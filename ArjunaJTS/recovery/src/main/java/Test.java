@@ -82,6 +82,7 @@ public class Test {
             System.out.print("Done, press enter to shutdown: ");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             reader.readLine();
+            Runtime.getRuntime().halt(0);
         }
     }
 }
