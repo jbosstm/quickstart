@@ -161,7 +161,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
 
         List<Xid> xids = new ArrayList<Xid>();
 
-        File file = new File(System.getProperty("user.dir") + "/" + this.getClass().getName() + ".xid");
+        File file = new File(System.getProperty("user.dir") + "/" + this.getClass().getName() + ".xid_");
 
         if (file.exists()) {
 
@@ -220,6 +220,8 @@ public abstract class AbstractExampleXAResource implements XAResource {
                         return stringBuilder.toString();
                     }
                 };
+                
+                xids.add(xid);
 
                 System.err.println("expect recovery on " + xid);
                 fis.close();

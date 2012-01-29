@@ -26,6 +26,7 @@ import javax.transaction.Transaction;
 import javax.transaction.UserTransaction;
 
 import com.arjuna.ats.arjuna.common.arjPropertyManager;
+import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
 import com.arjuna.ats.internal.jts.ORBManager;
 import com.arjuna.ats.jta.TransactionManager;
 import com.arjuna.orbportability.OA;
@@ -53,6 +54,7 @@ public class Test {
             System.setProperty("com.arjuna.ats.jta.xaRecoveryNode", "*");
             
             arjPropertyManager.getCoordinatorEnvironmentBean().setDefaultTimeout(0);
+            recoveryPropertyManager.getRecoveryEnvironmentBean().setPeriodicRecoveryPeriod(10);
 
             ORB myORB = ORB.getInstance("test");
             RootOA myOA = OA.getRootOA(myORB);
