@@ -21,6 +21,7 @@
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import javax.transaction.Transaction;
 import javax.transaction.UserTransaction;
@@ -29,6 +30,7 @@ import com.arjuna.ats.arjuna.common.arjPropertyManager;
 import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
 import com.arjuna.ats.internal.jts.ORBManager;
 import com.arjuna.ats.jta.TransactionManager;
+import com.arjuna.ats.jta.common.jtaPropertyManager;
 import com.arjuna.orbportability.OA;
 import com.arjuna.orbportability.ORB;
 import com.arjuna.orbportability.RootOA;
@@ -49,10 +51,10 @@ public class Test {
         if (!crash && !recover) {
             System.err.println("You must specify either -crash or -recover");
         } else {
-
-            System.setProperty("com.arjuna.ats.jta.recovery.XAResourceRecovery1", "ExampleXAResourceRecovery");
-            System.setProperty("com.arjuna.ats.jta.xaRecoveryNode", "*");
-            
+            // Perform some setup
+            jtaPropertyManager.getJTAEnvironmentBean().setXaResourceRecoveryClassNames(
+                    Arrays.asList(new String[] { "ExampleXAResourceRecovery" }));
+            jtaPropertyManager.getJTAEnvironmentBean().setXaRecoveryNodes(Arrays.asList(new String[] { "*" }));
             arjPropertyManager.getCoordinatorEnvironmentBean().setDefaultTimeout(0);
             recoveryPropertyManager.getRecoveryEnvironmentBean().setPeriodicRecoveryPeriod(10);
 
@@ -79,12 +81,12 @@ public class Test {
                 txImple.enlistResource(new ExampleXAResource2());
 
                 ut.commit();
+            } else {
+                System.out.print("Press enter after recovery is complete to shutdown: ");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                reader.readLine();
+                Runtime.getRuntime().halt(0);
             }
-
-            System.out.print("Done, press enter to shutdown: ");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            reader.readLine();
-            Runtime.getRuntime().halt(0);
         }
     }
 }
