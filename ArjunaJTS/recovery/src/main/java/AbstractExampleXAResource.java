@@ -67,36 +67,10 @@ public abstract class AbstractExampleXAResource implements XAResource {
     /**
      * 
      * @param param1 <description>
-     * @param param2 <description>
-     * @exception javax.transaction.xa.XAException <description>
-     */
-    public void commit(Xid xid, boolean onePhase) throws XAException {
-        System.out.println(this.getClass().getName() + ": " + "commit,xid=" + xid + ",onePhase=" + onePhase);
-
-        if (!recovered) {
-            Runtime.getRuntime().halt(0);
-        }
-
-        File prepared = new File(this.getClass().getName() + ".xid_");
-        File committed = new File(this.getClass().getName() + ".xid");
-        if (prepared.exists()) {
-            prepared.renameTo(committed);
-        } else {
-            try {
-                committed.createNewFile();
-            } catch (IOException e) {
-                throw new XAException("Could not create committed state");
-            }
-        }
-    }
-
-    /**
-     * 
-     * @param param1 <description>
      * @return <description>
      * @exception javax.transaction.xa.XAException <description>
      */
-    public int prepare(Xid xid) throws XAException {
+    public synchronized int prepare(Xid xid) throws XAException {
         System.out.println(this.getClass().getName() + ": " + "prepare " + xid);
 
         int i = 2;
@@ -130,14 +104,40 @@ public abstract class AbstractExampleXAResource implements XAResource {
     /**
      * 
      * @param param1 <description>
+     * @param param2 <description>
      * @exception javax.transaction.xa.XAException <description>
      */
-    public void rollback(Xid xid) throws XAException {
-        System.out.println(this.getClass().getName() + ": " + "rollback");
+    public synchronized void commit(Xid xid, boolean onePhase) throws XAException {
+        System.out.println(this.getClass().getName() + ": " + "commit,xid=" + xid + ",onePhase=" + onePhase);
+
+        if (!recovered) {
+            Runtime.getRuntime().halt(0);
+        }
 
         File file = new File(this.getClass().getName() + ".xid_");
         if (file.exists()) {
             file.delete();
+        }
+    }
+
+    /**
+     * 
+     * @param param1 <description>
+     * @exception javax.transaction.xa.XAException <description>
+     */
+    public synchronized void rollback(Xid xid) throws XAException {
+        System.out.println(this.getClass().getName() + ": " + "rollback");
+
+        File prepared = new File(this.getClass().getName() + ".xid_");
+        File committed = new File(this.getClass().getName() + ".xid");
+        if (prepared.exists()) {
+            prepared.renameTo(committed);
+        } else {
+            try {
+                committed.createNewFile();
+            } catch (IOException e) {
+                throw new XAException("Could not create committed state");
+            }
         }
     }
 
@@ -156,13 +156,12 @@ public abstract class AbstractExampleXAResource implements XAResource {
      * @return <description>
      * @exception javax.transaction.xa.XAException <description>
      */
-    public Xid[] recover(int flag) throws XAException {
+    public synchronized Xid[] recover(int flag) throws XAException {
         System.out.println(this.getClass().getName() + ": " + "recover");
 
         List<Xid> xids = new ArrayList<Xid>();
 
         File file = new File(System.getProperty("user.dir") + "/" + this.getClass().getName() + ".xid_");
-
         if (file.exists()) {
 
             try {
@@ -220,7 +219,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
                         return stringBuilder.toString();
                     }
                 };
-                
+
                 xids.add(xid);
 
                 System.err.println("expect recovery on " + xid);
@@ -229,7 +228,6 @@ public abstract class AbstractExampleXAResource implements XAResource {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
         }
 
         return xids.toArray(new Xid[0]);

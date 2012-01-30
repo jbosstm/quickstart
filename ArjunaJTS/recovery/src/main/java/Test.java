@@ -26,6 +26,7 @@ import java.util.Arrays;
 import javax.transaction.Transaction;
 import javax.transaction.UserTransaction;
 
+import com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean;
 import com.arjuna.ats.arjuna.common.arjPropertyManager;
 import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
 import com.arjuna.ats.internal.jts.ORBManager;
@@ -57,6 +58,16 @@ public class Test {
             jtaPropertyManager.getJTAEnvironmentBean().setXaRecoveryNodes(Arrays.asList(new String[] { "*" }));
             arjPropertyManager.getCoordinatorEnvironmentBean().setDefaultTimeout(0);
             recoveryPropertyManager.getRecoveryEnvironmentBean().setPeriodicRecoveryPeriod(10);
+
+            arjPropertyManager.getObjectStoreEnvironmentBean().setObjectStoreDir("tx-object-store");
+
+            ObjectStoreEnvironmentBean communicationStoreObjectStoreEnvironmentBean = com.arjuna.common.internal.util.propertyservice.BeanPopulator
+                    .getNamedInstance(com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean.class, "communicationStore");
+            communicationStoreObjectStoreEnvironmentBean.setObjectStoreDir("tx-object-store");
+            
+            ObjectStoreEnvironmentBean stateStoreObjectStoreEnvironmentBean = com.arjuna.common.internal.util.propertyservice.BeanPopulator
+                    .getNamedInstance(com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean.class, "stateStore");
+            stateStoreObjectStoreEnvironmentBean.setObjectStoreDir("tx-object-store");
 
             ORB myORB = ORB.getInstance("test");
             RootOA myOA = OA.getRootOA(myORB);
