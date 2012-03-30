@@ -21,8 +21,8 @@
 	
 	<MACHINES>
 		<MACHINE id="secure1" hostname="${HOSTNAME}"
-			pathToExecutable="../server"
-			workingDirectory=".."
+			pathToExecutable="./server"
+			workingDirectory="."
 			serverId="1" />
 	</MACHINES>
 	<SERVERS>
