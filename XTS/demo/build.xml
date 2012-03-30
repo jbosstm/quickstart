@@ -37,7 +37,6 @@
     <property name="xtsinstalled.home" location="../xts-install" />
     <property name="distrib.dir" location="${xtsinstalled.home}/demo"/>
 
-    <property name="docs.dir" location="docs"/>
     <property name="xsl.dir"  location="xsl"/>
     <property name="html.dir" location="html"/>
     <property name="xsl.file" value="ATL_LookAndFeel.xsl"/>
@@ -58,18 +57,6 @@
         <mkdir dir="${html.dir}"/>
     </target>
 
-    <target name="docs" depends="init">
-        <copy todir="${html.dir}">
-            <fileset dir="${docs.dir}">
-                <include name="**/*.css"/>
-                <include name="**/*.gif"/>
-                <include name="**/*.jpg"/>
-            </fileset>
-        </copy>
-        <style processor="trax" style="${xsl.dir}/${xsl.file}" basedir="${docs.dir}" includes="*.xml" destdir="${html.dir}" extension=".html">
-            <param name="rootpath" expression="."/>
-        </style>
-    </target>
 
     <!-- hook to 'inherit' distrib dir if we are called by the ArjuaXTS install script -->
 	<target name="select-distribution-dir" if="com.arjuna.mwlabs.installationdirectory">
@@ -77,7 +64,7 @@
 	</target>
 
     <!-- prepare the demo app for customer release -->
-    <target name="distribution" depends="clean, select-distribution-dir, docs">
+    <target name="distribution" depends="clean, select-distribution-dir">
 
         <!-- this assignment will fail silent if the property
           has already been set (inherited) by ArjunaXTS -->

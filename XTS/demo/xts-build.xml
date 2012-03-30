@@ -235,8 +235,8 @@
         </ear>
     </target>
 
-    <target  name="docs">
-        <javadoc packagenames="com.jboss.jbosstm.xts.demo.*" destdir="docs">
+    <target  name="javadoc">
+        <javadoc packagenames="com.jboss.jbosstm.xts.demo.*" destdir="javadoc">
             <classpath>
                 <path refid="compile.path"/>
             </classpath>
@@ -246,7 +246,7 @@
         </javadoc>
     </target>
 
-    <target name="build" depends="jboss-ear, docs"/>
+    <target name="build" depends="jboss-ear, javadoc"/>
 
     <target name="deploy" depends="build, undeploy">
         <copy file="${build.dir}/xts-demo.ear" tofile="${deploy.dir}/xts-demo.ear"/>
