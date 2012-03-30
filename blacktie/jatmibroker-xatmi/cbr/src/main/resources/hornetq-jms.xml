@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<configuration xmlns="urn:hornetq" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hornetq /schema/hornetq-jms.xsd">
+  <queue name="BTR_CBR_Request">
+	  <entry name="/queue/BTR_CBR_Request"/>
+  </queue>
+  <queue name="blacktie_simple_cbr">
+	  <entry name="/queue/blacktie_simple_cbr"/>
+  </queue>
+  <queue name="BTR_CBR_TestOne">
+	  <entry name="/queue/BTR_CBR_TestOne"/>
+  </queue>
+  <queue name="CBR_TestOne">
+	  <entry name="/queue/CBR_TestOne"/>
+  </queue>
+  <queue name="BTR_CBR_TestTwo">
+	  <entry name="/queue/BTR_CBR_TestTwo"/>
+  </queue>
+  <queue name="CBR_TestTwo">
+	  <entry name="/queue/CBR_TestTwo"/>
+  </queue>
+</configuration>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messaging-deployment xmlns="urn:jboss:messaging-deployment:1.0">
+    <hornetq-server>
+        <jms-destinations>
+            <jms-queue name="BTR_EchoService">
+                <entry name="/queue/BTR_EchoService"/>
+            </jms-queue>
+            <jms-queue name="BTR_TxEchoService">
+                <entry name="/queue/BTR_TxEchoService"/>
+            </jms-queue>
+            <jms-queue name="BTR_TxCreateService">
+                <entry name="/queue/BTR_TxCreateService"/>
+            </jms-queue>
+        </jms-destinations>
+    </hornetq-server>
+</messaging-deployment>

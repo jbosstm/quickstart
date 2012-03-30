@@ -1,0 +1,62 @@
+<project name="extract-blacktie" default="dist">
+
+	<target name="init">
+		<delete dir="${BT_HOME}"/>
+		<mkdir dir="${BT_HOME}"/>
+		<condition property="is-msvc">
+			<os family="windows" />
+		</condition>
+	</target>
+
+	<target name="_extract-gcc" depends="init" unless="is-msvc">
+		<exec executable="sh">
+			<arg line="-c &quot;tar xfz ../../blacktie/target/${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
+		</exec>
+		<property name="ESC_BT_HOME" value="${BT_HOME}/"/>
+	</target>
+
+	<target name="_extract-msvc" depends="init" if="is-msvc">
+		<unzip dest="${BT_HOME}">
+			<fileset dir="../../blacktie/target/">
+				<include name="${VERSION}*-bin.zip"/>
+			</fileset>
+		</unzip>
+		<property environment="env"/>
+		<echo message="${BT_HOME}"/>
+		<echo message="${BT_HOME}" file="bthome.tmp.file"/>
+		<replace file="bthome.tmp.file" token="\" value="\\\\"/>
+		<loadfile srcfile="bthome.tmp.file" property="ESC_BT_HOME"/>
+		<echo message="${ESC_BT_HOME}"/>
+		<delete file="bthome.tmp.file"/>
+	</target>
+
+	<target name="dist" depends="_extract-msvc,_extract-gcc">
+		<echo message="${ESC_BT_HOME}"/>
+		<replaceregexp byline="true" match="REPLACE_WITH_INSTALL_LOCATION" replace="${ESC_BT_HOME}${VERSION}">
+			<fileset dir="${BT_HOME}/">
+				<include name="*/setenv.*"/>
+			</fileset>
+		</replaceregexp>
+		<replaceregexp byline="true" match="REPLACE_WITH_JBOSSAS_IP_ADDR" replace="${JBOSSAS_IP_ADDR}">
+			<fileset dir="${BT_HOME}/">
+				<include name="*/setenv.*"/>
+			</fileset>
+		</replaceregexp>
+
+		<replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
+			<fileset dir="${BT_HOME}${VERSION}/">
+				<include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
+			</fileset>
+		</replaceregexp>
+		<replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
+			<fileset dir="${BT_HOME}${VERSION}/">
+				<include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
+			</fileset>
+		</replaceregexp>
+		<replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
+			<fileset dir="${BT_HOME}${VERSION}/">
+				<include name="atmibroker-xatmi/txfooapp/request.c"/>
+			</fileset>
+		</replaceregexp>
+	</target>
+</project>

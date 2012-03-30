@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="integration1-ejb-5.0.0.M2-SNAPSHOT-client">
+        <wb-resource deploy-path="/" source-path="/src/main/resources" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+        <property name="java-output-path" value="/bt-integration1-ejb/target/classes"/>
+    </wb-module>
+</project-modules>

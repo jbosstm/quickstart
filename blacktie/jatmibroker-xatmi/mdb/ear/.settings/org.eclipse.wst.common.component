@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="quickstart-mdb-xatmi-service-ear-5.0.0.M2-SNAPSHOT">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
+        <dependent-module archiveName="quickstart-mdb-xatmi-service-5.0.0.M2-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/bt-quickstart-mdb-xatmi-service/bt-quickstart-mdb-xatmi-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jatmibroker-xatmi-5.0.0.M2-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/bt-jatmibroker-xatmi/bt-jatmibroker-xatmi">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="blacktie-xsd-5.0.0.M2-SNAPSHOT.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/narayana/blacktie/blacktie-xsd/5.0.0.M2-SNAPSHOT/blacktie-xsd-5.0.0.M2-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="atmibroker-idl-java-5.0.0.M2-SNAPSHOT.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/narayana/blacktie/atmibroker-idl-java/5.0.0.M2-SNAPSHOT/atmibroker-idl-java-5.0.0.M2-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="log4j-1.2.15.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.15/log4j-1.2.15.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="xercesImpl-2.8.1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/xerces/xercesImpl/2.8.1/xercesImpl-2.8.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jaxb-xjc-2.0EA3.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/javax/xml/jaxb-xjc/2.0EA3/jaxb-xjc-2.0EA3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

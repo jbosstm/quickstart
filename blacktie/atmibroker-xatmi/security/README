@@ -1,0 +1,153 @@
+JBoss, Home of Professional Open Source
+Copyright 2008, Red Hat, Inc., and others contributors as indicated
+by the @authors tag. All rights reserved.
+See the copyright.txt in the distribution for a
+full listing of individual contributors.
+This copyrighted material is made available to anyone wishing to use,
+modify, copy, or redistribute it subject to the terms and conditions
+of the GNU Lesser General Public License, v. 2.1.
+This program is distributed in the hope that it will be useful, but WITHOUT A
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+You should have received a copy of the GNU Lesser General Public License,
+v.2.1 along with this distribution; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+MA  02110-1301, USA.
+
+NOTE: You may like to create a backup of this folder before starting!
+
+NOTE: If you are using IPv6 you will need to change any references to localhost in the btconfig.xml files to be localhost4 or 127.0.0.1
+
+1. INTRODUCTION
+This quickstart shows how the services may be secured using the <security> element
+in the btconfig.xml
+
+NOTE: This quickstart makes use of default users provided in JBoss 5.1.0.GA, "guest"
+and "dynsub". "guest" has the role "guest", and "dynsub" has the role "publisher"
+and "durpublisher".
+These users are provided out of the box for JBM 1.4 and were chosen as they have 
+non-overlapping roles so we can show how to excluded "guest" users from certain 
+queues.
+
+2. SET ENVIRONMENT VARIABLES
+In order to run the quickstart you need to make sure that you have set the environment
+variables JBOSSAS_IP_ADDR and BLACKTIE_HOME appropriately.
+On Linux you need to edit:
+	$BLACKTIE_HOME/setenv.sh
+On Windows:
+	%BLACKTIE_HOME%\setenv.bat
+Then, execute the script setenv
+
+On Windows: 
+You MUST use an environment configured with the VC++ development tools, e.g. launch:
+C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat
+
+
+3. CREATE THE SERVER
+generate_server -Dservice.names=SECURE -Dserver.includes=BarService.c
+NOTE: If you get the following error you have not installed ant-contrib into your ANT distribution:
+	BUILD FAILED
+	/home/tom/blacktie/dist/blacktie-5.0.0.M2-SNAPSHOT/bin/generate-executables.xml:160: Problem: failed to create task or type propertycopy
+NOTE: If you get the following error you have not installed cpp-tasks into your ANT distribution:
+	BUILD FAILED
+	/home/tom/blacktie/dist/blacktie-5.0.0.M2-SNAPSHOT/bin/generate-executables.xml:113: The following error occurred while executing this line:
+	/home/tom/blacktie/dist/blacktie-5.0.0.M2-SNAPSHOT/bin/generate-executables.xml:140: Problem: failed to create task or type cc
+NOTE: If you get the following error you have not edited or executed setenv correctly:
+java org.apache.tools.ant.launch.Launcher -f ...
+Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/tools/ant/launch/Launcher
+Caused by: java.lang.ClassNotFoundException: org.apache.tools.ant.launch.Launcher
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:200)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:188)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:307)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:252)
+        at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
+Could not find the main class: org.apache.tools.ant.launch.Launcher.  Program will exit.
+NOTE: On Windows - If you get the following error you have not used a command prompt with VC++ tools in it:
+BUILD FAILED
+C:\blacktie\dist\blacktie-5.0.0.M2-SNAPSHOT\bin\generate-executables.xml:117: The following error occurred while executing this line:
+C:\blacktie\dist\blacktie-5.0.0.M2-SNAPSHOT\bin\generate-executables.xml:144: Could not launch cl: java.io.IOException: Cannot run program "cl" (in directory "C:
+\blacktie\dist\blacktie-5.0.0.M2-SNAPSHOT\quickstarts\xatmi\fooapp\target\classes"): CreateProcess error=2, The system cannot find the file specified
+
+4. CREATE THE CLIENT
+generate_client -Dclient.includes=client.c
+
+
+5. DEPLOY THE STOMPCONNECTSERVICE
+Undeploy any older versions of the blacktie admin service
+Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/server/all-with-hornetq/deploy
+Copy the file $BLACKTIE_HOME/blacktie-admin-services/stompconnectservice-<VERSION.ear into $JBOSS_HOME/server/all-with-hornetq/deploy
+
+
+6. RUN AND CONFIGURE THE APPLICATION SERVER
+Make sure that the naming, messaging and transaction services are running, by running the JBoss server:
+<JBOSS_HOME>/bin/run.sh|bat -c all-with-hornetq
+You will need to configure the security settings at the HornetQ level in this release of BlackTie and moving forward.
+What you will need to do is:
+6.1 CONFIGURE USERS AND ROLES
+Edit <JBOSS_HOME>/server/all-with-hornetq/conf/props/hornetq-users.properties to add the user dynsub with password dynsub
+Edit <JBOSS_HOME>/server/all-with-hornetq/conf/props/hornetq-roles.properties to give the user dynsub the role blacktie
+6.2 CONFIGURE THE SECURITY SETTINGS FOR THIS SERVER
+Edit <JBOSS_HOME>/server/all-with-hornetq/deploy/hornetq.sar/hornetq-configuration.xml to add the following security-settings:
+      <security-setting match="jms.queue.BTR_SECURE">
+         <permission type="send" roles="blacktie"/>
+         <permission type="consume" roles="blacktie"/>
+      </security-setting>
+NOTE: The security settings are done before the queue is even deployed, this is a feature of HornetQ
+
+
+7. RUN THE APPLICATIONS
+As the username/password is encoded in the btconfig.xml file, for this 
+quickstart we have separated the configuration for the server and each of the
+clients. Therefore the BLACKTIE_CONFIGURATION_DIR environment variable 
+will need to be exported.
+NOTE: If you get the following error you have not sourced setenv.sh|bat
+./<EXECUTABLE>: error while loading shared libraries: libTAO_CosNaming.so.1.6.7: cannot open shared object file: No such file or directoryI
+
+7.1 RUN THE SERVER
+export BLACKTIE_CONFIGURATION_DIR=serv
+btadmin startup secure
+NOTE: If you get the following error you have not started the JBoss server:
+2009-06-23 08:51:51,270 [0x7f627be63750] ERROR AtmiBrokerServer          - serverinit - Unexpected CORBA exception: TRANSIENT
+2009-06-23 08:51:51,270 [0x7f627be63750] INFO  AtmiBrokerLogc            - main Unexpected exception in serverrun()
+
+7.2 RUN THE CLIENT WITH INVALID CREDENTIALS
+export BLACKTIE_CONFIGURATION_DIR=guest
+./client
+If you echo $? you will see the application returned an error
+
+7.3 RUN THE CLIENT WITH VALID CREDENTIALS
+export BLACKTIE_CONFIGURATION_DIR=dynsub
+./client
+If you echo $? you will see the application completed successfully
+
+7.4 SHUTDOWN THE SERVER
+btadmin shutdown
+
+8. CREATE A NEW USER AND RUN THE TEST AGAIN
+Duplicate the "dynsub" folder as "bt"
+Edit bt/btconfig.xml and change "dynsub" to "bt", with password "pwd"
+Edit serv/btconfig.xml and change "dynsub" to "bt", with password "pwd"
+
+Edit: "serv/btconfig.xml" and <JBOSS_HOME>/server/all-with-hornetq/conf/btconfig.xml
+Change the roles with name "publisher" to "blacktie"
+Remove the "guest" role
+
+Open:  <JBOSS_HOME>/server/all-with-hornetq/deploy/messaging/hsqldb-persistence-service.xml
+Add:
+POPULATE.TABLES.15  = INSERT INTO JBM_USER (USER_ID, PASSWD) VALUES ('bt', 'pwd')
+POPULATE.TABLES.16 = INSERT INTO JBM_ROLE (ROLE_ID, USER_ID) VALUES ('blacktie','bt')
+
+
+Edit: <JBOSS_HOME>/server/all-with-hornetq/conf/btconfig.xml
+Change the user from "guest"/"guest" to "bt"/"pwd"
+
+Run step 7.1 above
+Run step 7.2 above
+Run step 7.3 above (this time the dynsub test will fail)
+
+export BLACKTIE_CONFIGURATION_DIR=bt
+./client
+If you echo $? you will see the application completed successfully
+Run step 7.4 above
