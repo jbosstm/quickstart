@@ -3,8 +3,6 @@ set -m
 
 echo "Quickstart: Running fooapp"
 
-cd $BLACKTIE_HOME/quickstarts/xatmi/fooapp
-
 # RUN THE FOOAPP SERVER
 generate_server -Dservice.names=FOOAPP -Dserver.includes=BarService.c -Dserver.name=fooapp
 if [ "$?" != "0" ]; then

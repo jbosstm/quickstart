@@ -60,5 +60,12 @@
 				<include name="atmibroker-xatmi/txfooapp/request.c"/>
 			</fileset>
 		</replaceregexp>
+        <copy todir="${JBOSS_HOME}/standalone/deployments">
+            <fileset dir="${BT_HOME}blacktie-${VERSION}/blacktie-admin-services/">
+                <include name="*.jar"/>
+                <include name="*.ear"/>
+            </fileset>
+        </copy>
+        <sleep seconds="7"/>
 	</target>
 </project>

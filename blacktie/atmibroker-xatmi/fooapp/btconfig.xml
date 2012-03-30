@@ -21,12 +21,12 @@
 	
 	<MACHINES>
 		<MACHINE id="fooapp1" hostname="${HOSTNAME}"
-			pathToExecutable="${BLACKTIE_HOME}/quickstarts/xatmi/fooapp/server"
-			workingDirectory="${BLACKTIE_HOME}/quickstarts/xatmi/fooapp"
+			pathToExecutable="./server"
+			workingDirectory="."
 			serverId="1" />
 		<MACHINE id="fooapp2" hostname="${HOSTNAME}"
-			pathToExecutable="${BLACKTIE_HOME}/quickstarts/xatmi/fooapp/server"
-			workingDirectory="${BLACKTIE_HOME}/quickstarts/xatmi/fooapp"
+			pathToExecutable="./server"
+			workingDirectory="."
 			serverId="2" />
 	</MACHINES>
 	<SERVERS>
