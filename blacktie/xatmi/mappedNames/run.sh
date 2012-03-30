@@ -1,9 +1,13 @@
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
-echo "Quickstart: Running nbf quickstart "
+echo "Running Mapped Service Names"
 
-generate_server -Dservice.names=NBFEXAMPLE -Dserver.includes=NBFService.c -Dserver.name=nbfserv
+generate_server -Dservice.names=ONE,TWO -Dserver.output.file=hiprio  -Dserver.includes=BarService.c -Dserver.name=hiprio
+if [ "$?" != "0" ]; then
+	exit -1
+fi
+generate_server -Dservice.names=THREE,FOUR -Dserver.output.file=loprio  -Dserver.includes=BarService.c -Dserver.name=loprio
 if [ "$?" != "0" ]; then
 	exit -1
 fi
@@ -15,11 +19,11 @@ if [ "$?" != "0" ]; then
 fi
 unset BLACKTIE_CONFIGURATION
 
-# RUN THE C CLIENT
 generate_client -Dclient.includes=client.c
 ./client
 if [ "$?" != "0" ]; then
-	killall -9 server
+	killall -9 hiprio
+	killall -9 loprio
 	exit -1
 fi
 

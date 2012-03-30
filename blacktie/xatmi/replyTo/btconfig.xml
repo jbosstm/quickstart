@@ -17,35 +17,43 @@
 	-->
 <ENVIRONMENT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.jboss.org/blacktie">
-	<DOMAIN>integration</DOMAIN>
+	<DOMAIN>fooapp</DOMAIN>
+	
 	<MACHINES>
-		<MACHINE id="integra1" hostname="${HOSTNAME}"
+		<MACHINE id="server1" hostname="${HOSTNAME}"
 			pathToExecutable="./server"
 			workingDirectory="."
 			serverId="1" />
 	</MACHINES>
 	<SERVERS>
-		<SERVER name='integra'>
-			<MACHINE-REF id="integra1" />
+		<SERVER name='server'>
+			<MACHINE-REF id="server1" />
 			<SERVICE_NAMES>
-				<SERVICE name='CREDITEXAMPLE' />
-				<SERVICE name='DEBITEXAMPLE' />
+				<SERVICE name='FOO' advertised="true" function_name="BAR">
+                    <LIBRARY_NAME configuration="win32" value="server.exe"/>
+                </SERVICE>
+			</SERVICE_NAMES>
+		</SERVER>
+		<SERVER name='clientA'>
+			<SERVICE_NAMES>
+				<SERVICE name='CLIENTRESPONSEHANDLER_1' size="1"/>
+			</SERVICE_NAMES>
+		</SERVER>
+		<SERVER name='clientB'>
+			<SERVICE_NAMES>
+				<SERVICE name='CLIENTRESPONSEHANDLER_2' size="1"/>
 			</SERVICE_NAMES>
 		</SERVER>
 	</SERVERS>
-	<ORB
-		OPT="-ORBInitRef NameService=corbaloc::${JBOSSAS_IP_ADDR}:3528/NameService -ORBListenEndpoints iiop://${JBOSSAS_IP_ADDR}:0"
+	<ORB OPT="-ORBInitRef NameService=corbaloc::${JBOSSAS_IP_ADDR}:3528/NameService -ORBListenEndpoints iiop://${JBOSSAS_IP_ADDR}:0"
 		TRANS_FACTORY_ID="TransactionManagerService.OTS" />
 	<MQ HOST="${JBOSSAS_IP_ADDR}" PORT="61613" USER="guest" PASSWORD="password"
 		 RECEIVE_TIMEOUT="10" TIME_TO_LIVE="40" />
-	<BUFFERS>
-		<BUFFER name="debit">
-			<ATTRIBUTE id="acct_no" type="long" />
-			<ATTRIBUTE id="amount" type="short" />
-		</BUFFER>
-		<BUFFER name="credit">
-			<ATTRIBUTE id="acct_no" type="long" />
-			<ATTRIBUTE id="amount" type="short" />
+	
+    <BUFFERS>
+		<BUFFER name="message">
+			<ATTRIBUTE id="reply_to" type="char[]" arrayLength="128" />
+			<ATTRIBUTE id="data" type="char[]" arrayLength="15" />
 		</BUFFER>
 	</BUFFERS>
 </ENVIRONMENT>

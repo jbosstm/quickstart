@@ -4,7 +4,7 @@ set -m
 echo "Quickstart: Running XATMI admin quickstart"
 
 # RUN THE FOOAPP SERVER
-cd $BLACKTIE_HOME/quickstarts/xatmi/fooapp
+cd ../../xatmi/fooapp/
 generate_server -Dservice.names=FOOAPP -Dserver.includes=BarService.c -Dserver.name=fooapp
 if [ "$?" != "0" ]; then
 	exit -1
@@ -16,8 +16,9 @@ if [ "$?" != "0" ]; then
 fi
 unset BLACKTIE_CONFIGURATION
 
+cd ../../blacktie-admin-services/xatmi
+
 # SHUTDOWN THE SERVER RUNNING THE XATMI ADMIN CLIENT
-cd $BLACKTIE_HOME/quickstarts/admin/xatmi
 generate_client -Dclient.includes=client.c
 echo '0
 0
@@ -30,7 +31,6 @@ if [ "$?" != "0" ]; then
 	exit -1
 fi
 # SHUTDOWN THE SERVER RUNNING THE XATMI ADMIN CLIENT
-cd $BLACKTIE_HOME/quickstarts/admin/xatmi
 generate_client -Dclient.includes=client.c
 echo '0
 0

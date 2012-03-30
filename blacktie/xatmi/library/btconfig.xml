@@ -17,35 +17,28 @@
 	-->
 <ENVIRONMENT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.jboss.org/blacktie">
-	<DOMAIN>integration</DOMAIN>
+	<DOMAIN>fooapp</DOMAIN>
+	
 	<MACHINES>
-		<MACHINE id="integra1" hostname="${HOSTNAME}"
+		<MACHINE id="library1" hostname="${HOSTNAME}"
 			pathToExecutable="./server"
 			workingDirectory="."
 			serverId="1" />
 	</MACHINES>
 	<SERVERS>
-		<SERVER name='integra'>
-			<MACHINE-REF id="integra1" />
+		<SERVER name='library'>
+			<MACHINE-REF id="library1" />
 			<SERVICE_NAMES>
-				<SERVICE name='CREDITEXAMPLE' />
-				<SERVICE name='DEBITEXAMPLE' />
+				<SERVICE name='LIBRARY' advertised="true" size="5" function_name="BAR">
+                    <LIBRARY_NAME configuration="linux" value="libmyxatmiservice.so"/>
+                    <LIBRARY_NAME configuration="win32" value="myxatmiservice.dll"/>
+                </SERVICE>                
 			</SERVICE_NAMES>
 		</SERVER>
 	</SERVERS>
-	<ORB
-		OPT="-ORBInitRef NameService=corbaloc::${JBOSSAS_IP_ADDR}:3528/NameService -ORBListenEndpoints iiop://${JBOSSAS_IP_ADDR}:0"
+	<ORB OPT="-ORBInitRef NameService=corbaloc::${JBOSSAS_IP_ADDR}:3528/NameService -ORBListenEndpoints iiop://${JBOSSAS_IP_ADDR}:0"
 		TRANS_FACTORY_ID="TransactionManagerService.OTS" />
 	<MQ HOST="${JBOSSAS_IP_ADDR}" PORT="61613" USER="guest" PASSWORD="password"
 		 RECEIVE_TIMEOUT="10" TIME_TO_LIVE="40" />
-	<BUFFERS>
-		<BUFFER name="debit">
-			<ATTRIBUTE id="acct_no" type="long" />
-			<ATTRIBUTE id="amount" type="short" />
-		</BUFFER>
-		<BUFFER name="credit">
-			<ATTRIBUTE id="acct_no" type="long" />
-			<ATTRIBUTE id="amount" type="short" />
-		</BUFFER>
-	</BUFFERS>
+	
 </ENVIRONMENT>

@@ -1,14 +1,17 @@
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
-echo "Quickstart: Running nbf quickstart "
+echo "Quickstart: Running Topics"
 
-generate_server -Dservice.names=NBFEXAMPLE -Dserver.includes=NBFService.c -Dserver.name=nbfserv
+# CLEAN LOG
+rm -f blacktie*.log
+
+# RUN THE SERVER
+generate_server -Dserver.includes=BarService.c -Dserver.name=myserv
 if [ "$?" != "0" ]; then
 	exit -1
 fi
 
-export BLACKTIE_CONFIGURATION=linux
 btadmin startup
 if [ "$?" != "0" ]; then
 	exit -1
@@ -23,9 +26,13 @@ if [ "$?" != "0" ]; then
 	exit -1
 fi
 
-export BLACKTIE_CONFIGURATION=linux
 btadmin shutdown
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-unset BLACKTIE_CONFIGURATION
+
+barcalled=`grep "bar called" blacktie.log|wc -l`
+if [ "$barcalled" != "2" ]; then
+	echo "every server should been bursted with the messages"
+	exit -1
+fi

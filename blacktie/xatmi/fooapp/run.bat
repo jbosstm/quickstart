@@ -1,9 +1,8 @@
 @echo off
 
-echo "Quickstart: Running XATMI admin quickstart"
+echo "Quickstart: Running fooapp"
 
 rem RUN THE FOOAPP SERVER
-cd ..\..\xatmi\fooapp
 call generate_server -Dservice.names=FOOAPP -Dserver.includes=BarService.c -Dserver.name=fooapp
 IF %ERRORLEVEL% NEQ 0 exit -1
 set BLACKTIE_CONFIGURATION=win32
@@ -11,13 +10,10 @@ call btadmin startup
 IF %ERRORLEVEL% NEQ 0 exit -1
 set BLACKTIE_CONFIGURATION=
 
-rem RUN THE ADMIN JMX CLIENT
-cd ..\..\blacktie-admin-services\xatmi
+rem RUN THE C CLIENT
 call generate_client -Dclient.includes=client.c
-(echo 0& echo 0& echo 0& echo 0& echo 1) | client
-IF %ERRORLEVEL% NEQ 0 exit -1
-(echo 0& echo 0& echo 0& echo 0& echo 2) | client
+client
 IF %ERRORLEVEL% NEQ 0 exit -1
 
-rem PICK UP THE CLOSING SERVER
-@ping 127.0.0.1 -n 3 -w 1000 > nul
+call btadmin shutdown
+IF %ERRORLEVEL% NEQ 0 exit -1

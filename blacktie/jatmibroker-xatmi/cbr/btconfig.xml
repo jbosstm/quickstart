@@ -21,12 +21,12 @@
 	
 	<MACHINES>
 		<MACHINE id="server_one" hostname="${HOSTNAME}"
-			pathToExecutable="${BLACKTIE_HOME}/quickstarts/cbr/server_one"
-			workingDirectory="${BLACKTIE_HOME}/quickstarts/cbr"
+			pathToExecutable="./server_one"
+			workingDirectory="."
 			serverId="1" />
 		<MACHINE id="server_two" hostname="${HOSTNAME}"
-			pathToExecutable="${BLACKTIE_HOME}/quickstarts/cbr/server_two"
-			workingDirectory="${BLACKTIE_HOME}/quickstarts/cbr"
+			pathToExecutable="./server_two"
+			workingDirectory="."
 			serverId="2" />
 	</MACHINES>
 	<SERVERS>

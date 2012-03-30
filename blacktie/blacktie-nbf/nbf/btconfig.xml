@@ -21,8 +21,8 @@
 	
 	<MACHINES>
 		<MACHINE id="nbfserv1" hostname="${HOSTNAME}"
-			pathToExecutable="${BLACKTIE_HOME}/quickstarts/nbf/server"
-			workingDirectory="${BLACKTIE_HOME}/quickstarts/nbf"
+			pathToExecutable="./server"
+			workingDirectory="."
 			serverId="1" />
 	</MACHINES>
 	<SERVERS>
