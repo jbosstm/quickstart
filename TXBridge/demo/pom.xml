@@ -26,6 +26,7 @@
     <modules>
         <module>service</module>
         <module>client</module>
+        <module>demo-test</module>
     </modules>
 
 </project>
