@@ -33,28 +33,123 @@
             <phase>compile</phase>
             <configuration>
               <target>
-                <property name="docs.dir" value="docs"/>
-                <property name="xsl.dir" value="xsl"/>
-                <property name="html.dir" value="target/classes/html"/>
-                <property name="xsl.file" value="ATL_LookAndFeel.xsl"/>
-                <copy todir="${html.dir}">
-                  <fileset dir="${docs.dir}">
-                    <include name="**/*.css"/>
-                    <include name="**/*.gif"/>
-                    <include name="**/*.jpg"/>
-                    <include name="**/*.GIF"/>
-                  </fileset>
-                </copy>
-                <style processor="trax" style="${xsl.dir}/${xsl.file}" basedir="${docs.dir}" includes="*.xml" destdir="${html.dir}" extension=".html">
-                  <param name="rootpath" expression="."/>
-                </style>
-                <copy todir="target/classes/">
-                  <fileset dir=".">
-                    <include name="src/"/>
-                    <include name="build.xml"/>
-                    <include name="README.txt"/>
-                  </fileset>
-                </copy>
+
+    <!-- Where the transaction has been installed to, this should not need changing by default -->
+    <property name="jbosstshome" value=".."/>
+
+    <!-- This source code directory for the trailmap -->
+    <property name="src" value="src"/>
+
+    <!-- Where the trailmap source code should be built to -->
+    <property name="build" value="build"/>
+
+    <!-- The directory where the trailmap JAR should be created under -->
+    <property name="lib" value="lib"/>
+
+    <!-- The location of JacORB to use. This should not need changing unless a different version of JacORB is used -->
+    <property name="jacorb-home" value="${jbosstshome}/jacorb"/>
+
+    <!-- The location of the Arjuna IDL files used by the JTS -->
+    <property name="jbossts-include" value="${jbosstshome}/idl"/>
+
+    <!-- The include files required by JacORB -->
+    <property name="jacorb-include" value="${jacorb-home}/idl/omg"/>
+
+
+    <!--
+        This target is responsible for final assembly of the trailmap JAR file. It uses the compile dependency to
+        ensure that the code has already been built.
+    -->
+    <target name="buildjar" depends="compile">
+        <jar basedir="${build}" jarfile="${lib}/jbossts-demo.jar"/>
+    </target>
+
+
+    <!--
+        The compile target is responsible for compiling the source code into the build directory. Before compilation
+        can take place the target requires a dependency target idl to have completed.
+    -->
+    <target name="compile" depends="idl">
+        <javac srcdir="${src}" destdir="${build}">
+            <classpath>
+                <fileset dir="${jbosstshome}/lib" includes="*.jar"/>
+                <fileset dir="${jbosstshome}/lib/ext" includes="*.jar,*.zip"/>
+                <fileset dir="${jacorb-home}/lib" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+
+    <!--
+        The idl target is used to create the stub classes for the trailmap. It requires that the build directories
+        already exist, hence the dependency on prepare.
+    -->
+    <target name="idl" depends="prepare">
+
+        <!-- Create the stub classes for the installation verification step of the trailmap -->
+        <java classname="org.jacorb.idl.parser" fork="yes">
+            <classpath>
+                <fileset dir="${jacorb-home}/lib" includes="*.jar"/>
+            </classpath>
+            <arg value="-I${jbossts-include}"/>
+            <arg value="-I${jacorb-include}"/>
+            <arg line="-d ${src}/generated"/>
+            <arg value="${src}/com/arjuna/demo/simple/Hello.idl"/>
+        </java>
+
+        <!-- Create the stub classes for the implicit propogation Bank sample -->
+        <java classname="org.jacorb.idl.parser" fork="yes">
+            <classpath>
+                <fileset dir="${jacorb-home}/lib" includes="*.jar"/>
+            </classpath>
+            <arg value="-I${jbossts-include}"/>
+            <arg value="-I${jacorb-include}"/>
+            <arg line="-d ${src}/generated"/>
+            <arg value="${src}/com/arjuna/demo/jts/remotebank/Bank.idl"/>
+        </java>
+
+        <!-- Create the stub classes for the explicit propogation Bank sample -->
+        <java classname="org.jacorb.idl.parser" fork="yes">
+            <classpath>
+                <fileset dir="${jacorb-home}/lib" includes="*.jar"/>
+            </classpath>
+            <arg value="-I${jbossts-include}"/>
+            <arg value="-I${jacorb-include}"/>
+            <arg line="-d ${src}/generated"/>
+            <arg value="${src}/com/arjuna/demo/jts/explicitremotebank/Bank.idl"/>
+        </java>
+
+        <!-- Create the stub classes for the JBoss Transactional-Objects for Java extension Bank sample -->
+        <java classname="org.jacorb.idl.parser" fork="yes">
+            <classpath>
+                <fileset dir="${jacorb-home}/lib" includes="*.jar"/>
+            </classpath>
+            <arg value="-I${jbossts-include}"/>
+            <arg value="-I${jacorb-include}"/>
+            <arg line="-d ${src}/generated"/>
+            <arg value="${src}/com/arjuna/demo/jts/txojbank/Bank.idl"/>
+        </java>
+    </target>
+
+
+    <!--
+        Prepare is the base target for building the trailmap. It is responsible for ensuring that the
+        directories required by the rest of the trailmap build system are present
+    -->
+    <target name="prepare">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${lib}"/>
+    </target>
+
+
+    <!--
+        This target is reponsible for cleaning the build directories. It may be invoked before buildjar to ensure
+        that no old classes remain (if the user has changed the source code)
+    -->
+    <target name="clean" description="clean up">
+        <delete dir="${build}"/>
+        <delete dir="${lib}"/>
+    </target>
               </target>
               <dependencies>
                 <dependency>
