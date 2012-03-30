@@ -158,14 +158,8 @@
     <dependency>
       <groupId>org.jboss.jbossts</groupId>
       <artifactId>jbossjta</artifactId>
-      <version>4.15.1.Final</version>
+      <version>5.0.0.M2-SNAPSHOT</version>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.logging</groupId>
-          <artifactId>jboss-logging-spi</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- Import the injection annotations -->
     <dependency>

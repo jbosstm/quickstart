@@ -70,17 +70,7 @@
     <dependency>
       <groupId>org.jboss.jbossts</groupId>
       <artifactId>jbossjta</artifactId>
-      <version>4.15.1.Final</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.logging</groupId>
-          <artifactId>jboss-logging-spi</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jacorb</groupId>
-          <artifactId>idl</artifactId>
-        </exclusion>
-      </exclusions>
+      <version>5.0.0.M2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
