@@ -34,20 +34,6 @@
             <configuration>
               <target>
                 <property name="selected-distrib-dir" location="target/classes"/>
-                <property name="docs.dir" location="docs"/>
-                <property name="xsl.dir" location="xsl"/>
-                <property name="html.dir" location="target/classes/html"/>
-                <property name="xsl.file" value="ATL_LookAndFeel.xsl"/>
-                <copy todir="${html.dir}">
-                  <fileset dir="${docs.dir}">
-                    <include name="**/*.css"/>
-                    <include name="**/*.gif"/>
-                    <include name="**/*.jpg"/>
-                  </fileset>
-                </copy>
-                <style processor="trax" style="${xsl.dir}/${xsl.file}" basedir="${docs.dir}" includes="*.xml" destdir="${html.dir}" extension=".html">
-                  <param name="rootpath" expression="."/>
-                </style>
                 <!-- copy everything (CVS dirs are auto-ignored) -->
                 <copy todir="${selected-distrib-dir}">
                   <fileset dir=".">
