@@ -9,16 +9,18 @@
 	</target>
 
 	<target name="_extract-gcc" depends="init" unless="is-msvc">
+        <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" verbose="true" usetimestamp="true" skipexisting="false"/> -->
 		<exec executable="sh">
-			<arg line="-c &quot;tar xfz ../../blacktie/target/${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
+			<arg line="-c &quot;tar xfz ${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/blacktie-${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
 		</exec>
 		<property name="ESC_BT_HOME" value="${BT_HOME}/"/>
 	</target>
 
 	<target name="_extract-msvc" depends="init" if="is-msvc">
+        <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" verbose="true" usetimestamp="true" skipexisting="false"/> -->
 		<unzip dest="${BT_HOME}">
-			<fileset dir="../../blacktie/target/">
-				<include name="${VERSION}*-bin.zip"/>
+			<fileset dir="${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/">
+				<include name="blacktie-${VERSION}*-bin.zip"/>
 			</fileset>
 		</unzip>
 		<property environment="env"/>
@@ -32,7 +34,7 @@
 
 	<target name="dist" depends="_extract-msvc,_extract-gcc">
 		<echo message="${ESC_BT_HOME}"/>
-		<replaceregexp byline="true" match="REPLACE_WITH_INSTALL_LOCATION" replace="${ESC_BT_HOME}${VERSION}">
+		<replaceregexp byline="true" match="REPLACE_WITH_INSTALL_LOCATION" replace="${ESC_BT_HOME}blacktie-${VERSION}">
 			<fileset dir="${BT_HOME}/">
 				<include name="*/setenv.*"/>
 			</fileset>
@@ -44,17 +46,17 @@
 		</replaceregexp>
 
 		<replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
-			<fileset dir="${BT_HOME}${VERSION}/">
+			<fileset dir="${BT_HOME}blacktie-${VERSION}/">
 				<include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
 			</fileset>
 		</replaceregexp>
 		<replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
-			<fileset dir="${BT_HOME}${VERSION}/">
+			<fileset dir="${BT_HOME}blacktie-${VERSION}/">
 				<include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
 			</fileset>
 		</replaceregexp>
 		<replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
-			<fileset dir="${BT_HOME}${VERSION}/">
+			<fileset dir="${BT_HOME}blacktie-${VERSION}/">
 				<include name="atmibroker-xatmi/txfooapp/request.c"/>
 			</fileset>
 		</replaceregexp>

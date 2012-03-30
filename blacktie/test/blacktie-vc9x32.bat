@@ -13,7 +13,7 @@ tasklist
 
 rem INITIALIZE JBOSS
 cd %WORKSPACE%
-call ant -f scripts/hudson/initializeJBoss.xml -Dbasedir=. initializeDatabase initializeJBoss -debug
+call ant -f blacktie/test/initializeJBoss.xml -Dbasedir=. initializeDatabase initializeJBoss -debug
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 cd %WORKSPACE%\jboss-as-7.1.1.Final\bin\
@@ -34,7 +34,7 @@ echo "Started server"
 rem CREATE BLACKTIE DISTRIBUTION
 cd %WORKSPACE%\blacktie\test
 for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
-call ant dist -DBT_HOME=%WORKSPACE%\blacktie\dist\ -DVERSION=blacktie-5.0.0.M2-SNAPSHOT -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DMACHINE_ADDR=%MACHINE_ADDR% -Dbpa=vc9x32
+call ant dist -DBT_HOME=%WORKSPACE%\blacktie\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DMACHINE_ADDR=%MACHINE_ADDR% -Dbpa=vc9x32
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem RUN THE SAMPLES
