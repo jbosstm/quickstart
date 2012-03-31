@@ -12,71 +12,93 @@
   along with this distribution; if not, write to the Free Software Foundation, 
   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.narayana.quickstart.jta</groupId>
-  <artifactId>maven</artifactId>
-  <version>5.0.0.M2-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>basic maven example</name>
-  <description>basic maven example</description>
-  <repositories>
-    <repository>
-      <id>jboss-public-repository-group</id>
-      <name>JBoss Public Maven Repository Group</name>
-      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <!-- This plugin allows our example to be executed by maven -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <executable>java</executable>
-          <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
-          <arguments>
-            <argument>-classpath</argument>
-            <classpath/>
-            <argument>TransactionManagerExample</argument>
-          </arguments>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <dependencies>
-    <dependency>
-      <groupId>org.jboss.narayana.jta</groupId>
-      <artifactId>narayana-jta</artifactId>
-      <version>5.0.0.M2-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jboss.narayana.quickstart.jta</groupId>
+    <artifactId>maven</artifactId>
+    <version>5.0.0.M2-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>basic maven example</name>
+    <description>basic maven example</description>
+    <repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- This plugin allows our example to be executed by maven -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <argument>TransactionManagerExample</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencyManagement>
+        <dependencies>
+            <!-- Define the version of JBoss' Java EE 6 APIs we want to use -->
+            <!-- JBoss distributes a complete set of Java EE 6 APIs including
+a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
+a collection) of artifacts. We use this here so that we always get the correct
+versions of artifacts. Here we use the jboss-javaee-web-6.0 stack (you can
+read this as the JBoss stack of the Java EE 6 Web Profile APIs) -->
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-web-6.0</artifactId>
+                <version>${javaee6.spec.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>narayana-jta</artifactId>
+            <version>5.0.0.M2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
