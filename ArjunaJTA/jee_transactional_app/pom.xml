@@ -156,7 +156,7 @@
     </dependency>
     <!-- For the txoj -->
     <dependency>
-      <groupId>org.jboss.narayana.quickstarts.jta</groupId>
+      <groupId>org.jboss.narayana.jta</groupId>
       <artifactId>narayana-jta</artifactId>
       <version>5.0.0.M2-SNAPSHOT</version>
       <scope>provided</scope>
