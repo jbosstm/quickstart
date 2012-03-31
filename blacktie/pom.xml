@@ -37,7 +37,7 @@
                                 <phase>compile</phase>
                                 <configuration>
                                     <target>
-                                        <exec dir="." executable="cmd">
+                                        <exec dir="${env.WORKSPACE}/blacktie" executable="cmd">
                                             <arg line="/c test\blacktie-vc9x32.bat"/>
                                         </exec>
                                     </target>
@@ -68,7 +68,7 @@
                                 <phase>compile</phase>
                                 <configuration>
                                     <target>
-                                        <exec dir="." executable="sh" failonerror="true">
+                                        <exec dir="${env.WORKSPACE}/blacktie" executable="sh" failonerror="true">
                                             <arg line="-c ./test/blacktie-linux.sh"/>
                                         </exec>
                                     </target>
