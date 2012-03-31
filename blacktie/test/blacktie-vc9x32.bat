@@ -12,7 +12,7 @@ taskkill /F /IM cs.exe
 tasklist
 
 rem INITIALIZE JBOSS
-call ant -f %WORKSPACE%/test/initializeJBoss.xml -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
+call ant -f %WORKSPACE%/blacktie/test/initializeJBoss.xml -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 cd %WORKSPACE%\jboss-as-7.1.1.Final\bin\
