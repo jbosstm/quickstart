@@ -1,8 +1,8 @@
 set NOPAUSE=true
 
 rem SHUTDOWN ANY PREVIOUS BUILD REMNANTS
-if exist jboss-as-7.1.1.Final call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown && cd .
-if exist jboss-as-7.1.1.Final @ping 127.0.0.1 -n 10 -w 1000 > nul
+if exist %WORKSPACE%\jboss-as-7.1.1.Final call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown && cd .
+if exist %WORKSPACE%\jboss-as-7.1.1.Final @ping 127.0.0.1 -n 10 -w 1000 > nul
 tasklist
 taskkill /F /IM mspdbsrv.exe
 taskkill /F /IM testsuite.exe
