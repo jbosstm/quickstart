@@ -68,8 +68,8 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.jboss.jbossts</groupId>
-      <artifactId>jbossjta</artifactId>
+      <groupId>org.jboss.narayana.jta</groupId>
+      <artifactId>narayana-jta</artifactId>
       <version>5.0.0.M2-SNAPSHOT</version>
     </dependency>
     <dependency>
