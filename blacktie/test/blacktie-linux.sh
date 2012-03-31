@@ -27,7 +27,7 @@ else
 fi
 
 # INITIALIZE JBOSS
-ant -f blacktie/test/initializeJBoss.xml -Dbasedir=. initializeJBoss -debug
+ant -f $WORKSPACE/blacktie/test/initializeJBoss.xml -Dbasedir=.. initializeJBoss -debug
 if [ "$?" != "0" ]; then
 	exit -1
 fi
@@ -47,7 +47,7 @@ $WORKSPACE/jboss-as-7.1.1.Final/bin/standalone.sh -c standalone-full.xml -Djboss
 sleep 5
 
 # INITIALIZE THE BLACKTIE DISTRIBUTION
-ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -DBT_HOME=$WORKSPACE/blacktie/dist/ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DJBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final
+ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DJBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
@@ -60,8 +60,8 @@ if [ "$?" != "0" ]; then
 fi
 
 # RUN ALL THE SAMPLES
-chmod u+x $WORKSPACE/blacktie/dist/blacktie-5.0.0.M2-SNAPSHOT/setenv.sh
-. $WORKSPACE/blacktie/dist/blacktie-5.0.0.M2-SNAPSHOT/setenv.sh
+chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-5.0.0.M2-SNAPSHOT/setenv.sh
+. $WORKSPACE/blacktie/target/dist/blacktie-5.0.0.M2-SNAPSHOT/setenv.sh
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done

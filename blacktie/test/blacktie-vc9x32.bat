@@ -12,8 +12,7 @@ taskkill /F /IM cs.exe
 tasklist
 
 rem INITIALIZE JBOSS
-cd %WORKSPACE%
-call ant -f blacktie/test/initializeJBoss.xml -Dbasedir=. initializeDatabase initializeJBoss -debug
+call ant -f %WORKSPACE%/test/initializeJBoss.xml -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 cd %WORKSPACE%\jboss-as-7.1.1.Final\bin\
@@ -33,17 +32,15 @@ echo "Started server"
 
 rem CREATE BLACKTIE DISTRIBUTION
 for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
-call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DBT_HOME=%WORKSPACE%\blacktie\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final
+call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem RUN THE SAMPLES
 
 set PATH=%PATH%;%ORACLE_HOME%\bin;%ORACLE_HOME%\vc9
 
-set PATH=%PATH%;%WORKSPACE%\tools\maven\bin
-
 echo calling generated setenv - error %ERRORLEVEL%
-call %WORKSPACE%\blacktie\dist\blacktie-5.0.0.M2-SNAPSHOT\setenv.bat
+call %WORKSPACE%\blacktie\target\dist\blacktie-5.0.0.M2-SNAPSHOT\setenv.bat
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 5 with error %ERRORLEVEL%" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 cd %WORKSPACE%\blacktie\

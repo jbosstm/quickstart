@@ -127,5 +127,6 @@
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
     <module>rest-tx</module>
+    <module>blacktie</module>
   </modules>
 </project>
