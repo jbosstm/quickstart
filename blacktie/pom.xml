@@ -38,7 +38,7 @@
                                 <configuration>
                                     <target>
                                         <exec dir="." executable="cmd">
-                                            <arg line="/c test/blacktie-vc9x32.bat"/>
+                                            <arg line="/c test\blacktie-vc9x32.bat"/>
                                         </exec>
                                     </target>
                                 </configuration>
