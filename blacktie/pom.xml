@@ -24,7 +24,7 @@
             <id>windows</id>
             <activation>
                 <os>
-                    <family>windows</family>
+                    <family>Windows</family>
                 </os>
             </activation>
             <build>
