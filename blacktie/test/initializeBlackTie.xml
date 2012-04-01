@@ -1,71 +1,79 @@
+<?xml version="1.0"?>
 <project name="extract-blacktie" default="dist">
-
-	<target name="init">
-		<delete dir="${BT_HOME}"/>
-		<mkdir dir="${BT_HOME}"/>
-		<condition property="is-msvc">
-			<os family="windows" />
-		</condition>
-	</target>
-
-	<target name="_extract-gcc" depends="init" unless="is-msvc">
+    <target name="init">
+        <delete dir="${BT_HOME}"/>
+        <mkdir dir="${BT_HOME}"/>
+        <condition property="is-msvc">
+            <os family="windows"/>
+        </condition>
+    </target>
+    <target name="_extract-gcc" depends="init" unless="is-msvc">
         <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" verbose="true" usetimestamp="true" skipexisting="false"/> -->
-		<exec executable="sh">
-			<arg line="-c &quot;tar xfz ${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/blacktie-${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
-		</exec>
-		<property name="ESC_BT_HOME" value="${BT_HOME}/"/>
-	</target>
-
-	<target name="_extract-msvc" depends="init" if="is-msvc">
+        <exec executable="sh">
+            <arg line="-c &quot;tar xfz ${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/blacktie-${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
+        </exec>
+        <property name="ESC_BT_HOME" value="${BT_HOME}/"/>
+    </target>
+    <target name="_extract-msvc" depends="init" if="is-msvc">
         <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" verbose="true" usetimestamp="true" skipexisting="false"/> -->
-		<unzip dest="${BT_HOME}">
-			<fileset dir="${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/">
-				<include name="blacktie-${VERSION}*-bin.zip"/>
-			</fileset>
-		</unzip>
-		<property environment="env"/>
-		<echo message="${BT_HOME}"/>
-		<echo message="${BT_HOME}" file="bthome.tmp.file"/>
-		<replace file="bthome.tmp.file" token="\" value="\\\\"/>
-		<loadfile srcfile="bthome.tmp.file" property="ESC_BT_HOME"/>
-		<echo message="${ESC_BT_HOME}"/>
-		<delete file="bthome.tmp.file"/>
-	</target>
-
-	<target name="dist" depends="_extract-msvc,_extract-gcc">
-		<echo message="${ESC_BT_HOME}"/>
-		<replaceregexp byline="true" match="REPLACE_WITH_INSTALL_LOCATION" replace="${ESC_BT_HOME}blacktie-${VERSION}">
-			<fileset dir="${BT_HOME}/">
-				<include name="*/setenv.*"/>
-			</fileset>
-		</replaceregexp>
-		<replaceregexp byline="true" match="REPLACE_WITH_JBOSSAS_IP_ADDR" replace="${JBOSSAS_IP_ADDR}">
-			<fileset dir="${BT_HOME}/">
-				<include name="*/setenv.*"/>
-			</fileset>
-		</replaceregexp>
-
-		<replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
-			<fileset dir="${BT_HOME}blacktie-${VERSION}/">
-				<include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
-			</fileset>
-		</replaceregexp>
-		<replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
-			<fileset dir="${BT_HOME}blacktie-${VERSION}/">
-				<include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
-			</fileset>
-		</replaceregexp>
-		<replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
-			<fileset dir="${BT_HOME}blacktie-${VERSION}/">
-				<include name="atmibroker-xatmi/txfooapp/request.c"/>
-			</fileset>
-		</replaceregexp>
+        <unzip dest="${BT_HOME}">
+            <fileset dir="${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/">
+                <include name="blacktie-${VERSION}*-bin.zip"/>
+            </fileset>
+        </unzip>
+        <property environment="env"/>
+        <echo message="${BT_HOME}"/>
+        <echo message="${BT_HOME}" file="bthome.tmp.file"/>
+        <replace file="bthome.tmp.file" token="\" value="\\\\"/>
+        <loadfile srcfile="bthome.tmp.file" property="ESC_BT_HOME"/>
+        <echo message="${ESC_BT_HOME}"/>
+        <delete file="bthome.tmp.file"/>
+    </target>
+    <target name="dist" depends="_extract-msvc,_extract-gcc">
+        <echo message="${ESC_BT_HOME}"/>
+        <replaceregexp byline="true" match="REPLACE_WITH_INSTALL_LOCATION" replace="${ESC_BT_HOME}blacktie-${VERSION}">
+            <fileset dir="${BT_HOME}/">
+                <include name="*/setenv.*"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match="REPLACE_WITH_JBOSSAS_IP_ADDR" replace="${JBOSSAS_IP_ADDR}">
+            <fileset dir="${BT_HOME}/">
+                <include name="*/setenv.*"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
+            <fileset dir="${BT_HOME}blacktie-${VERSION}/">
+                <include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
+            <fileset dir="${BT_HOME}blacktie-${VERSION}/">
+                <include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
+            <fileset dir="${BT_HOME}blacktie-${VERSION}/">
+                <include name="atmibroker-xatmi/txfooapp/request.c"/>
+            </fileset>
+        </replaceregexp>
         <copy todir="${JBOSS_HOME}/standalone/deployments">
             <fileset dir="${BT_HOME}blacktie-${VERSION}/blacktie-admin-services/">
                 <include name="*.jar"/>
                 <include name="*.ear"/>
             </fileset>
         </copy>
-        <sleep seconds="7"/>
-	</target>
+        <timestamp.echo message="Waiting for services to be deployed"/>
+        <sleep seconds="20"/>
+        <timestamp.echo message="Hopefully services are deployed"/>
+    </target>
+    <macrodef name="timestamp.echo">
+        <attribute name="message"/>
+        <sequential>
+            <local name="current.time"/>
+            <tstamp>
+                <format property="current.time" pattern="dd/MM/yyyy hh:mm:ss"/>
+            </tstamp>
+            <echo message="${current.time} @{message}"/>
+        </sequential>
+    </macrodef>
 </project>

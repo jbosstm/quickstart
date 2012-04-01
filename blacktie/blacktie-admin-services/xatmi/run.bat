@@ -8,7 +8,7 @@ call generate_server -Dservice.names=FOOAPP -Dserver.includes=BarService.c -Dser
 IF %ERRORLEVEL% NEQ 0 exit -1
 set BLACKTIE_CONFIGURATION=win32
 call btadmin startup
-IF %ERRORLEVEL% NEQ 0 exit -1
+IF %ERRORLEVEL% NEQ 0 echo "Could not start server" & exit -1
 set BLACKTIE_CONFIGURATION=
 
 rem RUN THE ADMIN JMX CLIENT
