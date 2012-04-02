@@ -127,6 +127,7 @@
     <module>blacktie</module>
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
+    <module>ArjunaJTS</module>
     <module>rest-tx</module>
     <module>XTS</module>
   </modules>
