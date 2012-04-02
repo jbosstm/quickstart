@@ -1,3 +1,67 @@
+
+
+# JBoss, Home of Professional Open Source.
+# Copyright (c) 2011, Red Hat, Inc., and individual contributors
+# as indicated by the @author tags. See the copyright.txt file in the
+# distribution for a full listing of individual contributors.
+#
+# This is free software; you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as
+# published by the Free Software Foundation; either version 2.1 of
+# the License, or (at your option) any later version.
+#
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this software; if not, write to the Free
+# Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+# 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+
+
+
+This demo has been written for, and tested on, JBoss 7.0.2. It may work with other versions of JBoss 7.
+Please download and install this app server from the JBoss website.
+
+ensure JBoss AS is started with XTS enabled. This can be done by specifying the standalone-xts configuration when starting JBoss AS:
+
+cd $JBOSS_HOME
+sh bin/standalone.sh -server-config=standalone-xts.xml -Djava.awt.headless=false
+
+Note: The java.awt.headless property is needed for the demo as it starts a Java Swing user interface for each or the participant services. This is done for demonstration purposes; it is unlikely that a typical JEE application will ever do this. 
+
+
+Follow these steps to build the demo for JBoss
+ - edit jboss.properties and replace variables as directed in the comments
+ - add java and ant to your path
+ - set environment variable JBOSS_HOME to point to the root directory of an
+   instance of JBoss 7
+ - execute 'sh build.sh jboss clean deploy' on unix or
+   'build.bat jboss clean deploy' on windows
+
+Open a browser and enter the xts-demo url (e.g. http://localhost:8080/xts-demo)
+
+---------  Basic test coverage for JBossTS XTS Demo App
+Author: Ivo Studensky <istudens@redhat.com>
+
+This is some basic test coverage for the XTS Demo App. It is powered by Arquillian
+and its Drone extension. By default it calls a local Firefox browser to execute the tests.
+
+The test starts up the AS, deploys the XTS Demo App into it and runs a reservation of some
+restaurant/theatre/taxi seats using both AtomicTransaction and BusinessActivity tx type.
+
+
+--- Requirements:
+1. apache maven tool
+2. xts demo built in /XTS/xts-install/demo dir
+
+
+--- Steps to run:
+
+1. export JBOSS_HOME=<path to JBossAS >= 7.1.0.Alpha2-SNAPSHOT>
+2. mvn clean test
 This is the raw demo source directory for the XTS demo program
 (XTS/demo). Do not attempt to build the demo from this directory as it
 will not work.

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <parent>
+        <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+        <artifactId>xts-demo-all</artifactId>
+        <version>5.0.0.M2-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>xts-demo-ear</artifactId>
+    <packaging>ear</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+            <artifactId>xts-demo-war</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+            <artifactId>xts-demo-webservices</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+
+    </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <defaultJavaBundleDir>lib</defaultJavaBundleDir>
+                    <modules>
+                        <webModule>
+                            <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+                            <artifactId>xts-demo-war</artifactId>
+                            <contextRoot>/xts-demo</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+                            <artifactId>xts-demo-webservices</artifactId>
+                            <contextRoot>/xts-demo-webservices</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.1.0.Final</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
