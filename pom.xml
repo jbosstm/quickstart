@@ -128,5 +128,6 @@
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
     <module>rest-tx</module>
+    <module>XTS</module>
   </modules>
 </project>
