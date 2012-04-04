@@ -10,7 +10,7 @@ else
 endif
 
 LDIR=$(BLACKTIE_HOME)/lib/cxx
-LDFLAGS=-L$(LDIR) -latmibroker-xatmi -latmibroker-core -latmibroker-tx
+LDFLAGS=-L$(LDIR) -lblacktie-xatmi -lblacktie-core -blacktie-tx
 
 all: client txsender log4cxx.properties
 

@@ -130,7 +130,7 @@
 		</dependency>
         <dependency>
             <groupId>org.jboss.narayana.blacktie</groupId>
-            <artifactId>jatmibroker-xatmi</artifactId>
+            <artifactId>blacktie-jatmibroker-xatmi</artifactId>
             <version>5.0.0.M2-SNAPSHOT</version>
         </dependency>
         <dependency>
