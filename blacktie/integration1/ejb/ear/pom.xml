@@ -100,7 +100,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
-            <artifactId>integration1-ejb</artifactId>
+            <artifactId>blacktie-quickstarts-integration1-ejb</artifactId>
             <version>5.0.0.M2-SNAPSHOT</version>
         </dependency>
     </dependencies>
