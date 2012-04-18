@@ -25,8 +25,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jboss.narayana.blacktie.jatmibroker.core.conf.ConfigurationException;
 import org.jboss.narayana.blacktie.jatmibroker.core.transport.JtsTransactionImple;
-import org.jboss.narayana.blacktie.jatmibroker.jab.JABException;
-import org.jboss.narayana.blacktie.jatmibroker.jab.JABTransaction;
+import org.jboss.narayana.blacktie.jatmibroker.core.tx.TransactionException;
+import org.jboss.narayana.blacktie.jatmibroker.core.tx.TransactionImpl;
 import org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection;
 import org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionException;
 import org.jboss.narayana.blacktie.jatmibroker.xatmi.Response;
@@ -88,11 +88,11 @@ public class TxEchoServiceTestService extends MDBBlacktieService implements java
                 log.info("TxCreateService response: " + responseData);
 
                 // check that the remote service created a transaction
-                JABTransaction tx = JABTransaction.current();
+                TransactionImpl tx = TransactionImpl.current();
                 if (tx != null) {
                     try {
                         tx.commit();
-                    } catch (JABException e) {
+                    } catch (TransactionException e) {
                         args = "Service create a transaction but commit failed: " + e;
                         log.error(args, e);
                     }
