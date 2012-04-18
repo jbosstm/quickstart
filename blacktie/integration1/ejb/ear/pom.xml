@@ -18,7 +18,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
-    <artifactId>integration1-ejb-ear</artifactId>
+    <artifactId>blacktie-quickstarts-integration1-ejb-ear</artifactId>
     <version>5.0.0.M2-SNAPSHOT</version>
     <name>Integration1 - Quickstart EJB Ear</name>
     <packaging>ear</packaging>
@@ -84,7 +84,7 @@
                     <modules>
                         <jarModule>
                             <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
-                            <artifactId>integration1-ejb</artifactId>
+                            <artifactId>blacktie-quickstarts-integration1-ejb</artifactId>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
                     </modules>

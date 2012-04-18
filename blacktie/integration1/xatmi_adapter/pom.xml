@@ -18,7 +18,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
-    <artifactId>integration1-xatmi_adapter</artifactId>
+    <artifactId>blacktie-quickstarts-integration1-xatmi_adapter</artifactId>
     <version>5.0.0.M2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Integration 1 - Quickstart XATMI Adapter</name>
@@ -119,7 +119,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
-            <artifactId>integration1-ejb</artifactId>
+            <artifactId>blacktie-quickstarts-integration1-ejb</artifactId>
             <version>5.0.0.M2-SNAPSHOT</version>
             <classifier>client</classifier>
         </dependency>
