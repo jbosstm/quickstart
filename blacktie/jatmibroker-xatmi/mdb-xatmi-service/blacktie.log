@@ -1,0 +1,481 @@
+2012-04-05 14:25:32,242 [main]           INFO  (TxBlacktieServiceTestCase:45  ) - TxBlacktieServiceTestCase::setUp
+2012-04-05 14:25:32,247 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@3a6ac461
+2012-04-05 14:25:32,251 [main]           DEBUG (conf.XMLParser           :140 ) - Configfile not loaded yet: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:32,252 [main]           DEBUG (conf.XMLParser           :62  ) - Creating the parser: btconfig.xsd
+2012-04-05 14:25:32,253 [main]           DEBUG (conf.XMLParser           :66  ) - SCHEMA DIR: /home/tom/projects/narayana/quickstart/blacktie/target/dist//blacktie-5.0.0.M2-SNAPSHOT/xsd
+2012-04-05 14:25:32,398 [main]           DEBUG (conf.XMLParser           :106 ) - read btconfig.xml configuration from null directory
+2012-04-05 14:25:32,413 [main]           DEBUG (conf.XMLEnvHandler       :332 ) - blacktie.orb.arg.1 is -ORBInitRef
+2012-04-05 14:25:32,413 [main]           DEBUG (conf.XMLEnvHandler       :332 ) - blacktie.orb.arg.2 is NameService=corbaloc::localhost:3528/NameService
+2012-04-05 14:25:32,414 [main]           DEBUG (conf.XMLEnvHandler       :337 ) - blacktie.orb.args is 2
+2012-04-05 14:25:32,415 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@3a6ac461
+2012-04-05 14:25:32,421 [main]           DEBUG (xatmi.Connection         :151 ) - Creating connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@7dce784b
+2012-04-05 14:25:32,423 [main]           DEBUG (ransport.TransportFactory:40  ) - Creating Transportfactory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@163dc0bb
+2012-04-05 14:25:32,424 [main]           DEBUG (transport.OrbManagement  :63  ) - setting properities
+2012-04-05 14:25:32,424 [main]           DEBUG (transport.OrbManagement  :71  ) - set properities
+2012-04-05 14:25:32,424 [main]           DEBUG (transport.OrbManagement  :72  ) -  initing orb
+2012-04-05 14:25:32,468 [main]           DEBUG (transport.OrbManagement  :74  ) -  inited orb
+2012-04-05 14:25:32,470 [main]           DEBUG (transport.OrbManagement  :75  ) -  resolving NameService
+2012-04-05 14:25:32,580 [main]           DEBUG (transport.OrbManagement  :77  ) - NamingContextExt is IOR:000000000000001D49444C3A6F6D672E6F72672F434F5242412F4F626A6563743A312E3000000000000000010000000000000023000100000000000A3132372E302E302E31000DC80000000B4E616D6553657276696365
+2012-04-05 14:25:32,581 [main]           DEBUG (transport.OrbManagement  :79  ) - resolving roo_poa
+2012-04-05 14:25:32,607 [main]           DEBUG (transport.OrbManagement  :81  ) - roo_poa is org.jacorb.poa.POA@5adf48c4
+2012-04-05 14:25:32,608 [main]           DEBUG (transport.OrbManagement  :83  ) - roo_poa is activated
+2012-04-05 14:25:32,608 [main]           DEBUG (transport.OrbManagement  :84  ) -  finished & returning from ConnectToORBWithNameServiceProp
+2012-04-05 14:25:32,608 [main]           DEBUG (transport.OrbManagement  :87  ) -  creating NamingContext
+2012-04-05 14:25:32,611 [main]           DEBUG (transport.OrbManagement  :93  ) - Could not create the context
+2012-04-05 14:25:32,611 [main]           DEBUG (transport.OrbManagement  :96  ) -  resolving NamingContext
+2012-04-05 14:25:32,614 [main]           DEBUG (transport.OrbManagement  :98  ) - NamingContext Object is IOR:000000000000002B49444C3A6F6D672E6F72672F436F734E616D696E672F4E616D696E67436F6E746578744578743A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC8000000174A426F73732F4E616D696E672F726F6F7426256374783400000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:32,625 [main]           DEBUG (transport.OrbManagement  :106 ) - NamingContext is IOR:000000000000002B49444C3A6F6D672E6F72672F436F734E616D696E672F4E616D696E67436F6E746578744578743A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC8000000174A426F73732F4E616D696E672F726F6F7426256374783400000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:32,625 [Thread-6]           DEBUG (transport.OrbManagement  :110 ) - Running the orb
+2012-04-05 14:25:32,625 [main]           DEBUG (ransport.TransportFactory:49  ) - Created OrbManagement
+2012-04-05 14:25:32,625 [main]           DEBUG (xatmi.ConnectionFactory  :62  ) - Returning connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@7dce784b
+2012-04-05 14:25:32,626 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:32,626 [main]           DEBUG (jab.JABSession           :54  ) - JABSession constructor
+2012-04-05 14:25:32,626 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@1fbbdd48
+2012-04-05 14:25:32,627 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:32,627 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@1fbbdd48
+2012-04-05 14:25:32,627 [main]           INFO  (TxBlacktieServiceTestCase:60  ) - TxBlacktieServiceTestCase::test1
+2012-04-05 14:25:32,627 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:32,630 [main]           DEBUG (jab.JABTransaction       :60  ) - JABTransaction constructor
+2012-04-05 14:25:32,639 [main]           DEBUG (jab.JABTransaction       :77  ) -  creating Control
+2012-04-05 14:25:32,646 [main]           DEBUG (jab.JABTransaction       :80  ) -  created Control IOR:000000000000002B49444C3A61726A756E612E636F6D2F41726A756E614F54532F416374696F6E436F6E74726F6C3A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC800000016383739303635313137372F0B17200235041F3C01304B0000000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:32,651 [main]           DEBUG (jab.JABTransaction       :139 ) - Terminator is IOR:000000000000002F49444C3A61726A756E612E636F6D2F41726A756E614F54532F41726A756E615472616E73616374696F6E3A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC800000016383739303635313137372F0C17200235041F3C01304B0000000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:32,651 [main]           DEBUG (xatmi.Connection         :199 ) - tpcall
+2012-04-05 14:25:32,651 [main]           DEBUG (xatmi.Connection         :221 ) - tpacall
+2012-04-05 14:25:32,651 [main]           DEBUG (xatmi.Connection         :232 ) - TxEchoService qtype is queue and flags is 0
+2012-04-05 14:25:32,652 [main]           DEBUG (ransport.TransportFactory:53  ) - Creating transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@163dc0bb
+2012-04-05 14:25:32,654 [main]           DEBUG (hybrid.TransportImpl     :52  ) - Creating transport
+2012-04-05 14:25:32,654 [main]           DEBUG (hybrid.TransportImpl     :56  ) - Created transport
+2012-04-05 14:25:32,655 [main]           DEBUG (ransport.TransportFactory:56  ) - Created transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@163dc0bb transport: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@306dbdc9
+2012-04-05 14:25:32,655 [main]           DEBUG (hybrid.TransportImpl     :166 ) - Creating a receiver
+2012-04-05 14:25:32,658 [main]           DEBUG (hybrid.CorbaReceiverImpl :69  ) - ClientCallbackImpl constructor
+2012-04-05 14:25:32,659 [main]           DEBUG (hybrid.CorbaReceiverImpl :83  ) - JABSession createCallbackObject
+2012-04-05 14:25:32,660 [main]           DEBUG (hybrid.CorbaReceiverImpl :85  ) - activated this org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.CorbaReceiverImpl@2911ded2
+2012-04-05 14:25:32,661 [main]           DEBUG (hybrid.CorbaReceiverImpl :88  ) - created reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:32,662 [main]           DEBUG (hybrid.CorbaReceiverImpl :90  ) - narrowed reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:32,663 [main]           DEBUG (hybrid.CorbaReceiverImpl :92  ) - Created:IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:32,663 [main]           DEBUG (hybrid.CorbaReceiverImpl :98  ) - Timeout set as: 50000
+2012-04-05 14:25:32,664 [main]           DEBUG (xatmi.Connection         :268 ) - Set ttl: 40000
+2012-04-05 14:25:32,664 [main]           DEBUG (hybrid.TransportImpl     :97  ) - Get sender: TxEchoService
+2012-04-05 14:25:32,710 [main]           DEBUG (stomp.StompManagement    :65  ) - Created socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49732] input: java.net.SocketInputStream@5567d7fboutput: java.net.SocketOutputStream@3fdb484d
+2012-04-05 14:25:32,711 [main]           DEBUG (stomp.StompSenderImpl    :68  ) - Sender Created: /queue/BTR_TxEchoService
+2012-04-05 14:25:32,711 [main]           DEBUG (stomp.StompSenderImpl    :88  ) - Sender sending: /queue/BTR_TxEchoService
+2012-04-05 14:25:32,775 [main]           DEBUG (sport.JtsTransactionImple:155 ) - getTransactionIOR
+2012-04-05 14:25:32,775 [main]           DEBUG (sport.JtsTransactionImple:159 ) - have JABTransaction
+2012-04-05 14:25:32,775 [main]           DEBUG (stomp.StompSenderImpl    :98  ) - Sender sending IOR: IOR:000000000000002B49444C3A61726A756E612E636F6D2F41726A756E614F54532F416374696F6E436F6E74726F6C3A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC800000016383739303635313137372F0B17200235041F3C01304B0000000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:32,775 [main]           DEBUG (stomp.StompSenderImpl    :104 ) - Reply to: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:32,775 [main]           DEBUG (stomp.StompSenderImpl    :117 ) - EXPIRES: 40000
+2012-04-05 14:25:32,776 [main]           DEBUG (stomp.StompSenderImpl    :121 ) - RECEIPT: send-J-0
+2012-04-05 14:25:32,813 [main]           DEBUG (stomp.StompSenderImpl    :146 ) - sent message
+2012-04-05 14:25:32,814 [main]           DEBUG (xatmi.Connection         :275 ) - Returning cd: 1
+2012-04-05 14:25:32,814 [main]           DEBUG (xatmi.Connection         :504 ) - receive: 1
+2012-04-05 14:25:32,814 [main]           DEBUG (hybrid.CorbaReceiverImpl :151 ) - Receiving: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:32,814 [main]           DEBUG (hybrid.CorbaReceiverImpl :156 ) - Waiting: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,179 [RequestProcessor-5]           DEBUG (hybrid.CorbaReceiverImpl :108 ) - Received: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,180 [main]           DEBUG (hybrid.CorbaReceiverImpl :158 ) - Waited: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,181 [main]           DEBUG (hybrid.CorbaReceiverImpl :182 ) - Message was available
+2012-04-05 14:25:33,181 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:33,183 [main]           DEBUG (xatmi.Connection         :529 ) - received returned a response? true
+2012-04-05 14:25:33,183 [main]           DEBUG (xatmi.Connection         :286 ) - tpcancel: 1
+2012-04-05 14:25:33,183 [main]           DEBUG (xatmi.Connection         :290 ) - closing endpoint
+2012-04-05 14:25:33,184 [main]           DEBUG (hybrid.CorbaReceiverImpl :242 ) - close: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0017200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,184 [main]           DEBUG (hybrid.CorbaReceiverImpl :225 ) - disconnect
+2012-04-05 14:25:33,184 [main]           DEBUG (hybrid.CorbaReceiverImpl :227 ) - deactivating
+2012-04-05 14:25:33,185 [main]           DEBUG (hybrid.CorbaReceiverImpl :229 ) - deactivated
+2012-04-05 14:25:33,185 [main]           DEBUG (xatmi.Connection         :292 ) - endpoint closed
+2012-04-05 14:25:33,185 [main]           DEBUG (xatmi.Connection         :298 ) - tpcancel returning: 0
+2012-04-05 14:25:33,186 [main]           DEBUG (jab.JABTransaction       :165 ) - JABTransaction commit
+2012-04-05 14:25:33,186 [main]           DEBUG (jab.JABTransaction       :168 ) - calling commit
+2012-04-05 14:25:33,208 [main]           DEBUG (jab.JABTransaction       :172 ) - called commit on terminator
+2012-04-05 14:25:33,208 [main]           INFO  (TxBlacktieServiceTestCase:54  ) - TxBlacktieServiceTestCase::tearDown
+2012-04-05 14:25:33,208 [main]           DEBUG (xatmi.Connection         :442 ) - Close connection called: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@7dce784b
+2012-04-05 14:25:33,209 [main]           DEBUG (xatmi.Connection         :475 ) - closing transport
+2012-04-05 14:25:33,209 [main]           DEBUG (hybrid.TransportImpl     :60  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@306dbdc9
+2012-04-05 14:25:33,210 [main]           DEBUG (stomp.StompSenderImpl    :153 ) - Sender closing: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,210 [main]           DEBUG (stomp.StompSenderImpl    :159 ) - closing socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49732]
+2012-04-05 14:25:33,210 [main]           DEBUG (stomp.StompManagement    :28  ) - close
+2012-04-05 14:25:33,211 [main]           DEBUG (stomp.StompManagement    :35  ) - Sent disconnect
+2012-04-05 14:25:33,288 [main]           DEBUG (stomp.StompManagement    :117 ) - Read disconnect receipt from: java.net.SocketInputStream@5567d7fb
+2012-04-05 14:25:33,289 [main]           DEBUG (stomp.StompSenderImpl    :162 ) - closed socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49732]
+2012-04-05 14:25:33,289 [main]           DEBUG (ransport.TransportFactory:62  ) - Transport was removed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@306dbdc9 from: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@163dc0bb result: true
+2012-04-05 14:25:33,289 [main]           DEBUG (hybrid.TransportImpl     :89  ) - Closed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@306dbdc9
+2012-04-05 14:25:33,289 [main]           DEBUG (xatmi.Connection         :477 ) - closed transport
+2012-04-05 14:25:33,290 [main]           DEBUG (ransport.TransportFactory:69  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@163dc0bb
+2012-04-05 14:25:33,290 [main]           DEBUG (ransport.TransportFactory:71  ) - Going into shutdown
+2012-04-05 14:25:33,290 [main]           DEBUG (ransport.TransportFactory:72  ) - Closing factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@163dc0bb
+2012-04-05 14:25:33,290 [main]           DEBUG (ransport.TransportFactory:86  ) - Closed factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory
+2012-04-05 14:25:33,291 [main]           DEBUG (xatmi.Connection         :482 ) - Close connection finished
+2012-04-05 14:25:33,294 [main]           INFO  (TxBlacktieServiceTestCase:45  ) - TxBlacktieServiceTestCase::setUp
+2012-04-05 14:25:33,295 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@5f4275d4
+2012-04-05 14:25:33,295 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,296 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@5f4275d4
+2012-04-05 14:25:33,296 [main]           DEBUG (xatmi.Connection         :151 ) - Creating connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@445e228
+2012-04-05 14:25:33,296 [main]           DEBUG (ransport.TransportFactory:40  ) - Creating Transportfactory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@802b249
+2012-04-05 14:25:33,296 [main]           DEBUG (ransport.TransportFactory:49  ) - Created OrbManagement
+2012-04-05 14:25:33,296 [main]           DEBUG (xatmi.ConnectionFactory  :62  ) - Returning connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@445e228
+2012-04-05 14:25:33,297 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,297 [main]           DEBUG (jab.JABSession           :54  ) - JABSession constructor
+2012-04-05 14:25:33,297 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@6906daba
+2012-04-05 14:25:33,297 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,297 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@6906daba
+2012-04-05 14:25:33,298 [main]           INFO  (TxBlacktieServiceTestCase:73  ) - TxBlacktieServiceTestCase::test2
+2012-04-05 14:25:33,298 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:33,298 [main]           DEBUG (xatmi.Connection         :199 ) - tpcall
+2012-04-05 14:25:33,298 [main]           DEBUG (xatmi.Connection         :221 ) - tpacall
+2012-04-05 14:25:33,298 [main]           DEBUG (xatmi.Connection         :232 ) - TxEchoService qtype is queue and flags is 0
+2012-04-05 14:25:33,298 [main]           DEBUG (ransport.TransportFactory:53  ) - Creating transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@802b249
+2012-04-05 14:25:33,298 [main]           DEBUG (hybrid.TransportImpl     :52  ) - Creating transport
+2012-04-05 14:25:33,298 [main]           DEBUG (hybrid.TransportImpl     :56  ) - Created transport
+2012-04-05 14:25:33,298 [main]           DEBUG (ransport.TransportFactory:56  ) - Created transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@802b249 transport: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@41021f34
+2012-04-05 14:25:33,298 [main]           DEBUG (hybrid.TransportImpl     :166 ) - Creating a receiver
+2012-04-05 14:25:33,299 [main]           DEBUG (hybrid.CorbaReceiverImpl :69  ) - ClientCallbackImpl constructor
+2012-04-05 14:25:33,299 [main]           DEBUG (hybrid.CorbaReceiverImpl :83  ) - JABSession createCallbackObject
+2012-04-05 14:25:33,299 [main]           DEBUG (hybrid.CorbaReceiverImpl :85  ) - activated this org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.CorbaReceiverImpl@c163956
+2012-04-05 14:25:33,299 [main]           DEBUG (hybrid.CorbaReceiverImpl :88  ) - created reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0117200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,300 [main]           DEBUG (hybrid.CorbaReceiverImpl :90  ) - narrowed reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0117200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,300 [main]           DEBUG (hybrid.CorbaReceiverImpl :92  ) - Created:IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0117200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,300 [main]           DEBUG (hybrid.CorbaReceiverImpl :98  ) - Timeout set as: 50000
+2012-04-05 14:25:33,300 [main]           DEBUG (xatmi.Connection         :268 ) - Set ttl: 40000
+2012-04-05 14:25:33,300 [main]           DEBUG (hybrid.TransportImpl     :97  ) - Get sender: TxEchoService
+2012-04-05 14:25:33,371 [main]           DEBUG (stomp.StompManagement    :65  ) - Created socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49735] input: java.net.SocketInputStream@396477d9output: java.net.SocketOutputStream@70e434d
+2012-04-05 14:25:33,372 [main]           DEBUG (stomp.StompSenderImpl    :68  ) - Sender Created: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,372 [main]           DEBUG (stomp.StompSenderImpl    :88  ) - Sender sending: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,373 [main]           DEBUG (sport.JtsTransactionImple:155 ) - getTransactionIOR
+2012-04-05 14:25:33,377 [main]           DEBUG (stomp.StompSenderImpl    :104 ) - Reply to: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0117200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,377 [main]           DEBUG (stomp.StompSenderImpl    :117 ) - EXPIRES: 40000
+2012-04-05 14:25:33,377 [main]           DEBUG (stomp.StompSenderImpl    :121 ) - RECEIPT: send-J-1
+2012-04-05 14:25:33,430 [RequestProcessor-5]           DEBUG (hybrid.CorbaReceiverImpl :108 ) - Received: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0117200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,443 [main]           DEBUG (stomp.StompSenderImpl    :146 ) - sent message
+2012-04-05 14:25:33,443 [main]           DEBUG (xatmi.Connection         :275 ) - Returning cd: 2
+2012-04-05 14:25:33,443 [main]           DEBUG (xatmi.Connection         :504 ) - receive: 2
+2012-04-05 14:25:33,444 [main]           DEBUG (hybrid.CorbaReceiverImpl :151 ) - Receiving: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0117200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,444 [main]           DEBUG (hybrid.CorbaReceiverImpl :182 ) - Message was available
+2012-04-05 14:25:33,444 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:33,444 [main]           DEBUG (xatmi.Connection         :529 ) - received returned a response? true
+2012-04-05 14:25:33,444 [main]           DEBUG (xatmi.Connection         :286 ) - tpcancel: 2
+2012-04-05 14:25:33,444 [main]           DEBUG (xatmi.Connection         :290 ) - closing endpoint
+2012-04-05 14:25:33,444 [main]           DEBUG (hybrid.CorbaReceiverImpl :242 ) - close: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0117200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,444 [main]           DEBUG (hybrid.CorbaReceiverImpl :225 ) - disconnect
+2012-04-05 14:25:33,444 [main]           DEBUG (hybrid.CorbaReceiverImpl :227 ) - deactivating
+2012-04-05 14:25:33,445 [main]           DEBUG (hybrid.CorbaReceiverImpl :229 ) - deactivated
+2012-04-05 14:25:33,445 [main]           DEBUG (xatmi.Connection         :292 ) - endpoint closed
+2012-04-05 14:25:33,445 [main]           DEBUG (xatmi.Connection         :298 ) - tpcancel returning: 0
+2012-04-05 14:25:33,445 [main]           INFO  (TxBlacktieServiceTestCase:54  ) - TxBlacktieServiceTestCase::tearDown
+2012-04-05 14:25:33,445 [main]           DEBUG (xatmi.Connection         :442 ) - Close connection called: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@445e228
+2012-04-05 14:25:33,445 [main]           DEBUG (xatmi.Connection         :475 ) - closing transport
+2012-04-05 14:25:33,445 [main]           DEBUG (hybrid.TransportImpl     :60  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@41021f34
+2012-04-05 14:25:33,445 [main]           DEBUG (stomp.StompSenderImpl    :153 ) - Sender closing: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,446 [main]           DEBUG (stomp.StompSenderImpl    :159 ) - closing socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49735]
+2012-04-05 14:25:33,446 [main]           DEBUG (stomp.StompManagement    :28  ) - close
+2012-04-05 14:25:33,446 [main]           DEBUG (stomp.StompManagement    :35  ) - Sent disconnect
+2012-04-05 14:25:33,514 [main]           DEBUG (stomp.StompManagement    :117 ) - Read disconnect receipt from: java.net.SocketInputStream@396477d9
+2012-04-05 14:25:33,553 [main]           DEBUG (stomp.StompSenderImpl    :162 ) - closed socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49735]
+2012-04-05 14:25:33,553 [main]           DEBUG (ransport.TransportFactory:62  ) - Transport was removed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@41021f34 from: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@802b249 result: true
+2012-04-05 14:25:33,553 [main]           DEBUG (hybrid.TransportImpl     :89  ) - Closed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@41021f34
+2012-04-05 14:25:33,554 [main]           DEBUG (xatmi.Connection         :477 ) - closed transport
+2012-04-05 14:25:33,554 [main]           DEBUG (ransport.TransportFactory:69  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@802b249
+2012-04-05 14:25:33,554 [main]           DEBUG (ransport.TransportFactory:71  ) - Going into shutdown
+2012-04-05 14:25:33,554 [main]           DEBUG (ransport.TransportFactory:72  ) - Closing factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@802b249
+2012-04-05 14:25:33,555 [main]           DEBUG (ransport.TransportFactory:86  ) - Closed factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory
+2012-04-05 14:25:33,555 [main]           DEBUG (xatmi.Connection         :482 ) - Close connection finished
+2012-04-05 14:25:33,555 [main]           INFO  (TxBlacktieServiceTestCase:45  ) - TxBlacktieServiceTestCase::setUp
+2012-04-05 14:25:33,556 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@4c272961
+2012-04-05 14:25:33,557 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,557 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@4c272961
+2012-04-05 14:25:33,557 [main]           DEBUG (xatmi.Connection         :151 ) - Creating connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@1f0dc656
+2012-04-05 14:25:33,558 [main]           DEBUG (ransport.TransportFactory:40  ) - Creating Transportfactory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@41584807
+2012-04-05 14:25:33,558 [main]           DEBUG (ransport.TransportFactory:49  ) - Created OrbManagement
+2012-04-05 14:25:33,558 [main]           DEBUG (xatmi.ConnectionFactory  :62  ) - Returning connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@1f0dc656
+2012-04-05 14:25:33,558 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,558 [main]           DEBUG (jab.JABSession           :54  ) - JABSession constructor
+2012-04-05 14:25:33,558 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@ae0e515
+2012-04-05 14:25:33,559 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,559 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@ae0e515
+2012-04-05 14:25:33,559 [main]           INFO  (TxBlacktieServiceTestCase:84  ) - TxBlacktieServiceTestCase::test3
+2012-04-05 14:25:33,559 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:33,559 [main]           DEBUG (xatmi.Connection         :199 ) - tpcall
+2012-04-05 14:25:33,559 [main]           DEBUG (xatmi.Connection         :221 ) - tpacall
+2012-04-05 14:25:33,559 [main]           DEBUG (xatmi.Connection         :232 ) - TxEchoService qtype is queue and flags is 0
+2012-04-05 14:25:33,559 [main]           DEBUG (ransport.TransportFactory:53  ) - Creating transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@41584807
+2012-04-05 14:25:33,560 [main]           DEBUG (hybrid.TransportImpl     :52  ) - Creating transport
+2012-04-05 14:25:33,560 [main]           DEBUG (hybrid.TransportImpl     :56  ) - Created transport
+2012-04-05 14:25:33,560 [main]           DEBUG (ransport.TransportFactory:56  ) - Created transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@41584807 transport: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@32dfcb47
+2012-04-05 14:25:33,560 [main]           DEBUG (hybrid.TransportImpl     :166 ) - Creating a receiver
+2012-04-05 14:25:33,560 [main]           DEBUG (hybrid.CorbaReceiverImpl :69  ) - ClientCallbackImpl constructor
+2012-04-05 14:25:33,560 [main]           DEBUG (hybrid.CorbaReceiverImpl :83  ) - JABSession createCallbackObject
+2012-04-05 14:25:33,560 [main]           DEBUG (hybrid.CorbaReceiverImpl :85  ) - activated this org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.CorbaReceiverImpl@29abc69
+2012-04-05 14:25:33,561 [main]           DEBUG (hybrid.CorbaReceiverImpl :88  ) - created reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,561 [main]           DEBUG (hybrid.CorbaReceiverImpl :90  ) - narrowed reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,561 [main]           DEBUG (hybrid.CorbaReceiverImpl :92  ) - Created:IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,561 [main]           DEBUG (hybrid.CorbaReceiverImpl :98  ) - Timeout set as: 50000
+2012-04-05 14:25:33,561 [main]           DEBUG (xatmi.Connection         :268 ) - Set ttl: 40000
+2012-04-05 14:25:33,561 [main]           DEBUG (hybrid.TransportImpl     :97  ) - Get sender: TxEchoService
+2012-04-05 14:25:33,625 [main]           DEBUG (stomp.StompManagement    :65  ) - Created socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49736] input: java.net.SocketInputStream@1278dc4coutput: java.net.SocketOutputStream@7cc792d4
+2012-04-05 14:25:33,626 [main]           DEBUG (stomp.StompSenderImpl    :68  ) - Sender Created: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,626 [main]           DEBUG (stomp.StompSenderImpl    :88  ) - Sender sending: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,627 [main]           DEBUG (sport.JtsTransactionImple:155 ) - getTransactionIOR
+2012-04-05 14:25:33,627 [main]           DEBUG (stomp.StompSenderImpl    :104 ) - Reply to: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,627 [main]           DEBUG (stomp.StompSenderImpl    :117 ) - EXPIRES: 40000
+2012-04-05 14:25:33,627 [main]           DEBUG (stomp.StompSenderImpl    :121 ) - RECEIPT: send-J-2
+2012-04-05 14:25:33,706 [main]           DEBUG (stomp.StompSenderImpl    :146 ) - sent message
+2012-04-05 14:25:33,706 [main]           DEBUG (xatmi.Connection         :275 ) - Returning cd: 3
+2012-04-05 14:25:33,706 [main]           DEBUG (xatmi.Connection         :504 ) - receive: 3
+2012-04-05 14:25:33,706 [main]           DEBUG (hybrid.CorbaReceiverImpl :151 ) - Receiving: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,707 [main]           DEBUG (hybrid.CorbaReceiverImpl :156 ) - Waiting: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,741 [RequestProcessor-5]           DEBUG (hybrid.CorbaReceiverImpl :108 ) - Received: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,742 [main]           DEBUG (hybrid.CorbaReceiverImpl :158 ) - Waited: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,742 [main]           DEBUG (hybrid.CorbaReceiverImpl :182 ) - Message was available
+2012-04-05 14:25:33,742 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:33,742 [main]           DEBUG (xatmi.Connection         :529 ) - received returned a response? true
+2012-04-05 14:25:33,742 [main]           DEBUG (xatmi.Connection         :286 ) - tpcancel: 3
+2012-04-05 14:25:33,743 [main]           DEBUG (xatmi.Connection         :290 ) - closing endpoint
+2012-04-05 14:25:33,743 [main]           DEBUG (hybrid.CorbaReceiverImpl :242 ) - close: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0217200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,743 [main]           DEBUG (hybrid.CorbaReceiverImpl :225 ) - disconnect
+2012-04-05 14:25:33,743 [main]           DEBUG (hybrid.CorbaReceiverImpl :227 ) - deactivating
+2012-04-05 14:25:33,744 [main]           DEBUG (hybrid.CorbaReceiverImpl :229 ) - deactivated
+2012-04-05 14:25:33,744 [main]           DEBUG (xatmi.Connection         :292 ) - endpoint closed
+2012-04-05 14:25:33,744 [main]           DEBUG (xatmi.Connection         :298 ) - tpcancel returning: 0
+2012-04-05 14:25:33,745 [main]           INFO  (TxBlacktieServiceTestCase:54  ) - TxBlacktieServiceTestCase::tearDown
+2012-04-05 14:25:33,745 [main]           DEBUG (xatmi.Connection         :442 ) - Close connection called: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@1f0dc656
+2012-04-05 14:25:33,745 [main]           DEBUG (xatmi.Connection         :475 ) - closing transport
+2012-04-05 14:25:33,745 [main]           DEBUG (hybrid.TransportImpl     :60  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@32dfcb47
+2012-04-05 14:25:33,745 [main]           DEBUG (stomp.StompSenderImpl    :153 ) - Sender closing: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,745 [main]           DEBUG (stomp.StompSenderImpl    :159 ) - closing socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49736]
+2012-04-05 14:25:33,746 [main]           DEBUG (stomp.StompManagement    :28  ) - close
+2012-04-05 14:25:33,746 [main]           DEBUG (stomp.StompManagement    :35  ) - Sent disconnect
+2012-04-05 14:25:33,807 [main]           DEBUG (stomp.StompManagement    :117 ) - Read disconnect receipt from: java.net.SocketInputStream@1278dc4c
+2012-04-05 14:25:33,808 [main]           DEBUG (stomp.StompSenderImpl    :162 ) - closed socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49736]
+2012-04-05 14:25:33,808 [main]           DEBUG (ransport.TransportFactory:62  ) - Transport was removed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@32dfcb47 from: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@41584807 result: true
+2012-04-05 14:25:33,808 [main]           DEBUG (hybrid.TransportImpl     :89  ) - Closed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@32dfcb47
+2012-04-05 14:25:33,808 [main]           DEBUG (xatmi.Connection         :477 ) - closed transport
+2012-04-05 14:25:33,808 [main]           DEBUG (ransport.TransportFactory:69  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@41584807
+2012-04-05 14:25:33,808 [main]           DEBUG (ransport.TransportFactory:71  ) - Going into shutdown
+2012-04-05 14:25:33,809 [main]           DEBUG (ransport.TransportFactory:72  ) - Closing factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@41584807
+2012-04-05 14:25:33,809 [main]           DEBUG (ransport.TransportFactory:86  ) - Closed factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory
+2012-04-05 14:25:33,809 [main]           DEBUG (xatmi.Connection         :482 ) - Close connection finished
+2012-04-05 14:25:33,809 [main]           INFO  (TxBlacktieServiceTestCase:45  ) - TxBlacktieServiceTestCase::setUp
+2012-04-05 14:25:33,809 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@57d840cd
+2012-04-05 14:25:33,810 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,810 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@57d840cd
+2012-04-05 14:25:33,810 [main]           DEBUG (xatmi.Connection         :151 ) - Creating connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@36867fc9
+2012-04-05 14:25:33,810 [main]           DEBUG (ransport.TransportFactory:40  ) - Creating Transportfactory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@382f8116
+2012-04-05 14:25:33,810 [main]           DEBUG (ransport.TransportFactory:49  ) - Created OrbManagement
+2012-04-05 14:25:33,810 [main]           DEBUG (xatmi.ConnectionFactory  :62  ) - Returning connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@36867fc9
+2012-04-05 14:25:33,810 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,811 [main]           DEBUG (jab.JABSession           :54  ) - JABSession constructor
+2012-04-05 14:25:33,811 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@36c3e82b
+2012-04-05 14:25:33,811 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:33,811 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@36c3e82b
+2012-04-05 14:25:33,811 [main]           INFO  (TxBlacktieServiceTestCase:96  ) - TxBlacktieServiceTestCase::test4
+2012-04-05 14:25:33,812 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:33,812 [main]           DEBUG (jab.JABTransaction       :60  ) - JABTransaction constructor
+2012-04-05 14:25:33,815 [main]           DEBUG (jab.JABTransaction       :77  ) -  creating Control
+2012-04-05 14:25:33,817 [main]           DEBUG (jab.JABTransaction       :80  ) -  created Control IOR:000000000000002B49444C3A61726A756E612E636F6D2F41726A756E614F54532F416374696F6E436F6E74726F6C3A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC800000016383739303635313137372F0E17200235041F3C01304B0000000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:33,820 [main]           DEBUG (jab.JABTransaction       :139 ) - Terminator is IOR:000000000000002F49444C3A61726A756E612E636F6D2F41726A756E614F54532F41726A756E615472616E73616374696F6E3A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC800000016383739303635313137372F0F17200235041F3C01304B0000000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:33,821 [main]           DEBUG (xatmi.Connection         :199 ) - tpcall
+2012-04-05 14:25:33,821 [main]           DEBUG (xatmi.Connection         :221 ) - tpacall
+2012-04-05 14:25:33,821 [main]           DEBUG (xatmi.Connection         :232 ) - TxEchoService qtype is queue and flags is 0
+2012-04-05 14:25:33,821 [main]           DEBUG (ransport.TransportFactory:53  ) - Creating transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@382f8116
+2012-04-05 14:25:33,821 [main]           DEBUG (hybrid.TransportImpl     :52  ) - Creating transport
+2012-04-05 14:25:33,821 [main]           DEBUG (hybrid.TransportImpl     :56  ) - Created transport
+2012-04-05 14:25:33,822 [main]           DEBUG (ransport.TransportFactory:56  ) - Created transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@382f8116 transport: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@288b567c
+2012-04-05 14:25:33,822 [main]           DEBUG (hybrid.TransportImpl     :166 ) - Creating a receiver
+2012-04-05 14:25:33,822 [main]           DEBUG (hybrid.CorbaReceiverImpl :69  ) - ClientCallbackImpl constructor
+2012-04-05 14:25:33,822 [main]           DEBUG (hybrid.CorbaReceiverImpl :83  ) - JABSession createCallbackObject
+2012-04-05 14:25:33,822 [main]           DEBUG (hybrid.CorbaReceiverImpl :85  ) - activated this org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.CorbaReceiverImpl@53dafbaf
+2012-04-05 14:25:33,823 [main]           DEBUG (hybrid.CorbaReceiverImpl :88  ) - created reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,823 [main]           DEBUG (hybrid.CorbaReceiverImpl :90  ) - narrowed reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,823 [main]           DEBUG (hybrid.CorbaReceiverImpl :92  ) - Created:IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,823 [main]           DEBUG (hybrid.CorbaReceiverImpl :98  ) - Timeout set as: 50000
+2012-04-05 14:25:33,824 [main]           DEBUG (xatmi.Connection         :268 ) - Set ttl: 40000
+2012-04-05 14:25:33,824 [main]           DEBUG (hybrid.TransportImpl     :97  ) - Get sender: TxEchoService
+2012-04-05 14:25:33,877 [main]           DEBUG (stomp.StompManagement    :65  ) - Created socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49738] input: java.net.SocketInputStream@7449cf9foutput: java.net.SocketOutputStream@7f2e7c6a
+2012-04-05 14:25:33,878 [main]           DEBUG (stomp.StompSenderImpl    :68  ) - Sender Created: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,878 [main]           DEBUG (stomp.StompSenderImpl    :88  ) - Sender sending: /queue/BTR_TxEchoService
+2012-04-05 14:25:33,878 [main]           DEBUG (sport.JtsTransactionImple:155 ) - getTransactionIOR
+2012-04-05 14:25:33,878 [main]           DEBUG (sport.JtsTransactionImple:159 ) - have JABTransaction
+2012-04-05 14:25:33,878 [main]           DEBUG (stomp.StompSenderImpl    :98  ) - Sender sending IOR: IOR:000000000000002B49444C3A61726A756E612E636F6D2F41726A756E614F54532F416374696F6E436F6E74726F6C3A312E3000000000000200000000000000CC000102000000000A3132372E302E302E31000DC800000016383739303635313137372F0E17200235041F3C01304B0000000000060000000000000008000000004A4143000000000100000020000000000501000100000001000100010001010900000002050100010001010000000014000000080000001A00000DC900000021000000300000000000000001000000000000002200000000000000000000000000000000000000000000000000000000000000000000002000000004000000000000001F0000000400000003000000010000002000000000000000020000002000000004000000000000001F0000000400000003
+2012-04-05 14:25:33,878 [main]           DEBUG (stomp.StompSenderImpl    :104 ) - Reply to: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,879 [main]           DEBUG (stomp.StompSenderImpl    :117 ) - EXPIRES: 40000
+2012-04-05 14:25:33,879 [main]           DEBUG (stomp.StompSenderImpl    :121 ) - RECEIPT: send-J-3
+2012-04-05 14:25:33,958 [main]           DEBUG (stomp.StompSenderImpl    :146 ) - sent message
+2012-04-05 14:25:33,958 [main]           DEBUG (xatmi.Connection         :275 ) - Returning cd: 4
+2012-04-05 14:25:33,958 [main]           DEBUG (xatmi.Connection         :504 ) - receive: 4
+2012-04-05 14:25:33,959 [main]           DEBUG (hybrid.CorbaReceiverImpl :151 ) - Receiving: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:33,959 [main]           DEBUG (hybrid.CorbaReceiverImpl :156 ) - Waiting: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,023 [RequestProcessor-5]           DEBUG (hybrid.CorbaReceiverImpl :108 ) - Received: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,024 [main]           DEBUG (hybrid.CorbaReceiverImpl :158 ) - Waited: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,024 [main]           DEBUG (hybrid.CorbaReceiverImpl :182 ) - Message was available
+2012-04-05 14:25:34,024 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:34,025 [main]           DEBUG (xatmi.Connection         :529 ) - received returned a response? true
+2012-04-05 14:25:34,025 [main]           DEBUG (xatmi.Connection         :286 ) - tpcancel: 4
+2012-04-05 14:25:34,025 [main]           DEBUG (xatmi.Connection         :290 ) - closing endpoint
+2012-04-05 14:25:34,026 [main]           DEBUG (hybrid.CorbaReceiverImpl :242 ) - close: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0317200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,026 [main]           DEBUG (hybrid.CorbaReceiverImpl :225 ) - disconnect
+2012-04-05 14:25:34,026 [main]           DEBUG (hybrid.CorbaReceiverImpl :227 ) - deactivating
+2012-04-05 14:25:34,027 [main]           DEBUG (hybrid.CorbaReceiverImpl :229 ) - deactivated
+2012-04-05 14:25:34,027 [main]           DEBUG (xatmi.Connection         :292 ) - endpoint closed
+2012-04-05 14:25:34,027 [main]           DEBUG (xatmi.Connection         :298 ) - tpcancel returning: 0
+2012-04-05 14:25:34,027 [main]           DEBUG (jab.JABTransaction       :165 ) - JABTransaction commit
+2012-04-05 14:25:34,027 [main]           DEBUG (jab.JABTransaction       :168 ) - calling commit
+2012-04-05 14:25:34,037 [main]           DEBUG (jab.JABTransaction       :172 ) - called commit on terminator
+2012-04-05 14:25:34,037 [main]           INFO  (TxBlacktieServiceTestCase:54  ) - TxBlacktieServiceTestCase::tearDown
+2012-04-05 14:25:34,037 [main]           DEBUG (xatmi.Connection         :442 ) - Close connection called: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@36867fc9
+2012-04-05 14:25:34,037 [main]           DEBUG (xatmi.Connection         :475 ) - closing transport
+2012-04-05 14:25:34,038 [main]           DEBUG (hybrid.TransportImpl     :60  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@288b567c
+2012-04-05 14:25:34,038 [main]           DEBUG (stomp.StompSenderImpl    :153 ) - Sender closing: /queue/BTR_TxEchoService
+2012-04-05 14:25:34,038 [main]           DEBUG (stomp.StompSenderImpl    :159 ) - closing socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49738]
+2012-04-05 14:25:34,038 [main]           DEBUG (stomp.StompManagement    :28  ) - close
+2012-04-05 14:25:34,039 [main]           DEBUG (stomp.StompManagement    :35  ) - Sent disconnect
+2012-04-05 14:25:34,076 [main]           DEBUG (stomp.StompManagement    :117 ) - Read disconnect receipt from: java.net.SocketInputStream@7449cf9f
+2012-04-05 14:25:34,076 [main]           DEBUG (stomp.StompSenderImpl    :162 ) - closed socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49738]
+2012-04-05 14:25:34,076 [main]           DEBUG (ransport.TransportFactory:62  ) - Transport was removed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@288b567c from: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@382f8116 result: true
+2012-04-05 14:25:34,076 [main]           DEBUG (hybrid.TransportImpl     :89  ) - Closed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@288b567c
+2012-04-05 14:25:34,076 [main]           DEBUG (xatmi.Connection         :477 ) - closed transport
+2012-04-05 14:25:34,076 [main]           DEBUG (ransport.TransportFactory:69  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@382f8116
+2012-04-05 14:25:34,076 [main]           DEBUG (ransport.TransportFactory:71  ) - Going into shutdown
+2012-04-05 14:25:34,077 [main]           DEBUG (ransport.TransportFactory:72  ) - Closing factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@382f8116
+2012-04-05 14:25:34,077 [main]           DEBUG (ransport.TransportFactory:86  ) - Closed factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory
+2012-04-05 14:25:34,077 [main]           DEBUG (xatmi.Connection         :482 ) - Close connection finished
+2012-04-05 14:25:34,077 [main]           INFO  (TxBlacktieServiceTestCase:45  ) - TxBlacktieServiceTestCase::setUp
+2012-04-05 14:25:34,077 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@495b0e2c
+2012-04-05 14:25:34,077 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:34,077 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@495b0e2c
+2012-04-05 14:25:34,078 [main]           DEBUG (xatmi.Connection         :151 ) - Creating connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@78ff9053
+2012-04-05 14:25:34,078 [main]           DEBUG (ransport.TransportFactory:40  ) - Creating Transportfactory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@525c7734
+2012-04-05 14:25:34,078 [main]           DEBUG (ransport.TransportFactory:49  ) - Created OrbManagement
+2012-04-05 14:25:34,078 [main]           DEBUG (xatmi.ConnectionFactory  :62  ) - Returning connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@78ff9053
+2012-04-05 14:25:34,078 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:34,078 [main]           DEBUG (jab.JABSession           :54  ) - JABSession constructor
+2012-04-05 14:25:34,078 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@3496212a
+2012-04-05 14:25:34,078 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:34,078 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@3496212a
+2012-04-05 14:25:34,079 [main]           INFO  (TxBlacktieServiceTestCase:112 ) - TxBlacktieServiceTestCase::test5
+2012-04-05 14:25:34,079 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:34,079 [main]           DEBUG (xatmi.Connection         :199 ) - tpcall
+2012-04-05 14:25:34,079 [main]           DEBUG (xatmi.Connection         :221 ) - tpacall
+2012-04-05 14:25:34,079 [main]           DEBUG (xatmi.Connection         :232 ) - TxEchoService qtype is queue and flags is 0
+2012-04-05 14:25:34,079 [main]           DEBUG (ransport.TransportFactory:53  ) - Creating transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@525c7734
+2012-04-05 14:25:34,079 [main]           DEBUG (hybrid.TransportImpl     :52  ) - Creating transport
+2012-04-05 14:25:34,079 [main]           DEBUG (hybrid.TransportImpl     :56  ) - Created transport
+2012-04-05 14:25:34,079 [main]           DEBUG (ransport.TransportFactory:56  ) - Created transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@525c7734 transport: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@6c5b675e
+2012-04-05 14:25:34,079 [main]           DEBUG (hybrid.TransportImpl     :166 ) - Creating a receiver
+2012-04-05 14:25:34,080 [main]           DEBUG (hybrid.CorbaReceiverImpl :69  ) - ClientCallbackImpl constructor
+2012-04-05 14:25:34,080 [main]           DEBUG (hybrid.CorbaReceiverImpl :83  ) - JABSession createCallbackObject
+2012-04-05 14:25:34,080 [main]           DEBUG (hybrid.CorbaReceiverImpl :85  ) - activated this org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.CorbaReceiverImpl@64df83e5
+2012-04-05 14:25:34,080 [main]           DEBUG (hybrid.CorbaReceiverImpl :88  ) - created reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,080 [main]           DEBUG (hybrid.CorbaReceiverImpl :90  ) - narrowed reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,081 [main]           DEBUG (hybrid.CorbaReceiverImpl :92  ) - Created:IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,081 [main]           DEBUG (hybrid.CorbaReceiverImpl :98  ) - Timeout set as: 50000
+2012-04-05 14:25:34,081 [main]           DEBUG (xatmi.Connection         :268 ) - Set ttl: 40000
+2012-04-05 14:25:34,081 [main]           DEBUG (hybrid.TransportImpl     :97  ) - Get sender: TxEchoService
+2012-04-05 14:25:34,122 [main]           DEBUG (stomp.StompManagement    :65  ) - Created socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49739] input: java.net.SocketInputStream@38ffd135output: java.net.SocketOutputStream@e4c6320
+2012-04-05 14:25:34,122 [main]           DEBUG (stomp.StompSenderImpl    :68  ) - Sender Created: /queue/BTR_TxEchoService
+2012-04-05 14:25:34,123 [main]           DEBUG (stomp.StompSenderImpl    :88  ) - Sender sending: /queue/BTR_TxEchoService
+2012-04-05 14:25:34,123 [main]           DEBUG (sport.JtsTransactionImple:155 ) - getTransactionIOR
+2012-04-05 14:25:34,123 [main]           DEBUG (stomp.StompSenderImpl    :104 ) - Reply to: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,123 [main]           DEBUG (stomp.StompSenderImpl    :117 ) - EXPIRES: 40000
+2012-04-05 14:25:34,124 [main]           DEBUG (stomp.StompSenderImpl    :121 ) - RECEIPT: send-J-4
+2012-04-05 14:25:34,196 [main]           DEBUG (stomp.StompSenderImpl    :146 ) - sent message
+2012-04-05 14:25:34,196 [main]           DEBUG (xatmi.Connection         :275 ) - Returning cd: 5
+2012-04-05 14:25:34,196 [main]           DEBUG (xatmi.Connection         :504 ) - receive: 5
+2012-04-05 14:25:34,196 [main]           DEBUG (hybrid.CorbaReceiverImpl :151 ) - Receiving: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,196 [main]           DEBUG (hybrid.CorbaReceiverImpl :156 ) - Waiting: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,369 [RequestProcessor-5]           DEBUG (hybrid.CorbaReceiverImpl :108 ) - Received: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,369 [main]           DEBUG (hybrid.CorbaReceiverImpl :158 ) - Waited: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,370 [main]           DEBUG (hybrid.CorbaReceiverImpl :182 ) - Message was available
+2012-04-05 14:25:34,370 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:34,370 [main]           DEBUG (xatmi.Connection         :529 ) - received returned a response? true
+2012-04-05 14:25:34,371 [main]           DEBUG (xatmi.Connection         :286 ) - tpcancel: 5
+2012-04-05 14:25:34,371 [main]           DEBUG (xatmi.Connection         :290 ) - closing endpoint
+2012-04-05 14:25:34,371 [main]           DEBUG (hybrid.CorbaReceiverImpl :242 ) - close: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0417200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,371 [main]           DEBUG (hybrid.CorbaReceiverImpl :225 ) - disconnect
+2012-04-05 14:25:34,371 [main]           DEBUG (hybrid.CorbaReceiverImpl :227 ) - deactivating
+2012-04-05 14:25:34,372 [main]           DEBUG (hybrid.CorbaReceiverImpl :229 ) - deactivated
+2012-04-05 14:25:34,372 [main]           DEBUG (xatmi.Connection         :292 ) - endpoint closed
+2012-04-05 14:25:34,372 [main]           DEBUG (xatmi.Connection         :298 ) - tpcancel returning: 0
+2012-04-05 14:25:34,372 [main]           INFO  (TxBlacktieServiceTestCase:54  ) - TxBlacktieServiceTestCase::tearDown
+2012-04-05 14:25:34,373 [main]           DEBUG (xatmi.Connection         :442 ) - Close connection called: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@78ff9053
+2012-04-05 14:25:34,373 [main]           DEBUG (xatmi.Connection         :475 ) - closing transport
+2012-04-05 14:25:34,373 [main]           DEBUG (hybrid.TransportImpl     :60  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@6c5b675e
+2012-04-05 14:25:34,373 [main]           DEBUG (stomp.StompSenderImpl    :153 ) - Sender closing: /queue/BTR_TxEchoService
+2012-04-05 14:25:34,374 [main]           DEBUG (stomp.StompSenderImpl    :159 ) - closing socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49739]
+2012-04-05 14:25:34,374 [main]           DEBUG (stomp.StompManagement    :28  ) - close
+2012-04-05 14:25:34,374 [main]           DEBUG (stomp.StompManagement    :35  ) - Sent disconnect
+2012-04-05 14:25:34,463 [main]           DEBUG (stomp.StompManagement    :117 ) - Read disconnect receipt from: java.net.SocketInputStream@38ffd135
+2012-04-05 14:25:34,463 [main]           DEBUG (stomp.StompSenderImpl    :162 ) - closed socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49739]
+2012-04-05 14:25:34,464 [main]           DEBUG (ransport.TransportFactory:62  ) - Transport was removed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@6c5b675e from: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@525c7734 result: true
+2012-04-05 14:25:34,464 [main]           DEBUG (hybrid.TransportImpl     :89  ) - Closed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@6c5b675e
+2012-04-05 14:25:34,464 [main]           DEBUG (xatmi.Connection         :477 ) - closed transport
+2012-04-05 14:25:34,464 [main]           DEBUG (ransport.TransportFactory:69  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@525c7734
+2012-04-05 14:25:34,464 [main]           DEBUG (ransport.TransportFactory:71  ) - Going into shutdown
+2012-04-05 14:25:34,465 [main]           DEBUG (ransport.TransportFactory:72  ) - Closing factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@525c7734
+2012-04-05 14:25:34,465 [main]           DEBUG (ransport.TransportFactory:86  ) - Closed factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory
+2012-04-05 14:25:34,465 [main]           DEBUG (xatmi.Connection         :482 ) - Close connection finished
+2012-04-05 14:25:34,483 [main]           INFO  (ctBlacktieServiceTestCase:36  ) - AbstractBlacktieServiceTestCase::setUp
+2012-04-05 14:25:34,484 [main]           DEBUG (xatmi.ConnectionFactory  :45  ) - Creating connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@549b6220
+2012-04-05 14:25:34,484 [main]           DEBUG (conf.XMLParser           :144 ) - Configfile loaded before: /home/tom/projects/narayana/quickstart/blacktie/jatmibroker-xatmi/mdb/target/test-classes/btconfig.xml
+2012-04-05 14:25:34,485 [main]           DEBUG (xatmi.ConnectionFactory  :48  ) - Created connection factory: org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionFactory@549b6220
+2012-04-05 14:25:34,485 [main]           DEBUG (xatmi.Connection         :151 ) - Creating connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@25474e45
+2012-04-05 14:25:34,485 [main]           DEBUG (ransport.TransportFactory:40  ) - Creating Transportfactory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@6c63a721
+2012-04-05 14:25:34,485 [main]           DEBUG (ransport.TransportFactory:49  ) - Created OrbManagement
+2012-04-05 14:25:34,485 [main]           DEBUG (xatmi.ConnectionFactory  :62  ) - Returning connection: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@25474e45
+2012-04-05 14:25:34,486 [main]           INFO  (ctBlacktieServiceTestCase:47  ) - AbstractBlacktieServiceTestCase::test
+2012-04-05 14:25:34,486 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:34,486 [main]           DEBUG (xatmi.Connection         :199 ) - tpcall
+2012-04-05 14:25:34,486 [main]           DEBUG (xatmi.Connection         :221 ) - tpacall
+2012-04-05 14:25:34,486 [main]           DEBUG (xatmi.Connection         :232 ) - EchoService qtype is queue and flags is 0
+2012-04-05 14:25:34,487 [main]           DEBUG (ransport.TransportFactory:53  ) - Creating transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@6c63a721
+2012-04-05 14:25:34,487 [main]           DEBUG (hybrid.TransportImpl     :52  ) - Creating transport
+2012-04-05 14:25:34,487 [main]           DEBUG (hybrid.TransportImpl     :56  ) - Created transport
+2012-04-05 14:25:34,487 [main]           DEBUG (ransport.TransportFactory:56  ) - Created transport from factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@6c63a721 transport: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@2719f1f
+2012-04-05 14:25:34,487 [main]           DEBUG (hybrid.TransportImpl     :166 ) - Creating a receiver
+2012-04-05 14:25:34,487 [main]           DEBUG (hybrid.CorbaReceiverImpl :69  ) - ClientCallbackImpl constructor
+2012-04-05 14:25:34,487 [main]           DEBUG (hybrid.CorbaReceiverImpl :83  ) - JABSession createCallbackObject
+2012-04-05 14:25:34,488 [main]           DEBUG (hybrid.CorbaReceiverImpl :85  ) - activated this org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.CorbaReceiverImpl@7185ad79
+2012-04-05 14:25:34,488 [main]           DEBUG (hybrid.CorbaReceiverImpl :88  ) - created reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0517200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,488 [main]           DEBUG (hybrid.CorbaReceiverImpl :90  ) - narrowed reference IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0517200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,488 [main]           DEBUG (hybrid.CorbaReceiverImpl :92  ) - Created:IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0517200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,488 [main]           DEBUG (hybrid.CorbaReceiverImpl :98  ) - Timeout set as: 50000
+2012-04-05 14:25:34,488 [main]           DEBUG (xatmi.Connection         :268 ) - Set ttl: 40000
+2012-04-05 14:25:34,489 [main]           DEBUG (hybrid.TransportImpl     :97  ) - Get sender: EchoService
+2012-04-05 14:25:34,593 [main]           DEBUG (stomp.StompManagement    :65  ) - Created socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49741] input: java.net.SocketInputStream@4a3a6e5coutput: java.net.SocketOutputStream@7f401d28
+2012-04-05 14:25:34,593 [main]           DEBUG (stomp.StompSenderImpl    :68  ) - Sender Created: /queue/BTR_EchoService
+2012-04-05 14:25:34,593 [main]           DEBUG (stomp.StompSenderImpl    :88  ) - Sender sending: /queue/BTR_EchoService
+2012-04-05 14:25:34,594 [main]           DEBUG (sport.JtsTransactionImple:155 ) - getTransactionIOR
+2012-04-05 14:25:34,594 [main]           DEBUG (stomp.StompSenderImpl    :104 ) - Reply to: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0517200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,594 [main]           DEBUG (stomp.StompSenderImpl    :117 ) - EXPIRES: 40000
+2012-04-05 14:25:34,595 [main]           DEBUG (stomp.StompSenderImpl    :121 ) - RECEIPT: send-J-5
+2012-04-05 14:25:34,662 [RequestProcessor-5]           DEBUG (hybrid.CorbaReceiverImpl :108 ) - Received: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0517200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,675 [main]           DEBUG (stomp.StompSenderImpl    :146 ) - sent message
+2012-04-05 14:25:34,675 [main]           DEBUG (xatmi.Connection         :275 ) - Returning cd: 6
+2012-04-05 14:25:34,675 [main]           DEBUG (xatmi.Connection         :504 ) - receive: 6
+2012-04-05 14:25:34,675 [main]           DEBUG (hybrid.CorbaReceiverImpl :151 ) - Receiving: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0517200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,675 [main]           DEBUG (hybrid.CorbaReceiverImpl :182 ) - Message was available
+2012-04-05 14:25:34,675 [main]           DEBUG (xatmi.Connection         :171 ) - Initializing a new X_OCTET
+2012-04-05 14:25:34,676 [main]           DEBUG (xatmi.Connection         :529 ) - received returned a response? true
+2012-04-05 14:25:34,676 [main]           DEBUG (xatmi.Connection         :286 ) - tpcancel: 6
+2012-04-05 14:25:34,676 [main]           DEBUG (xatmi.Connection         :290 ) - closing endpoint
+2012-04-05 14:25:34,676 [main]           DEBUG (hybrid.CorbaReceiverImpl :242 ) - close: IOR:000000000000002149444C3A41746D6942726F6B65722F456E64706F696E7451756575653A312E3000000000000000010000000000000048000102000000000A3132372E302E302E3100A5640000001A3538303535343534392F544F444F2F0517200235300F3F021B060000000000010000000000000008000000004A414300
+2012-04-05 14:25:34,676 [main]           DEBUG (hybrid.CorbaReceiverImpl :225 ) - disconnect
+2012-04-05 14:25:34,676 [main]           DEBUG (hybrid.CorbaReceiverImpl :227 ) - deactivating
+2012-04-05 14:25:34,677 [main]           DEBUG (hybrid.CorbaReceiverImpl :229 ) - deactivated
+2012-04-05 14:25:34,677 [main]           DEBUG (xatmi.Connection         :292 ) - endpoint closed
+2012-04-05 14:25:34,677 [main]           DEBUG (xatmi.Connection         :298 ) - tpcancel returning: 0
+2012-04-05 14:25:34,677 [main]           INFO  (ctBlacktieServiceTestCase:42  ) - AbstractBlacktieServiceTestCase::tearDown
+2012-04-05 14:25:34,677 [main]           DEBUG (xatmi.Connection         :442 ) - Close connection called: org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection@25474e45
+2012-04-05 14:25:34,677 [main]           DEBUG (xatmi.Connection         :475 ) - closing transport
+2012-04-05 14:25:34,677 [main]           DEBUG (hybrid.TransportImpl     :60  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@2719f1f
+2012-04-05 14:25:34,677 [main]           DEBUG (stomp.StompSenderImpl    :153 ) - Sender closing: /queue/BTR_EchoService
+2012-04-05 14:25:34,678 [main]           DEBUG (stomp.StompSenderImpl    :159 ) - closing socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49741]
+2012-04-05 14:25:34,678 [main]           DEBUG (stomp.StompManagement    :28  ) - close
+2012-04-05 14:25:34,678 [main]           DEBUG (stomp.StompManagement    :35  ) - Sent disconnect
+2012-04-05 14:25:34,699 [main]           DEBUG (stomp.StompManagement    :117 ) - Read disconnect receipt from: java.net.SocketInputStream@4a3a6e5c
+2012-04-05 14:25:34,739 [main]           DEBUG (stomp.StompSenderImpl    :162 ) - closed socket: Socket[addr=localhost/127.0.0.1,port=61613,localport=49741]
+2012-04-05 14:25:34,740 [main]           DEBUG (ransport.TransportFactory:62  ) - Transport was removed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@2719f1f from: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@6c63a721 result: true
+2012-04-05 14:25:34,740 [main]           DEBUG (hybrid.TransportImpl     :89  ) - Closed: org.jboss.narayana.blacktie.jatmibroker.core.transport.hybrid.TransportImpl@2719f1f
+2012-04-05 14:25:34,740 [main]           DEBUG (xatmi.Connection         :477 ) - closed transport
+2012-04-05 14:25:34,740 [main]           DEBUG (ransport.TransportFactory:69  ) - Close called: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@6c63a721
+2012-04-05 14:25:34,740 [main]           DEBUG (ransport.TransportFactory:71  ) - Going into shutdown
+2012-04-05 14:25:34,740 [main]           DEBUG (ransport.TransportFactory:72  ) - Closing factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory@6c63a721
+2012-04-05 14:25:34,740 [main]           DEBUG (ransport.TransportFactory:86  ) - Closed factory: org.jboss.narayana.blacktie.jatmibroker.core.transport.TransportFactory
+2012-04-05 14:25:34,740 [main]           DEBUG (xatmi.Connection         :482 ) - Close connection finished
