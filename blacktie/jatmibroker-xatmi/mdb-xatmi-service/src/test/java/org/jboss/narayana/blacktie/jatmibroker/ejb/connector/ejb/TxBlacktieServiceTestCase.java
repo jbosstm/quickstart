@@ -36,24 +36,14 @@ import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
 
 public class TxBlacktieServiceTestCase extends TestCase {
     private static final Logger log = LogManager.getLogger(TxBlacktieServiceTestCase.class);
-    private Connection connection;
 
-    public void setUp() throws ConnectionException, ConfigurationException {
-        log.info("TxBlacktieServiceTestCase::setUp");
-        ConnectionFactory connectionFactory = ConnectionFactory.getConnectionFactory();
-        connection = connectionFactory.getConnection();
-    }
-
-    public void tearDown() throws ConnectionException, ConfigurationException {
-        log.info("TxBlacktieServiceTestCase::tearDown");
-        connection.close();
-    }
-
-    public void test1() throws ConnectionException, TransactionException, ConfigurationException, NotFound, CannotProceed, InvalidName,
+    public void testNeverWithTransaction() throws ConnectionException, TransactionException, ConfigurationException, NotFound, CannotProceed, InvalidName,
             org.omg.CORBA.ORBPackage.InvalidName, AdapterInactive {
         log.info("TxBlacktieServiceTestCase::test1");
+        ConnectionFactory connectionFactory = ConnectionFactory.getConnectionFactory();
+        Connection connection = connectionFactory.getConnection();
         byte[] args = "test=test1,tx=true".getBytes();
-        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null, args.length);
+        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null);
         buffer.setByteArray(args);
 
         TransactionImpl transaction = new TransactionImpl(5000);
@@ -61,35 +51,44 @@ public class TxBlacktieServiceTestCase extends TestCase {
         String responseData = new String(((X_OCTET) response.getBuffer()).getByteArray());
         transaction.commit();
         assertEquals("test=test1,tx=true", responseData);
+        connection.close();
     }
 
-    public void test2() throws ConnectionException, ConfigurationException {
+    public void testNeverWithoutTransaction() throws ConnectionException, ConfigurationException {
         log.info("TxBlacktieServiceTestCase::test2");
+        ConnectionFactory connectionFactory = ConnectionFactory.getConnectionFactory();
+        Connection connection = connectionFactory.getConnection();
         byte[] args = "test=test2,tx=true".getBytes();
-        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null, args.length);
+        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null);
         buffer.setByteArray(args);
 
         Response response = connection.tpcall("TxEchoService", buffer, 0);
         String responseData = new String(((X_OCTET) response.getBuffer()).getByteArray());
         assertNotSame("test=test2,tx=true", responseData);
+        connection.close();
     }
 
-    public void test3() throws ConnectionException, ConfigurationException {
+    public void testMandatoryWithoutTransaction() throws ConnectionException, ConfigurationException {
         log.info("TxBlacktieServiceTestCase::test3");
+        ConnectionFactory connectionFactory = ConnectionFactory.getConnectionFactory();
+        Connection connection = connectionFactory.getConnection();
         byte[] args = "test=test3,tx=false".getBytes();
-        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null, args.length);
+        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null);
         buffer.setByteArray(args);
 
         Response response = connection.tpcall("TxEchoService", buffer, 0);
         String responseData = new String(((X_OCTET) response.getBuffer()).getByteArray());
         assertEquals("test=test3,tx=false", responseData);
+        connection.close();
     }
 
-    public void test4() throws ConnectionException, TransactionException, ConfigurationException, NotFound, CannotProceed, InvalidName,
+    public void testMandatoryWithTransaction() throws ConnectionException, TransactionException, ConfigurationException, NotFound, CannotProceed, InvalidName,
             org.omg.CORBA.ORBPackage.InvalidName, AdapterInactive {
         log.info("TxBlacktieServiceTestCase::test4");
+        ConnectionFactory connectionFactory = ConnectionFactory.getConnectionFactory();
+        Connection connection = connectionFactory.getConnection();
         byte[] args = "test=test4,tx=false".getBytes();
-        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null, args.length);
+        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null);
         buffer.setByteArray(args);
 
         TransactionImpl transaction = new TransactionImpl(5000);
@@ -97,15 +96,18 @@ public class TxBlacktieServiceTestCase extends TestCase {
         String responseData = new String(((X_OCTET) response.getBuffer()).getByteArray());
         transaction.commit();
         assertNotSame("test=test4,tx=false", responseData);
+        connection.close();
     }
 
     /*
      * Test that the AS can create a transaction and propagate it too another blacktie service.
      */
-    public void test5() throws ConnectionException, ConfigurationException {
+    public void testCreateTransaction() throws ConnectionException, ConfigurationException {
         log.info("TxBlacktieServiceTestCase::test5");
+        ConnectionFactory connectionFactory = ConnectionFactory.getConnectionFactory();
+        Connection connection = connectionFactory.getConnection();
         byte[] args = "test=test5,tx=create".getBytes();
-        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null, args.length);
+        X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null);
         buffer.setByteArray(args);
 
         Response response = connection.tpcall("TxEchoService", buffer, 0);

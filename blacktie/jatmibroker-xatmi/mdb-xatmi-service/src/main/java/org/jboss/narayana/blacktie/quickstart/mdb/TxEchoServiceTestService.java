@@ -43,7 +43,7 @@ public class TxEchoServiceTestService extends MDBBlacktieService implements java
     private static final Logger log = LogManager.getLogger(TxEchoServiceTestService.class);
 
     @Inject
-    private BTBean firstBTBean;
+    private BTBean btBean;
 
     public TxEchoServiceTestService() throws ConfigurationException {
         super("TxEchoServiceTestService");
@@ -59,7 +59,7 @@ public class TxEchoServiceTestService extends MDBBlacktieService implements java
 
         if (args.contains("tx=true")) {
             try {
-                firstBTBean.txNever();
+                btBean.txNever();
                 log.info("Error should have got a Not Supported Exception");
                 resp = "Error should have got a Not Supported Exception";
             } catch (javax.ejb.EJBException e) {
@@ -68,7 +68,7 @@ public class TxEchoServiceTestService extends MDBBlacktieService implements java
             }
         } else if (args.contains("tx=false")) {
             try {
-                firstBTBean.txMandatory();
+                btBean.txMandatory();
                 log.info("Error should have got an EJBTransactionRequiredException exception");
                 resp = "Error should have got an EJBTransactionRequiredException exception";
             } catch (javax.ejb.EJBTransactionRequiredException e) {
@@ -78,7 +78,7 @@ public class TxEchoServiceTestService extends MDBBlacktieService implements java
         } else if (args.contains("tx=create")) {
             try {
                 byte[] echo = args.getBytes();
-                X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null, echo.length);
+                X_OCTET buffer = (X_OCTET) connection.tpalloc("X_OCTET", null);
                 buffer.setByteArray(echo);
 
                 log.info("Invoking TxCreateService...");
@@ -111,7 +111,7 @@ public class TxEchoServiceTestService extends MDBBlacktieService implements java
         } else {
             resp = "unknown operation";
         }
-        X_OCTET buffer = (X_OCTET) svcinfo.getConnection().tpalloc("X_OCTET", null, resp.length());
+        X_OCTET buffer = (X_OCTET) svcinfo.getConnection().tpalloc("X_OCTET", null);
         buffer.setByteArray(resp.getBytes());
         return new Response(Connection.TPSUCCESS, 0, buffer, 0);
     }

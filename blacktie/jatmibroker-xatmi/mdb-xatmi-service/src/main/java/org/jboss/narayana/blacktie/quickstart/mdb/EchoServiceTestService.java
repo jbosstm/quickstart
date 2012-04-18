@@ -40,7 +40,7 @@ public class EchoServiceTestService extends MDBBlacktieService implements javax.
 
     public Response tpservice(TPSVCINFO svcinfo) throws ConnectionException, ConfigurationException {
         X_OCTET rcvd = (X_OCTET) svcinfo.getBuffer();
-        X_OCTET buffer = (X_OCTET) svcinfo.getConnection().tpalloc("X_OCTET", null, rcvd.getByteArray().length);
+        X_OCTET buffer = (X_OCTET) svcinfo.getConnection().tpalloc("X_OCTET", null);
         buffer.setByteArray(rcvd.getByteArray());
         return new Response(Connection.TPSUCCESS, 0, buffer, 0);
     }

@@ -43,7 +43,7 @@ public class CreditBean implements CreditRemote {
     @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public String credit(long acct_no, short amount) {
         log.info("Credit called: acct_no: " + acct_no + " amount: " + amount);
-        return "CREDITTED";
+        return "CREDITTED\0";
     }
 
 }

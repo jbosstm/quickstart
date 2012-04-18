@@ -43,6 +43,6 @@ public class DebitBean implements DebitRemote {
     @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public String debit(long acct_no, short amount) {
         log.info("Debit called: acct_no: " + acct_no + " amount: " + amount);
-        return "DEBITTED";
+        return "DEBITTED\0";
     }
 }

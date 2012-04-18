@@ -63,7 +63,7 @@ public class CreditAdapterService extends MDBBlacktieService implements javax.jm
         }
         log.trace("Returning: " + resp);
 
-        X_OCTET buffer = (X_OCTET) svcinfo.getConnection().tpalloc("X_OCTET", null, resp.length() + 1);
+        X_OCTET buffer = (X_OCTET) svcinfo.getConnection().tpalloc("X_OCTET", null);
         buffer.setByteArray(resp.getBytes());
         return new Response(Connection.TPSUCCESS, 0, buffer, 0);
     }
