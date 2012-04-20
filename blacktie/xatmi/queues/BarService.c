@@ -18,7 +18,7 @@
 #include <stdlib.h>
 
 #include "xatmi.h"
-#include "btxatmi.h"
+#include "btqueue.h"
 #include "btlogger.h"
 #include "string.h"
 
