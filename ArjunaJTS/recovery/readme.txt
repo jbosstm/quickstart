@@ -106,9 +106,9 @@ And the example resource prints out the following when it is asked to commit:
 
 You will see similar paired ouput lines corresponding to ExampleXAResource2.
 
-NOTE: You may also see, intermittantly, an org.omg.CORBA.OBJECT_NOT_EXIST exception trace on the console.
+NOTE: You may also see, intermittently, an org.omg.CORBA.OBJECT_NOT_EXIST exception trace on the console.
 Although recovery has still taken place the warning is not good (there is a JIRA for it and should be fixed
-for final). The exception sometimes results in the system moving the log record to an
+for final). The exception sometimes, though not always, results in the system moving the log record to an
 AssumedCompleteTransaction directory (after the next recovery pass).
 
 When you notice both resources have recovered you can end the demonstration by pressing the enter key.

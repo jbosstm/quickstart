@@ -39,7 +39,7 @@ public class ExampleXAResourceRecovery implements XAResourceRecovery {
     /**
      * Initialise with all properties required to create the resource(s).
      * 
-     * @param String p An arbitrary string from which initialization data is obtained.
+     * @param p An arbitrary string from which initialization data is obtained.
      * 
      * @return <code>true</code> if initialization happened successfully, <code>false</code> otherwise.
      */

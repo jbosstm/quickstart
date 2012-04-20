@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.jboss.narayana.quickstart.jts</groupId>
+    <artifactId>narayana-quickstarts-jts</artifactId>
+    <version>5.0.0.M2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <description>
+	Example of how to implement XA recovery. Refer to the readme file for more details.
+	</description>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jts-recovery</artifactId>
+  <packaging>jar</packaging>
+  <name>JTS recovery</name>
+
+  <dependencies>
+    <!-- For logging -->
+    <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <version>3.1.0.GA</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jacorb</groupId>
+      <artifactId>jacorb</artifactId>
+      <version>2.3.1.jbossorg-1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>1.5.6</version>
+    </dependency>
+  </dependencies>
+</project>
