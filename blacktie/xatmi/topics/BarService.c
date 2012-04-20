@@ -21,14 +21,16 @@
 #include "btlogger.h"
 #include "string.h"
 #include "btservice.h"
+#include "btserver.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 EXPORT_SERVICE void BAR(TPSVCINFO * svcinfo) {
-	btlogger((char*) "topic service BAR called  - svc: %s data %s len: %d flags: %d",
-			svcinfo->name, svcinfo->data, svcinfo->len, svcinfo->flags);
+       int serverid = getServerId();
+       btlogger((char*) "server-%d bar called  - svc: %s data %s len: %d flags: %d",
+                       serverid, svcinfo->name, svcinfo->data, svcinfo->len, svcinfo->flags);
 }
 #ifdef __cplusplus
 }
