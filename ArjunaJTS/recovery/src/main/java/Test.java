@@ -22,6 +22,8 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.transaction.Transaction;
 import javax.transaction.UserTransaction;
@@ -37,16 +39,21 @@ import com.arjuna.orbportability.ORB;
 import com.arjuna.orbportability.RootOA;
 
 public class Test {
+    private static String RECOVERY_STORE = AbstractExampleXAResource.DATA_DIR + "tx-object-store";
+
     public static void main(String[] args) throws Exception {
 
         boolean crash = false;
         boolean recover = false;
+        boolean auto = false;
 
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-crash"))
                 crash = true;
             if (args[i].equals("-recover"))
                 recover = true;
+            if (args[i].equals("-auto"))
+                auto = true;
         }
 
         if (!crash && !recover) {
@@ -59,15 +66,15 @@ public class Test {
             arjPropertyManager.getCoordinatorEnvironmentBean().setDefaultTimeout(0);
             recoveryPropertyManager.getRecoveryEnvironmentBean().setPeriodicRecoveryPeriod(10);
 
-            arjPropertyManager.getObjectStoreEnvironmentBean().setObjectStoreDir("tx-object-store");
+            arjPropertyManager.getObjectStoreEnvironmentBean().setObjectStoreDir(RECOVERY_STORE);
 
             ObjectStoreEnvironmentBean communicationStoreObjectStoreEnvironmentBean = com.arjuna.common.internal.util.propertyservice.BeanPopulator
                     .getNamedInstance(com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean.class, "communicationStore");
-            communicationStoreObjectStoreEnvironmentBean.setObjectStoreDir("tx-object-store");
-            
+            communicationStoreObjectStoreEnvironmentBean.setObjectStoreDir(RECOVERY_STORE);
+
             ObjectStoreEnvironmentBean stateStoreObjectStoreEnvironmentBean = com.arjuna.common.internal.util.propertyservice.BeanPopulator
                     .getNamedInstance(com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean.class, "stateStore");
-            stateStoreObjectStoreEnvironmentBean.setObjectStoreDir("tx-object-store");
+            stateStoreObjectStoreEnvironmentBean.setObjectStoreDir(RECOVERY_STORE);
 
             ORB myORB = ORB.getInstance("test");
             RootOA myOA = OA.getRootOA(myORB);
@@ -93,6 +100,16 @@ public class Test {
 
                 ut.commit();
             } else {
+                if (auto) {
+                    // wait long enough for recovery (80 seconds should suffice)
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            Runtime.getRuntime().halt(0);
+                        }
+                    }, 80000);
+                }
+
                 System.out.print("Press enter after recovery is complete to shutdown: ");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 reader.readLine();

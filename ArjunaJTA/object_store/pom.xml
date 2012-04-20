@@ -13,4 +13,13 @@
   <artifactId>object-store</artifactId>
   <packaging>jar</packaging>
   <name>Configuring the Object Store</name>
+
+  <dependencies>
+    <!-- For logging -->
+    <dependency>
+    <groupId>org.jboss.logging</groupId>
+    <artifactId>jboss-logging</artifactId>
+    <version>3.1.0.GA</version>
+    </dependency>
+  </dependencies>
 </project>

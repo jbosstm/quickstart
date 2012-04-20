@@ -36,18 +36,20 @@ import javax.transaction.xa.Xid;
 import com.arjuna.ats.arjuna.common.Uid;
 
 public abstract class AbstractExampleXAResource implements XAResource {
+    static String DATA_DIR = "target/";
+
     private boolean recovered;
     private int timeout = 10;
 
     public AbstractExampleXAResource(boolean recovered) {
-        System.out.println(this.getClass().getName() + ": " + " (Constructor) recovered = " + recovered);
+ //       System.out.println(this.getClass().getName() + ": " + " (Constructor) recovered = " + recovered);
         this.recovered = recovered;
     }
 
     /**
      * 
-     * @param param1 <description>
-     * @param param2 <description>
+     * @param xid <description>
+     * @param flags <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public void start(Xid xid, int flags) throws XAException {
@@ -56,8 +58,8 @@ public abstract class AbstractExampleXAResource implements XAResource {
 
     /**
      * 
-     * @param param1 <description>
-     * @param param2 <description>
+     * @param xid <description>
+     * @param flags <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public void end(Xid xid, int flags) throws XAException {
@@ -66,19 +68,14 @@ public abstract class AbstractExampleXAResource implements XAResource {
 
     /**
      * 
-     * @param param1 <description>
+     * @param xid <description>
      * @return <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public synchronized int prepare(Xid xid) throws XAException {
-        System.out.println(this.getClass().getName() + ": " + "prepare " + xid);
+        System.out.println("******: " + this.getClass().getName() + ": " + "PREPARE " + xid);
 
-        int i = 2;
-        if (i == 1) {
-            throw (new XAException(XAException.XA_RBROLLBACK));
-        }
-
-        File prepared = new File(this.getClass().getName() + ".xid_");
+        File prepared = new File(DATA_DIR + this.getClass().getName() + ".xid_");
         try {
             prepared.createNewFile();
             final int formatId = xid.getFormatId();
@@ -103,26 +100,27 @@ public abstract class AbstractExampleXAResource implements XAResource {
 
     /**
      * 
-     * @param param1 <description>
-     * @param param2 <description>
+     * @param xid <description>
+     * @param onePhase <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public synchronized void commit(Xid xid, boolean onePhase) throws XAException {
-        System.out.println(this.getClass().getName() + ": " + "commit,xid=" + xid + ",onePhase=" + onePhase);
+        System.out.println("******\n" + this.getClass().getName() + ": " + "commit,xid=" + xid + ",onePhase=" + onePhase);
 
         if (!recovered) {
             Runtime.getRuntime().halt(0);
         }
 
-        File file = new File(this.getClass().getName() + ".xid_");
+        File file = new File(DATA_DIR + this.getClass().getName() + ".xid_");
         if (file.exists()) {
-            file.delete();
+            if (!file.delete())
+                throw new XAException("Could not removed committed state");
         }
     }
 
     /**
      * 
-     * @param param1 <description>
+     * @param xid <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public synchronized void rollback(Xid xid) throws XAException {
@@ -131,7 +129,8 @@ public abstract class AbstractExampleXAResource implements XAResource {
         File prepared = new File(this.getClass().getName() + ".xid_");
         File committed = new File(this.getClass().getName() + ".xid");
         if (prepared.exists()) {
-            prepared.renameTo(committed);
+            if (!prepared.renameTo(committed))
+                throw new XAException("Could not rename prepared state");
         } else {
             try {
                 committed.createNewFile();
@@ -143,25 +142,27 @@ public abstract class AbstractExampleXAResource implements XAResource {
 
     /**
      * 
-     * @param param1 <description>
+     * @param xid <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public void forget(Xid xid) throws XAException {
         System.out.println(this.getClass().getName() + ": " + "forget");
+        // an actual resource would ned to look up the relevant file and remove it
+        File file = new File(DATA_DIR + this.getClass().getName() + ".xid_");
     }
 
     /**
      * 
-     * @param param1 <description>
+     * @param flag <description>
      * @return <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public synchronized Xid[] recover(int flag) throws XAException {
-        System.out.println(this.getClass().getName() + ": " + "recover");
+//        System.out.println(this.getClass().getName() + ": " + "recover");
 
         List<Xid> xids = new ArrayList<Xid>();
+        File file = new File(DATA_DIR + this.getClass().getName() + ".xid_");
 
-        File file = new File(System.getProperty("user.dir") + "/" + this.getClass().getName() + ".xid_");
         if (file.exists()) {
 
             try {
@@ -204,7 +205,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
                         stringBuilder.append(new String(Arrays.copyOfRange(gtrid, Uid.UID_SIZE, gtrid_length)));
                         stringBuilder.append(", branch_uid=");
                         stringBuilder.append(new Uid(bqual));
-                        ;
+
                         stringBuilder.append(", subordinatenodename=");
 
                         int offset = Uid.UID_SIZE + 4;
@@ -225,22 +226,21 @@ public abstract class AbstractExampleXAResource implements XAResource {
                 System.err.println("expect recovery on " + xid);
                 fis.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
 
-        return xids.toArray(new Xid[0]);
+        return xids.toArray(new Xid[xids.size()]); //new Xid[0];
     }
 
     /**
      * 
-     * @param param1 <description>
+     * @param other <description>
      * @return <description>
      * @exception javax.transaction.xa.XAException <description>
      */
     public boolean isSameRM(XAResource other) throws XAException {
-        System.out.println(this.getClass().getName() + ": " + "isSameRM");
+//        System.out.println(this.getClass().getName() + ": " + "isSameRM");
         return (false);
     }
 
@@ -256,7 +256,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
 
     /**
      * 
-     * @param param1 <description>
+     * @param seconds <description>
      * @return <description>
      * @exception javax.transaction.xa.XAException <description>
      */
