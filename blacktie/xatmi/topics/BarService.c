@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 EXPORT_SERVICE void BAR(TPSVCINFO * svcinfo) {
-	btlogger((char*) "server-%d bar called  - svc: %s data %s len: %d flags: %d",
+	btlogger((char*) "topic service BAR called  - svc: %s data %s len: %d flags: %d",
 			svcinfo->name, svcinfo->data, svcinfo->len, svcinfo->flags);
 }
 #ifdef __cplusplus
