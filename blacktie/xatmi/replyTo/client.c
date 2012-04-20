@@ -24,7 +24,7 @@
 #include "btlogger.h"
 
 #include "message.h"
-#include "AtmiBrokerServerControl.h"
+#include "btserver.h"
 
 #ifdef WIN32
 #include "windows.h"

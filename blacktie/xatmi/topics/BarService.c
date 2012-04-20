@@ -21,16 +21,14 @@
 #include "btlogger.h"
 #include "string.h"
 #include "btservice.h"
-#include "AtmiBrokerServerControl.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 EXPORT_SERVICE void BAR(TPSVCINFO * svcinfo) {
-	int serverid = getServerId();
 	btlogger((char*) "server-%d bar called  - svc: %s data %s len: %d flags: %d",
-			serverid, svcinfo->name, svcinfo->data, svcinfo->len, svcinfo->flags);
+			svcinfo->name, svcinfo->data, svcinfo->len, svcinfo->flags);
 }
 #ifdef __cplusplus
 }
