@@ -21,7 +21,7 @@
 
 #include "xatmi.h"
 #include "tx.h"
-#include "btxatmi.h"
+#include "btqueue.h"
 
 #include "btlogger.h"
 
