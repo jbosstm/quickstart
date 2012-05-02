@@ -2,6 +2,9 @@
 .settings/
 .project
 
+*.iml
+.idea
+
 target/
 
 instantclient_11_2/
