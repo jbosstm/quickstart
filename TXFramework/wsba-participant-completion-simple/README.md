@@ -13,7 +13,7 @@ This example demonstrates the deployment of a WS-BA (WS Business Activity) enabl
 
 The example uses the annotation support provided by the TXFramework. The TXFramwork provides annotation support for
 writing transactional applications. This particular example shows how it can be used to write a WS-BA application.
-However, the TXFramework provides support for other Transaction protocols, such as REST-AT and WS-BA.
+However, the TXFramework provides support for other Transaction protocols, such as REST-AT and WS-AT.
 See the other TXFramework quickstarts for more examples and the README.md file in the directory above, for a more complete
 description of what the TXFramework provides.
 

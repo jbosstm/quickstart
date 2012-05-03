@@ -59,7 +59,9 @@ public class Client implements RestaurantServiceAT {
         restaurant = service.getPort(portName, RestaurantServiceAT.class);
 
         /*
-         * Add client handler chain
+         * Add client handler chain so that XTS can add the transaction context to the SOAP messages.
+         *
+         * This will be automatically added by the TXFramework in the future.
          */
         BindingProvider bindingProvider = (BindingProvider) restaurant;
         List<Handler> handlers = new ArrayList<Handler>(1);
