@@ -22,5 +22,6 @@
     </build>
     <modules>
         <module>wsat-simple</module>
+        <module>wsba-participant-completion-simple</module>
     </modules>
 </project>
