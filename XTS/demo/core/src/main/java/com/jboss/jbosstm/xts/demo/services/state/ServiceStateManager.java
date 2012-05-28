@@ -71,7 +71,9 @@ public abstract class ServiceStateManager<T extends ServiceState> {
      */
     protected void removeState(Object txId)
     {
-        transactions.remove(txId);
+        if(txId != null) {
+            transactions.remove(txId);
+        }
     }
 
     /**
