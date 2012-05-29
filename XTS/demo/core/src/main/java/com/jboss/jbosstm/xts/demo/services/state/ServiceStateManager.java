@@ -201,6 +201,9 @@ public abstract class ServiceStateManager<T extends ServiceState> {
     {
         File stateFile = new File(getStateFilename());
         File shadowFile = new File(getShadowStateFilename());
+        if(stateFile.exists()) {
+            stateFile.delete();
+        }
         shadowFile.renameTo(stateFile);
     }
 
