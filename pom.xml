@@ -131,5 +131,7 @@
     <module>rest-tx</module>
     <module>TXBridge</module>
     <module>XTS</module>
+    <!-- Currently depends on the XTS demo -->
+    <module>TXBridge</module>
   </modules>
 </project>

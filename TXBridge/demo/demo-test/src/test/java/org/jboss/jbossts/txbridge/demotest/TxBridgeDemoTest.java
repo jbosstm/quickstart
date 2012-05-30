@@ -60,12 +60,9 @@ import java.util.zip.ZipFile;
 public class TxBridgeDemoTest {
     private static final Logger log = Logger.getLogger(TxBridgeDemoTest.class);
 
-    private static final String XTS_DEMO_DIR = "../../XTS/xts-install/demo/build/";
-    private static final String XTS_DEMO_ARCHIVE = "xts-demo.ear";
-
-    private static final String TXBRIDGE_DEMO_DIR = "../demo/build/";
-    private static final String TXBRIDGE_DEMO_SERVICE_ARCHIVE = "txbridge-demo-service.jar";
-    private static final String TXBRIDGE_DEMO_CLIENT_ARCHIVE = "txbridge-demo-client.war";
+    private static final String XTS_DEMO_ARCHIVE = "../../../XTS/demo/ear/target/xts-demo-ear-5.0.0.M2-SNAPSHOT.ear";
+    private static final String TXBRIDGE_DEMO_SERVICE_ARCHIVE = "../service/target/txbridge-demo-service.jar";
+    private static final String TXBRIDGE_DEMO_CLIENT_ARCHIVE = "../client/target/txbridge-demo-client.war";
 
     private static final String RESULT_TITLE = "Transaction Result";
     private static final String TRANSACTION_FINISHED = "Transaction finished OK";
@@ -91,21 +88,21 @@ public class TxBridgeDemoTest {
     @Deployment(name = XTS_DEMO_ARCHIVE, testable = false, order = 1)
     public static Archive<?> createXTSDemoArchive() throws Exception {
         Archive<?> archive = ShrinkWrap.create(ZipImporter.class, XTS_DEMO_ARCHIVE)
-                .importFrom(new ZipFile(XTS_DEMO_DIR + XTS_DEMO_ARCHIVE)).as(EnterpriseArchive.class);
+                .importFrom(new ZipFile(XTS_DEMO_ARCHIVE)).as(EnterpriseArchive.class);
         return archive;
     }
 
     @Deployment(name = TXBRIDGE_DEMO_SERVICE_ARCHIVE, testable = false, order = 2)
     public static Archive<?> createTxBridgeDemoServiceArchive() throws Exception {
         Archive<?> archive = ShrinkWrap.create(ZipImporter.class, TXBRIDGE_DEMO_SERVICE_ARCHIVE)
-                .importFrom(new ZipFile(TXBRIDGE_DEMO_DIR + TXBRIDGE_DEMO_SERVICE_ARCHIVE)).as(JavaArchive.class);
+                .importFrom(new ZipFile(TXBRIDGE_DEMO_SERVICE_ARCHIVE)).as(JavaArchive.class);
         return archive;
     }
 
     @Deployment(name = TXBRIDGE_DEMO_CLIENT_ARCHIVE, testable = false, order = 3)
     public static Archive<?> createTxBridgeDemoClientArchive() throws Exception {
         Archive<?> archive = ShrinkWrap.create(ZipImporter.class, TXBRIDGE_DEMO_CLIENT_ARCHIVE)
-                .importFrom(new ZipFile(TXBRIDGE_DEMO_DIR + TXBRIDGE_DEMO_CLIENT_ARCHIVE)).as(WebArchive.class);
+                .importFrom(new ZipFile(TXBRIDGE_DEMO_CLIENT_ARCHIVE)).as(WebArchive.class);
         return archive;
     }
 
