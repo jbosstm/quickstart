@@ -10,14 +10,14 @@
     <target name="_extract-gcc" depends="init" unless="is-msvc">
         <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" verbose="true" usetimestamp="true" skipexisting="false"/> -->
         <exec executable="sh">
-            <arg line="-c &quot;tar xfz ${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/blacktie-${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
+            <arg line="-c &quot;tar xfz ${BLACKTIE_DIST_HOME}/blacktie-${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
         </exec>
         <property name="ESC_BT_HOME" value="${BT_HOME}/"/>
     </target>
     <target name="_extract-msvc" depends="init" if="is-msvc">
         <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" verbose="true" usetimestamp="true" skipexisting="false"/> -->
         <unzip dest="${BT_HOME}">
-            <fileset dir="${user.home}/.m2/repository/org/jboss/narayana/blacktie/blacktie/${VERSION}/">
+            <fileset dir="${BLACKTIE_DIST_HOME}/">
                 <include name="blacktie-${VERSION}*-bin.zip"/>
             </fileset>
         </unzip>
