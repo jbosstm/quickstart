@@ -32,7 +32,7 @@ echo "Started server"
 
 rem CREATE BLACKTIE DISTRIBUTION
 for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
-call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final
+call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME%
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem RUN THE SAMPLES
