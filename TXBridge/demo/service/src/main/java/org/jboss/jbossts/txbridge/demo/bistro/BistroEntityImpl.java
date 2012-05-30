@@ -23,8 +23,6 @@
  */
 package org.jboss.jbossts.txbridge.demo.bistro;
 
-import org.jboss.logging.Logger;
-
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -41,8 +39,6 @@ import javax.persistence.GeneratedValue;
 @Table(name = "bistros")
 public class BistroEntityImpl implements Serializable
 {
-	private static Logger log = Logger.getLogger(BistroEntityImpl.class);
-
 	private int id;
 	private int bookingCount;
 
