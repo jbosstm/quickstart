@@ -39,7 +39,7 @@
 
         <% if(null != request.getAttribute("result")) { %>
         <!-- tx result panel -->
-        <p>Transaction Result: <%= request.getAttribute("result") %></p>
+		<p><span class="result_title">Transaction Result:</span> <span class="result"><%= request.getAttribute("result") %></span></p>
         <% } // end if %>
 
         <p>Number of seats to book:
