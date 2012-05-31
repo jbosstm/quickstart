@@ -231,7 +231,7 @@ public class BasicClient extends HttpServlet
     private Restaurant createRestaurantClient() throws MalformedURLException
     {
         //Obtain service
-        URL wsdlLocation = new URL("http://localhost:8080/xtsdemowebservices/RestaurantServiceAT?wsdl");
+        URL wsdlLocation = new URL("http://localhost:8080/xts-demo-webservices/RestaurantServiceAT?wsdl");
         QName serviceName = new QName("http://www.jboss.com/jbosstm/xts/demo/Restaurant", "RestaurantServiceATService");
         Service service = Service.create(wsdlLocation, serviceName);
 

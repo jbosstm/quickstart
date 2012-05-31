@@ -87,21 +87,21 @@ public class TxBridgeDemoTest {
 
     @Deployment(name = XTS_DEMO_ARCHIVE, testable = false, order = 1)
     public static Archive<?> createXTSDemoArchive() throws Exception {
-        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, XTS_DEMO_ARCHIVE)
+        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, "xts-demo-ear-5.0.0.M2-SNAPSHOT.ear")
                 .importFrom(new ZipFile(XTS_DEMO_ARCHIVE)).as(EnterpriseArchive.class);
         return archive;
     }
 
     @Deployment(name = TXBRIDGE_DEMO_SERVICE_ARCHIVE, testable = false, order = 2)
     public static Archive<?> createTxBridgeDemoServiceArchive() throws Exception {
-        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, TXBRIDGE_DEMO_SERVICE_ARCHIVE)
+        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, "txbridge-demo-service.jar")
                 .importFrom(new ZipFile(TXBRIDGE_DEMO_SERVICE_ARCHIVE)).as(JavaArchive.class);
         return archive;
     }
 
     @Deployment(name = TXBRIDGE_DEMO_CLIENT_ARCHIVE, testable = false, order = 3)
     public static Archive<?> createTxBridgeDemoClientArchive() throws Exception {
-        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, TXBRIDGE_DEMO_CLIENT_ARCHIVE)
+        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, "txbridge-demo-client.war")
                 .importFrom(new ZipFile(TXBRIDGE_DEMO_CLIENT_ARCHIVE)).as(WebArchive.class);
         return archive;
     }
