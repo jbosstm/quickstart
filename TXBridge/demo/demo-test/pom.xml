@@ -11,19 +11,33 @@
 
     <properties>
         <version.jbossas>7.1.1.Final</version.jbossas>
-        <version.arquillian.junit>1.0.0.Final</version.arquillian.junit>
-        <version.arquillian.drone>1.0.0.Final</version.arquillian.drone>
-        <version.arquillian.ajocado.junit>1.0.0.CR2</version.arquillian.ajocado.junit>
+        <version.org.jboss.arquillian>1.0.0.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian.drone>1.0.0.Final</version.org.jboss.arquillian.drone>
+        <version.org.jboss.arquillian.graphene>1.0.0.Final</version.org.jboss.arquillian.graphene>
         <version.junit>4.8.2</version.junit>
+
+        <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+        <jvm.args.ip.server>${jvm.args.ip}</jvm.args.ip.server>
+        <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
+        <node0>127.0.0.1</node0>
+        <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Arquillian Core dependencies -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version.org.jboss.arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- Arquillian Drone dependencies and Selenium dependencies -->
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
                 <artifactId>arquillian-drone-bom</artifactId>
-                <version>${version.arquillian.drone}</version>
+                <version>${version.org.jboss.arquillian.drone}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -49,14 +63,14 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <version>${version.arquillian.junit}</version>
+            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.arquillian.ajocado</groupId>
-            <artifactId>arquillian-ajocado-junit</artifactId>
-            <version>${version.arquillian.ajocado.junit}</version>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>arquillian-graphene</artifactId>
+            <version>${version.org.jboss.arquillian.graphene}</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
@@ -112,10 +126,36 @@
                             <directory>${basedir}</directory>
                             <includes>
                                 <include>restaurantManagerState</include>
+                                <include>theatreManagerState</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
                     </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.11</version>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <enableAssertions>true</enableAssertions>
+                    <!--<workingDirectory>${basedir}/target/workdir</workingDirectory> &lt;!&ndash; Work in submodule's own dir. &ndash;&gt;-->
+
+                    <!-- Forked process timeout -->
+                    <forkedProcessTimeoutInSeconds>${surefire.forked.process.timeout}</forkedProcessTimeoutInSeconds>
+                    <!-- System properties to forked surefire JVM which runs clients. -->
+                    <argLine>${jvm.args.ip.client}</argLine>
+
+                    <!-- System properties passed to test cases -->
+                    <systemPropertyVariables>
+                        <node0>${node0}</node0>
+                        <!--
+                            Used in arquillian.xml - arguments for all JBoss AS instances.
+                            System properties are duplicated here until ARQ-647 is implemented.
+                        -->
+                        <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip.server} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}</server.jvm.args>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
@@ -135,6 +175,15 @@
                     <scope>test</scope>
                 </dependency>
             </dependencies>
+        </profile>
+
+        <profile>
+            <id>ipv6</id>
+            <activation><property><name>ipv6</name></property></activation>
+            <properties>
+                <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
+                <node0>[::1]</node0>
+            </properties>
         </profile>
     </profiles>
 </project>
