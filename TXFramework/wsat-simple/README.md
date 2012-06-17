@@ -41,7 +41,7 @@ Please not that this documentation focuses on developing applications *without* 
 
 The application consists of a single JAX-WS web service that is deployed within a WAR archive. It is tested with a JBoss Arquillian enabled JUnit test.
 
-When running the `org.jboss.as.quickstarts.wsat.simple.ClientTest#testCommit()` method, the following steps occur:
+When running the `org.jboss.narayana.quickstarts.wsat.simple.ClientTest#testCommit()` method, the following steps occur:
 
 1. A new Atomic Transaction (AT) is created by the client.
 2. An operation on a WS-AT enabled Web service is invoked by the client.
@@ -100,31 +100,32 @@ The following expected output should appear. Note there will be some other log m
 
 Test commit:
 
-    14:06:28,208 INFO  [stdout] (management-handler-threads - 14) Starting 'testCommit'. This test invokes a WS within an AT. The AT is later committed, which causes the back-end resource(s) to be committed.
-    14:06:28,209 INFO  [stdout] (management-handler-threads - 14) [CLIENT] Creating a new WS-AT User Transaction
-    14:06:28,209 INFO  [stdout] (management-handler-threads - 14) [CLIENT] Beginning Atomic Transaction (All calls to Web services that support WS-AT wil be included in this transaction)
-    14:06:28,532 INFO  [stdout] (management-handler-threads - 14) [CLIENT] invoking makeBooking() on WS
-    14:06:29,168 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Restaurant service invoked to make a booking
-    14:06:29,168 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Enlisting a Durable2PC participant into the AT
-    14:06:29,410 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Invoking the back-end business logic
-    14:06:29,410 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] makeBooking called on backend resource.
-    14:06:29,411 INFO  [stdout] (management-handler-threads - 14) [CLIENT] committing Atomic Transaction (This will cause the AT to complete successfully)
-    14:06:29,974 INFO  [stdout] (TaskWorker-3) [SERVICE] Prepare called on participant, about to prepare the back-end resource
-    14:06:29,974 INFO  [stdout] (TaskWorker-3) [SERVICE] prepare called on backend resource.
-    14:06:29,974 INFO  [stdout] (TaskWorker-3) [SERVICE] back-end resource prepared, participant votes prepared
-    14:06:30,560 INFO  [stdout] (TaskWorker-3) [SERVICE] all participants voted 'prepared', so coordinator tells the participant to commit
-    14:06:30,560 INFO  [stdout] (TaskWorker-3) [SERVICE] commit called on backend resource.
+    14:46:31,618 INFO  [stdout] (http--127.0.0.1-8080-1) Starting 'testCommit'. This test invokes a WS within an AT. The AT is later committed, which causes the back-end resource(s) to be committed.
+    14:46:31,618 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] Creating a new WS-AT User Transaction
+    14:46:31,619 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] Beginning Atomic Transaction (All calls to Web services that support WS-AT wil be included in this transaction)
+    14:46:31,997 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] invoking makeBooking() on WS
+    14:46:32,284 INFO  [stdout] (http--127.0.0.1-8080-3) [SERVICE] Restaurant service invoked to make a booking
+    14:46:32,284 INFO  [stdout] (http--127.0.0.1-8080-3) [SERVICE] Invoking the back-end business logic
+    14:46:32,284 INFO  [stdout] (http--127.0.0.1-8080-3) [SERVICE] makeBooking called on backend resource.
+    14:46:32,288 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] committing Atomic Transaction (This will cause the AT to complete successfully)
+    14:46:32,661 INFO  [stdout] (TaskWorker-2) [SERVICE] Prepare called on participant, about to prepare the back-end resource
+    14:46:32,662 INFO  [stdout] (TaskWorker-2) [SERVICE] prepare called on backend resource.
+    14:46:32,662 INFO  [stdout] (TaskWorker-2) [SERVICE] back-end resource prepared, participant votes prepared
+    14:46:32,867 INFO  [stdout] (TaskWorker-2) [SERVICE] all participants voted 'prepared', so coordinator tells the participant to commit
+    14:46:32,868 INFO  [stdout] (TaskWorker-2) [SERVICE] commit called on backend resource.
 
 Test rollback:
 
-    14:06:31,163 INFO  [stdout] (management-handler-threads - 13) Starting 'testRollback'. This test invokes a WS within an AT. The AT is later rolled back, which causes the back-end resource(s) to be rolled back.
-    14:06:31,163 INFO  [stdout] (management-handler-threads - 13) [CLIENT] Creating a new WS-AT User Transaction
-    14:06:31,164 INFO  [stdout] (management-handler-threads - 13) [CLIENT] Beginning Atomic Transaction (All calls to Web services that support WS-AT wil be included in this transaction)
-    14:06:31,461 INFO  [stdout] (management-handler-threads - 13) [CLIENT] invoking makeBooking() on WS
-    14:06:32,094 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Restaurant service invoked to make a booking
-    14:06:32,094 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Enlisting a Durable2PC participant into the AT
-    14:06:32,297 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Invoking the back-end business logic
-    14:06:32,322 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] makeBooking called on backend resource.
-    14:06:32,324 INFO  [stdout] (management-handler-threads - 13) [CLIENT] rolling back Atomic Transaction (This will cause the AT and thus the enlisted back-end resources to rollback)
-    14:06:32,818 INFO  [stdout] (TaskWorker-1) [SERVICE] one or more participants voted 'aborted' or a failure occurred, so coordinator tells the participant to rollback
-    14:06:32,818 INFO  [stdout] (TaskWorker-1) [SERVICE] rollback called on backend resource.
+    14:46:31,618 INFO  [stdout] (http--127.0.0.1-8080-1) Starting 'testCommit'. This test invokes a WS within an AT. The AT is later committed, which causes the back-end resource(s) to be committed.
+    14:46:31,618 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] Creating a new WS-AT User Transaction
+    14:46:31,619 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] Beginning Atomic Transaction (All calls to Web services that support WS-AT wil be included in this transaction)
+    14:46:31,997 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] invoking makeBooking() on WS
+    14:46:32,284 INFO  [stdout] (http--127.0.0.1-8080-3) [SERVICE] Restaurant service invoked to make a booking
+    14:46:32,284 INFO  [stdout] (http--127.0.0.1-8080-3) [SERVICE] Invoking the back-end business logic
+    14:46:32,284 INFO  [stdout] (http--127.0.0.1-8080-3) [SERVICE] makeBooking called on backend resource.
+    14:46:32,288 INFO  [stdout] (http--127.0.0.1-8080-1) [CLIENT] committing Atomic Transaction (This will cause the AT to complete successfully)
+    14:46:32,661 INFO  [stdout] (TaskWorker-2) [SERVICE] Prepare called on participant, about to prepare the back-end resource
+    14:46:32,662 INFO  [stdout] (TaskWorker-2) [SERVICE] prepare called on backend resource.
+    14:46:32,662 INFO  [stdout] (TaskWorker-2) [SERVICE] back-end resource prepared, participant votes prepared
+    14:46:32,867 INFO  [stdout] (TaskWorker-2) [SERVICE] all participants voted 'prepared', so coordinator tells the participant to commit
+    14:46:32,868 INFO  [stdout] (TaskWorker-2) [SERVICE] commit called on backend resource.
