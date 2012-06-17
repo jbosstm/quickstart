@@ -40,7 +40,7 @@ that ships with the Narayana project. The latet version can be downloaded from h
 The application consists of a single JAX-WS web service that is deployed within a war archive. It is tested with a JBoss
 Arquillian enabled JUnit test.
 
-When running the org.jboss.as.quickstarts.wsba.participantcompletion.simple.ClientTest#testSuccess() method, the
+When running the org.jboss.narayana.quickstarts.wsba.participantcompletion.simple.ClientTest#testSuccess() method, the
 following steps occur:
 
 1. A new Business Activity is created by the client.

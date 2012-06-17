@@ -37,11 +37,11 @@ Please note that this documentation focuses on developing applications *without*
 
 The application consists of a single JAX-WS web service that is deployed within a JAR archive. It is tested with JBoss Arquillian enabled JUnit tests.
 
-The quickstart offers two tests; `org.jboss.as.quickstarts.wsat.jtabridge.tojta.BridgeToJTATest` and `org.jboss.as.quickstarts.wsat.jtabridge.fromjta.BridgeFromJTATest`. The first test (BridgeToJTATest)
+The quickstart offers two tests; `org.jboss.narayana.quickstarts.wsat.jtabridge.tojta.BridgeToJTATest` and `org.jboss.narayana.quickstarts.wsat.jtabridge.fromjta.BridgeFromJTATest`. The first test (BridgeToJTATest)
 begins a WS-AT transaction on the client side and then bridges it on the server side to a JTA transaction. The second test (BridgeFromJTATest) begins a JTA transaction on the client side and then
 bridges it to a WS-AT transaction for the Web service call. The incoming WS-AT transaction is then bridged on the server side to another JTA transaction.
 
-When running the `org.jboss.as.quickstarts.wsat.jtabridge.tojta.BridgeToJTATest#testCommit()`, the following steps occur:
+When running the `org.jboss.narayana.quickstarts.wsat.jtabridge.tojta.BridgeToJTATest#testCommit()`, the following steps occur:
 
 1. A new Atomic Transaction (WS-AT) is created by the client.
 2. An operation on a WS-AT enabled Web service is invoked by the client.
@@ -54,7 +54,7 @@ When running the `org.jboss.as.quickstarts.wsat.jtabridge.tojta.BridgeToJTATest#
 
 There is another test that shows what happens if the client decides to rollback the AT.
 
-When running the `org.jboss.as.quickstarts.wsat.jtabridge.fromjta.BridgeFromJTATest#testCommit()`, the following steps occur:
+When running the `org.jboss.narayana.quickstarts.wsat.jtabridge.fromjta.BridgeFromJTATest#testCommit()`, the following steps occur:
 
 1. A new JTA Transaction is created by the client.
 2. An operation on a WS-AT enabled Web service is invoked by the client.
