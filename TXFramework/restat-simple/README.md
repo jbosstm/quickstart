@@ -9,7 +9,7 @@ experiences with the TXFramework and of any bugs you may find. Please direct the
 What is it?
 -----------
 
-This example demonstrates the deployment of a WS-AT (WS-AtomicTransaction) enabled JAX-WS Web service bundled in a WAR
+This example demonstrates the deployment of a REST-AT (RESTful AtomicTransaction) enabled JAX-WS Web service bundled in a WAR
 archive for deployment to *JBoss AS 7*.
 
 The example uses the annotation support provided by the TXFramework. The TXFramwork provides annotation support for
@@ -20,7 +20,7 @@ description of what the TXFramework provides.
 
 In particular this example showcases the following features of the TXFramework:
 
-1. Annotation support for developing participants. Traditionally a separate REST Service needed to be developed that responded to protocol events. With the TXFramework the developer can simply annotate methods of the application, that participate in the transaction protocol. For example, a method annotated by @Commit will be invoked at the commit phase of the protocol.
+1. Annotation support for developing participants. Traditionally a separate REST Service needed to be developed that responded to protocol events. With the TXFramework the developer can simply annotate methods of the application that participate in the transaction protocol. For example, a method annotated by @Commit will be invoked at the commit phase of the protocol.
 2. Automatic participant registration. A participant is automatically registered with the transaction. Traditionally, the application needed to do this registration manually.
 3. Per-participant data-management. This allows the application to store data in a map that is tied to the transaction participant. When transaction lifecycle methods are invoked, the data for just that transaction is made available through this map.
 
@@ -42,10 +42,10 @@ The application consists of two JAX-RS web services that are deployed within a W
 
 When running the `org.jboss.narayana.quickstarts.restat#clientDrivenCommitTest()` method, the following steps occur:
 
-1. The REST-AT coordinator is invoked to begine a new REST-AT transaction.
+1. The REST-AT coordinator is invoked to begin a new REST-AT transaction (AT).
 2. An operation on a REST-AT enabled service is invoked by the client.
-3. The client side interceptor inserts the transaction id into the outgoing request.
-4. When the service receives the request, an interceptor inspects the REST-AT transaction id and enlists a participant with the REST-AT coordinator. This allows the Web Service logic to respond to protocol events, such as Commit and Rollback, via the @Prepare, @Commit and @Rollback annotated methods on the service.
+3. The client side interceptor inserts the transaction URL into the outgoing request.
+4. When the service receives the request, an interceptor inspects the REST-AT transaction url and enlists a participant with the REST-AT coordinator. This allows the Web Service logic to respond to protocol events, such as Commit and Rollback, via the @Prepare, @Commit and @Rollback annotated methods on the service.
 5. The service operation is invoked. In this case, a booking is made with the restaurant.
 6. The client can then decide to commit or rollback the AT. If the client decides to commit, the coordinator will begin the 2PC protocol. If the participant decides to rollback, all participants will be told to rollback.
 
@@ -83,8 +83,12 @@ Run the Arquillian Tests
 This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container. 
 
 1. Make sure you have started the JBoss Server as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. Type the following command to run the test goal with the following profile activated:
+2. Deploy the REST-AT coordinator:
+
+        cp <Narayana source directory>/rest-tx/webservice/target/rest-tx-web-5.0.0.M2-SNAPSHOT.war $JBOSS_HOME/standalone/deployments/
+
+3. Open a command line and navigate to the root directory of this quickstart.
+4. Type the following command to run the test goal with the following profile activated:
 
         mvn clean test -Parq-jbossas-remote 
 

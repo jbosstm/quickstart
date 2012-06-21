@@ -50,7 +50,7 @@ following steps occur:
 5. The Web service operation is invoked.
 6. The TXFramework automatically enlists a participant in this BA. This allows the Web Service logic to respond to protocol events, such as compensate and close via annotated methods (@Compensate and @Close etc).
 7. The service invokes the business logic. In this case, an email send is simulated to confirm the order.
-9. Providing the above steps where successful, the service notifies the coordinator that it has completed. The service has now made its changes visible and is not holding any locks. Allowing the service to notify completion is an optimisation that prevents the holding of locks, whilst waiting for other participants to complete. This notification is required as the Service participates in the `ParticipantCompletion` protocol.
+9. Providing the above steps were successful, the service notifies the coordinator that it has completed. The service has now made its changes visible and is not holding any locks. Allowing the service to notify completion is an optimisation that prevents the holding of locks, whilst waiting for other participants to complete. This notification is required as the Service participates in the `ParticipantCompletion` protocol.
 10. The client can then decide to complete or cancel the BA. If the client decides to complete, all participants will be told to close. If the participant decides to cancel, all participants will be told to compensate. Which for this example, results in an email being sent confirming cancellation.
 
 There is another test that shows what happens if the client cancels the BA.

@@ -67,8 +67,8 @@ run the following commands:
 Build Narayana from source
 
     git clone git://github.com/jbosstm/narayana.git
-    git checkout master
     cd narayana
+    git checkout master
     ./build.sh -DskipTests=true
 
 Obtain the source for the TXFramework enabled JBossAS and build it:
@@ -86,4 +86,8 @@ Now set your JBOSS_HOME environment variable to the location of the built JBoss 
 
     export JBOSS_HOME=~/dev/jboss-as/build/target/jboss-as-7.1.2.Final-SNAPSHOT
 
-You now have a build of JBossAS enabled for use with the TXFramework and you are now ready to run each of the quickstarts.
+You now have a build of JBossAS enabled for use with the TXFramework and you are now ready to run each of the quickstarts. Make sure you have a local copy of these quickstarts:
+
+    cd ..
+    git clone git://github.com/jbosstm/quickstart.git
+    cd quickstart/TXFramework
