@@ -70,14 +70,12 @@ Build Narayana from source
     git checkout master
     cd narayana
     ./build.sh -DskipTests=true
-    cd txframework
-    mvn install
 
 Obtain the source for the TXFramework enabled JBossAS and build it:
 
-    git clone git://github.com/paulrobinson/jboss-as.git
+    git clone git://github.com/jbosstm/jboss-as.git
     cd jboss-as
-    git checkout txframework
+    git checkout 5_BRANCH
     mvn install -DskipTests=true
 
 You will find the built version of JBoss here:
