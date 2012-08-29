@@ -49,7 +49,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
-            <artifactId>narayana-jts</artifactId>
+            <artifactId>narayana-jts-jacorb</artifactId>
             <version>5.0.0.M2-SNAPSHOT</version>
         </dependency>
         <dependency>
