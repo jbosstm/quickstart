@@ -19,6 +19,7 @@
  * @author JBoss, by Red Hat.
  */
 import org.jboss.jbossts.star.util.TxSupport;
+import org.jboss.jbossts.star.util.TxStatusMediaType;
 
 public class RestTransactionExample {
     private static final String[] authorities = {"172.17.130.188:8080", "localhost:8080"};
@@ -33,7 +34,7 @@ public class RestTransactionExample {
         txn.startTx();
 
         // verify that there is an active transaction
-        if (!txn.txStatus().equals(TxSupport.TX_ACTIVE))
+        if (!txn.txStatus().equals(TxStatusMediaType.TX_ACTIVE))
             throw new RuntimeException("A transaction should be active: " + txn.txStatus());
 
         System.out.println("transaction running: " + txn.txStatus());

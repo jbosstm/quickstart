@@ -25,8 +25,14 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>simple</artifactId>
   <version>5.0.0.M2-SNAPSHOT</version>
-  <name>RESTful Atomic Transaction Quickstart: Basic</name>
+  <name>RESTAT Quickstart: Basic</name>
   <description>Basic example of how to start and stop a REST Atomic transaction</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -56,7 +62,7 @@
   <dependencies>
     <dependency>
       <groupId>org.jboss.narayana.rts</groupId>
-      <artifactId>rest-tx-api</artifactId>
+      <artifactId>restat-util</artifactId>
       <version>5.0.0.M2-SNAPSHOT</version>
     </dependency>
   </dependencies>

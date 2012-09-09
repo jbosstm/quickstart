@@ -22,6 +22,7 @@ package quickstart;
 
 import java.net.HttpURLConnection;
 
+import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
 
 public class ParticipantRecovery {
@@ -50,14 +51,21 @@ public class ParticipantRecovery {
                 try {
                     // ask the service how many transactions it has committed since the VM started
 
-                    String cnt = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, SERVICE_URL + "/query", "GET", TxSupport.PLAIN_MEDIA_TYPE, null, null);
+                    String commitCnt = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK},
+                            SERVICE_URL + "/commits", "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+                    String abortCnt = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK},
+                            SERVICE_URL + "/aborts", "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
 
-                    if (cnt != null && !"0".equals(cnt)) {
-                        System.out.println("SUCCESS participant was recovered after " + (i * 2) + " seconds. Number of commits: " + cnt);
+                    if (commitCnt != null && !"0".equals(commitCnt)) {
+                        System.out.println("SUCCESS participant was recovered after " + (i * 2) + " seconds. Number of commits: " + commitCnt);
+                        System.exit(0);
+                    } else if (abortCnt != null && !"0".equals(abortCnt)) {
+                        System.out.println("Partial SUCCESS participant was aborted after " + (i * 2) + " seconds. Number of aborts: " + abortCnt);
                         System.exit(0);
                     }
 
-                    Thread.sleep(i * 1000);
+                    System.out.print(".");
+                    Thread.sleep(2000);
 
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -75,10 +83,10 @@ public class ParticipantRecovery {
          * Send two web service requests. Include the resource url for registering durable participation
          * in the transaction with the request
          */
-        String serviceRequest = SERVICE_URL + "?enlistURL=" + txn.enlistUrl();
+        String serviceRequest = SERVICE_URL + "?enlistURL=" + txn.getDurableParticipantEnlistmentURI();
 
-        String wId1 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxSupport.PLAIN_MEDIA_TYPE, null, null);
-        String wId2 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxSupport.PLAIN_MEDIA_TYPE, null, null);
+        String wId1 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+        String wId2 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
 
         // commit the transaction
         if ("-f".equals(opt)) {

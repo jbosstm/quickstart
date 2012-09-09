@@ -7,8 +7,14 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>recovery</artifactId>
-  <name>RESTful Atomic Transaction Quickstart: Participant Service with Recovery</name>
+  <name>RESTAT Quickstart: Participant Service with Recovery</name>
   <description>Example of how a web service can recover from failures during transaction completion</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+  </properties>
+
   <repositories>
     <!-- Jersey -->
     <repository>
@@ -20,10 +26,10 @@
     <!-- end Jersey -->
   </repositories>
   <dependencies>
-    <!-- the implementation of REST Atomic Transactions -->
+    <!-- RESTAT utils -->
     <dependency>
       <groupId>org.jboss.narayana.rts</groupId>
-      <artifactId>rest-tx-api</artifactId>
+      <artifactId>restat-util</artifactId>
       <version>5.0.0.M2-SNAPSHOT</version>
     </dependency>
     <!-- Jersey container for running participant services -->
@@ -44,4 +50,70 @@
     </dependency>
     <!-- end Jersey -->
   </dependencies>
+  <profiles>
+    <profile>
+      <id>fail</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>java</executable>
+              <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
+              <arguments>
+                <argument>-classpath</argument>
+                <classpath/>
+                <argument>quickstart.ParticipantRecovery</argument>
+                <argument>-f</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>recover</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>java</executable>
+              <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
+              <arguments>
+                <argument>-classpath</argument>
+                <classpath/>
+                <argument>quickstart.ParticipantRecovery</argument>
+                <argument>-r</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

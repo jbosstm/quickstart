@@ -7,8 +7,14 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>service</artifactId>
-  <name>RESTful Atomic Transaction Quickstart: Participant Service</name>
+  <name>RESTAT Quickstart: Participant Service</name>
   <description>Examples show how a web service can participate in a transaction</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+  </properties>
+
   <repositories>
     <!-- Jersey -->
     <repository>
@@ -38,6 +44,8 @@
           <arguments>
             <argument>-classpath</argument>
             <classpath/>
+<!--
+            <argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</argument-->
             <argument>quickstart.MultipleParticipants</argument>
           </arguments>
         </configuration>
@@ -45,10 +53,10 @@
     </plugins>
   </build>
   <dependencies>
-    <!-- the implementation of REST Atomic Transactions -->
+    <!-- REST-AT helper -->
     <dependency>
       <groupId>org.jboss.narayana.rts</groupId>
-      <artifactId>rest-tx-api</artifactId>
+      <artifactId>restat-util</artifactId>
       <version>5.0.0.M2-SNAPSHOT</version>
     </dependency>
     <!-- Jersey container for running participant services -->

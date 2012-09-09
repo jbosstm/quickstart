@@ -19,6 +19,7 @@
  * @author JBoss, by Red Hat.
  */
 import org.jboss.jbossts.star.util.TxSupport;
+import org.jboss.jbossts.star.util.TxStatusMediaType;
 
 public class MultipleTransactions {
     private static final String[] hosts = {"localhost:8080", "184.72.71.236", "jbossapp1-mmusgrov1.dev.rhcloud.com"};
@@ -34,7 +35,7 @@ public class MultipleTransactions {
 
         // verify that all the transactions are active
         for (TxSupport txn: txns)
-            if (!txn.txStatus().equals(TxSupport.TX_ACTIVE))
+            if (!txn.txStatus().equals(TxStatusMediaType.TX_ACTIVE))
                 throw new RuntimeException("A transaction should be active: " + txn.txStatus());
 
         // see how many RESTful transactions are running (there should be at least one)

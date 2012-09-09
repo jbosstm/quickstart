@@ -21,6 +21,8 @@ localhost:8080 (if you use a different host/port change the relevant url in test
 
 Eg deploying to AS7:
 cp ../../webservice/target/rest-tx-web-<version>.war <AS7>/standalone/deployments/) into a running AS7
+or
+cd ../../webservice; mvn jboss-as:deploy
 
 and then execute the run script:
 

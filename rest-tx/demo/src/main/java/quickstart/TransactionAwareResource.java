@@ -21,6 +21,7 @@
 package quickstart;
 
 import org.jboss.jbossts.star.provider.HttpResponseException;
+import org.jboss.jbossts.star.util.TxStatus;
 import org.jboss.jbossts.star.util.TxSupport;
 
 import java.io.*;
@@ -80,39 +81,33 @@ public class TransactionAwareResource {
 
         Work w = getWork(enlistUrl, index);
         if (w != null) {
-	    System.out.println("Returning old counter");
+            System.out.println("Returning old counter");
             response = Response.ok("" + ++w.counter).build();
         } else if (enlistUrl.length() == 0) {
             response = Response.ok("non transactional request. Value=" +
-				counters[index].incrementAndGet()).build();
+                    counters[index].incrementAndGet()).build();
         } else {
             int wid = workId.incrementAndGet();
             String serviceURL = info.getBaseUri() + info.getPath();
-            String workURL = serviceURL + '/' + workId;
+            String linkHeader = new TxSupport().makeTwoPhaseAwareParticipantLinkHeader(
+                    serviceURL, false, String.valueOf(workId), null);
 
-            String terminator = workURL + "/terminate";
-            String participant = workURL + "/terminator";
-
-            String pUrls = TxSupport.getParticipantUrls(terminator, participant);
-            System.out.println("Service: Enlisting " + pUrls + "\non endpoint: " + enlistUrl);
-            System.out.println("proxies: " +  System.getProperty("http.proxyHost") +
-				':' + System.getProperty("http.proxyPort"));
+            System.out.println("Service: Enlisting " + linkHeader);
 
             try {
-                new TxSupport().httpRequest(new int[]{HttpURLConnection.HTTP_CREATED}, enlistUrl,
-                        "POST", TxSupport.POST_MEDIA_TYPE, pUrls, null);
-            } catch (HttpResponseException e) {
+                new TxSupport().enlistParticipant(enlistUrl, linkHeader);
+            } catch (HttpResponseException e){
                 System.out.println("Enlist error: " + e);
-		e.printStackTrace();
+                e.printStackTrace();
                 if (e.getActualResponse() == 404)
                     return Response.status(e.getActualResponse()).entity("No such url").build();
                 else
                     return Response.status(e.getActualResponse()).
-						entity("Transaction Manager service is unavailable").build();
+                            entity("Transaction Manager service is unavailable").build();
             }
 
             w = new Work(enlistUrl, wid, index, counters[index].get() + 1);
-	    System.out.println("Added counter: " + w.wid + " " + w.counter); 
+            System.out.println("Added counter: " + w.wid + " " + w.counter);
             Work.work.put(Integer.toString(wid), w);
 
             serializeWork();
@@ -130,11 +125,11 @@ public class TransactionAwareResource {
     public Response readCounters(@QueryParam("wId") @DefaultValue("0") String wid) {
         Work w = Work.work.get(wid);
 
-	System.out.println("Work is null?: " + w == null);
+        System.out.println("Work is null?: " + w == null);
 
         if (w == null)
             return Response.ok("counter[0]=" + counters[0].get() + "<br/>counter[1]=" +
-				counters[1].get()).build();
+                    counters[1].get()).build();
         else
             return Response.ok("counter[" + w.index + "]=" + w.counter).build();
     }
@@ -146,24 +141,24 @@ public class TransactionAwareResource {
      * participants to prepare/commit/rollback their transactional work.
      */
     @PUT
-    @Path("{wId}/terminate")
+    @Path("{wId}/terminator")
     public Response terminate(@PathParam("wId") @DefaultValue("")String wId, String content) {
         System.out.println("Service: PUT request to terminate url: wId=" + wId + ", status:=" + content);
-        String status = TxSupport.getStatus(content);
+        TxStatus status = TxSupport.toTxStatus(content);
         Work w = Work.work.get(wId);
-	    System.out.println("Read counter: " + w.wid + " " + w.counter); 
+        System.out.println("Read counter: " + w.wid + " " + w.counter);
 
-	if (w == null) {
-		System.err.println("No work available");
-	}
+        if (w == null) {
+            System.err.println("No work available");
+        }
 
-        if (TxSupport.isPrepare(status)) {
-            return Response.ok(TxSupport.toStatusContent(TxSupport.PREPARED)).build();
-        } else if (TxSupport.isCommit(status)) {
+        if (status.isPrepare()) {
+            System.out.println("Service: preparing");
+        } else if (status.isCommit()) {
             if (!serializeWork()) {
-		System.err.println("Aborting transaction, could not serialize work");
+                System.err.println("Aborting transaction, could not serialize work");
                 Work.work.remove(wId);
-                return Response.ok(TxSupport.toStatusContent(TxSupport.ABORTED)).build();
+                return Response.ok(TxSupport.toStatusContent(TxStatus.TransactionRolledBack.name())).build();
             }
 
             if (wId.equals(FAIL_COMMIT)) {
@@ -171,19 +166,30 @@ public class TransactionAwareResource {
                 Runtime.getRuntime().halt(1);
             }
 
-	    System.out.println("Updating counter: " + w.index + " " + w.counter);
+            System.out.println("Updating counter: " + w.index + " " + w.counter);
             counters[w.index].set(w.counter);
             Work.work.remove(wId);
-            return Response.ok(TxSupport.toStatusContent(TxSupport.COMMITTED)).build();
-        } else if (TxSupport.isAbort(status)) {
-	    System.err.println("Participant told to abort");
+            System.out.println("Service: committing");
+        } else if (status.isAbort()) {
+            System.err.println("Participant told to abort");
             Work.work.remove(wId);
             serializeWork();
-            return Response.ok(TxSupport.toStatusContent(TxSupport.ABORTED)).build();
+            System.out.println("Service: aborting");
         } else {
-	    System.err.println("Participant received bad request");
+            System.err.println("Participant received bad request");
             return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
         }
+
+        return Response.ok(TxSupport.toStatusContent(status.name())).build();
+    }
+
+    @HEAD
+    @Path("{pId}/participant")
+    public Response getTerminator(@Context UriInfo info, @PathParam("pId") @DefaultValue("")String wId) {
+        String serviceURL = info.getBaseUri() + info.getPath();
+        String linkHeader = new TxSupport().makeTwoPhaseAwareParticipantLinkHeader(serviceURL, false, wId, null);
+
+        return Response.ok().header("Link", linkHeader).build();
     }
 
     static boolean serializeWork() {
@@ -196,7 +202,7 @@ public class TransactionAwareResource {
             oos.close();
             return true;
         } catch (IOException e) {
-	    e.printStackTrace();
+            e.printStackTrace();
             return false;
         }
 
@@ -215,7 +221,7 @@ public class TransactionAwareResource {
             ois.close();
             return true;
         } catch (Exception e) {
-	    e.printStackTrace();
+            e.printStackTrace();
             return false;
         }
     }
@@ -242,7 +248,7 @@ public class TransactionAwareResource {
         JaxrsServer.startServer(HOST, PORT);
 
         System.out.println("JAX-RS container waiting for requests on " + HOST + ":" +
-			PORT + " (for 1000 seconds) ...");
+                PORT + " (for 1000 seconds) ...");
         Thread.sleep(1000000);
 
         // shutdown the embedded JAX-RS server

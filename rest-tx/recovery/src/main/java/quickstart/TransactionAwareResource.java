@@ -22,16 +22,13 @@ package quickstart;
 
 import java.net.HttpURLConnection;
 
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.jbossts.star.provider.HttpResponseException;
+import org.jboss.jbossts.star.util.TxStatus;
 import org.jboss.jbossts.star.util.TxSupport;
 
 /**
@@ -52,6 +49,7 @@ public class TransactionAwareResource {
     public static String FAIL_COMMIT;
     private static int workId = 1;
     private static int commitCnt = 0;
+    private static int abortCnt = 0;
 
     @GET
     public Response someServiceRequest(@Context UriInfo info, @QueryParam("enlistURL") @DefaultValue("")String enlistUrl) {
@@ -59,50 +57,68 @@ public class TransactionAwareResource {
             return Response.ok("non transactional request").build();
 
         String serviceURL = info.getBaseUri() + info.getPath();
-        String workURL = serviceURL + '/' + workId;
 
-        String terminator = workURL + "/terminate";
-        String participant = workURL + "/terminator";
+        String linkHeader = new TxSupport().makeTwoPhaseAwareParticipantLinkHeader(
+                serviceURL, false, String.valueOf(workId), null);
 
-        String pUrls = TxSupport.getParticipantUrls(terminator, participant);
-        System.out.println("Service: Enlisting " + pUrls);
+        System.out.println("Service: Enlisting " + linkHeader);
 
-        new TxSupport().httpRequest(new int[] {HttpURLConnection.HTTP_CREATED}, enlistUrl,
-                "POST", TxSupport.POST_MEDIA_TYPE, pUrls, null);
-
-        return Response.ok(Integer.toString(workId++)).build();
+        try {
+            new TxSupport().enlistParticipant(enlistUrl, linkHeader);
+            return Response.ok(Integer.toString(workId++)).build();
+        } catch (HttpResponseException e){
+            return Response.status(e.getActualResponse()).build();
+        }
     }
 
     @GET
-    @Path("query")
-    public Response someServiceRequest() {
+    @Path("commits")
+    public Response getNumberOfCommits() {
         return Response.ok(Integer.toString(commitCnt)).build();
     }
 
+    @GET
+    @Path("aborts")
+    public Response getNumberOfAborts() {
+        return Response.ok(Integer.toString(abortCnt)).build();
+    }
     /*
      * this method handles PUT requests to the url that the participant gave to the REST Atomic Transactions implementation
      * (in the someServiceRequest method). This is the endpoint that the transaction manager interacts with when it needs
      * participants to prepare/commit/rollback their transactional work.
      */
     @PUT
-    @Path("{wId}/terminate")
+    @Path("{wId}/terminator")
     public Response terminate(@PathParam("wId") @DefaultValue("")String wId, String content) {
         System.out.println("Service: PUT request to terminate url: wId=" + wId + ", status:=" + content);
-        String status = TxSupport.getStatus(content);
+        TxStatus status = TxSupport.toTxStatus(content);
 
-        if (TxSupport.isPrepare(status)) {
-            return Response.ok(TxSupport.toStatusContent(TxSupport.PREPARED)).build();
-        } else if (TxSupport.isCommit(status)) {
+        if (status.isPrepare()) {
+            System.out.println("Service: preparing");
+        } else if (status.isCommit()) {
             if (wId.equals(FAIL_COMMIT)) {
                 System.out.println("Service: Halting VM during commit of work unit wId=" + wId);
                 Runtime.getRuntime().halt(1);
             }
             commitCnt += 1;
-            return Response.ok(TxSupport.toStatusContent(TxSupport.COMMITTED)).build();
-        } else if (TxSupport.isAbort(status)) {
-            return Response.ok(TxSupport.toStatusContent(TxSupport.ABORTED)).build();
+            System.out.println("Service: committing");
+        } else if (status.isAbort()) {
+            System.out.println("Service: aborting");
+            abortCnt += 1;
         } else {
+            System.out.println("Service: invalid termination request");
             return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
         }
+
+        return Response.ok(TxSupport.toStatusContent(status.name())).build();
+    }
+
+    @HEAD
+    @Path("{pId}/participant")
+    public Response getTerminator(@Context UriInfo info, @PathParam("pId") @DefaultValue("")String wId) {
+        String serviceURL = info.getBaseUri() + info.getPath();
+        String linkHeader = new TxSupport().makeTwoPhaseAwareParticipantLinkHeader(serviceURL, false, wId, null);
+
+        return Response.ok().header("Link", linkHeader).build();
     }
 }

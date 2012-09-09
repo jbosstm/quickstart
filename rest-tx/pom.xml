@@ -20,7 +20,7 @@
   <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>quickstarts</artifactId>
   <version>5.0.0.M2-SNAPSHOT</version>
-  <name>RESTful Atomic Transaction Quickstarts</name>
+  <name>RESTAT Quickstarts</name>
   <description>Provides examples of how to use transactions with web applications</description>
   <packaging>pom</packaging>
   <repositories>

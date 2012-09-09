@@ -98,7 +98,7 @@
         
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
-            <artifactId>rest-tx-api</artifactId>
+            <artifactId>restat-util</artifactId>
             <version>5.0.0.M2-SNAPSHOT</version>
         </dependency>
 

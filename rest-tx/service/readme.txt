@@ -21,8 +21,8 @@ EXPECTED OUTPUT
 [The examples run under the control of maven so you will need to filter maven output from example output.]
 
 1. You will see 2 lines of output showing the service enlisting into the transaction:
-	Service: Enlisting terminator=http://localhost:58082/service/1/1/terminate;durableparticipant=http://localhost:58082/service/1/1/terminator
-	Service: Enlisting terminator=http://localhost:58082/service/1/2/terminate;durableparticipant=http://localhost:58082/service/1/2/terminator
+	Service: Enlisting <http://localhost:58082/service/1/participant>; rel="participant",<http://localhost:58082/service/1/terminator>; rel="terminator"
+	Service: Enlisting <http://localhost:58082/service/2/participant>; rel="participant",<http://localhost:58082/service/2/terminator>; rel="terminator"
 
 2. A message showing the client committing transaction:
 
