@@ -40,7 +40,7 @@
                 <!-- https://repository.jboss.org/nexus/content/groups/public-jboss/org/jboss/as/jboss-as-parent/7.0.0.Final/jboss-as-parent-7.0.0.Final.pom -->
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-parent</artifactId>
-                <version>7.1.1.Final</version>
+                <version>7.2.0.Alpha1-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -20,7 +20,7 @@
 
 
 
-This demo has been written for, and tested on, JBoss 7.1.1.Final It may work with other versions of JBoss 7.
+This demo has been written for, and tested on, JBoss 7.2.0.Alpha1-SNAPSHOT It may work with other versions of JBoss 7.
 Please download and install this app server from the JBoss website.
 
 
