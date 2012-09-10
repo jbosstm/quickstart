@@ -27,27 +27,27 @@ else
 fi
 
 # INITIALIZE JBOSS
-ant -f $WORKSPACE/blacktie/test/initializeJBoss.xml -Dbasedir=.. initializeJBoss -debug
+ant -f $WORKSPACE/blacktie/test/initializeJBoss.xml -DJBOSSAS_BIN_DIR=$JBOSSAS_BIN_DIR -Dbasedir=.. initializeJBoss -debug
 if [ "$?" != "0" ]; then
 	exit -1
 fi
 
-chmod u+x $WORKSPACE/jboss-as-7.1.1.Final/bin/standalone.sh
-chmod u+x $WORKSPACE/jboss-as-7.1.1.Final/bin/add-user.sh
+chmod u+x $WORKSPACE/jboss-as-7.2.0.Alpha1-SNAPSHOT/bin/standalone.sh
+chmod u+x $WORKSPACE/jboss-as-7.2.0.Alpha1-SNAPSHOT/bin/add-user.sh
 
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && JBOSS_HOME= ./add-user.sh admin password --silent=true)
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && JBOSS_HOME= ./add-user.sh guest password -a --silent=true)
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && JBOSS_HOME= ./add-user.sh dynsub password -a --silent=true)
+(cd $WORKSPACE/jboss-as-7.2.0.Alpha1-SNAPSHOT/bin/ && JBOSS_HOME= ./add-user.sh admin password --silent=true)
+(cd $WORKSPACE/jboss-as-7.2.0.Alpha1-SNAPSHOT/bin/ && JBOSS_HOME= ./add-user.sh guest password -a --silent=true)
+(cd $WORKSPACE/jboss-as-7.2.0.Alpha1-SNAPSHOT/bin/ && JBOSS_HOME= ./add-user.sh dynsub password -a --silent=true)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
 
 # START JBOSS
-$WORKSPACE/jboss-as-7.1.1.Final/bin/standalone.sh -c standalone-full.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR&
+$WORKSPACE/jboss-as-7.2.0.Alpha1-SNAPSHOT/bin/standalone.sh -c standalone-full.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR&
 sleep 5
 
 # INITIALIZE THE BLACKTIE DISTRIBUTION
-ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DJBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME
+ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DJBOSS_HOME=$WORKSPACE/jboss-as-7.2.0.Alpha1-SNAPSHOT -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
