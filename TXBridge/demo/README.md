@@ -11,9 +11,9 @@ Start JBoss AS:
 ensure JBoss AS is started with XTS enabled. This can be done by specifying the standalone-xts configuration when starting JBoss AS:
 
 	cd $JBOSS_HOME
-	./bin/standalone.sh --server-config=../../docs/examples/configs/standalone-xts.xml
+	cp docs/examples/configs/standalone-xts.xml standalone/configuration/
+	./bin/standalone.sh --server-config=standalone-xts.xml
 
 Visit http://localhost:8080/txbridge-demo-client/ to run the demo.
 
 See docs/TransactionBridgingGuide for further details on the demo app.
-
