@@ -47,7 +47,7 @@ $WORKSPACE/jboss-as-7.1.1.Final/bin/standalone.sh -c standalone-full.xml -Djboss
 sleep 5
 
 # INITIALIZE THE BLACKTIE DISTRIBUTION
-ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DJBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME
+ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DJBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
