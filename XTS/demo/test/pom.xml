@@ -25,8 +25,6 @@
         <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
         <node0>127.0.0.1</node0>
         <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
-        <!-- For arquillian -->
-        <jbossHome>${env.APP_SERVER_HOME}</jbossHome>
     </properties>
 
     <dependencyManagement>
@@ -166,6 +164,8 @@
                             System properties are duplicated here until ARQ-647 is implemented.
                         -->
                         <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip.server} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}</server.jvm.args>
+                        <!-- For arquillian -->
+                        <jbossHome>${env.APP_SERVER_HOME}</jbossHome>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
