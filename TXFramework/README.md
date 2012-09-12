@@ -67,7 +67,7 @@ The TXFramework is not currently shipped with JBoss AS, therefore you will need 
 Download Pre-built
 ==================
 
-Download the pre-built bundle of jboss-as-7.2.0.Alpha1-SNAPSHOT containing narayana-5.0.0.M2-SNAPSHOT. The bundle was built using the commands in the next section on 22/06/2012.
+Download the pre-built bundle of jboss-as-7.2.0.Alpha1-SNAPSHOT containing narayana-4.17.0.Final-SNAPSHOT. The bundle was built using the commands in the next section on 22/06/2012.
 
     wget http://bit.ly/Mr0QgD
 

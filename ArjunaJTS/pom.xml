@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.narayana.quickstart.jts</groupId>
+  <groupId>org.jboss.jbossts.quickstart.jts</groupId>
   <artifactId>narayana-quickstarts-jts</artifactId>
-  <version>5.0.0.M2-SNAPSHOT</version>
+  <version>4.17.0.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JTS Examples</name>
   <description>All quickstarts of JTS</description>
@@ -94,9 +94,9 @@
       <version>1.0.0.Final</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.narayana.jts</groupId>
-      <artifactId>narayana-jts-jacorb</artifactId>
-      <version>5.0.0.M2-SNAPSHOT</version>
+      <groupId>org.jboss.jbossts.jts</groupId>
+      <artifactId>jbossjts-jacorb</artifactId>
+      <version>4.17.0.Final-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

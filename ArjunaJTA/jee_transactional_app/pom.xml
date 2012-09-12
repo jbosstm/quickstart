@@ -13,9 +13,9 @@
 	Fifth Floor, Boston, MA 02110-1301, USA. (C) 2009 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jboss.narayana.quickstart.rts</groupId>
+    <groupId>org.jboss.jbossts.quickstart.rts</groupId>
     <artifactId>jee_transactional_app</artifactId>
-    <version>5.0.0.M2-SNAPSHOT</version>
+    <version>4.17.0.Final-SNAPSHOT</version>
     <name>basic integration example</name>
     <description>basic integration example</description>
     <packaging>war</packaging>
@@ -156,9 +156,9 @@
         </dependency>
         <!-- For the txoj -->
         <dependency>
-            <groupId>org.jboss.narayana.jta</groupId>
+            <groupId>org.jboss.jbossts.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>4.17.0.Final-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Import the injection annotations -->

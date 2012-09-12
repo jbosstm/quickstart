@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>org.jboss.narayana</groupId>
+        <groupId>org.jboss.jbossts</groupId>
         <artifactId>jbosstxbridge-demo</artifactId>
-        <version>5.0.0.M2-SNAPSHOT</version>
+        <version>4.17.0.Final-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jboss.narayana</groupId>
+    <groupId>org.jboss.jbossts</groupId>
     <artifactId>jbosstxbridge-demo-client</artifactId>
-    <version>5.0.0.M2-SNAPSHOT</version>
+    <version>4.17.0.Final-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
@@ -53,10 +53,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.narayana.xts</groupId>
+            <groupId>org.jboss.jbossts.xts</groupId>
             <artifactId>jbossxts</artifactId>
             <classifier>api</classifier>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>4.17.0.Final-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -66,9 +66,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.jboss.narayana.jta</groupId>
+            <groupId>org.jboss.jbossts.jta</groupId>
             <artifactId>jta</artifactId>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>4.17.0.Final-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -78,9 +78,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.jboss.narayana</groupId>
+            <groupId>org.jboss.jbossts</groupId>
             <artifactId>jbosstxbridge</artifactId>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>4.17.0.Final-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

@@ -4,9 +4,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <parent>
-        <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+        <groupId>org.jboss.jbossts.quickstarts.xts.demo</groupId>
         <artifactId>xts-demo-all</artifactId>
-        <version>5.0.0.M2-SNAPSHOT</version>
+        <version>4.17.0.Final-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+            <groupId>org.jboss.jbossts.quickstarts.xts.demo</groupId>
             <artifactId>xts-demo-core</artifactId>
             <version>${project.version}</version>
         </dependency>

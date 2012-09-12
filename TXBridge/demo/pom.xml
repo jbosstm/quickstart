@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jboss.narayana</groupId>
+    <groupId>org.jboss.jbossts</groupId>
     <artifactId>jbosstxbridge-demo</artifactId>
-    <version>5.0.0.M2-SNAPSHOT</version>
+    <version>4.17.0.Final-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <packaging>pom</packaging>
