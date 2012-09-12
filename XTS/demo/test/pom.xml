@@ -25,6 +25,8 @@
         <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
         <node0>127.0.0.1</node0>
         <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
+        <!-- For arquillian -->
+        <jbossHome>${env.APP_SERVER_HOME}</jbossHome>
     </properties>
 
     <dependencyManagement>
