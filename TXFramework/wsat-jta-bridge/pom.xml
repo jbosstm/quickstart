@@ -226,6 +226,10 @@
                         <configuration>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
 			                <skip>false</skip>
+                            <systemPropertyVariables>
+                                <!-- For arquillian -->
+                                <jbossHome>${env.APP_SERVER_HOME}</jbossHome>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>
