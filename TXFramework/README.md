@@ -99,7 +99,8 @@ Configure
 
 Now set your JBOSS_HOME environment variable to the location of the built JBoss AS. For example:
 
-    export JBOSS_HOME=~/dev/jboss-as/build/target/jboss-as-7.1.2.Final-SNAPSHOT
+    export JBOSS_HOME=~/dev/jboss-as/build/target/jboss-as-7.2.0.Alpha1-SNAPSHOT
+    cp ${JBOSS_HOME}/docs/examples/configs/standalone-xts.xml ${JBOSS_HOME}/standalone/configuration/
 
 You now have a build of JBossAS enabled for use with the TXFramework and you are now ready to run each of the quickstarts. Make sure you have a local copy of these quickstarts:
 

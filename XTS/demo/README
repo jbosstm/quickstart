@@ -31,7 +31,8 @@ Follow these steps to build the demo for JBoss
  - add java and Maven to your path
  - ensure JBoss AS is started with XTS enabled. This can be done by specifying the standalone-xts configuration when starting JBoss AS:
     cd $JBOSS_HOME
-    ./bin/standalone.sh -c ../../docs/examples/configs/standalone-xts.xml -Djava.awt.headless=false
+    cp docs/examples/configs/standalone-xts.xml standalone/configuration/
+    ./bin/standalone.sh -c standalone-xts.xml -Djava.awt.headless=false
  - execute 'mvn clean install' (runs tests)
  - mvn -f ear/pom.xml jboss-as:deploy (deploys the demo)
  - Open a browser and enter the xts-demo url (e.g. http://localhost:8080/xts-demo)
