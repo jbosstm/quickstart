@@ -17,6 +17,7 @@
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss-as.version>7.2.0.Alpha1-SNAPSHOT</jboss-as.version>
+        <narayana.version>5.0.0.M2-SNAPSHOT</narayana.version>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -67,7 +68,7 @@
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-javaee-6.0-with-tools</artifactId>
-                <version>1.0.0.M7</version>
+                <version>1.0.0.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -80,7 +81,7 @@
             <groupId>org.jboss.narayana.xts</groupId>
             <artifactId>jbossxts</artifactId>
             <classifier>api</classifier>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>${narayana.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -99,14 +100,14 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-util</artifactId>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>${narayana.version}</version>
         </dependency>
 
         <!-- The TXFramework api needed to simplify usage of WS-AT -->
         <dependency>
             <groupId>org.jboss.narayana.txframework</groupId>
             <artifactId>txframework</artifactId>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>${narayana.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -175,7 +176,7 @@
             <plugin>
                 <groupId>org.jboss.as.plugins</groupId>
                 <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>7.2.0.Alpha1-SNAPSHOT</version>
+                <version>${jboss-as.version}</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -192,7 +193,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7.2</version>
+                <version>2.9</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -213,6 +214,7 @@
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>${jboss-as.version}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -240,6 +242,7 @@
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                    <version>${jboss-as.version}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -256,6 +259,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
-
