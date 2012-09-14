@@ -85,7 +85,7 @@ This quickstart provides Arquillian tests. By default, these tests are configure
 1. Make sure you have started the JBoss Server as described above.
 2. Deploy the REST-AT coordinator:
 
-        cp <Narayana source directory>/rest-tx/webservice/target/rest-tx-web-5.0.0.M2-SNAPSHOT.war $JBOSS_HOME/standalone/deployments/
+        cp <Narayana source directory>/rest-tx/webservice/target/rest-tx-web-4.17.0.Final-SNAPSHOT.war $JBOSS_HOME/standalone/deployments/
 
 3. Open a command line and navigate to the root directory of this quickstart.
 4. Type the following command to run the test goal with the following profile activated:

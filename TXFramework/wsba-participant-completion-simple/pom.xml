@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jboss.narayana.quickstart.txframework.wsba-participant-completion-simple</groupId>
+    <groupId>org.jboss.jbossts.quickstart.txframework.wsba-participant-completion-simple</groupId>
     <artifactId>wsba-participant-completion-simple-all</artifactId>
-    <version>5.0.0.M2-SNAPSHOT</version>
+    <version>4.17.0.Final-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-BA with participant completion Web service using the TXFramework</name>
     <description>JBoss Narayana Quickstarts: Simple WS-BA with participant completion Web service using the TXFramework</description>
@@ -17,7 +17,7 @@
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss-as.version>7.2.0.Alpha1-SNAPSHOT</jboss-as.version>
-        <narayana.version>5.0.0.M2-SNAPSHOT</narayana.version>
+        <narayana.version>4.17.0.Final-SNAPSHOT</narayana.version>
     </properties>
 
     <dependencyManagement>
@@ -45,7 +45,7 @@
     <dependencies>
         <!-- The XTS api needed to use WS-AT -->
         <dependency>
-            <groupId>org.jboss.narayana.xts</groupId>
+            <groupId>org.jboss.jbossts.xts</groupId>
             <artifactId>jbossxts</artifactId>
             <classifier>api</classifier>
             <version>${narayana.version}</version>
@@ -60,7 +60,7 @@
 
         <!-- The TXFramework api needed to simplify usage of WS-AT -->
         <dependency>
-            <groupId>org.jboss.narayana.txframework</groupId>
+            <groupId>org.jboss.jbossts.txframework</groupId>
             <artifactId>txframework</artifactId>
             <version>${narayana.version}</version>
             <scope>provided</scope>

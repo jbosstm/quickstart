@@ -17,14 +17,14 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>org.jboss.narayana.quickstart.rts</groupId>
+    <groupId>org.jboss.jbossts.quickstart.rts</groupId>
     <artifactId>quickstarts</artifactId>
-    <version>5.0.0.M2-SNAPSHOT</version>
+    <version>4.17.0.Final-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>simple</artifactId>
-  <version>5.0.0.M2-SNAPSHOT</version>
+  <version>4.17.0.Final-SNAPSHOT</version>
   <name>RESTAT Quickstart: Basic</name>
   <description>Basic example of how to start and stop a REST Atomic transaction</description>
 
@@ -61,9 +61,9 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.jboss.narayana.rts</groupId>
+      <groupId>org.jboss.jbossts.rts</groupId>
       <artifactId>restat-util</artifactId>
-      <version>5.0.0.M2-SNAPSHOT</version>
+      <version>4.17.0.Final-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
