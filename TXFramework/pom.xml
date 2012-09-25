@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.jbossts.quickstart.txframework</groupId>
     <artifactId>narayana-quickstarts-txframework</artifactId>
-    <version>4.17.0.Final-SNAPSHOT</version>
+    <version>4.17.0.Final</version>
     <packaging>pom</packaging>
     <name>TXFramework Examples</name>
     <description>All quickstarts of TXFramework</description>

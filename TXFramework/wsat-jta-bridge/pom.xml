@@ -5,7 +5,7 @@
 
     <groupId>org.jboss.jbossts.quickstart.txframework.wsat-jta-bridge</groupId>
     <artifactId>wsat-jta-bridge-all</artifactId>
-    <version>4.17.0.Final-SNAPSHOT</version>
+    <version>4.17.0.Final</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA, using the TXFramework</name>
     <description>JBoss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA, using the TXFramework</description>
@@ -17,7 +17,7 @@
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss-as.version>7.2.0.Alpha1-SNAPSHOT</jboss-as.version>
-        <narayana.version>4.17.0.Final-SNAPSHOT</narayana.version>
+        <narayana.version>4.17.0.Final</narayana.version>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors

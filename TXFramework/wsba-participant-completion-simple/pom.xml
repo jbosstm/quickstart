@@ -5,7 +5,7 @@
 
     <groupId>org.jboss.jbossts.quickstart.txframework.wsba-participant-completion-simple</groupId>
     <artifactId>wsba-participant-completion-simple-all</artifactId>
-    <version>4.17.0.Final-SNAPSHOT</version>
+    <version>4.17.0.Final</version>
     <packaging>war</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-BA with participant completion Web service using the TXFramework</name>
     <description>JBoss Narayana Quickstarts: Simple WS-BA with participant completion Web service using the TXFramework</description>
@@ -17,7 +17,7 @@
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss-as.version>7.2.0.Alpha1-SNAPSHOT</jboss-as.version>
-        <narayana.version>4.17.0.Final-SNAPSHOT</narayana.version>
+        <narayana.version>4.17.0.Final</narayana.version>
     </properties>
 
     <dependencyManagement>
