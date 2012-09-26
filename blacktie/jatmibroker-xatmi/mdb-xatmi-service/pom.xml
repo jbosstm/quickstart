@@ -86,8 +86,8 @@
 			<scope>provided</scope>
 		</dependency>
                <dependency>
-                       <groupId>org.jboss.narayana</groupId>
-                       <artifactId>jbossjts</artifactId>
+                       <groupId>org.jboss.narayana.jts</groupId>
+                       <artifactId>narayana-jts-jacorb</artifactId>
                        <scope>provided</scope>
                </dependency>
 		<dependency>
