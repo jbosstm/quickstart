@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jboss.jbossts.quickstart.txframework.wsat-simple</groupId>
+    <groupId>org.jboss.narayana.quickstart.txframework.wsat-simple</groupId>
     <artifactId>wsat-simple-all</artifactId>
     <version>5.0.0.M2-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -78,7 +78,7 @@
     <dependencies>
         <!-- The XTS api needed to use WS-AT -->
         <dependency>
-            <groupId>org.jboss.jbossts.xts</groupId>
+            <groupId>org.jboss.narayana.xts</groupId>
             <artifactId>jbossxts</artifactId>
             <classifier>api</classifier>
             <version>${narayana.version}</version>
@@ -93,7 +93,7 @@
 
         <!-- The TXFramework api needed to simplify usage of WS-AT -->
         <dependency>
-            <groupId>org.jboss.jbossts.txframework</groupId>
+            <groupId>org.jboss.narayana.txframework</groupId>
             <artifactId>txframework</artifactId>
             <version>${narayana.version}</version>
             <scope>provided</scope>

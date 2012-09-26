@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jboss.jbossts</groupId>
+    <groupId>org.jboss.narayana</groupId>
     <artifactId>jbosstxbridge</artifactId>
     <version>5.0.0.M2-SNAPSHOT</version>
     <name>${project.artifactId}</name>

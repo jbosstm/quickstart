@@ -86,7 +86,7 @@
 			<scope>provided</scope>
 		</dependency>
                <dependency>
-                       <groupId>org.jboss.jbossts</groupId>
+                       <groupId>org.jboss.narayana</groupId>
                        <artifactId>jbossjts</artifactId>
                        <scope>provided</scope>
                </dependency>
