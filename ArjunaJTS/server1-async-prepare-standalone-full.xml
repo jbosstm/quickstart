@@ -35,7 +35,7 @@
     </extensions>
 
     <system-properties>
-        <property name="com.arjuna.ats.arjuna.coordinator.asyncPrepare" value="false"/>
+        <property name="com.arjuna.ats.arjuna.coordinator.asyncPrepare" value="true"/>
     </system-properties>
 
 

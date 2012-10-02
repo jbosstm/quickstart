@@ -34,6 +34,10 @@
         <extension module="org.jboss.as.weld"/>
     </extensions>
 
+    <system-properties>
+        <property name="com.arjuna.ats.arjuna.coordinator.asyncPrepare" value="false"/>
+    </system-properties>
+
 
     <management>
         <security-realms>
