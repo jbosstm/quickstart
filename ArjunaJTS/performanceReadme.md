@@ -2,6 +2,9 @@ cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-7.2.0.Alpha1-S
 cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-7.2.0.Alpha1-SNAPSHOT/ jts/server2
 cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-7.2.0.Alpha1-SNAPSHOT/ jta/server3
 
+cp server1-standalone-full.xml jts/server1/standalone/configuration/standalone-full.xml
+cp server2-standalone-full.xml jts/server2/standalone/configuration/standalone-full.xml
+
 ./server1/bin/standalone.sh -c standalone-full.xml -Djboss.socket.binding.port-offset=000
 ./server2/bin/standalone.sh -c standalone-full.xml -Djboss.socket.binding.port-offset=100
 ./server3/bin/standalone.sh -c standalone-full.xml -Djboss.socket.binding.port-offset=200
