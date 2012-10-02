@@ -14,7 +14,7 @@ public class DummyXAResource implements XAResource {
 
 	@Override
 	public void commit(Xid arg0, boolean arg1) throws XAException {
-		System.out.println(name + "commited");
+		//System.out.println(name + "commited");
 //		Thread.dumpStack();
 		// try {
 		// Thread.currentThread().sleep(60000);
@@ -26,51 +26,51 @@ public class DummyXAResource implements XAResource {
 
 	@Override
 	public void end(Xid arg0, int arg1) throws XAException {
-		// System.out.println(name + "end");
+		// //System.out.println(name + "end");
 	}
 
 	@Override
 	public void forget(Xid arg0) throws XAException {
-		// System.out.println(name + "forget");
+		// //System.out.println(name + "forget");
 	}
 
 	@Override
 	public int getTransactionTimeout() throws XAException {
-		// System.out.println(name + "getTransactionTimeout");
+		// //System.out.println(name + "getTransactionTimeout");
 		return 0;
 	}
 
 	@Override
 	public boolean isSameRM(XAResource arg0) throws XAException {
-		// System.out.println(name + "isSameRM");
+		// //System.out.println(name + "isSameRM");
 		return this == arg0;
 	}
 
 	@Override
 	public int prepare(Xid arg0) throws XAException {
-		System.out.println(name + "prepare");
+		//System.out.println(name + "prepare");
 		return 0;
 	}
 
 	@Override
 	public Xid[] recover(int arg0) throws XAException {
-		// System.out.println(name + "recover");
+		// //System.out.println(name + "recover");
 		return null;
 	}
 
 	@Override
 	public void rollback(Xid arg0) throws XAException {
-		System.out.println(name + "rollback");
+		//System.out.println(name + "rollback");
 	}
 
 	@Override
 	public boolean setTransactionTimeout(int arg0) throws XAException {
-		// System.out.println(name + "setTransactionTimeout");
+		// //System.out.println(name + "setTransactionTimeout");
 		return false;
 	}
 
 	@Override
 	public void start(Xid arg0, int arg1) throws XAException {
-		// System.out.println(name + "start");
+		// //System.out.println(name + "start");
 	}
 }

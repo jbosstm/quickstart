@@ -36,6 +36,7 @@
 
     <system-properties>
         <property name="com.arjuna.ats.arjuna.coordinator.asyncPrepare" value="true"/>
+       <!-- <property name="com.arjuna.ats.arjuna.coordinator.asyncCommit" value="true"/> -->
     </system-properties>
 
 
