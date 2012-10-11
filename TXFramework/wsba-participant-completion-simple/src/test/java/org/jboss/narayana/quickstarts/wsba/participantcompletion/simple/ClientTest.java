@@ -28,8 +28,10 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.quickstarts.wsba.participantcompletion.simple.jaxws.OrderServiceBA;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,10 +48,10 @@ public class ClientTest {
     public OrderServiceBA client;
 
     @Deployment
-    public static WebArchive createTestArchive() {
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+    public static JavaArchive createTestArchive() {
+        return ShrinkWrap.create(JavaArchive.class, "test.jar")
                 .addPackages(true, OrderServiceBAImpl.class.getPackage().getName())
-                .addAsWebInfResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
+                .addAsManifestResource(new ByteArrayAsset("<interceptors><class>org.jboss.narayana.txframework.impl.ServiceRequestInterceptor</class></interceptors>".getBytes()), ArchivePaths.create("beans.xml"))
                 .setManifest(new StringAsset(ManifestMF));
     }
 

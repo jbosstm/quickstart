@@ -6,7 +6,7 @@
 
    <!-- Uncomment to have test archives exported to the file system for inspection -->
    <engine> 
-      <property name="deploymentExportPath">target/</property> 
+      <property name="deploymentExportPath">target/arquillian</property> 
    </engine>
 
    <!-- Force the use of the Servlet 3.0 protocol with all containers, as it is the most mature -->

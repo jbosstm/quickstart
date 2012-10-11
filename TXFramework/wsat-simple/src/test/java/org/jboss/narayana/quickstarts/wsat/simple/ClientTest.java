@@ -8,9 +8,10 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.quickstarts.wsat.simple.jaxws.RestaurantServiceAT;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,12 +40,12 @@ public class ClientTest {
      * @return a WebArchive representing the required deployment
      */
     @Deployment
-    public static WebArchive createTestArchive() {
+    public static JavaArchive createTestArchive() {
 
-        return ShrinkWrap.create(WebArchive.class, "wsat-simple.war")
+        return ShrinkWrap.create(JavaArchive.class, "wsat-simple.jar")
                 .addPackages(true, RestaurantServiceATImpl.class.getPackage())
-                .addAsWebInfResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
-                .setManifest(new StringAsset(ManifestMF));
+                .addAsManifestResource(new ByteArrayAsset("<interceptors><class>org.jboss.narayana.txframework.impl.ServiceRequestInterceptor</class></interceptors>".getBytes()), ArchivePaths.create("beans.xml"))
+                        .setManifest(new StringAsset(ManifestMF));
     }
 
     /**

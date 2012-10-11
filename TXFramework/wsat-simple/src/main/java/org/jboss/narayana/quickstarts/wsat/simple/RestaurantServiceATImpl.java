@@ -37,6 +37,8 @@ import org.jboss.narayana.txframework.api.annotation.service.ServiceRequest;
 import org.jboss.narayana.txframework.api.annotation.transaction.Transactional;
 import org.jboss.narayana.txframework.api.configuration.BridgeType;
 
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -51,7 +53,8 @@ import java.util.Map;
 @Transactional(bridgeType = BridgeType.NONE)
 @WebService(serviceName = "RestaurantServiceATService", portName = "RestaurantServiceAT", name = "RestaurantServiceAT", targetNamespace = "http://www.jboss.org/narayana/quickstarts/wsat/simple/Restaurant")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-@WebServlet("/RestaurantServiceAT")
+@Remote(RestaurantServiceAT.class)
+@Stateless
 public class RestaurantServiceATImpl implements RestaurantServiceAT {
 
     private MockRestaurantManager mockRestaurantManager = MockRestaurantManager.getSingletonInstance();
