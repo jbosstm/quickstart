@@ -30,6 +30,8 @@ import org.jboss.narayana.txframework.api.annotation.transaction.Compensatable;
 import org.jboss.narayana.txframework.api.configuration.transaction.CompletionType;
 import org.jboss.narayana.txframework.api.management.WSBATxControl;
 
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -44,7 +46,8 @@ import java.util.Map;
 @Compensatable(completionType = CompletionType.PARTICIPANT)
 @WebService(serviceName = "OrderServiceBAService", portName = "OrderServiceBA", name = "OrderServiceBA", targetNamespace = "http://www.jboss.org/as/quickstarts/helloworld/wsba/participantcompletion/order")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-@WebServlet("/OrderServiceBA")
+@Stateless
+@Remote(OrderServiceBA.class)
 public class OrderServiceBAImpl implements OrderServiceBA {
 
     /*

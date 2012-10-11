@@ -6,7 +6,7 @@
     <groupId>org.jboss.narayana.quickstart.txframework.wsba-participant-completion-simple</groupId>
     <artifactId>wsba-participant-completion-simple-all</artifactId>
     <version>5.0.0.M2-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-BA with participant completion Web service using the TXFramework</name>
     <description>JBoss Narayana Quickstarts: Simple WS-BA with participant completion Web service using the TXFramework</description>
 
@@ -107,32 +107,16 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-                <configuration>
-                    <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <archive>
-                        <manifestEntries>
-                            <Dependencies>org.jboss.narayana.txframework</Dependencies>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-            <!-- JBoss AS deployment disabled, as this is a test-only example! -->
-            <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>${jboss-as.version}</version>
-                <configuration>
-                  <skip>true</skip>
-                </configuration>
-            </plugin>
             <!-- Compiler plugin enforces Java 1.6 compatibility and activates
           annotation processors -->
             <plugin>
