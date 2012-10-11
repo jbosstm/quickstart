@@ -7,8 +7,8 @@
     <artifactId>restat-simple-all</artifactId>
     <version>5.0.0.M2-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>JBoss Narayana Quickstarts: Simple WS-AT Web service using the TXFramework</name>
-    <description>JBoss Narayana Quickstarts: Simple WS-AT Web service using the TXFramework</description>
+    <name>JBoss Narayana Quickstarts: Simple REST-AT Web service using the TXFramework</name>
+    <description>JBoss Narayana Quickstarts: Simple REST-AT Web service using the TXFramework</description>
 
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following
