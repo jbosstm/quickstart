@@ -60,7 +60,7 @@ import java.util.zip.ZipFile;
 public class TxBridgeDemoTest {
     private static final Logger log = Logger.getLogger(TxBridgeDemoTest.class);
 
-    private static final String XTS_DEMO_ARCHIVE = "../../../XTS/demo/ear/target/xts-demo-ear-4.17.1.Final.ear";
+    private static final String XTS_DEMO_ARCHIVE = "../../../XTS/demo/ear/target/xts-demo-ear-4.17.2.Final-SNAPSHOT.ear";
     private static final String TXBRIDGE_DEMO_SERVICE_ARCHIVE = "../service/target/txbridge-demo-service.jar";
     private static final String TXBRIDGE_DEMO_CLIENT_ARCHIVE = "../client/target/txbridge-demo-client.war";
 
@@ -87,7 +87,7 @@ public class TxBridgeDemoTest {
 
     @Deployment(name = XTS_DEMO_ARCHIVE, testable = false, order = 1)
     public static Archive<?> createXTSDemoArchive() throws Exception {
-        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, "xts-demo-ear-4.17.1.Final.ear")
+        Archive<?> archive = ShrinkWrap.create(ZipImporter.class, "xts-demo-ear-4.17.2.Final-SNAPSHOT.ear")
                 .importFrom(new ZipFile(XTS_DEMO_ARCHIVE)).as(EnterpriseArchive.class);
         return archive;
     }
