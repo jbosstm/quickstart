@@ -3,12 +3,12 @@
 	<!-- Artifact Configuration -->
 	<groupId>org.jboss.jbossts</groupId>
 	<artifactId>jbossts-transactional-fileio-demo</artifactId>
-	<version>4.17.2.Final-SNAPSHOT</version>
+	<version>4.17.2.Final</version>
 	<name>JBoss Transactional File I/O Demo</name>
 	<description>Demo of JBoss Transactional file I/O</description>
 	<url>http://www.jboss.org/jbosstm/fileio/</url>
 	<properties>
-		<version.jbossts.transactional.fileio>4.17.2.Final-SNAPSHOT</version.jbossts.transactional.fileio>
+		<version.jbossts.transactional.fileio>4.17.2.Final</version.jbossts.transactional.fileio>
 	</properties>
 	<build>
 		<plugins>
