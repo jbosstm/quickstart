@@ -107,20 +107,30 @@ dynsub=guest,blacktie,dynsub" file="${JBOSS_HOME}/standalone/configuration/appli
         </copy>
     </target>
     <target name="tweak-txfooapp-for-environment">
-        <replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
+        <replaceregexp byline="true" match="DB=blacktie" replace="DB=orcl.buildnet.ncl.jboss.com">
             <fileset dir="../">
-                <include name="xatmi/txfooapp/btconfig.xml"/>
+                <include name="xatmi/txfooapp/cli/btconfig.xml"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL112">
             <fileset dir="../">
-                <include name="xatmi/txfooapp/btconfig.xml"/>
+                <include name="xatmi/txfooapp/cli/btconfig.xml"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
+        <replaceregexp byline="true" match="DB=blacktie" replace="DB=orcl.buildnet.ncl.jboss.com">
             <fileset dir="../">
+                <include name="xatmi/txfooapp/svr/btconfig.xml"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL112">
+            <fileset dir="../">
+                <include name="xatmi/txfooapp/svr/btconfig.xml"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match='\"blacktie\"' replace='\"orcl.buildnet.ncl.jboss.com\"'>
+             <fileset dir="../">
                 <include name="xatmi/txfooapp/request.c"/>
             </fileset>
-        </replaceregexp>
+         </replaceregexp>
     </target>
 </project>

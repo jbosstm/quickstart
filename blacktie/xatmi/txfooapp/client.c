@@ -40,9 +40,9 @@ static product_t *get_product(const char *pid) {
 int main(int argc, char **argv)
 {
     product_t prods[8];
-	int rv = -1;
-	int i;
-	int rmCnt = 0;
+    int rv = -1;
+    int i;
+    int rmCnt = 0;
     btlogger_debug( "TxLog %s:%d", __FUNCTION__, __LINE__);
 
     if (argc > 1) {
@@ -50,14 +50,13 @@ int main(int argc, char **argv)
             product_t *p = get_product(argv[i]);
 
             if (p == NULL) {
-    			btlogger_debug("TxLog product id %s not found", argv[i]);
-				product_t *prod;
-				for (prod = products; prod->id != -1; prod++)
-    				btlogger_debug("TxLog product id %d", prod->id);
-				//return fatal("Requested db is not supported\n");
-			} else {
-            	prods[rmCnt++] = *p;
-			}
+                btlogger_debug("TxLog product id %s not found", argv[i]);
+                for (p = products; p->id != -1; p++)
+                    btlogger_debug("TxLog product id %d", p->id);
+                //return fatal("Requested db is not supported\n");
+            } else {
+                prods[rmCnt++] = *p;
+            }
         }
 
         prods[rmCnt].id = -1;
@@ -67,17 +66,17 @@ int main(int argc, char **argv)
         for (i = 0; products[i].id != -1; i++)
             prods[i] = products[i];
 
-		prods[i] = products[i];
+        prods[i] = products[i];
     }
 
-	for (i = 0; prods[i].id != -1; i++) {
-		btlogger_debug("TxLog INFO: %s (%s) id=%d flags=0x%x",
+    for (i = 0; prods[i].id != -1; i++) {
+        btlogger_debug("TxLog INFO: %s (%s) id=%d flags=0x%x",
             prods[i].pname, prods[i].dbname, prods[i].id, prods[i].xaflags());
     }
 
-	rv = run_tests(prods);
+    rv = run_tests(prods);
 
-	btlogger("TxLog Test %s (%d)\n", (rv ? "failed" : "passed"), rv);
+    btlogger("TxLog Test %s (%d)\n", (rv ? "failed" : "passed"), rv);
 
-	return rv;
+    return rv;
 }
