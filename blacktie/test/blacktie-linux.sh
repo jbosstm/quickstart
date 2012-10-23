@@ -5,7 +5,7 @@ if [ -n "${WORKSPACE+x}" ]; then
   echo WORKSPACE is set
 else
   echo WORKSPACE not set
-  exit
+  exit -1
 fi
 
 if [ -z "${JBOSSAS_IP_ADDR+x}" ]; then
