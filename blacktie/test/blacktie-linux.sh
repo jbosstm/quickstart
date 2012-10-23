@@ -8,6 +8,14 @@ else
   exit
 fi
 
+# Do not use the CI setting of JBOSS_HOME
+JBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final
+
+if [ -z "${JBOSSAS_IP_ADDR+x}" ]; then
+  echo JBOSSAS_IP_ADDR not set
+  JBOSSAS_IP_ADDR=localhost
+fi
+
 # KILL ANY PREVIOUS BUILD REMNANTS
 ps -f
 for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
@@ -35,9 +43,9 @@ fi
 chmod u+x $WORKSPACE/jboss-as-7.1.1.Final/bin/standalone.sh
 chmod u+x $WORKSPACE/jboss-as-7.1.1.Final/bin/add-user.sh
 
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && JBOSS_HOME= ./add-user.sh admin password --silent=true)
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && JBOSS_HOME= ./add-user.sh guest password -a --silent=true)
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && JBOSS_HOME= ./add-user.sh dynsub password -a --silent=true)
+(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh admin password --silent=true)
+(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh guest password -a --silent=true)
+(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh dynsub password -a --silent=true)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
