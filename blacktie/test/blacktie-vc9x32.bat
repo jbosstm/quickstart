@@ -1,5 +1,12 @@
 set NOPAUSE=true
 
+if not defined WORKSPACE echo "WORKSPACE not set" & exit -1
+
+if not defined JBOSSAS_IP_ADDR echo "JBOSSAS_IP_ADDR not set" & JBOSSAS_IP_ADDR=localhost
+
+rem Do not use the CI setting of JBOSS_HOME
+set JBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final
+
 rem SHUTDOWN ANY PREVIOUS BUILD REMNANTS
 if exist %WORKSPACE%\jboss-as-7.1.1.Final call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown && cd .
 if exist %WORKSPACE%\jboss-as-7.1.1.Final @ping 127.0.0.1 -n 10 -w 1000 > nul
