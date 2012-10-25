@@ -19,7 +19,7 @@ taskkill /F /IM cs.exe
 tasklist
 
 rem INITIALIZE JBOSS
-call ant -f %WORKSPACE%/blacktie/test/initializeJBoss.xml -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
+call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 cd %WORKSPACE%\jboss-as-7.1.1.Final\bin\
@@ -39,7 +39,11 @@ echo "Started server"
 
 rem CREATE BLACKTIE DISTRIBUTION
 for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
-call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME%
+call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME% dist
+IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
+
+rem TWEAK txfooapp FOR THIS NODE
+call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml tweak-txfooapp-for-environment
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem RUN THE SAMPLES
