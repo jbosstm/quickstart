@@ -19,6 +19,45 @@
     <packaging>jar</packaging>
     <name>blacktie-all</name>
     <description>All the blacktie quickstarts</description>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>clean</id>
+                                <phase>clean</phase>
+                                <configuration>
+                                    <target>
+                                        <exec dir="${project.basedir}/integration1/xatmi_adapter/" executable="${mvn.exe}" failonerror="true">
+                                            <arg line="clean"/>
+                                        </exec>
+                                        <exec dir="${project.basedir}/integration1/xatmi_adapter/ear/" executable="${mvn.exe}" failonerror="true">
+                                            <arg line="clean"/>
+                                        </exec>
+                                        <exec dir="${project.basedir}/integration1/ejb/" executable="${mvn.exe}" failonerror="true">
+                                            <arg line="clean"/>
+                                        </exec>
+                                        <exec dir="${project.basedir}/integration1/ejb/ear/" executable="${mvn.exe}" failonerror="true">
+                                            <arg line="clean"/>
+                                        </exec>
+                                        <exec dir="${project.basedir}/jatmibroker-xatmi/mdb-xatmi-service/" executable="${mvn.exe}" failonerror="true">
+                                            <arg line="clean"/>
+                                        </exec>
+                                        <exec dir="${project.basedir}/jatmibroker-xatmi/mdb-xatmi-service/ear/" executable="${mvn.exe}" failonerror="true">
+                                            <arg line="clean"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
     <profiles>
         <profile>
             <id>windows</id>
@@ -27,6 +66,9 @@
                     <family>Windows</family>
                 </os>
             </activation>
+            <properties>
+		<mvn.exe>mvn.bat</mvn.exe>
+	    </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -37,7 +79,7 @@
                                 <phase>compile</phase>
                                 <configuration>
                                     <target>
-                                        <exec dir="${env.WORKSPACE}/blacktie" executable="cmd" failonerror="true">
+                                        <exec dir="${project.basedir}" executable="cmd" failonerror="true">
                                             <arg line="/c test\blacktie-vc9x32.bat"/>
                                         </exec>
                                     </target>
@@ -58,6 +100,9 @@
                     <family>unix</family>
                 </os>
             </activation>
+            <properties>
+		<mvn.exe>mvn</mvn.exe>
+	    </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -68,7 +113,7 @@
                                 <phase>compile</phase>
                                 <configuration>
                                     <target>
-                                        <exec dir="${env.WORKSPACE}/blacktie" executable="sh" failonerror="true">
+                                        <exec dir="${project.basedir}" executable="sh" failonerror="true">
                                             <arg line="-c ./test/blacktie-linux.sh"/>
                                         </exec>
                                     </target>

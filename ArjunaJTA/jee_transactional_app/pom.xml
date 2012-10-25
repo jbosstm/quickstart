@@ -50,7 +50,7 @@
     </pluginRepositories>
     <properties>
         <!-- For arquillian -->
-        <jbossHome>${env.APP_SERVER_HOME}</jbossHome>
+        <jbossHome>${env.JBOSS_HOME}</jbossHome>
     </properties>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -210,7 +210,7 @@
                     </plugin>
                     <!-- The JBoss AS plugin deploys your war to a local JBoss 
                   AS container -->
-                    <!-- To use, set the APP_SERVER_HOME environment variable and run: 
+                    <!-- To use, set the JBOSS_HOME environment variable and run: 
                   mvn package jboss-as:deploy -->
                     <plugin>
                         <groupId>org.jboss.as.plugins</groupId>
