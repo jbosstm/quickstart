@@ -1,21 +1,56 @@
 <?xml version="1.0"?>
-<project name="extract-blacktie" default="dist">
-    <target name="init">
+<project name="extract-blacktie">
+    <target name="initializeDatabase">
+        <get src="http://172.17.131.2/userContent/blacktie/instantclient-basiclite-win32-11.2.0.1.0.zip" dest="./instantclient-basiclite-win32-11.2.0.1.0.zip" verbose="true" usetimestamp="true" skipexisting="true"/>
+        <get src="http://172.17.131.2/userContent/blacktie/instantclient-sdk-win32-11.2.0.1.0.zip" dest="./instantclient-sdk-win32-11.2.0.1.0.zip" verbose="true" usetimestamp="true" skipexisting="true"/>
+        <get src="http://172.17.131.2/userContent/blacktie/tnsnames.ora" dest="./tnsnames.ora" verbose="true" usetimestamp="true" skipexisting="true"/>
+        <delete dir="instantclient_11_2"/>
+        <unzip src="./instantclient-basiclite-win32-11.2.0.1.0.zip" dest="."/>
+        <unzip src="./instantclient-sdk-win32-11.2.0.1.0.zip" dest="."/>
+        <mkdir dir="./instantclient_11_2/network/admin"/>
+        <copy file="./tnsnames.ora" tofile="./instantclient_11_2/network/admin/tnsnames.ora"/>
+        <move tofile="./instantclient_11_2/OCI" file="./instantclient_11_2/sdk"/>
+        <move tofile="./instantclient_11_2/OCI/lib/MSVC2" file="./instantclient_11_2/OCI/lib/msvc"/>
+        <move tofile="./instantclient_11_2/OCI/lib/MSVC" file="./instantclient_11_2/OCI/lib/MSVC2"/>
+        <mkdir dir="./instantclient_11_2/bin"/>
+        <move todir="./instantclient_11_2/bin">
+            <fileset dir="./instantclient_11_2/">
+                <include name="*.dll"/>
+            </fileset>
+        </move>
+    </target>
+    <target name="initializeJBoss">
+        <get src="http://172.17.131.2/userContent/jboss-as-7.1.1.Final.zip" dest="./jboss-as-7.1.1.Final.zip" verbose="true" usetimestamp="true" skipexisting="true"/>
+        <delete dir="jboss-as-7.1.1.Final"/>
+        <unzip src="jboss-as-7.1.1.Final.zip" dest="."/>
+        <replaceregexp byline="true" match="rem set &quot;JAVA_OPTS=%JAVA_OPTS% -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n&quot;" replace="set &quot;JAVA_OPTS=%JAVA_OPTS% -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n&quot;&#10;set &quot;JAVA_OPTS=%JAVA_OPTS% -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE&quot;" file="jboss-as-7.1.1.Final/bin/standalone.conf.bat"/>
+        <replaceregexp byline="true" match="#JAVA_OPTS=&quot;\$JAVA_OPTS -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n&quot;" replace="JAVA_OPTS=&quot;$JAVA_OPTS -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n&quot;&#10;JAVA_OPTS=&quot;$JAVA_OPTS -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE&quot;" file="jboss-as-7.1.1.Final/bin/standalone.conf"/>
+        <replaceregexp byline="true" match="&quot;spec&quot;" replace="&quot;on&quot;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;" replace="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;&#10;            &lt;jts/&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="&lt;root-logger&gt;" replace="&lt;logger category=&quot;org.jboss.ejb.client&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.as.ejb3&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.narayana.blacktie&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.codehaus.stomp&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.hornetq&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;root-logger&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="&lt;jms-destinations&gt;" replace="&lt;jms-destinations&gt;&#10;                    &lt;jms-queue name=&quot;BTR_TestOne&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_TestOne&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_TestOne&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTR_TestTwo&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_TestTwo&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_TestTwo&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTC_ConvService&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTC_ConvService&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTC_ConvService&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTR_JAVA_Converse&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_JAVA_Converse&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_JAVA_Converse&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-topic name=&quot;BTR_JAVA_Topic&quot;&gt;&#10;                        &lt;entry name=&quot;topic/BTR_JAVA_Topic&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/topic/BTR_JAVA_Topic&quot;/&gt;&#10;                    &lt;/jms-topic&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="&lt;security-settings&gt;" replace="&lt;security-settings&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_BTDomainAdmin&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;blacktie&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;blacktie&quot;/&gt;&#10;                    &lt;/security-setting&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_BTStompAdmin&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;blacktie&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;blacktie&quot;/&gt;&#10;                    &lt;/security-setting&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="#guest=guest" replace="guest=guest,blacktie&#10;" file="jboss-as-7.1.1.Final/standalone/configuration/application-roles.properties"/>
+        <echo file="jboss-as-7.1.1.Final/standalone/configuration/application-roles.properties" append="true">dynsub=guest,blacktie,dynsub</echo>
+        <replaceregexp byline="true" match="&lt;security-settings&gt;" replace="&lt;security-settings&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_SECURE&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;dynsub&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;dynsub&quot;/&gt;&#10;                    &lt;/security-setting&gt;&#10;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;" replace="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;" replace="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
+        <replaceregexp byline="true" match="&lt;module name=&quot;org.omg.api&quot;/&gt;" replace="&lt;module name=&quot;org.omg.api&quot;/&gt;&#10;        &lt;module name=&quot;org.jboss.as.jacorb&quot;/&gt;" file="jboss-as-7.1.1.Final/modules/org/jboss/as/transactions/main/module.xml"/>
+    </target>
+    <target name="_extract-init">
         <delete dir="${BT_HOME}"/>
         <mkdir dir="${BT_HOME}"/>
         <condition property="is-msvc">
             <os family="windows"/>
         </condition>
     </target>
-    <target name="_extract-gcc" depends="init" unless="is-msvc">
-        <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.tar.gz" verbose="true" usetimestamp="true" skipexisting="false"/> -->
+    <target name="_extract-gcc" depends="_extract-init" unless="is-msvc">
         <exec executable="sh">
             <arg line="-c &quot;tar xfz ${BLACKTIE_DIST_HOME}/blacktie-${VERSION}-*-bin.tar.gz -C ${BT_HOME}&quot;"/>
         </exec>
         <property name="ESC_BT_HOME" value="${BT_HOME}/"/>
     </target>
-    <target name="_extract-msvc" depends="init" if="is-msvc">
-        <!--<get src="http://172.17.131.2/job/blacktie-clean/lastSuccessfulBuild/blacktie/target/blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" dest="blacktie-5.0.0.M2-SNAPSHOT-centos54x64-bin.zip" verbose="true" usetimestamp="true" skipexisting="false"/> -->
+    <target name="_extract-msvc" depends="_extract-init" if="is-msvc">
         <unzip dest="${BT_HOME}">
             <fileset dir="${BLACKTIE_DIST_HOME}/">
                 <include name="blacktie-${VERSION}*-bin.zip"/>
@@ -41,21 +76,6 @@
                 <include name="*/setenv.*"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
-            <fileset dir="${BT_HOME}blacktie-${VERSION}/">
-                <include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
-            </fileset>
-        </replaceregexp>
-        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
-            <fileset dir="${BT_HOME}blacktie-${VERSION}/">
-                <include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
-            </fileset>
-        </replaceregexp>
-        <replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
-            <fileset dir="${BT_HOME}blacktie-${VERSION}/">
-                <include name="atmibroker-xatmi/txfooapp/request.c"/>
-            </fileset>
-        </replaceregexp>
         <copy todir="${JBOSS_HOME}/standalone/deployments">
             <fileset dir="${BT_HOME}blacktie-${VERSION}/blacktie-admin-services/">
                 <include name="*.jar"/>
@@ -76,4 +96,21 @@
             <echo message="${current.time} @{message}"/>
         </sequential>
     </macrodef>
+    <target name="tweak-txfooapp-for-environment">
+        <replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
+            <fileset dir="../">
+                <include name="xatmi/txfooapp/btconfig.xml"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
+            <fileset dir="../">
+                <include name="xatmi/txfooapp/btconfig.xml"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
+            <fileset dir="../">
+                <include name="xatmi/txfooapp/request.c"/>
+            </fileset>
+        </replaceregexp>
+    </target>
 </project>
