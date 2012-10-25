@@ -164,7 +164,7 @@
 			                <skip>false</skip>
                             <systemPropertyVariables>
                                 <!-- For arquillian -->
-                                <jbossHome>${env.APP_SERVER_HOME}</jbossHome>
+                                <jbossHome>${env.JBOSS_HOME}</jbossHome>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>

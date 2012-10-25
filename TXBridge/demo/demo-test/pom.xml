@@ -156,7 +156,7 @@
                         -->
                         <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip.server} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}</server.jvm.args>
                         <!-- For arquillian -->
-                        <jbossHome>${env.APP_SERVER_HOME}</jbossHome>
+                        <jbossHome>${env.JBOSS_HOME}</jbossHome>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
