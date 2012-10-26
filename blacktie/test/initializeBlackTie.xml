@@ -36,6 +36,18 @@
         <replaceregexp byline="true" match="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;" replace="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
         <replaceregexp byline="true" match="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;" replace="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as-7.1.1.Final/standalone/configuration/standalone-full.xml"/>
         <replaceregexp byline="true" match="&lt;module name=&quot;org.omg.api&quot;/&gt;" replace="&lt;module name=&quot;org.omg.api&quot;/&gt;&#10;        &lt;module name=&quot;org.jboss.as.jacorb&quot;/&gt;" file="jboss-as-7.1.1.Final/modules/org/jboss/as/transactions/main/module.xml"/>
+
+	<!-- Copy the required users into the AS domain -->
+	<!--
+	   REPLICATES THE FOLLOWING
+	chmod u+x $WORKSPACE/jboss-as-7.1.1.Final/bin/add-user.sh
+	(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh admin password \-\-silent=true)
+	(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh guest password -a \-\-silent=true)
+	(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh dynsub password -a \-\-silent=true)
+	-->
+	<copy todir="jboss-as-7.1.1.Final/">
+		<fileset dir="blacktie/test/config/"/>
+	</copy>
     </target>
     <target name="_extract-init">
         <delete dir="${BT_HOME}"/>
@@ -64,7 +76,7 @@
         <echo message="${ESC_BT_HOME}"/>
         <delete file="bthome.tmp.file"/>
     </target>
-    <target name="dist" depends="_extract-msvc,_extract-gcc">
+    <target name="initializeBlackTie" depends="_extract-msvc,_extract-gcc">
         <echo message="${ESC_BT_HOME}"/>
         <replaceregexp byline="true" match="REPLACE_WITH_INSTALL_LOCATION" replace="${ESC_BT_HOME}blacktie-${VERSION}">
             <fileset dir="${BT_HOME}/">
@@ -82,20 +94,7 @@
                 <include name="*.ear"/>
             </fileset>
         </copy>
-        <timestamp.echo message="Waiting for services to be deployed"/>
-        <sleep seconds="20"/>
-        <timestamp.echo message="Hopefully services are deployed"/>
     </target>
-    <macrodef name="timestamp.echo">
-        <attribute name="message"/>
-        <sequential>
-            <local name="current.time"/>
-            <tstamp>
-                <format property="current.time" pattern="dd/MM/yyyy hh:mm:ss"/>
-            </tstamp>
-            <echo message="${current.time} @{message}"/>
-        </sequential>
-    </macrodef>
     <target name="tweak-txfooapp-for-environment">
         <replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
             <fileset dir="../">

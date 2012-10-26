@@ -18,29 +18,16 @@ taskkill /F /IM client.exe
 taskkill /F /IM cs.exe
 tasklist
 
-rem INITIALIZE JBOSS
-call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
-IF %ERRORLEVEL% NEQ 0 exit -1
-
-cd %WORKSPACE%\jboss-as-7.1.1.Final\bin\
-call add-user admin password --silent=true
-IF %ERRORLEVEL% NEQ 0 exit -1
-call add-user guest password -a --silent=true
-IF %ERRORLEVEL% NEQ 0 exit -1
-call add-user dynsub password -a --silent=true
-IF %ERRORLEVEL% NEQ 0 exit -1
-
+rem INITIALIZE JBOSS and CREATE BLACKTIE DISTRIBUTION
+for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
+call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME%  -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss initializeBlackTie -debug
+IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem START JBOSS
 cd %WORKSPACE%\jboss-as-7.1.1.Final\bin
 start /B standalone.bat -c standalone-full.xml -Djboss.bind.address=%JBOSSAS_IP_ADDR% -Djboss.bind.address.unsecure=%JBOSSAS_IP_ADDR%
 echo "Started server"
 @ping 127.0.0.1 -n 20 -w 1000 > nul
-
-rem CREATE BLACKTIE DISTRIBUTION
-for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
-call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DJBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME% dist
-IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %WORKSPACE%\jboss-as-7.1.1.Final\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem TWEAK txfooapp FOR THIS NODE
 call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml tweak-txfooapp-for-environment
