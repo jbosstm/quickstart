@@ -7,6 +7,8 @@
 
 target/
 
+.DS_Store
+
 instantclient_11_2/
 jboss-as-7.1.1.Final.zip
 jbossesb-4.9.zip
