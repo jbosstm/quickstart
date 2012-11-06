@@ -51,7 +51,7 @@ enum TX_TYPE {
 };
 
 typedef struct BLACKTIE_XATMI_DLL test_req {
-	char db[16];
+	char db[64];
 	char data[80];
 	char op;
 	int  id;	// request id
