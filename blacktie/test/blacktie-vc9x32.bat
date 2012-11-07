@@ -4,12 +4,9 @@ if not defined WORKSPACE echo "WORKSPACE not set" & exit -1
 
 if not defined JBOSSAS_IP_ADDR echo "JBOSSAS_IP_ADDR not set" & JBOSSAS_IP_ADDR=localhost
 
-rem Do not use the CI setting of JBOSS_HOME
-set JBOSS_HOME=%WORKSPACE%\jboss-as-7.1.1.Final
-
 rem SHUTDOWN ANY PREVIOUS BUILD REMNANTS
-if exist %JBOSS_HOME% call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown && cd .
-if exist %JBOSS_HOME% @ping 127.0.0.1 -n 10 -w 1000 > nul
+if exist jboss-as\bin\jboss-cli.bat call jboss-as\bin\jboss-cli.bat --connect command=:shutdown && cd .
+if exist jboss-as\bin\jboss-cli.bat @ping 127.0.0.1 -n 10 -w 1000 > nul
 tasklist
 taskkill /F /IM mspdbsrv.exe
 taskkill /F /IM testsuite.exe
@@ -21,17 +18,18 @@ tasklist
 rem INITIALIZE JBOSS and CREATE BLACKTIE DISTRIBUTION
 for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
 call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=%JBOSS_HOME% -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.M2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME%  -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss initializeBlackTie -debug
-IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
+IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
+set JBOSS_HOME=
 
 rem START JBOSS
-cd %JBOSS_HOME%\bin
+cd %WORKSPACE%\jboss-as\bin
 start /B standalone.bat -c standalone-full.xml -Djboss.bind.address=%JBOSSAS_IP_ADDR% -Djboss.bind.address.unsecure=%JBOSSAS_IP_ADDR%
 echo "Started server"
 @ping 127.0.0.1 -n 20 -w 1000 > nul
 
 rem TWEAK txfooapp FOR THIS NODE
 call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml tweak-txfooapp-for-environment
-IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
+IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem RUN THE SAMPLES
 
@@ -39,12 +37,12 @@ set PATH=%PATH%;%ORACLE_HOME%\bin;%ORACLE_HOME%\vc9
 
 echo calling generated setenv - error %ERRORLEVEL%
 call %WORKSPACE%\blacktie\target\dist\blacktie-5.0.0.M2-SNAPSHOT\setenv.bat
-IF %ERRORLEVEL% NEQ 0 echo "Failing build 5 with error %ERRORLEVEL%" & tasklist & call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
+IF %ERRORLEVEL% NEQ 0 echo "Failing build 5 with error %ERRORLEVEL%" & tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 cd %WORKSPACE%\blacktie\
 call run_all_quickstarts.bat
-IF %ERRORLEVEL% NEQ 0 echo "Failing build 6 with error %ERRORLEVEL%" & tasklist & call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
+IF %ERRORLEVEL% NEQ 0 echo "Failing build 6 with error %ERRORLEVEL%" & tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem SHUTDOWN ANY PREVIOUS BUILD REMNANTS
-tasklist & call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul
+tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul
 echo "Finished build"

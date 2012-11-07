@@ -8,14 +8,10 @@ else
   exit -1
 fi
 
-# Do not use the CI setting of JBOSS_HOME
-JBOSS_HOME=$WORKSPACE/jboss-as-7.1.1.Final
-
 if [ -z "${JBOSSAS_IP_ADDR+x}" ]; then
   echo JBOSSAS_IP_ADDR not set
   JBOSSAS_IP_ADDR=localhost
 fi
-
 
 # KILL ANY PREVIOUS BUILD REMNANTS
 ps -f
@@ -47,10 +43,11 @@ if [ "$?" != "0" ]; then
   	ps -f
 	exit -1
 fi
-chmod u+x $JBOSS_HOME/bin/standalone.sh
+export JBOSS_HOME=
+chmod u+x $WORKSPACE/jboss-as/bin/standalone.sh
 
 # START JBOSS
-$JBOSS_HOME/bin/standalone.sh -c standalone-full.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR&
+$WORKSPACE/jboss-as/bin/standalone.sh -c standalone-full.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR&
 sleep 20
 
 # TWEAK txfooapp FOR THIS NODE
