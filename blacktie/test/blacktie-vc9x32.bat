@@ -23,11 +23,11 @@ call ant -f %WORKSPACE%/blacktie/test/initializeJBoss.xml -Dbasedir=%WORKSPACE% 
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 cd %WORKSPACE%\jboss-as-7.1.1.Final\bin\
-call add-user admin password --silent=true
+call add-user admin password1@ --silent=true
 IF %ERRORLEVEL% NEQ 0 exit -1
-call add-user guest password -a --silent=true
+call add-user guest password1@ -a --silent=true
 IF %ERRORLEVEL% NEQ 0 exit -1
-call add-user dynsub password -a --silent=true
+call add-user dynsub password1@ -a --silent=true
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 

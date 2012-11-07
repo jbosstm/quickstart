@@ -130,7 +130,7 @@
 		TRANS_FACTORY_ID="TransactionManagerService.OTS" /> to start the ORB
 		on a fixed endpoint to test recovery use the following:
 	-->
-	<MQ HOST="${JBOSSAS_IP_ADDR}" PORT="61613" USER="guest" PASSWORD="password"
+	<MQ HOST="${JBOSSAS_IP_ADDR}" PORT="61613" USER="guest" PASSWORD="password1@"
 		 RECEIVE_TIMEOUT="10" TIME_TO_LIVE="40" />
 
 	<BUFFERS>
