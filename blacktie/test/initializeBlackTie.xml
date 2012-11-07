@@ -56,7 +56,7 @@ dynsub=guest,blacktie,dynsub" file="${JBOSS_HOME}/standalone/configuration/appli
 	(cd ${JBOSS_HOME}/bin/ && ./add-user.sh guest password -a \-\-silent=true)
 	(cd ${JBOSS_HOME}/bin/ && ./add-user.sh dynsub password -a \-\-silent=true)
 	-->
-	<copy todir="${JBOSS_HOME}/">
+	<copy todir="${JBOSS_HOME}/" overwrite="true">
 		<fileset dir="blacktie/test/config/"/>
 	</copy>
     </target>
