@@ -21,17 +21,7 @@
  */
 package org.jboss.jbossts.xts.demotest;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
-import static org.jboss.arquillian.ajocado.Graphene.name;
-import static org.jboss.arquillian.ajocado.Graphene.waitForHttp;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-import static org.jboss.arquillian.ajocado.Graphene.xp;
-
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.locator.NameLocator;
-import org.jboss.arquillian.ajocado.locator.XPathLocator;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -44,6 +34,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+import java.util.concurrent.TimeUnit;
+
 import java.net.URL;
 import java.util.zip.ZipFile;
 
@@ -53,9 +48,9 @@ import java.util.zip.ZipFile;
  * @author istudens@redhat.com
  */
 @RunWith(Arquillian.class)
-@RunAsClient
 public class XTSDemoTest {
     private static final Logger log = Logger.getLogger(XTSDemoTest.class);
+    private static final int IMPLICIT_WAIT_S = 120;
 
     private static final String XTS_DEMO_DIR = "../ear/target/xts-demo-ear-4.17.3.Final-SNAPSHOT.ear";
     private static final String XTS_DEMO_ARCHIVE = "xts-demo.ear";
@@ -68,26 +63,25 @@ public class XTSDemoTest {
     private static final String TX_TYPE_BA = "BusinessActivity";
 
 
-    // load ajocado driver
     @Drone
-    GrapheneSelenium driver;
+    private HtmlUnitDriver driver;
 
     // Load context path to the test
     @ArquillianResource
-    URL contextPath;
+    private URL contextPath;
 
 
-    protected NameLocator TX_TYPE_FIELD = name("txType");
-    protected NameLocator RESTAURANT_FIELD = name("restaurant");
-    protected NameLocator THEATER_CIRCLE_FIELD = name("theatrecirclecount");
-    protected NameLocator THEATER_STALLS_FIELD = name("theatrestallscount");
-    protected NameLocator THEATER_BALCONY_FIELD = name("theatrebalconycount");
-    protected NameLocator TAXI_FIELD = name("taxi");
+    private static final By TX_TYPE_FIELD = By.name("txType");
+    private static final By RESTAURANT_FIELD = By.name("restaurant");
+    private static final By THEATER_CIRCLE_FIELD = By.name("theatrecirclecount");
+    private static final By THEATER_STALLS_FIELD = By.name("theatrestallscount");
+    private static final By THEATER_BALCONY_FIELD = By.name("theatrebalconycount");
+    private static final By TAXI_FIELD = By.name("taxi");
 
-    protected NameLocator SUBMIT_BUTTON = name("submit");
+    private static final By SUBMIT_BUTTON = By.name("submit");
 
-    protected XPathLocator RESULT_TABLE_TITLE_XP = xp("//div[@class='result_title']");
-    protected XPathLocator RESULT_TABLE_CONTENT_XP = xp("//div[@class='result']");
+    private static final By RESULT_TABLE_TITLE_XP = By.xpath("//div[@class='result_title']");
+    private static final By RESULT_TABLE_CONTENT_XP = By.xpath("//div[@class='result']");
 
 
     @Deployment(name = XTS_DEMO_ARCHIVE, testable = false)
@@ -96,7 +90,7 @@ public class XTSDemoTest {
                 .importFrom(new ZipFile(XTS_DEMO_DIR)).as(EnterpriseArchive.class);
         return archive;
     }
-
+    
     @Test
     public void testAtomicTransaction() throws Exception {
         testReservation(TX_TYPE_AT, "6", "1", "2", "3", true);
@@ -109,25 +103,27 @@ public class XTSDemoTest {
 
     protected void testReservation(String txType, String restaurantSeats, String theaterCircleSeats, String theaterStallsSeats, String theaterBalconySeats, boolean taxi) throws Exception {
         log.info("contextPath = " + contextPath);
-        driver.open(new URL(contextPath + "/" + DEMO_APP_CONTEXT + "/"));
+        driver.get(contextPath + "/" + DEMO_APP_CONTEXT + "/");
 
-        waitModel.until(elementPresent.locator(TX_TYPE_FIELD));
+        driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_S, TimeUnit.SECONDS);
+        driver.findElement(TX_TYPE_FIELD);
         log.info("driver.getTitle() = " + driver.getTitle());
 
-        driver.type(TX_TYPE_FIELD, txType);
-        driver.type(RESTAURANT_FIELD, restaurantSeats);
-        driver.type(THEATER_CIRCLE_FIELD, theaterCircleSeats);
-        driver.type(THEATER_STALLS_FIELD, theaterStallsSeats);
-        driver.type(THEATER_BALCONY_FIELD, theaterBalconySeats);
-        driver.type(TAXI_FIELD, taxi ? "1" : "0");
+        
+        driver.findElement(TX_TYPE_FIELD).sendKeys(txType);
+        driver.findElement(RESTAURANT_FIELD).sendKeys(restaurantSeats);
+        driver.findElement(THEATER_CIRCLE_FIELD).sendKeys(theaterCircleSeats);
+        driver.findElement(THEATER_STALLS_FIELD).sendKeys(theaterStallsSeats);
+        driver.findElement(THEATER_BALCONY_FIELD).sendKeys(theaterBalconySeats);
+        driver.findElement(TAXI_FIELD).sendKeys(taxi ? "1" : "0");
 
-        waitForHttp(driver).click(SUBMIT_BUTTON);
+        driver.findElement(SUBMIT_BUTTON).click();
 
-        String resultTableTitle = driver.getText(RESULT_TABLE_TITLE_XP);
+        String resultTableTitle = driver.findElement(RESULT_TABLE_TITLE_XP).getText();
         log.info("resultTableTitle = " + resultTableTitle);
         Assert.assertTrue("Page does not contain any results!", resultTableTitle.contains(RESULT_TITLE));
 
-        String resultTableContent = driver.getText(RESULT_TABLE_CONTENT_XP);
+        String resultTableContent = driver.findElement(RESULT_TABLE_CONTENT_XP).getText();
         log.info("resultTableContent = " + resultTableContent);
         Assert.assertTrue("Transaction failed with: " + resultTableContent, resultTableContent.contains(TRANSACTION_FINISHED));
     }
