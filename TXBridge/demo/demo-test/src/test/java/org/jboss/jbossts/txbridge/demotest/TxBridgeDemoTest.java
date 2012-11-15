@@ -21,18 +21,8 @@
  */
 package org.jboss.jbossts.txbridge.demotest;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
-import static org.jboss.arquillian.ajocado.Graphene.name;
-import static org.jboss.arquillian.ajocado.Graphene.waitForHttp;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-import static org.jboss.arquillian.ajocado.Graphene.xp;
-
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.locator.NameLocator;
-import org.jboss.arquillian.ajocado.locator.XPathLocator;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -47,7 +37,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipFile;
 
 /**
@@ -56,9 +50,9 @@ import java.util.zip.ZipFile;
  * @author istudens@redhat.com
  */
 @RunWith(Arquillian.class)
-@RunAsClient
 public class TxBridgeDemoTest {
     private static final Logger log = Logger.getLogger(TxBridgeDemoTest.class);
+    private static final int IMPLICIT_WAIT_S = 120;
 
     private static final String XTS_DEMO_ARCHIVE = "../../../XTS/demo/ear/target/xts-demo-ear-5.0.0.M2-SNAPSHOT.ear";
     private static final String TXBRIDGE_DEMO_SERVICE_ARCHIVE = "../service/target/txbridge-demo-service.jar";
@@ -73,16 +67,16 @@ public class TxBridgeDemoTest {
 
     // load ajocado driver
     @Drone
-    GrapheneSelenium driver;
+    private HtmlUnitDriver driver;
 
 
-    protected NameLocator TX_TYPE_FIELD = name("txType");
-    protected NameLocator SEATS_FIELD = name("seats");
+    private static final By TX_TYPE_FIELD = By.name("txType");
+    private static final By SEATS_FIELD = By.name("seats");
 
-    protected NameLocator SUBMIT_BUTTON = name("submit");
+    private static final By SUBMIT_BUTTON = By.name("submit");
 
-    protected XPathLocator RESULT_TABLE_TITLE_XP = xp("//span[@class='result_title']");
-    protected XPathLocator RESULT_TABLE_CONTENT_XP = xp("//span[@class='result']");
+    private static final By RESULT_TABLE_TITLE_XP = By.xpath("//span[@class='result_title']");
+    private static final By RESULT_TABLE_CONTENT_XP = By.xpath("//span[@class='result']");
 
 
     @Deployment(name = XTS_DEMO_ARCHIVE, testable = false, order = 1)
@@ -106,6 +100,7 @@ public class TxBridgeDemoTest {
         return archive;
     }
 
+    
     @Test  @OperateOnDeployment(TXBRIDGE_DEMO_CLIENT_ARCHIVE)
     public void testAT(@ArquillianResource URL contextPath) throws Exception {
         testReservation(PARENT_TX_TYPE_AT, "2", contextPath);
@@ -116,23 +111,24 @@ public class TxBridgeDemoTest {
         testReservation(PARENT_TX_TYPE_JTA, "3", contextPath);
     }
 
+    
     protected void testReservation(String txType, String seats, URL contextPath) throws Exception {
         log.info("contextPath = " + contextPath);
-        driver.open(contextPath);
+        driver.get(contextPath.toString());
 
-        waitModel.until(elementPresent.locator(TX_TYPE_FIELD));
+        driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_S, TimeUnit.SECONDS);
         log.info("driver.getTitle() = " + driver.getTitle());
 
-        driver.type(TX_TYPE_FIELD, txType);
-        driver.type(SEATS_FIELD, seats);
+        driver.findElement(TX_TYPE_FIELD).sendKeys(txType);
+        driver.findElement(SEATS_FIELD).sendKeys(seats);
 
-        waitForHttp(driver).click(SUBMIT_BUTTON);
+        driver.findElement(SUBMIT_BUTTON).click();
 
-        String resultTableTitle = driver.getText(RESULT_TABLE_TITLE_XP);
+        String resultTableTitle = driver.findElement(RESULT_TABLE_TITLE_XP).getText();
         log.info("resultTableTitle = " + resultTableTitle);
         Assert.assertTrue("Page does not contain any results!", resultTableTitle.contains(RESULT_TITLE));
 
-        String resultTableContent = driver.getText(RESULT_TABLE_CONTENT_XP);
+        String resultTableContent = driver.findElement(RESULT_TABLE_CONTENT_XP).getText();
         log.info("resultTableContent = " + resultTableContent);
         Assert.assertTrue("Transaction failed with: " + resultTableContent, resultTableContent.contains(TRANSACTION_FINISHED));
     }
