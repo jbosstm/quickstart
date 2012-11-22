@@ -43,9 +43,9 @@ fi
 chmod u+x $WORKSPACE/jboss-as-7.1.1.Final/bin/standalone.sh
 chmod u+x $WORKSPACE/jboss-as-7.1.1.Final/bin/add-user.sh
 
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh admin password --silent=true)
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh guest password -a --silent=true)
-(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh dynsub password -a --silent=true)
+(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh admin password1@ --silent=true)
+(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh guest password1@ -a --silent=true)
+(cd $WORKSPACE/jboss-as-7.1.1.Final/bin/ && ./add-user.sh dynsub password1@ -a --silent=true)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
