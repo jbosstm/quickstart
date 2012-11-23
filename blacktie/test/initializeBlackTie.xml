@@ -41,21 +41,34 @@
                 <include name="*/setenv.*"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="DB=blacktie" replace="DB=ORCL.NCL">
+
+        <!-- tweak-txfooapp-for-environment -->
+        <replaceregexp byline="true" match="DB=blacktie" replace="DB=orcl.buildnet.ncl.jboss.com">
             <fileset dir="${BT_HOME}blacktie-${VERSION}/">
-                <include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
+                <include name="xatmi/txfooapp/cli/btconfig.xml"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=orcl112">
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL112">
             <fileset dir="${BT_HOME}blacktie-${VERSION}/">
-                <include name="atmibroker-xatmi/txfooapp/btconfig.xml"/>
+                <include name="xatmi/txfooapp/cli/btconfig.xml"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="blacktie" replace="ORCL.NCL">
+        <replaceregexp byline="true" match="DB=blacktie" replace="DB=orcl.buildnet.ncl.jboss.com">
             <fileset dir="${BT_HOME}blacktie-${VERSION}/">
-                <include name="atmibroker-xatmi/txfooapp/request.c"/>
+                <include name="xatmi/txfooapp/svr/btconfig.xml"/>
             </fileset>
         </replaceregexp>
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL112">
+            <fileset dir="${BT_HOME}blacktie-${VERSION}/">
+                <include name="xatmi/txfooapp/svr/btconfig.xml"/>
+            </fileset>
+        </replaceregexp>
+        <replaceregexp byline="true" match='\"blacktie\"' replace='\"orcl.buildnet.ncl.jboss.com\"'>
+             <fileset dir="${BT_HOME}blacktie-${VERSION}/">
+                <include name="xatmi/txfooapp/request.c"/>
+            </fileset>
+         </replaceregexp>
+
         <copy todir="${JBOSS_HOME}/standalone/deployments">
             <fileset dir="${BT_HOME}blacktie-${VERSION}/blacktie-admin-services/">
                 <include name="*.jar"/>
