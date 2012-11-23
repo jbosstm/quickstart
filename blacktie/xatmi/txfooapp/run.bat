@@ -13,13 +13,14 @@ IF %ERRORLEVEL% NEQ 0 exit -1
 
 set BLACKTIE_CONFIGURATION_DIR=svr
 set BLACKTIE_CONFIGURATION=win32
+set LOG4CXXCONFIG=log4cxx.server.properties
 call btadmin startup
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 rem RUN THE C CLIENT
 set BLACKTIE_CONFIGURATION_DIR=cli
 set BLACKTIE_CONFIGURATION=win32
-set LOG4CXXCONFIG=log4cxx.client.properties
+set LOG4CXXCONFIG=log4cxx.properties
 client
 IF %ERRORLEVEL% NEQ 0 exit -1
 
