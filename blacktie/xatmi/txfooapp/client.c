@@ -51,9 +51,8 @@ int main(int argc, char **argv)
 
             if (p == NULL) {
     			btlogger_debug("TxLog product id %s not found", argv[i]);
-				product_t *prod;
-				for (prod = products; prod->id != -1; prod++)
-    				btlogger_debug("TxLog product id %d", prod->id);
+				for (p = products; p->id != -1; p++)
+    				btlogger_debug("TxLog product id %d", p->id);
 				//return fatal("Requested db is not supported\n");
 			} else {
             	prods[rmCnt++] = *p;
