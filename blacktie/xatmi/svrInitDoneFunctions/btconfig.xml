@@ -23,11 +23,11 @@
 		<MACHINE id="iniDone1" hostname="${HOSTNAME}"
 			pathToExecutable="./server"
 			workingDirectory="."
-			serverId="1" argLine="quickstart command line parameters"/>
+			serverId="1" argLine=" -p 12341 quickstart command line parameters"/>
 		<MACHINE id="iniDone2" hostname="${HOSTNAME}"
 			pathToExecutable="./server"
 			workingDirectory="."
-			serverId="2" argLine="quickstart command line parameters"/>
+			serverId="2" argLine=" -p 12342 quickstart command line parameters"/>
 	</MACHINES>
 	<SERVERS>
 		<SERVER name='iniDone' init_function='myserverinit' done_function='myserverdone'>
@@ -43,6 +43,7 @@
 	</SERVERS>
 	<ORB OPT="-ORBInitRef NameService=corbaloc::${JBOSSAS_IP_ADDR}:3528/NameService -ORBListenEndpoints iiop://${JBOSSAS_IP_ADDR}:0"
 		TRANS_FACTORY_ID="TransactionManagerService.OTS" />
+	<SOCKETSERVER PORT="12343" />
 	<MQ HOST="${JBOSSAS_IP_ADDR}" PORT="61613" USER="guest" PASSWORD="password1@"
 		 RECEIVE_TIMEOUT="10" TIME_TO_LIVE="40" />
 	
