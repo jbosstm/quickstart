@@ -23,7 +23,8 @@
 		<MACHINE id="secure1" hostname="${HOSTNAME}"
 			pathToExecutable="./server"
 			workingDirectory="."
-			serverId="1" />
+			serverId="1"
+			argLine =" -p 12341"/>
 	</MACHINES>
 	<SERVERS>
 		<SERVER name="secure">
@@ -35,6 +36,7 @@
 	</SERVERS>
 	<ORB OPT="-ORBInitRef NameService=corbaloc::${JBOSSAS_IP_ADDR}:3528/NameService -ORBListenEndpoints iiop://${JBOSSAS_IP_ADDR}:0"
 		TRANS_FACTORY_ID="TransactionManagerService.OTS" />
+	<SOCKETSERVER PORT="12345" />
 	<MQ HOST="${JBOSSAS_IP_ADDR}" PORT="61613" USER="dynsub" PASSWORD="password1@"
 		 RECEIVE_TIMEOUT="10" TIME_TO_LIVE="40" />
 	
