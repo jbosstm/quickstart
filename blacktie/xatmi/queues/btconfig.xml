@@ -23,7 +23,8 @@
 		<MACHINE id="queues1" hostname="${HOSTNAME}"
 			pathToExecutable="./server"
 			workingDirectory="."
-			serverId="1" />
+			serverId="1"
+			argLine =" -p 12341"/>
 	</MACHINES>
 	<SERVERS>
 		<SERVER name='queues'>
@@ -40,6 +41,7 @@
 	</SERVERS>
 	<ORB OPT="-ORBInitRef NameService=corbaloc::${JBOSSAS_IP_ADDR}:3528/NameService -ORBListenEndpoints iiop://${JBOSSAS_IP_ADDR}:0"
 		TRANS_FACTORY_ID="TransactionManagerService.OTS" />
+	<SOCKETSERVER PORT="12343" />
 	<MQ HOST="${JBOSSAS_IP_ADDR}" PORT="61613" USER="guest" PASSWORD="password1@"
 		 RECEIVE_TIMEOUT="10" TIME_TO_LIVE="40" />
 	
