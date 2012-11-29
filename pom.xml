@@ -124,6 +124,7 @@
     <url>https://github.com/jbosstm/quickstart</url>
   </scm>
   <modules>
+    <module>blacktie</module>
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
     <module>ArjunaJTS</module>
@@ -132,6 +133,5 @@
     <!-- Currently depends on the XTS demo -->
     <module>TXBridge</module>
     <module>fileio</module>
-    <module>blacktie</module>
   </modules>
 </project>
