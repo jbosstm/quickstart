@@ -32,13 +32,14 @@ import org.jboss.narayana.quickstarts.wsat.simple.jaxws.RestaurantServiceAT;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.at.Commit;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.at.Prepare;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.at.Rollback;
-import org.jboss.narayana.txframework.api.annotation.management.DataManagement;
 import org.jboss.narayana.txframework.api.annotation.service.ServiceRequest;
 import org.jboss.narayana.txframework.api.annotation.transaction.Transactional;
 import org.jboss.narayana.txframework.api.configuration.BridgeType;
+import org.jboss.narayana.txframework.api.management.TXDataMap;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -59,8 +60,8 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
 
     private MockRestaurantManager mockRestaurantManager = MockRestaurantManager.getSingletonInstance();
 
-    @DataManagement
-    Map dataControl;
+    @Inject
+    TXDataMap<String, String> dataControl;
 
     private static final String BOOKING_ID_KEY = "BOOKING_ID_KEY";
 
