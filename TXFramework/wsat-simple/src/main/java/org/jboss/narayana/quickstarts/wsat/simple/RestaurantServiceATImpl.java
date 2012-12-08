@@ -36,15 +36,11 @@ import org.jboss.narayana.txframework.api.annotation.service.ServiceRequest;
 import org.jboss.narayana.txframework.api.annotation.transaction.Transactional;
 import org.jboss.narayana.txframework.api.configuration.BridgeType;
 import org.jboss.narayana.txframework.api.management.TXDataMap;
-
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.annotation.WebServlet;
-import java.util.Map;
 
 /**
  * An adapter class that exposes the RestaurantManager business API as a transactional Web Service.
@@ -54,8 +50,7 @@ import java.util.Map;
 @Transactional(bridgeType = BridgeType.NONE)
 @WebService(serviceName = "RestaurantServiceATService", portName = "RestaurantServiceAT", name = "RestaurantServiceAT", targetNamespace = "http://www.jboss.org/narayana/quickstarts/wsat/simple/Restaurant")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-@Remote(RestaurantServiceAT.class)
-@Stateless
+@WebServlet("/RestaurantServiceAT")
 public class RestaurantServiceATImpl implements RestaurantServiceAT {
 
     private MockRestaurantManager mockRestaurantManager = MockRestaurantManager.getSingletonInstance();
