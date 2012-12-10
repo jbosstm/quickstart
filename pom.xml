@@ -124,7 +124,6 @@
     <url>https://github.com/jbosstm/quickstart</url>
   </scm>
   <modules>
-    <module>blacktie</module>
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
     <module>ArjunaJTS</module>
