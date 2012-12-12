@@ -31,11 +31,12 @@ package org.jboss.narayana.quickstarts.restat.taxi;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.at.Commit;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.at.Prepare;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.at.Rollback;
-import org.jboss.narayana.txframework.api.annotation.management.DataManagement;
 import org.jboss.narayana.txframework.api.annotation.service.ServiceRequest;
 import org.jboss.narayana.txframework.api.annotation.transaction.Transactional;
+import org.jboss.narayana.txframework.api.management.TXDataMap;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 
@@ -50,8 +51,8 @@ public class TaxiServiceATImpl implements TaxiServiceAT {
 
     private MockTaxiManager mockTaxiManager = MockTaxiManager.getSingletonInstance();
 
-    @DataManagement
-    Map dataControl;
+    @Inject
+    TXDataMap<String, String> dataControl;
 
     private static final String BOOKING_ID_KEY = "BOOKING_ID_KEY";
 

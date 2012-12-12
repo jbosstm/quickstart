@@ -23,15 +23,15 @@ package org.jboss.narayana.quickstarts.wsba.participantcompletion.simple;
 import org.jboss.narayana.quickstarts.wsba.participantcompletion.simple.jaxws.OrderServiceBA;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.ba.Cancel;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.ba.Compensate;
-import org.jboss.narayana.txframework.api.annotation.management.DataManagement;
-import org.jboss.narayana.txframework.api.annotation.management.TxManagement;
 import org.jboss.narayana.txframework.api.annotation.service.ServiceRequest;
 import org.jboss.narayana.txframework.api.annotation.transaction.Compensatable;
 import org.jboss.narayana.txframework.api.configuration.transaction.CompletionType;
+import org.jboss.narayana.txframework.api.management.TXDataMap;
 import org.jboss.narayana.txframework.api.management.WSBATxControl;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -54,7 +54,7 @@ public class OrderServiceBAImpl implements OrderServiceBA {
      * The @TxManagement injection provides a control to the running transaction. It can be used to notify the coordinator of important events. For example if the
      * participant has completed it's work or if the participant is unable to complete.
      */
-    @TxManagement
+    @Inject
     public WSBATxControl txControl;
 
     /*
@@ -62,8 +62,8 @@ public class OrderServiceBAImpl implements OrderServiceBA {
         can be retrieved when the protocol lifecycle methods are invoked by the coordinator (those annotated with @Compensate, @Cancel, etc).
         The Map is isolated within a particular transaction; therefore it is safe for multiple transactions to use this map without seeing each others' data.
      */
-    @DataManagement
-    private Map txDataMap;
+    @Inject
+    private TXDataMap<String, String> txDataMap;
 
     /*
      * This flag is used by the test to check whether the order was confirmed or cancelled. It is not thread safe as the same instance is used by all threads.
