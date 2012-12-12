@@ -28,15 +28,11 @@ import org.jboss.narayana.txframework.api.annotation.transaction.Compensatable;
 import org.jboss.narayana.txframework.api.configuration.transaction.CompletionType;
 import org.jboss.narayana.txframework.api.management.TXDataMap;
 import org.jboss.narayana.txframework.api.management.WSBATxControl;
-
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.annotation.WebServlet;
-import java.util.Map;
 
 /**
  * A simple Web service that accepts product orders and sends confirmation emails. If the BA is cancelled, then a cancellation EMail is sent.
@@ -46,8 +42,7 @@ import java.util.Map;
 @Compensatable(completionType = CompletionType.PARTICIPANT)
 @WebService(serviceName = "OrderServiceBAService", portName = "OrderServiceBA", name = "OrderServiceBA", targetNamespace = "http://www.jboss.org/as/quickstarts/helloworld/wsba/participantcompletion/order")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-@Stateless
-@Remote(OrderServiceBA.class)
+@WebServlet("/OrderServiceBA")
 public class OrderServiceBAImpl implements OrderServiceBA {
 
     /*
