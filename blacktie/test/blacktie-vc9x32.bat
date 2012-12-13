@@ -42,7 +42,7 @@ call %WORKSPACE%\blacktie\target\dist\blacktie-5.0.0.M2-SNAPSHOT\setenv.bat
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 5 with error %ERRORLEVEL%" & tasklist & call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 cd %WORKSPACE%\blacktie\
-call run_all_quickstarts.bat tx
+call run_all_quickstarts.bat
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 6 with error %ERRORLEVEL%" & tasklist & call %JBOSS_HOME%\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 rem SHUTDOWN ANY PREVIOUS BUILD REMNANTS
