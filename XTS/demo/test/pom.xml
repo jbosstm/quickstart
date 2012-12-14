@@ -27,6 +27,7 @@
         <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
         <node0>127.0.0.1</node0>
         <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
+        <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>
     </properties>
 
     <dependencyManagement>
@@ -215,7 +216,7 @@
                             Used in arquillian.xml - arguments for all JBoss AS instances.
                             System properties are duplicated here until ARQ-647 is implemented.
                         -->
-                        <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip.server} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}</server.jvm.args>
+                        <server.jvm.args>${jvm.args.memory} ${jvm.args.ip.server} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}</server.jvm.args>
                         <!-- For arquillian -->
                         <jbossHome>${env.JBOSS_HOME}</jbossHome>
                     </systemPropertyVariables>
