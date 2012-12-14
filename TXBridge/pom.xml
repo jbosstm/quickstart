@@ -13,6 +13,7 @@
     <modules>
         <module>demo</module>
         <module>wsat-jta-multi_hop</module>
+        <module>wsat-jta-multi_service</module>
     </modules>
 
 </project>
