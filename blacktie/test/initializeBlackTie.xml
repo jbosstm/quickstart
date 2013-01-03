@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 <project name="extract-blacktie">
     <target name="initializeDatabase">
-        <get src="http://172.17.131.2/userContent/blacktie/instantclient-basiclite-win32-11.2.0.1.0.zip" dest="./instantclient-basiclite-win32-11.2.0.1.0.zip" verbose="true" usetimestamp="true" skipexisting="true"/>
-        <get src="http://172.17.131.2/userContent/blacktie/instantclient-sdk-win32-11.2.0.1.0.zip" dest="./instantclient-sdk-win32-11.2.0.1.0.zip" verbose="true" usetimestamp="true" skipexisting="true"/>
-        <get src="http://172.17.131.2/userContent/blacktie/tnsnames.ora" dest="./tnsnames.ora" verbose="true" usetimestamp="true" skipexisting="true"/>
         <delete dir="instantclient_11_2"/>
-        <unzip src="./instantclient-basiclite-win32-11.2.0.1.0.zip" dest="."/>
-        <unzip src="./instantclient-sdk-win32-11.2.0.1.0.zip" dest="."/>
         <mkdir dir="./instantclient_11_2/network/admin"/>
         <copy file="./tnsnames.ora" tofile="./instantclient_11_2/network/admin/tnsnames.ora"/>
+        <unzip src="./instantclient-basiclite-win32-11.2.0.1.0.zip" dest="."/>
+        <unzip src="./instantclient-sdk-win32-11.2.0.1.0.zip" dest="."/>
         <move tofile="./instantclient_11_2/OCI" file="./instantclient_11_2/sdk"/>
         <move tofile="./instantclient_11_2/OCI/lib/MSVC2" file="./instantclient_11_2/OCI/lib/msvc"/>
         <move tofile="./instantclient_11_2/OCI/lib/MSVC" file="./instantclient_11_2/OCI/lib/MSVC2"/>
