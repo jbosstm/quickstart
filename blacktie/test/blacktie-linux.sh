@@ -26,9 +26,9 @@ ps -f
 TNS_ADMIN=$WORKSPACE/instantclient_11_2/network/admin
 mkdir -p $TNS_ADMIN
 if [ -e $TNS_ADMIN/tnsnames.ora ]; then
-	echo "tnsnames.ora already downloaded"
+	echo "tnsnames.ora already in place"
 else
-	(cd $TNS_ADMIN; wget http://albany/userContent/blacktie/tnsnames.ora)
+	cp tnsnames.ora $TNS_ADMIN/
 fi
 
 # INITIALIZE JBOSS and CREATE BLACKTIE DISTRIBUTION
