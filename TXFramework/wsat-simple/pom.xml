@@ -18,7 +18,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss-as.version>7.2.0.Alpha1-SNAPSHOT</jboss-as.version>
         <narayana.version>5.0.0.M2-SNAPSHOT</narayana.version>
-        <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -218,7 +217,6 @@
                             <systemPropertyVariables>
                                 <!-- For arquillian -->
                                 <jbossHome>${env.JBOSS_HOME}</jbossHome>
-                                <server.jvm.args>${jvm.args.memory}</server.jvm.args>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
