@@ -81,7 +81,8 @@ public class ClientTest {
 
             Assert.assertTrue("Expected order to be confirmed, but it wasn't", client.orderConfirmed());
         } catch (TransactionRolledBackException e) {
-            //Although undesirable this is actually a valid outcome. See JBTM-1429
+            //Although undesirable this is actually a valid outcome. See http://jbossts.blogspot.co.uk/2013/01/ws-ba-participant-completion-race.html
+            // or the 'Troubleshooting' section of the 'Transactions Development Guide'.
         }finally {
             cancelIfActive(uba);
             client.reset();
