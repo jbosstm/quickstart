@@ -38,24 +38,11 @@ public interface OrderServiceBA {
     /**
      * Place an order
      *
-     * @param item Item to order
+     * @param emailAddress email adress of the purchaser
+     * @param item Item to purchase
      * @throws org.jboss.narayana.quickstarts.wsba.participantcompletion.simple.OrderServiceException if an error occurred when making the order
      */
     @WebMethod
-    public void placeOrder(String item) throws OrderServiceException;
-
-    /**
-     * Check to see if order was confirmed and not canceled.
-     * 
-     * @return true if the order was confirmed, false if it was not confirmed or if it was later cancelled
-     */
-    @WebMethod
-    public boolean orderConfirmed();
-
-    /**
-     * Reset the orderConfirmed flag to false.
-     */
-    @WebMethod
-    public void reset();
+    public void placeOrder(String emailAddress, String item) throws OrderServiceException;
 
 }

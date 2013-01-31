@@ -100,23 +100,36 @@ The following expected output should appear. The output explains what actually w
 
 Test success:
 
-    08:02:36,791 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) Starting 'testSuccess'. This test invokes a WS within a BA. The BA is later closed, which causes the WS call to complete successfully.
-    08:02:36,791 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Creating a new Business Activity
-    08:02:36,791 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA wil be included in this activity)
-    08:02:36,809 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] invoking placeOrder('a book') on WS
-    08:02:37,038 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] invoked placeOrder('a book')
-    08:02:37,038 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.
-    08:02:37,161 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Closing Business Activity (This will cause the BA to complete successfully)
+    13:20:08,190 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) Starting 'testSuccess'. This test invokes a WS within a BA. The BA is later closed, which causes the WS call to complete successfully.
+    13:20:08,190 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Creating a new Business Activity
+    13:20:08,190 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA wil be included in this activity)
+    13:20:08,400 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] invoking placeOrder('test@test.com, a book') on WS
+    13:20:08,582 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] invoked placeOrder('a book')
+    13:20:08,582 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.
+    13:20:08,582 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] sent email: 'Order confirmed' to: 'test@test.com'
+    13:20:08,680 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Closing Business Activity (This will cause the BA to complete successfully)
 
 Test cancel:
 
-    08:02:37,517 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) Starting 'testCancel'. This test invokes a WS within a BA. The BA is later cancelled, which causes these WS call to be compensated.
-    08:02:37,517 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Creating a new Business Activity
-    08:02:37,517 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)
-    08:02:37,535 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] invoking placeOrder('a book') on WS
-    08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] invoked placeOrder('a book')
-    08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.
-    08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] sent email: 'Your order is now confirmed for the following item: 'a book''
-    08:02:37,909 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Cancelling Business Activity (This will cause the work to be compensated)
-    08:02:38,059 INFO  [stdout] (TaskWorker-1) [SERVICE] @Compensate
-    08:02:38,060 INFO  [stdout] (TaskWorker-1) [SERVICE] sent email: 'Unfortunately, we have had to cancel your order for item 'a book''
+    13:20:09,064 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) Starting 'testCancel'. This test invokes a WS within a BA. The BA is later cancelled, which causes these WS call to be compensated.
+    13:20:09,064 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Creating a new Business Activity
+    13:20:09,064 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)
+    13:20:09,084 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] invoking placeOrder('test@test.com, a book') on WS
+    13:20:09,159 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] invoked placeOrder('a book')
+    13:20:09,159 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.
+    13:20:09,160 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] sent email: 'Order confirmed' to: 'test@test.com'
+    13:20:09,210 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Cancelling Business Activity (This will cause the work to be compensated)
+    13:20:09,352 INFO  [stdout] (TaskWorker-1) [SERVICE] @Compensate called
+    13:20:09,352 INFO  [stdout] (TaskWorker-1) [SERVICE] sent email: 'Order cancelled' to: 'test@test.com'
+
+Test application exception:
+
+    13:20:09,477 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) Starting 'testApplicationException'. This test invokes a WS within a BA. The order is made with an invalid email address which causes the placeOrder operation to fail. As a res
+    ult the service throws an exception and the coordinator is informed that the BA cannot complete.
+    13:20:09,477 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Creating a new Business Activity
+    13:20:09,477 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)
+    13:20:09,495 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] invoking placeOrder('test@test, a book') on WS
+    13:20:09,576 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] invoked placeOrder('a book')
+    13:20:09,577 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.
+    13:20:09,577 INFO  [stdout] (http-localhost/127.0.0.1:8080-3) [SERVICE] Unable to send email due to an invalid address: 'test@test'. We currently only support '.com' addresses
+    13:20:09,700 INFO  [stdout] (http-localhost/127.0.0.1:8080-1) [CLIENT] 'placeOrder' failed, so canceling the BA

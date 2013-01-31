@@ -36,12 +36,14 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.List;
 
 @RunWith(Arquillian.class)
 public class ClientTest {
    
     private static final String ManifestMF = "Manifest-Version: 1.0\n"
-          + "Dependencies: org.jboss.narayana.txframework,org.jboss.xts,org.jboss.modules,org.jboss.msc,org.jboss.jts\n";
+          + "Dependencies: org.jboss.narayana.txframework,org.jboss.xts,org.jboss.msc,org.jboss.jts\n";
    
     @Inject
     @ClientStub
@@ -56,7 +58,7 @@ public class ClientTest {
     }
 
     /**
-     * Test the simple scenario where aqn order is made within a Business Activity which is closed successfully.
+     * Test the simple scenario where an order is made within a Business Activity which is closed successfully.
      * 
      * @throws Exception if something goes wrong.
      */
@@ -67,25 +69,25 @@ public class ClientTest {
         System.out.println("[CLIENT] Creating a new Business Activity");
         UserBusinessActivity uba = UserBusinessActivityFactory.userBusinessActivity();
         try {
-            String value = "a book";
+            String emailAddress = "test@test.com";
+            String item = "a book";
 
             System.out
                     .println("[CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA wil be included in this activity)");
             uba.begin();
 
-            System.out.println("[CLIENT] invoking placeOrder('" + value + "') on WS");
-            client.placeOrder(value);
+            System.out.println("[CLIENT] invoking placeOrder('" + emailAddress + ", " + item + "') on WS");
+            client.placeOrder(emailAddress, item);
 
             System.out.println("[CLIENT] Closing Business Activity (This will cause the BA to complete successfully)");
             uba.close();
 
-            Assert.assertTrue("Expected order to be confirmed, but it wasn't", client.orderConfirmed());
+            checkMail(EmailSender.MAIL_TEMPLATE_CONFIRMATION);
         } catch (TransactionRolledBackException e) {
             //Although undesirable this is actually a valid outcome. See http://jbossts.blogspot.co.uk/2013/01/ws-ba-participant-completion-race.html
             // or the 'Troubleshooting' section of the 'Transactions Development Guide'.
         }finally {
             cancelIfActive(uba);
-            client.reset();
         }
     }
 
@@ -103,27 +105,68 @@ public class ClientTest {
         System.out.println("[CLIENT] Creating a new Business Activity");
         UserBusinessActivity uba = UserBusinessActivityFactory.userBusinessActivity();
         try {
-            String value = "a book";
+            String emailAddress = "test@test.com";
+            String item = "a book";
 
             System.out
                     .println("[CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)");
             uba.begin();
 
-            System.out.println("[CLIENT] invoking placeOrder('" + value + "') on WS");
-            client.placeOrder(value);
-
-            Assert.assertTrue("Expected order to be confirmed, but it wasn't", client.orderConfirmed());
+            System.out.println("[CLIENT] invoking placeOrder('" + emailAddress + ", " + item + "') on WS");
+            client.placeOrder(emailAddress, item);
+            checkMail(EmailSender.MAIL_TEMPLATE_CONFIRMATION);
 
             System.out.println("[CLIENT] Cancelling Business Activity (This will cause the work to be compensated)");
             uba.cancel();
-
-            Assert.assertTrue("Expected order to be cancelled, but it wasn't", !client.orderConfirmed());
+            checkMail(EmailSender.MAIL_TEMPLATE_CANCELLATION);
 
         } finally {
             cancelIfActive(uba);
-            client.reset();
         }
 
+    }
+
+    /**
+     * Tests the scenario where an item is ordered within a business activity, but the order operation fails due to an invalid email address.
+     *
+     * The 'placeOrder' method throws an OrderServiceException, due to the invalid email address. As a side-effect the coordinator is informed that the
+     * participant cannot complete.
+     *
+     * The Business Activity is cancelled as we know it cannot complete. If the BA was instead closed, a 'TransactionRolledBackException' would be thrown
+     * as the coordinator will be unable to close the BA due to the participant who failed to complete.
+     *
+     * @throws Exception if something goes wrong
+     */
+    @Test
+    public void testApplicationException() throws Exception {
+        System.out
+                .println("\n\nStarting 'testApplicationException'. This test invokes a WS within a BA. The order is made " +
+                        "with an invalid email address which causes the placeOrder operation to fail. As a result the " +
+                        "service throws an exception and the coordinator is informed that the BA cannot complete.");
+        System.out.println("[CLIENT] Creating a new Business Activity");
+        UserBusinessActivity uba = UserBusinessActivityFactory.userBusinessActivity();
+        try {
+            String invalidEmailAddress = "test@test";
+            String item = "a book";
+
+            System.out
+                    .println("[CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)");
+            uba.begin();
+
+            System.out.println("[CLIENT] invoking placeOrder('" + invalidEmailAddress + ", " + item + "') on WS");
+            client.placeOrder(invalidEmailAddress, item);
+
+            Assert.fail("'placeOrder' should have thrown an OrderServiceException");
+
+        } catch (OrderServiceException e) {
+
+            checkMail();
+            System.out.println("[CLIENT] 'placeOrder' failed, so canceling the BA");
+            uba.cancel();
+
+        } finally {
+            cancelIfActive(uba);
+        }
     }
 
     /**
@@ -137,5 +180,21 @@ public class ClientTest {
         } catch (Throwable th2) {
             // do nothing, already closed
         }
+    }
+
+    /**
+     * Utility method for checking what mail was 'sent'. This is just a hack to keep the example simple. After checking
+     * the mailbox is emptied.
+     *
+     * It's main purpose is to check that the correct action was taken for each scenario.
+     *
+     * @param expectedMessages A list of messages that are expected. The assertion will fail if this doesn't
+     *                         match the actual messages 'sent'
+     */
+    private void checkMail(String... expectedMessages) {
+
+        List<String> mail = EmailSender.retrieveMail();
+        Assert.assertEquals(Arrays.asList(expectedMessages), mail);
+        mail.clear();
     }
 }

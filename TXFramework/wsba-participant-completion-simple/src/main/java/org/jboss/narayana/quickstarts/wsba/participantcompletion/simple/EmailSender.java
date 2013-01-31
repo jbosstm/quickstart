@@ -20,15 +20,36 @@
  */
 package org.jboss.narayana.quickstarts.wsba.participantcompletion.simple;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Mock implementation of an email sender. This class simulates the sending of an email by outputting the message to the console.
+ *
+ * It also stores the mail in a list so that the tests can assert that the expected mail was 'sent'
  *
  * @author paul.robinson@redhat.com, 2012-05-02
  */
 public class EmailSender {
 
-    public static void sendEmail(String message) throws OrderServiceException
-    {
-        System.out.println("[SERVICE] sent email: '" + message + "'");
+    private static volatile List<String> mailBox = new ArrayList<String>();
+
+    public static final String MAIL_TEMPLATE_CONFIRMATION = "Order confirmed";
+    public static final String MAIL_TEMPLATE_CANCELLATION = "Order cancelled";
+
+    public static void sendEmail(String emailAddress, String message) throws OrderServiceException {
+
+        if (emailAddress.endsWith(".com")) {
+            mailBox.add(message);
+            System.out.println("[SERVICE] sent email: '" + message + "' to: '" + emailAddress + "'");
+        } else {
+            System.out.println("[SERVICE] Unable to send email due to an invalid address: '" + emailAddress + "'. We currently only support '.com' addresses");
+            throw new OrderServiceException("Unable to send email due to an invalid address: '" + emailAddress + "'. We currently only support '.com' addresses");
+        }
+
+    }
+
+    public static List<String> retrieveMail() {
+        return mailBox;
     }
 }
