@@ -26,11 +26,8 @@ package org.jboss.narayana.quickstarts.wsba.participantcompletion.simple;
  * @author paul.robinson@redhat.com, 2012-01-04
  */
 public class OrderServiceException extends RuntimeException {
+
     public OrderServiceException(String message) {
         super(message);
-    }
-
-    public OrderServiceException(String message, Throwable cause) {
-        super(message, cause);
     }
 }

@@ -70,27 +70,12 @@ public class Client implements OrderServiceBA {
 
     /**
      * Place an order
-     * 
+     *
+     * @param emailAddress The email address of the person placing the order
      * @param item Item to order
      * @throws OrderServiceException if an error occurred when making the order
      */
-    public void placeOrder(String item) throws OrderServiceException {
-        order.placeOrder(item);
-    }
-
-    /**
-     * Check to see if order was confirmed and not canceled.
-     *
-     * @return true if the order was confirmed, false if it was not confirmed or if it was later cancelled
-     */
-    public boolean orderConfirmed() {
-        return order.orderConfirmed();
-    }
-
-    /**
-     * Reset the orderConfirmed flag to false.
-     */
-    public void reset() {
-        order.reset();
+    public void placeOrder(String emailAddress, String item) throws OrderServiceException {
+        order.placeOrder(emailAddress, item);
     }
 }

@@ -38,7 +38,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.servlet.annotation.WebServlet;
 
 /**
- * A simple Web service that accepts product orders and sends confirmation emails. If the BA is cancelled, then a cancellation EMail is sent.
+ * A simple Web service that accepts product orders and sends confirmation emails. If the BA is compensated, a cancellation email is sent.
  *
  * @author Paul Robinson (paul.robinson@redhat.com)
  */
@@ -49,56 +49,50 @@ import javax.servlet.annotation.WebServlet;
 public class OrderServiceBAImpl implements OrderServiceBA {
 
     /*
-        The @DataManagement injection provides a map that that is isolated to the transaction participant. This allows the service to store data that
+        The @TXDataMap injection provides a map that that is isolated to both the transaction and this participant. This allows the service to store data that
         can be retrieved when the protocol lifecycle methods are invoked by the coordinator (those annotated with @Compensate, @Cancel, etc).
         The Map is isolated within a particular transaction; therefore it is safe for multiple transactions to use this map without seeing each others' data.
+        The data is automatically removed after the transaction has ended.
      */
     @Inject
     private TXDataMap<String, String> txDataMap;
 
-    /*
-     * This flag is used by the test to check whether the order was confirmed or cancelled. It is not thread safe as the same instance is used by all threads.
-     * As this is a simple example and the variable is only used by the (sequentially ran) test, we are not too concerned about this.
-     */
-    private static volatile boolean orderConfirmed = false;
-
     /**
      * Places an order for the specified item. As this is a simple example, all the method does is attempt to send the confirmation email.
      *
-     * @param item Item to order
-     * @throws OrderServiceException if an error occurred when making the order
+     * The method is annotated with '@Completes' which means that providing the method doesn't throw an Exception, the coordinator will
+     * be automatically notified that the participant completed.
+     *
+     * @param emailAddress The email address of the person making the order.
+     * @param item Item to be purchased
+     * @throws OrderServiceException if an error occurred when making the order. In this case if an invalid email address is provided.
      */
     @WebMethod
     @ServiceRequest // This annotation is used by the TXFramework to know that this method participates in the BA
     @Completes
-    public void placeOrder(String item) throws OrderServiceException {
+    public void placeOrder(String emailAddress, String item) throws OrderServiceException {
 
         System.out.println("[SERVICE] invoked placeOrder('" + item + "')");
 
-        //Store value for use by compensation.
-        txDataMap.put("value", item);
+        /*
+         * Do some work to create the order. For example, create an entry in a database.
+         *
+         * This has been left out of this example to keep it simple.
+         */
+        String orderId = "someId"; //Normally generated when creating the order. Maybe the generated PK of the Order record.
 
         /*
-         * this service employs the participant completion protocol which means it has completed the work for this BA.
-         * If the local changes (emailing the order confirmation to the customer) succeeded, we notify the coordinator that we have
-         * completed. Otherwise, we notify the coordinator that we cannot complete. If any other participant fails or the client
-         * decides to cancel we can rely upon being told to compensate.
+         * Store data for use by compensation.
+         */
+        txDataMap.put("emailAddress", emailAddress);
+        txDataMap.put("orderId", orderId);
+
+
+        /* If the following fails (due to an invalid email address, in this example) an exception will be thrown and the middleware will notify the coordinator
+         * that this participant was unable to complete.
          */
         System.out.println("[SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.");
-
-        EmailSender.sendEmail("Your order is now confirmed for the following item: '" + item + "'");
-        orderConfirmed = true;
-    }
-
-    /**
-     * The BA has canceled, and the participant should undo any work. The participant cannot have informed the
-     * coordinator that it has completed.
-     */
-    @Cancel
-    public void cancel() {
-
-        System.out.println("[SERVICE] @Cancel (The participant should compensate any work done within this BA)");
-        doCompensate();
+        EmailSender.sendEmail(emailAddress, EmailSender.MAIL_TEMPLATE_CONFIRMATION);
     }
 
     /**
@@ -108,38 +102,15 @@ public class OrderServiceBAImpl implements OrderServiceBA {
     @Compensate
     public void compensate() {
 
-        System.out.println("[SERVICE] @Compensate");
-        doCompensate();
-    }
+        System.out.println("[SERVICE] @Compensate called");
 
-    private void doCompensate() {
+        //Lookup the item Do something to cancel the order, maybe remove it from the database. This is outside the scope of this quickstart.
+        String orderId = txDataMap.get("orderId");
 
-        String item = txDataMap.get("value");
-        EmailSender.sendEmail("Unfortunately, we have had to cancel your order for item '" + item + "'");
-        orderConfirmed = false;
-    }
-
-
-    /**
-     * Query to check if the order ws confirmed or cancelled. This is used by the tests.
-     *
-     * @return true if the value was present, false otherwise.
-     */
-    @WebMethod
-    public boolean orderConfirmed() {
-
-        return orderConfirmed;
-    }
-
-    /**
-     * reset the orderConfirmed flag. This is used by the tests.
-     * <p/>
-     * Note: To simplify this example, this method is not part of the compensation logic, so will not be undone if the BA is
-     * compensated. It can also be invoked outside of an active BA.
-     */
-    @WebMethod
-    public void reset() {
-
-        orderConfirmed = false;
+        /*
+         * Email the customer to notify them that the order ws cancelled.
+         */
+        String emailAddress = txDataMap.get("emailAddress");
+        EmailSender.sendEmail(emailAddress, EmailSender.MAIL_TEMPLATE_CANCELLATION);
     }
 }
