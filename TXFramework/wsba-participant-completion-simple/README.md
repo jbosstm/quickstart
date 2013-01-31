@@ -50,7 +50,7 @@ following steps occur:
 5. The Web service operation is invoked.
 6. The TXFramework automatically enlists a participant in this BA. This allows the Web Service logic to respond to protocol events, such as compensate and close via annotated methods (@Compensate and @Close etc).
 7. The service invokes the business logic. In this case, an email send is simulated to confirm the order.
-9. Providing the above steps were successful, the service notifies the coordinator that it has completed. The service has now made its changes visible and is not holding any locks. Allowing the service to notify completion is an optimisation that prevents the holding of locks, whilst waiting for other participants to complete. This notification is required as the Service participates in the `ParticipantCompletion` protocol.
+9. Providing the method returns without throwing an exception, the TXFramework notifies the coordinator that it has completed. The service has now made its changes visible and is not holding any locks. Allowing the service to notify completion is an optimisation that prevents the holding of locks, whilst waiting for other participants to complete. This notification is required as the Service participates in the `ParticipantCompletion` protocol.
 10. The client can then decide to complete or cancel the BA. If the client decides to complete, all participants will be told to close. If the participant decides to cancel, all participants will be told to compensate. Which for this example, results in an email being sent confirming cancellation.
 
 There is another test that shows what happens if the client cancels the BA.
@@ -105,9 +105,7 @@ Test success:
     08:02:36,791 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA wil be included in this activity)
     08:02:36,809 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] invoking placeOrder('a book') on WS
     08:02:37,038 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] invoked placeOrder('a book')
-    08:02:37,038 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Attempt to email an order confirmation, if successful notify the coordinator that we have completed our work
-    08:02:37,038 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] sent email: 'Your order is now confirmed for the following item: 'a book''
-    08:02:37,039 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Email sent successfully, notifying coordinator of completion
+    08:02:37,038 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.
     08:02:37,161 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Closing Business Activity (This will cause the BA to complete successfully)
 
 Test cancel:
@@ -117,9 +115,8 @@ Test cancel:
     08:02:37,517 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)
     08:02:37,535 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] invoking placeOrder('a book') on WS
     08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] invoked placeOrder('a book')
-    08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Attempt to email an order confirmation, if successful notify the coordinator that we have completed our work
+    08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.
     08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] sent email: 'Your order is now confirmed for the following item: 'a book''
-    08:02:37,789 INFO  [stdout] (http-localhost-127.0.0.1-8080-4) [SERVICE] Email sent successfully, notifying coordinator of completion
     08:02:37,909 INFO  [stdout] (http-localhost-127.0.0.1-8080-2) [CLIENT] Cancelling Business Activity (This will cause the work to be compensated)
     08:02:38,059 INFO  [stdout] (TaskWorker-1) [SERVICE] @Compensate
     08:02:38,060 INFO  [stdout] (TaskWorker-1) [SERVICE] sent email: 'Unfortunately, we have had to cancel your order for item 'a book''

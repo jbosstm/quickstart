@@ -27,9 +27,8 @@ package org.jboss.narayana.quickstarts.wsba.participantcompletion.simple;
  */
 public class EmailSender {
 
-    public static boolean sendEmail(String message)
+    public static void sendEmail(String message) throws OrderServiceException
     {
         System.out.println("[SERVICE] sent email: '" + message + "'");
-        return true;
     }
 }
