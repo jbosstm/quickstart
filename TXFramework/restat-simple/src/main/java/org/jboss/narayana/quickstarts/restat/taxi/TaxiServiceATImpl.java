@@ -37,8 +37,11 @@ import org.jboss.narayana.txframework.api.management.TXDataMap;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.util.Map;
 
 /**
  * An adapter class that exposes the TaxiManager business API as a transactional Web Service.
@@ -47,7 +50,8 @@ import java.util.Map;
  */
 @Stateless
 @Transactional
-public class TaxiServiceATImpl implements TaxiServiceAT {
+@Path("/taxi")
+public class TaxiServiceATImpl {
 
     private MockTaxiManager mockTaxiManager = MockTaxiManager.getSingletonInstance();
 
@@ -60,6 +64,9 @@ public class TaxiServiceATImpl implements TaxiServiceAT {
      * Book a number of seats in the taxi. Enrols a Participant, then passes the call through to the business logic.
      */
     @ServiceRequest
+    @POST
+    @Produces("text/plain")
+    //Bug in TXFramework prevents @Path on this method (JBTM-1191)
     public Response makeBooking() {
 
         System.out.println("[SERVICE] taxi service invoked to make a booking");
@@ -77,8 +84,12 @@ public class TaxiServiceATImpl implements TaxiServiceAT {
      *
      * @return the number of current bookings
      */
+    @GET
+    @Produces("text/plain")
+    @Path("getBookingCount")
     public Response getBookingCount() {
-        Integer bookingCount =  mockTaxiManager.getBookingCount();
+
+        Integer bookingCount = mockTaxiManager.getBookingCount();
         return Response.ok(bookingCount).build();
     }
 
@@ -88,7 +99,11 @@ public class TaxiServiceATImpl implements TaxiServiceAT {
      * Note: To simplify this example, this method is not part of the compensation logic, so will not be undone if the AT is
      * compensated. It can also be invoked outside of an active AT.
      */
+    @GET
+    @Produces("text/plain")
+    @Path("reset")
     public Response reset() {
+
         mockTaxiManager.reset();
         return Response.ok().build();
     }
@@ -122,6 +137,7 @@ public class TaxiServiceATImpl implements TaxiServiceAT {
      */
     @Commit
     public void commit() {
+
         String bookingId = (String) dataControl.get(BOOKING_ID_KEY);
         // Log the event and invoke the commit operation
         // on the backend business logic.
@@ -134,6 +150,7 @@ public class TaxiServiceATImpl implements TaxiServiceAT {
      */
     @Rollback
     public void rollback() {
+
         String bookingId = (String) dataControl.get(BOOKING_ID_KEY);
         // Log the event and invoke the rollback operation
         // on the backend business logic.
