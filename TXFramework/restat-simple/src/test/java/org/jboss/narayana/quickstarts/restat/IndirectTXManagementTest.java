@@ -36,7 +36,7 @@ public class IndirectTXManagementTest {
     public static WebArchive createTestArchive() {
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, "org.jboss.narayana.quickstarts.restat")
-                .addAsWebInfResource(new ByteArrayAsset("<interceptors><class>org.jboss.narayana.txframework.impl.handlers.restat.client.RestTXRequiredInterceptor</class><class>org.jboss.narayana.txframework.impl.ServiceRequestInterceptor</class></interceptors>".getBytes()),
+                .addAsWebInfResource(new ByteArrayAsset("<interceptors><class>org.jboss.narayana.txframework.impl.handlers.restat.client.RestTXRequiredInterceptor</class></interceptors>".getBytes()),
                         ArchivePaths.create("beans.xml"))
                 .addAsWebInfResource("web.xml");
         archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
