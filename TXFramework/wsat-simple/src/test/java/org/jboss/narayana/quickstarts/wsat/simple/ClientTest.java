@@ -9,6 +9,7 @@ import org.jboss.narayana.quickstarts.wsat.simple.jaxws.RestaurantServiceAT;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
@@ -43,7 +44,7 @@ public class ClientTest {
 
         return ShrinkWrap.create(WebArchive.class, "wsat-simple.war")
                 .addPackages(true, RestaurantServiceATImpl.class.getPackage())
-                .addAsWebInfResource(new ByteArrayAsset("<interceptors><class>org.jboss.narayana.txframework.impl.ServiceRequestInterceptor</class></interceptors>".getBytes()), ArchivePaths.create("beans.xml"))
+                .addAsWebInfResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
                 .setManifest(new StringAsset(ManifestMF));
     }
 

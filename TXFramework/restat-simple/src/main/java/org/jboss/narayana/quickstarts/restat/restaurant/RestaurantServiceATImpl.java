@@ -37,17 +37,21 @@ import org.jboss.narayana.txframework.api.management.TXDataMap;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.util.Map;
 
 /**
  * An adapter class that exposes the RestaurantManager business API as a transactional Web Service.
  *
  * @author paul.robinson@redhat.com, 2012-01-04
  */
+@Path("/restaurant")
 @Stateless
 @Transactional
-public class RestaurantServiceATImpl implements RestaurantServiceAT {
+public class RestaurantServiceATImpl {
 
     private MockRestaurantManager mockRestaurantManager = MockRestaurantManager.getSingletonInstance();
 
@@ -59,6 +63,8 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
     /**
      * Book a number of seats in the restaurant. Enrols a Participant, then passes the call through to the business logic.
      */
+    @POST
+    @Produces("text/plain")
     @ServiceRequest
     public Response makeBooking() {
 
@@ -77,8 +83,12 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
      *
      * @return the number of current bookings
      */
+    @GET
+    @Produces("text/plain")
+    @Path("getBookingCount")
     public Response getBookingCount() {
-        Integer bookingCount =  mockRestaurantManager.getBookingCount();
+
+        Integer bookingCount = mockRestaurantManager.getBookingCount();
         return Response.ok(bookingCount).build();
     }
 
@@ -88,7 +98,11 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
      * Note: To simplify this example, this method is not part of the compensation logic, so will not be undone if the AT is
      * compensated. It can also be invoked outside of an active AT.
      */
+    @GET
+    @Produces("text/plain")
+    @Path("reset")
     public Response reset() {
+
         mockRestaurantManager.reset();
         return Response.ok().build();
     }
@@ -122,6 +136,7 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
      */
     @Commit
     public void commit() {
+
         String bookingId = (String) dataControl.get(BOOKING_ID_KEY);
         // Log the event and invoke the commit operation
         // on the backend business logic.
@@ -134,6 +149,7 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
      */
     @Rollback
     public void rollback() {
+
         String bookingId = (String) dataControl.get(BOOKING_ID_KEY);
         // Log the event and invoke the rollback operation
         // on the backend business logic.

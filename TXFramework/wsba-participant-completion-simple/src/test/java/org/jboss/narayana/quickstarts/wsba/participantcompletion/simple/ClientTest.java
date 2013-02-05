@@ -53,7 +53,7 @@ public class ClientTest {
     public static WebArchive createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, OrderServiceBAImpl.class.getPackage().getName())
-                .addAsWebInfResource(new ByteArrayAsset("<interceptors><class>org.jboss.narayana.txframework.impl.ServiceRequestInterceptor</class></interceptors>".getBytes()), ArchivePaths.create("beans.xml"))
+                .addAsWebInfResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
                 .setManifest(new StringAsset(ManifestMF));
     }
 

@@ -2,14 +2,13 @@ package org.jboss.narayana.quickstarts.wsat.jtabridge.tojta;
 
 import com.arjuna.mw.wst11.UserTransaction;
 import com.arjuna.mw.wst11.UserTransactionFactory;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.RestaurantServiceATImpl;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.jaxws.RestaurantServiceAT;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
@@ -44,8 +43,7 @@ public class BridgeToJTATest {
         JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "bridge.jar")
                 .addPackages(true, RestaurantServiceATImpl.class.getPackage())
                 .addAsManifestResource("persistence.xml")
-                .addAsManifestResource(new ByteArrayAsset("<interceptors><class>org.jboss.narayana.txframework.impl.ServiceRequestInterceptor</class></interceptors>".getBytes()),
-                        ArchivePaths.create("beans.xml"));
+                .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
 
         archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
 
@@ -56,12 +54,14 @@ public class BridgeToJTATest {
 
     @Before
     public void setupTest() throws Exception {
+
         ut = UserTransactionFactory.userTransaction();
         client = ATBridgeClient.newInstance();
     }
 
     @After
     public void teardownTest() throws Exception {
+
         rollbackIfActive(ut);
         try {
             ut.begin();
@@ -74,6 +74,7 @@ public class BridgeToJTATest {
 
     @Test
     public void testCommit() throws Exception {
+
         System.out.println("[CLIENT] Beginning the first WS-AT transaction");
         ut.begin();
         System.out.println("[CLIENT] Calling makeBooking on the WS client stub.");
@@ -94,6 +95,7 @@ public class BridgeToJTATest {
 
     @Test
     public void testClientDrivenRollback() throws Exception {
+
         System.out.println("[CLIENT] Beginning the first WS-AT transaction");
         ut.begin();
         System.out.println("[CLIENT] Calling makeBooking on the WS client stub.");
@@ -118,6 +120,7 @@ public class BridgeToJTATest {
      * @param ut The User Business Activity to cancel.
      */
     private void rollbackIfActive(UserTransaction ut) {
+
         try {
             ut.rollback();
         } catch (Throwable th2) {
