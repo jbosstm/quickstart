@@ -25,5 +25,6 @@
         <module>wsat-jta-bridge</module>
         <module>wsat-simple</module>
         <module>wsba-participant-completion-simple</module>
+        <module>wsba-jta</module>
     </modules>
 </project>
