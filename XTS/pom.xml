@@ -20,6 +20,11 @@
     </plugins>
   </build>
   <modules>
-    <module>demo</module>
+    <module>legacy-api-quickstarts/demo</module>
+    <module>legacy-api-quickstarts/wsat-jta-multi_hop</module>
+    <module>legacy-api-quickstarts/wsat-jta-multi_service</module>
+    <module>jta-over-wsat</module>
+    <module>wsba-to-jta</module>
+    <module>wsba-simple</module>
   </modules>
 </project>
