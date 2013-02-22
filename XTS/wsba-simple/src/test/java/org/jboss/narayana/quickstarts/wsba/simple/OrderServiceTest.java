@@ -51,7 +51,7 @@ import java.util.List;
 public class OrderServiceTest {
    
     private static final String ManifestMF = "Manifest-Version: 1.0\n"
-          + "Dependencies: org.jboss.narayana.txframework,org.jboss.xts,org.jboss.msc,org.jboss.jts\n";
+          + "Dependencies: org.jboss.xts,org.jboss.xts,org.jboss.msc,org.jboss.jts\n";
    
     @Deployment
     public static WebArchive createTestArchive() {

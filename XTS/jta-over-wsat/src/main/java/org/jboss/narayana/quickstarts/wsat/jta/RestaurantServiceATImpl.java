@@ -65,7 +65,6 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
      * was automatically bridged from the WS-AT transaction.
      */
     @WebMethod
-    @ServiceRequest
     public void makeBooking(int numSeats) {
 
         System.out.println("[SERVICE] Restaurant service invoked to make a booking for '" + numSeats + "'");

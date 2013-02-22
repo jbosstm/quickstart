@@ -3,7 +3,6 @@ package org.jboss.narayana.quickstarts.wsat.jta;
 import com.arjuna.mw.wst11.client.JaxWSHeaderContextProcessor;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.narayana.quickstarts.wsat.jta.RestaurantServiceATImpl;
 import org.jboss.narayana.quickstarts.wsat.jta.jaxws.RestaurantServiceAT;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -37,10 +36,10 @@ import java.util.List;
  * @author paul.robinson@redhat.com, 2012-01-04
  */
 @RunWith(Arquillian.class)
-public class SimpleJTATests {
+public class SimpleJTATest {
 
     private static final String ManifestMF = "Manifest-Version: 1.0\n"
-            + "Dependencies: org.jboss.narayana.txframework\n";
+            + "Dependencies: org.jboss.xts\n";
 
     private UserTransaction ut;
     private RestaurantServiceAT client;
