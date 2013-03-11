@@ -18,6 +18,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss-as.version>7.2.0.Alpha1-SNAPSHOT</jboss-as.version>
         <narayana.version>5.0.0.M2-SNAPSHOT</narayana.version>
+
+
+        <jvm.args.ip></jvm.args.ip>
+        <node0>127.0.0.1</node0>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -210,7 +214,9 @@
             <!-- Run with: mvn clean test -->
             <id>arq-jbossas-managed</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                  <property>
+                    <name>!arq-jbossas-remote</name>
+                  </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -229,6 +235,8 @@
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
 			                <skip>false</skip>
                             <systemPropertyVariables>
+                                <node0>${node0}</node0>
+                                <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}</server.jvm.args>
                                 <!-- For arquillian -->
                                 <jbossHome>${env.JBOSS_HOME}</jbossHome>
                             </systemPropertyVariables>
@@ -264,5 +272,16 @@
                 </plugins>
             </build>
         </profile>
+
+
+        <profile>
+            <id>ipv6</id>
+            <activation><property><name>ipv6</name></property></activation>
+            <properties>
+                <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
+                <node0>[::1]</node0>
+            </properties>
+        </profile>
+
     </profiles>
 </project>
