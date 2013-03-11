@@ -97,7 +97,7 @@ public class RestaurantServiceATImpl implements RestaurantServiceAT {
     private BookingCountEntity lookupBookingCountEntity() {
         BookingCountEntity entity = em.find(BookingCountEntity.class, ENTITY_ID);
         if (entity == null) {
-            entity = new BookingCountEntity();
+            entity = new BookingCountEntity(ENTITY_ID);
             em.persist(entity);
         }
         return entity;

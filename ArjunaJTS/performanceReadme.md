@@ -1,6 +1,6 @@
-cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-7.2.0.Alpha1-SNAPSHOT/ jts/server1
-cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-7.2.0.Alpha1-SNAPSHOT/ jts/server2
-cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-7.2.0.Alpha1-SNAPSHOT/ jta/server3
+cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-8.0.0.Alpha1-SNAPSHOT/ jts/server1
+cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-8.0.0.Alpha1-SNAPSHOT/ jts/server2
+cp -rp ~/projects/jbosstm/narayana/jboss-as/build/target/jboss-as-8.0.0.Alpha1-SNAPSHOT/ jta/server3
 
 cp server1-standalone-full.xml jts/server1/standalone/configuration/standalone-full.xml
 cp server2-standalone-full.xml jts/server2/standalone/configuration/standalone-full.xml
