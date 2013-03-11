@@ -15,10 +15,14 @@ public class BookingCountEntity implements Serializable {
     private int bookingCount;
 
     public BookingCountEntity() {
+
+    }
+
+    public BookingCountEntity(int id) {
+        this.id = id;
     }
 
     @Id
-    @GeneratedValue
     public int getId() {
         return id;
     }
