@@ -12,26 +12,29 @@
 
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following
-       message: -->
+             message: -->
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
-  resources, i.e. build is platform dependent! -->
+             resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jboss-as.version>7.2.0.Final</jboss-as.version>
         <narayana.version>5.0.0.M2</narayana.version>
+
+        <jvm.args.ip></jvm.args.ip>
+        <node0>127.0.0.1</node0>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
-  for Arquillian and also for the Narayana libraries-->
+         for Arquillian and also for the Narayana libraries-->
     <repositories>
         <!-- The JBoss Community public repository is a composite repository
-    of several major repositories -->
+             of several major repositories -->
         <!-- see http://community.jboss.org/wiki/MavenGettingStarted-Users -->
         <repository>
             <id>jboss-public-repository</id>
             <name>JBoss Repository</name>
             <url>http://repository.jboss.org/nexus/content/groups/public</url>
             <!-- These optional flags are designed to speed up your builds
-       by reducing remote server calls -->
+                 by reducing remote server calls -->
             <releases>
             </releases>
             <snapshots>
@@ -58,13 +61,13 @@
             <!-- Define the version of JBoss' Java EE 6 APIs and Tools we want to import.  -->
 
             <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill
-           of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
-           of artifacts. We use this here so that we always get the correct versions
-           of artifacts.-->
+                 of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
+                 of artifacts. We use this here so that we always get the correct versions
+                 of artifacts.-->
 
             <!-- This BOM provides the jboss-javaee-6.0 with tools stack (you can read this as
-        the JBoss stack of the Java EE 6 APIs, with some extras tools for your project, such
-        as Arquillian for testing) -->
+                 the JBoss stack of the Java EE 6 APIs, with some extras tools for your project, such
+                 as Arquillian for testing) -->
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-javaee-6.0-with-tools</artifactId>
@@ -112,7 +115,7 @@
         </dependency>
 
         <!-- Import the CDI API, we use provided scope as the API is included
-        in JBoss AS 7 -->
+             in JBoss AS 7 -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
@@ -120,7 +123,7 @@
         </dependency>
 
         <!-- Import the Common Annotations API (JSR-250), we use provided scope
-        as the API is included in JBoss AS 7 -->
+             as the API is included in JBoss AS 7 -->
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.1_spec</artifactId>
@@ -161,7 +164,7 @@
 
     <build>
         <!-- Set the name of the jar, used as the context root when the app is
-              deployed -->
+             deployed -->
         <finalName>wsat-jta-multi_hop</finalName>
         <plugins>
             <plugin>
@@ -173,7 +176,7 @@
                 </configuration>
             </plugin>
             <!-- Compiler plugin enforces Java 1.6 compatibility and activates
-          annotation processors -->
+                 annotation processors -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.1</version>
@@ -206,11 +209,13 @@
     <profiles>
         <profile>
             <!-- This profile will start a new JBoss AS instance, and execute
-     the test, shutting it down when done -->
+                 the test, shutting it down when done -->
             <!-- Run with: mvn clean test -->
             <id>arq-jbossas-managed</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                  <property>
+                    <name>!arq-jbossas-remote</name>
+                  </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -227,9 +232,11 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
-			                <skip>false</skip>
+                            <skip>false</skip>
                             <systemPropertyVariables>
-                                <!-- For arquillian -->
+                                <node0>${node0}</node0>
+                                <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}</server.jvm.args>
+                                <!-- Property needed by arquillian -->
                                 <jbossHome>${env.JBOSS_HOME}</jbossHome>
                             </systemPropertyVariables>
                         </configuration>
@@ -241,7 +248,7 @@
         <profile>
 
             <!-- An optional Arquillian testing profile that executes tests
-      in a remote JBoss AS instance -->
+                 in a remote JBoss AS instance -->
             <!-- Run with: mvn clean test -Parq-jbossas-remote -->
             <id>arq-jbossas-remote</id>
             <dependencies>
@@ -264,5 +271,16 @@
                 </plugins>
             </build>
         </profile>
+
+
+        <profile>
+            <id>ipv6</id>
+            <activation><property><name>ipv6</name></property></activation>
+            <properties>
+                <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
+                <node0>[::1]</node0>
+            </properties>
+        </profile>
+
     </profiles>
 </project>
