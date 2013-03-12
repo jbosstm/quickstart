@@ -15,7 +15,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie</groupId>
     <artifactId>blacktie-quickstarts-cbr</artifactId>
-    <version>5.0.0.M2</version>
+    <version>5.0.0.M3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>A BlackTie component</description>
     <name>Blacktie CBR Quickstart</name>
