@@ -15,7 +15,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.jts.quickstart</groupId>
     <artifactId>narayana-jts-quickstart-trailmap</artifactId>
-    <version>5.0.0.M2-SNAPSHOT</version>
+    <version>5.0.0.M2</version>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <packaging>jar</packaging>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-jacorb</artifactId>
-            <version>5.0.0.M2-SNAPSHOT</version>
+            <version>5.0.0.M2</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
