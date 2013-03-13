@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ JBoss, Home of Professional Open Source.
+~ Copyright 2013, Red Hat, Inc., and individual contributors
+~ as indicated by the @author tags. See the copyright.txt file in the
+~ distribution for a full listing of individual contributors.
+~
+~ This is free software; you can redistribute it and/or modify it
+~ under the terms of the GNU Lesser General Public License as
+~ published by the Free Software Foundation; either version 2.1 of
+~ the License, or (at your option) any later version.
+~
+~ This software is distributed in the hope that it will be useful,
+~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+~ Lesser General Public License for more details.
+~
+~ You should have received a copy of the GNU Lesser General Public
+~ License along with this software; if not, write to the Free
+~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+<deployment>
+
+    <bean name="RecoveryEnvironmentBean" class="com.arjuna.ats.arjuna.common.RecoveryEnvironmentBean">
+        <constructor factoryClass="com.arjuna.ats.arjuna.common.recoveryPropertyManager"
+                     factoryMethod="getRecoveryEnvironmentBean"/>
+        <property name="recoveryInetAddress">localhost</property>
+        <property name="recoveryPort">4712</property>
+        <property name="transactionStatusManagerInetAddress">localhost</property>
+        <property name="transactionStatusManagerPort">4713</property>
+        <!-- It is usually 2 minutes. Here it is 30 seconds only to show recovery happening more quickly. -->
+        <property name="periodicRecoveryPeriod">30</property>
+        <property name="recoveryModuleClassNames">
+            <list elementClass="java.lang.String">
+                <value>com.arjuna.ats.internal.arjuna.recovery.AtomicActionRecoveryModule</value>
+                <value>com.arjuna.ats.internal.txoj.recovery.TORecoveryModule</value>
+                <value>com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule</value>
+            </list>
+        </property>
+        <property name="expiryScannerClassNames">
+            <list elementClass="java.lang.String">
+                <value>com.arjuna.ats.internal.arjuna.recovery.ExpiredTransactionStatusManagerScanner</value>
+            </list>
+        </property>
+        <property name="recoveryActivators">
+            <null/>
+        </property>
+    </bean>
+
+    <bean name="CoreEnvironmentBean" class="com.arjuna.ats.arjuna.common.CoreEnvironmentBean">
+        <constructor factoryClass="com.arjuna.ats.arjuna.common.arjPropertyManager"
+                     factoryMethod="getCoreEnvironmentBean"/>
+        <property name="socketProcessIdPort">0</property>
+        <property name="nodeIdentifier">1</property>
+        <property name="socketProcessIdMaxPorts">10</property>
+    </bean>
+
+    <bean name="CoordinatorEnvironmentBean" class="com.arjuna.ats.arjuna.common.CoordinatorEnvironmentBean">
+        <constructor factoryClass="com.arjuna.ats.arjuna.common.arjPropertyManager"
+                     factoryMethod="getCoordinatorEnvironmentBean"/>
+        <property name="enableStatistics">false</property>
+        <property name="defaultTimeout">300</property>
+        <property name="transactionStatusManagerEnable">false</property>
+        <property name="txReaperTimeout">120000</property>
+    </bean>
+
+    <bean name="ActionStoreObjectStoreEnvironmentBean" class="com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean">
+        <constructor factoryClass="com.arjuna.common.internal.util.propertyservice.BeanPopulator"
+                     factoryMethod="getNamedInstance">
+            <parameter>com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean</parameter>
+            <parameter>default</parameter>
+        </constructor>
+        <property name="objectStoreDir">tx-object-store</property>
+    </bean>
+
+    <bean name="StateStoreObjectStoreEnvironmentBean" class="com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean">
+        <constructor factoryClass="com.arjuna.common.internal.util.propertyservice.BeanPopulator"
+                     factoryMethod="getNamedInstance">
+            <parameter>com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean</parameter>
+            <parameter>stateStore</parameter>
+        </constructor>
+        <property name="objectStoreDir">tx-object-store</property>
+    </bean>
+
+    <bean name="CommunicationStoreObjectStoreEnvironmentBean"
+          class="com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean">
+        <constructor factoryClass="com.arjuna.common.internal.util.propertyservice.BeanPopulator"
+                     factoryMethod="getNamedInstance">
+            <parameter>com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean</parameter>
+            <parameter>communicationStore</parameter>
+        </constructor>
+        <property name="objectStoreDir">tx-object-store</property>
+    </bean>
+
+    <bean name="JTAEnvironmentBean" class="com.arjuna.ats.jta.common.JTAEnvironmentBean">
+        <constructor factoryClass="com.arjuna.ats.jta.common.jtaPropertyManager" factoryMethod="getJTAEnvironmentBean"/>
+        <property name="lastResourceOptimisationInterface">org.jboss.tm.LastResource</property>
+        <property name="transactionManagerClassName">com.arjuna.ats.jbossatx.jta.TransactionManagerDelegate</property>
+        <property name="userTransactionClassName">
+            <null/>
+        </property>
+        <property name="userTransaction">
+            <inject bean="UserTransaction"/>
+        </property>
+        <property name="transactionSynchronizationRegistryClassName">
+            <null/>
+        </property>
+        <property name="transactionSynchronizationRegistry">
+            <inject bean="TransactionSynchronizationRegistry"/>
+        </property>
+        <property name="xaRecoveryNodes">
+            <list elementClass="java.lang.String">
+                <value>1</value>
+            </list>
+        </property>
+        <property name="xaResourceOrphanFilterClassNames">
+            <list elementClass="java.lang.String">
+                <value>com.arjuna.ats.internal.jta.recovery.arjunacore.JTATransactionLogXAResourceOrphanFilter</value>
+                <value>com.arjuna.ats.internal.jta.recovery.arjunacore.JTANodeNameXAResourceOrphanFilter</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="RecoveryManager" class="com.arjuna.ats.jbossatx.jta.RecoveryManagerService">
+        <depends>RecoveryEnvironmentBean</depends>
+        <depends>ActionStoreObjectStoreEnvironmentBean</depends>
+        <depends>StateStoreObjectStoreEnvironmentBean</depends>
+        <depends>CommunicationStoreObjectStoreEnvironmentBean</depends>
+    </bean>
+
+    <bean name="XATerminator" class="com.arjuna.ats.internal.jbossatx.jta.jca.XATerminator"/>
+
+    <bean name="TransactionSynchronizationRegistry"
+          class="com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple"/>
+
+    <bean name="TxControl" class="com.arjuna.ats.arjuna.coordinator.TxControl"/>
+
+    <bean name="TransactionManager" class="com.arjuna.ats.jbossatx.jta.TransactionManagerService">
+        <property name="jbossXATerminator">
+            <inject bean="XATerminator"/>
+        </property>
+        <property name="transactionSynchronizationRegistry">
+            <inject bean="TransactionSynchronizationRegistry"/>
+        </property>
+        <depends>RecoveryEnvironmentBean</depends>
+        <depends>CoreEnvironmentBean</depends>
+        <depends>CoordinatorEnvironmentBean</depends>
+        <depends>JTAEnvironmentBean</depends>
+        <depends>RecoveryManager</depends>
+        <depends>ActionStoreObjectStoreEnvironmentBean</depends>
+        <depends>StateStoreObjectStoreEnvironmentBean</depends>
+        <depends>CommunicationStoreObjectStoreEnvironmentBean</depends>
+        <depends>TxControl</depends>
+    </bean>
+
+    <bean name="TransactionManagerJNDIBinding" class="org.jboss.jca.core.naming.JndiBinder">
+        <property name="name">java:/TransactionManager</property>
+        <property name="object">
+            <inject bean="RealTransactionManager"/>
+        </property>
+
+        <install method="bind"/>
+        <uninstall method="unbind"/>
+
+        <depends>NamingServer</depends>
+    </bean>
+
+    <bean name="TransactionSynchronizationRegistryJNDIBinding" class="org.jboss.jca.core.naming.JndiBinder">
+        <property name="name">java:/TransactionSynchronizationRegistry</property>
+        <property name="object">
+            <inject bean="TransactionSynchronizationRegistry"/>
+        </property>
+
+        <install method="bind"/>
+        <uninstall method="unbind"/>
+
+        <depends>NamingServer</depends>
+    </bean>
+
+    <!-- Make javax.transaction.TransactionManager available for injection -->
+    <bean name="RealTransactionManager">
+        <constructor factoryMethod="getTransactionManager">
+            <factory bean="TransactionManager"/>
+        </constructor>
+    </bean>
+
+    <!-- Handles user transaction providers and listeners -->
+    <bean name="UserTransactionRegistry" class="org.jboss.tm.usertx.UserTransactionRegistry">
+        <!-- Register providers -->
+        <incallback method="addProvider"/>
+        <uncallback method="removeProvider"/>
+
+        <!-- Register listeners -->
+        <incallback method="addListener"/>
+        <uncallback method="removeListener"/>
+    </bean>
+
+    <!-- The provider for default in process UserTransactions -->
+    <bean name="UserTransaction" class="org.jboss.tm.usertx.client.ServerVMClientUserTransaction">
+        <constructor factoryClass="org.jboss.tm.usertx.client.ServerVMClientUserTransaction"
+                     factoryMethod="getSingleton"/>
+        <property name="TransactionRegistry">
+            <inject bean="UserTransactionRegistry"/>
+        </property>
+
+        <!-- Hack due to cyclic dependencies -->
+        <incallback method="setTransactionManager"/>
+        <uncallback method="setTransactionManager"/>
+    </bean>
+
+    <!-- Bind java:/UserTransaction -->
+    <bean name="UserTransactionJNDIBinding" class="org.jboss.jca.core.naming.JndiBinder">
+        <property name="name">java:/UserTransaction</property>
+        <property name="object">
+            <inject bean="UserTransaction"/>
+        </property>
+
+        <install method="bind"/>
+        <uninstall method="unbind"/>
+
+        <depends>NamingServer</depends>
+    </bean>
+
+    <!-- Transaction integration -->
+    <bean name="TransactionIntegration"
+          interface="org.jboss.jca.core.spi.transaction.TransactionIntegration"
+          class="org.jboss.jca.core.tx.jbossts.TransactionIntegrationImpl">
+        <constructor>
+            <parameter>
+                <inject bean="RealTransactionManager"/>
+            </parameter>
+            <parameter>
+                <inject bean="TransactionSynchronizationRegistry"/>
+            </parameter>
+            <parameter>
+                <inject bean="UserTransactionRegistry"/>
+            </parameter>
+            <parameter>
+                <inject bean="TransactionManager" property="XATerminator"/>
+            </parameter>
+            <parameter>
+                <inject bean="RecoveryManager"/>
+            </parameter>
+        </constructor>
+    </bean>
+
+</deployment>
