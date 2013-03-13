@@ -1,0 +1,41 @@
+#
+# JBoss, Home of Professional Open Source.
+# Copyright 2013, Red Hat, Inc., and individual contributors
+# as indicated by the @author tags. See the copyright.txt file in the
+# distribution for a full listing of individual contributors.
+#
+# This is free software; you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as
+# published by the Free Software Foundation; either version 2.1 of
+# the License, or (at your option) any later version.
+#
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this software; if not, write to the Free
+# Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+# 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+#
+
+########################################################################
+#
+# Byteman script used to terminate JVM after successful prepare phase of 2 phase commit protocol.
+# Useful to show failure recovery in action.
+#
+# Usage:
+# $BYTEMAN_HOME/bin/bminstall.sh -b -Dorg.jboss.byteman.transform.all -Dorg.jboss.byteman.verbose org.apache.catalina.startup.Bootstrap
+# $BYTEMAN_HOME/bin/bmsubmit.sh -l $PATH_TO_THE_FILE/fail2pc.btm
+#########################################################################
+RULE Fail 2PC
+CLASS  com.arjuna.ats.arjuna.coordinator.BasicAction
+METHOD phase2Commit
+AT ENTRY
+BIND NOTHING
+IF readCounter("phase2commit") == 0
+    DO debug("Called"),
+    incrementCounter("phase2commit");
+    killJVM();
+ENDRULE
