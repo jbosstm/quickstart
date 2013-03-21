@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <version.jbossas>7.2.0.Alpha1-SNAPSHOT</version.jbossas>
+        <version.jbossas>7.2.0.Final</version.jbossas>
         <version.org.jboss.arquillian>1.0.3.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.drone>1.1.0.Final</version.org.jboss.arquillian.drone>
         <version.org.jboss.arquillian.graphene>2.0.0.Alpha2</version.org.jboss.arquillian.graphene>

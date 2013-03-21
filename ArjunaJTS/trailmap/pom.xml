@@ -37,10 +37,10 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <!-- https://repository.jboss.org/nexus/content/groups/public-jboss/org/jboss/as/jboss-as-parent/7.0.0.Final/jboss-as-parent-7.0.0.Final.pom -->
+                <!-- https://repository.jboss.org/nexus/content/groups/public-jboss/org/jboss/as/jboss-as-parent/... -->
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-parent</artifactId>
-                <version>7.2.0.Alpha1-SNAPSHOT</version>
+                <version>7.2.0.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
