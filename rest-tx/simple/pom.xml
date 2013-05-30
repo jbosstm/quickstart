@@ -19,12 +19,12 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>quickstarts</artifactId>
-    <version>5.0.0.M3-SNAPSHOT</version>
+    <version>5.0.0.M3</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>simple</artifactId>
-  <version>5.0.0.M3-SNAPSHOT</version>
+  <version>5.0.0.M3</version>
   <name>RESTAT Quickstart: Basic</name>
   <description>Basic example of how to start and stop a REST Atomic transaction</description>
 
@@ -63,7 +63,7 @@
     <dependency>
       <groupId>org.jboss.narayana.rts</groupId>
       <artifactId>restat-util</artifactId>
-      <version>5.0.0.M3-SNAPSHOT</version>
+      <version>5.0.0.M3</version>
     </dependency>
   </dependencies>
 </project>
