@@ -20,12 +20,12 @@
  */
 package org.jboss.narayana.quickstarts.wsba.simple;
 
+import org.jboss.narayana.compensations.api.CancelOnFailure;
+import org.jboss.narayana.compensations.api.Compensatable;
+import org.jboss.narayana.compensations.api.CompensationHandler;
+import org.jboss.narayana.compensations.api.TxCompensate;
 import org.jboss.narayana.quickstarts.wsba.simple.jaxws.OrderServiceBA;
 import org.jboss.narayana.txframework.api.annotation.lifecycle.ba.Compensate;
-import org.jboss.narayana.txframework.api.annotation.lifecycle.ba.Completes;
-import org.jboss.narayana.txframework.api.annotation.service.ServiceRequest;
-import org.jboss.narayana.txframework.api.annotation.transaction.Compensatable;
-import org.jboss.narayana.txframework.api.configuration.transaction.CompletionType;
 import org.jboss.narayana.txframework.api.management.TXDataMap;
 
 import javax.inject.Inject;
@@ -39,7 +39,6 @@ import javax.servlet.annotation.WebServlet;
  *
  * @author Paul Robinson (paul.robinson@redhat.com)
  */
-@Compensatable(completionType = CompletionType.PARTICIPANT)
 @WebService(serviceName = "OrderServiceBAService", portName = "OrderServiceBA", name = "OrderServiceBA", targetNamespace = "http://www.jboss.org/as/quickstarts/helloworld/wsba/participantcompletion/order")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 @WebServlet("/OrderServiceBA")
@@ -52,7 +51,7 @@ public class OrderServiceBAImpl implements OrderServiceBA {
         The data is automatically removed after the transaction has ended.
      */
     @Inject
-    private TXDataMap<String, String> txDataMap;
+    private OrderData orderData;
 
     /**
      * Places an order for the specified item. As this is a simple example, all the method does is attempt to send the confirmation email.
@@ -65,8 +64,8 @@ public class OrderServiceBAImpl implements OrderServiceBA {
      * @throws OrderServiceException if an error occurred when making the order. In this case if an invalid email address is provided.
      */
     @WebMethod
-    @ServiceRequest // This annotation is used by the TXFramework to know that this method participates in the BA
-    @Completes
+    @Compensatable
+    @TxCompensate(CancelOrder.class)
     public void placeOrder(String emailAddress, String item) throws OrderServiceException {
 
         System.out.println("[SERVICE] invoked placeOrder('" + item + "')");
@@ -81,33 +80,15 @@ public class OrderServiceBAImpl implements OrderServiceBA {
         /*
          * Store data for use by compensation.
          */
-        txDataMap.put("emailAddress", emailAddress);
-        txDataMap.put("orderId", orderId);
+        orderData.setEmailAddress(emailAddress);
+        orderData.setOrderId(orderId);
+        orderData.setItem(item);
 
 
         /* If the following fails (due to an invalid email address, in this example) an exception will be thrown and the middleware will notify the coordinator
          * that this participant was unable to complete.
          */
-        System.out.println("[SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the coordinator to be informed that this participant cannot complete.");
+        System.out.println("[SERVICE] Attempt to email an order confirmation. Failure would raise an exception causing the client to be informed that this participant failed.");
         EmailSender.sendEmail(emailAddress, EmailSender.MAIL_TEMPLATE_CONFIRMATION);
-    }
-
-    /**
-     * The BA has cancelled. The participant previously informed the coordinator that it had finished work but could
-     * compensate later if required, and it is now requested to do so.
-     */
-    @Compensate
-    public void compensate() {
-
-        System.out.println("[SERVICE] @Compensate called");
-
-        //Lookup the item Do something to cancel the order, maybe remove it from the database. This is outside the scope of this quickstart.
-        String orderId = txDataMap.get("orderId");
-
-        /*
-         * Email the customer to notify them that the order ws cancelled.
-         */
-        String emailAddress = txDataMap.get("emailAddress");
-        EmailSender.sendEmail(emailAddress, EmailSender.MAIL_TEMPLATE_CANCELLATION);
     }
 }

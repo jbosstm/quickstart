@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Mock implementation of an email sender. This class simulates the sending of an email by outputting the message to the console.
- *
+ * <p/>
  * It also stores the mail in a list so that the tests can assert that the expected mail was 'sent'
  *
  * @author paul.robinson@redhat.com, 2012-05-02
@@ -39,17 +39,16 @@ public class EmailSender {
 
     public static void sendEmail(String emailAddress, String message) throws OrderServiceException {
 
-        if (emailAddress.endsWith(".com")) {
-            mailBox.add(message);
-            System.out.println("[SERVICE] sent email: '" + message + "' to: '" + emailAddress + "'");
-        } else {
-            System.out.println("[SERVICE] Unable to send email due to an invalid address: '" + emailAddress + "'. We currently only support '.com' addresses");
-            throw new OrderServiceException("Unable to send email due to an invalid address: '" + emailAddress + "'. We currently only support '.com' addresses");
+        if (!emailAddress.endsWith(".com")) {
+            throw new OrderServiceException("Email address must end with '.com'. This one did not: " + emailAddress);
         }
 
+        mailBox.add(message);
+        System.out.println("[SERVICE] sent email: '" + message + "' to: '" + emailAddress + "'");
     }
 
     public static List<String> retrieveMail() {
+
         return mailBox;
     }
 }
