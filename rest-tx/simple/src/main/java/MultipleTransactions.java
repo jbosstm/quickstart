@@ -22,12 +22,14 @@ import org.jboss.jbossts.star.util.TxSupport;
 import org.jboss.jbossts.star.util.TxStatusMediaType;
 
 public class MultipleTransactions {
-    private static final String[] hosts = {"localhost:8080", "184.72.71.236", "jbossapp1-mmusgrov1.dev.rhcloud.com"};
-    private static final String TXN_MGR_URL = "http://" + hosts[1] + "/rest-tx/tx/transaction-manager";
-
     public static void main(String args[]) throws Exception {
+        String coordinatorUrl = "http://localhost:8080/rest-at-coordinator/tx/transaction-manager";
+
+        if (args.length > 0 && args[0].startsWith("coordinator="))
+            coordinatorUrl = args[0].substring("coordinator=".length());
+
         // create a helper with the desired transaction manager resource endpoint
-        TxSupport[] txns = { new TxSupport(TXN_MGR_URL), new TxSupport(TXN_MGR_URL)};
+        TxSupport[] txns = { new TxSupport(coordinatorUrl), new TxSupport(coordinatorUrl)};
 
         // start transactions
         for (TxSupport txn: txns)
