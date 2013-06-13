@@ -67,7 +67,7 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.jbossts.jta</groupId>
-            <artifactId>jta</artifactId>
+            <artifactId>narayana-jta</artifactId>
             <version>4.17.5.Final-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
