@@ -15,6 +15,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jboss.narayana.arjunacore</groupId>
+            <artifactId>arjunacore</artifactId>
+            <version>5.0.0.M4-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.narayana.xts</groupId>
             <artifactId>jbossxts</artifactId>
             <version>5.0.0.M4-SNAPSHOT</version>
