@@ -3,7 +3,7 @@
   <parent>
     <artifactId>quickstarts</artifactId>
     <groupId>org.jboss.jbossts.quickstart.rts</groupId>
-    <version>4.17.6-SNAPSHOT</version>
+    <version>4.17.6.Final-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>service</artifactId>
@@ -57,7 +57,7 @@
     <dependency>
       <groupId>org.jboss.jbossts.rts</groupId>
       <artifactId>restat-util</artifactId>
-      <version>4.17.6-SNAPSHOT</version>
+      <version>4.17.6.Final-SNAPSHOT</version>
     </dependency>
     <!-- Jersey container for running participant services -->
     <dependency>
