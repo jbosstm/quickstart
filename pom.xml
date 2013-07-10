@@ -129,7 +129,7 @@
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
     <module>ArjunaJTS</module>
-    <module>rest-tx</module>
+    <module>rts</module>
     <module>XTS</module>
     <module>fileio</module>
   </modules>

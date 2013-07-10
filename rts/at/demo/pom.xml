@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>quickstarts</artifactId>
+    <artifactId>restat-quickstarts</artifactId>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <version>5.0.0.M4-SNAPSHOT</version>
   </parent>

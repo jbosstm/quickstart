@@ -6,7 +6,7 @@ Examples using RESTAT (RESTful Atomic Transactions).
 OVERVIEW
 ========
 
-All the quickstarts related to rest-tx are found in this folder structure. Each quickstart has
+All the quickstarts related to rts are found in this folder structure. Each quickstart has
 a README.md file explaining how to execute the quickstart and what is happening in it. Each quickstart
 also contains a script for automating the execution of the quickstart.
 
@@ -24,7 +24,7 @@ the server with the RTS subsystem enabled using an optional server configuration
 
 For other versions of the applications server you will need to deploy the coordinator as a war archive.
 The archive is contain in the bin folder of the narayana download (restat-web.war). If you are building
-from source the archive is located in rest-tx/webservice/target/restat-web-<version>.war.
+from source the archive is located in rts/at/webservice/target/restat-web-<version>.war.
 
 The coordinator endpoint is different depending on which way you deploy the coordinator. For wildfly use:
 
