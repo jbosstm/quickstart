@@ -20,7 +20,7 @@
     <groupId>org.jboss.jbossts.quickstarts.xts.demo</groupId>
     <artifactId>xts-demo-all</artifactId>
     <packaging>pom</packaging>
-    <version>4.17.7.Final</version>
+    <version>4.17.8.Final-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <url>http://www.jboss.org/narayana/</url>
