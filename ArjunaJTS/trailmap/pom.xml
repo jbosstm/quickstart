@@ -13,7 +13,7 @@
 	Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jboss.narayana.jts.quickstart</groupId>
+    <groupId>org.jboss.narayana.quickstart.jts</groupId>
     <artifactId>narayana-jts-quickstart-trailmap</artifactId>
     <version>5.0.0.M4-SNAPSHOT</version>
     <name>${project.artifactId}</name>
@@ -34,18 +34,6 @@
         </repository>
     </repositories>
 -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <!-- https://repository.jboss.org/nexus/content/groups/public-jboss/org/jboss/as/jboss-as-parent/7.0.0.Final/jboss-as-parent-7.0.0.Final.pom -->
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-parent</artifactId>
-                <version>8.0.0.Alpha1-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
@@ -54,7 +42,8 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+            <version>1.0.0.Alpha3</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -98,5 +87,34 @@
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+          <plugins>
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+            <plugin>
+              <groupId>org.eclipse.m2e</groupId>
+              <artifactId>lifecycle-mapping</artifactId>
+              <version>1.0.0</version>
+              <configuration>
+                <lifecycleMappingMetadata>
+                  <pluginExecutions>
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>idlj-maven-plugin</artifactId>
+                        <versionRange>[1.2.1,)</versionRange>
+                        <goals>
+                          <goal>generate</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore></ignore>
+                      </action>
+                    </pluginExecution>
+                  </pluginExecutions>
+                </lifecycleMappingMetadata>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
     </build>
 </project>
