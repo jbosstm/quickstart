@@ -15,7 +15,7 @@ fi
 
 # KILL ANY PREVIOUS BUILD REMNANTS
 ps -f
-for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
+for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
 killall -9 testsuite
 killall -9 server
 killall -9 client
@@ -35,7 +35,7 @@ fi
 ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -Dbasedir=.. -DJBOSS_HOME=$JBOSS_HOME -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.0.0.M4-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME initializeJBoss initializeBlackTie -debug
 if [ "$?" != "0" ]; then
 	ps -f
-	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
+	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
 	killall -9 testsuite
 	killall -9 server
 	killall -9 client
@@ -47,14 +47,14 @@ export JBOSS_HOME=
 chmod u+x $WORKSPACE/jboss-as/bin/standalone.sh
 
 # START JBOSS
-$WORKSPACE/jboss-as/bin/standalone.sh -c standalone-full.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR&
+$WORKSPACE/jboss-as/bin/standalone.sh -c standalone-blacktie.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR&
 sleep 20
 
 # TWEAK txfooapp FOR THIS NODE
 ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml tweak-txfooapp-for-environment
 if [ "$?" != "0" ]; then
 	ps -f
-	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
+	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
 	killall -9 testsuite
 	killall -9 server
 	killall -9 client
@@ -68,7 +68,7 @@ chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-5.0.0.M4-SNAPSHOT/setenv.sh
 . $WORKSPACE/blacktie/target/dist/blacktie-5.0.0.M4-SNAPSHOT/setenv.sh
 if [ "$?" != "0" ]; then
 	ps -f
-	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
+	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
 	killall -9 testsuite
 	killall -9 server
 	killall -9 client
@@ -84,7 +84,7 @@ cd $WORKSPACE/blacktie/
 ./run_all_quickstarts.sh
 if [ "$?" != "0" ]; then
 	ps -f
-	for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
+	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
 	killall -9 testsuite
 	killall -9 server
 	killall -9 client
@@ -95,7 +95,7 @@ fi
 
 # KILL ANY BUILD REMNANTS
 ps -f
-for i in `ps -eaf | grep java | grep "standalone-full.xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
+for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
 killall -9 testsuite
 killall -9 server
 killall -9 client
