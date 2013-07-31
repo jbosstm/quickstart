@@ -20,7 +20,7 @@ public class MultipleParticipants {
         if (coordinatorUrl == null || serviceUrl == null)
             throw new RuntimeException("Missing coordinator or service URLs");
 
-        startServer(serviceUrl);
+//        startServer(serviceUrl);
 
         // get a helper for using REST Atomic Transactions, passing in the well know resource endpoint for the transaction coordinator
         TxSupport txn = new TxSupport(coordinatorUrl);
@@ -58,7 +58,7 @@ public class MultipleParticipants {
         int newCommitCnt = Integer.valueOf(txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
                 TxMediaType.PLAIN_MEDIA_TYPE, null, null));
 
-        stopServer();
+//        stopServer();
 
         // check that the service has been asked to commit twice
         if (oldCommitCnt + 2 == newCommitCnt)
@@ -66,16 +66,5 @@ public class MultipleParticipants {
         else
             throw new RuntimeException("FAILURE: At least one server work load did not receive a commit request: " +
                     (newCommitCnt - oldCommitCnt));
-    }
-
-    public static void startServer(String serviceUrl) {
-        int servicePort = Integer.valueOf(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
-        // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
-        JaxrsServer.startServer("localhost", servicePort);
-    }
-
-    public static void stopServer() {
-        // shutdown the embedded JAX-RS server
-        JaxrsServer.stopServer();
     }
 }

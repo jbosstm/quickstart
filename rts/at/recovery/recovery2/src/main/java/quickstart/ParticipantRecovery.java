@@ -6,18 +6,24 @@ import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
 
 public class ParticipantRecovery {
-    private static final int SERVICE_PORT = 58082;
-    private static final String SERVICE_URL =  "http://localhost:" + SERVICE_PORT + '/' + TransactionAwareResource.PSEGMENT;
-
     public static void main(String[] args) {
-        String opt = (args.length > 0 ? args[0] : "");
-        String coordinatorUrl = "http://localhost:8080/rest-at-coordinator/tx/transaction-manager";
-              
-//        if (args.length > 1 && args[1].startsWith("coordinator="))
-//            coordinatorUrl = args[1].substring("coordinator=".length());
+        String coordinatorUrl = null; // the endpoint of the resource for creating transaction coordinators
+        String serviceUrl = null; // the endpoint for the example web service that will take part in a transaction
+        String opt = "";
 
-        // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
-        JaxrsServer.startServer("localhost", SERVICE_PORT);
+        for (String arg : args) {    System.out.printf("checking arg %s%n", arg);
+            if (arg.startsWith("coordinator="))
+                coordinatorUrl = arg.substring("coordinator=".length());
+            else if (arg.startsWith("service="))
+                serviceUrl = arg.substring("service=".length());
+            else if (arg.startsWith("-"))
+                opt = arg;
+        }
+
+        if (coordinatorUrl == null || serviceUrl == null)
+            throw new RuntimeException("Missing coordinator or service URLs");
+
+        startServer(serviceUrl);
 
         // get a helper for using RESTful transactions, passing in the well know resource endpoint for the transaction manager
         TxSupport txn = new TxSupport(coordinatorUrl);
@@ -32,9 +38,9 @@ public class ParticipantRecovery {
                     // ask the service how many transactions it has committed since the VM started
 
                     String commitCnt = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK},
-                            SERVICE_URL + "/commits", "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+                            serviceUrl + "/commits", "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
                     String abortCnt = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK},
-                            SERVICE_URL + "/aborts", "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+                            serviceUrl + "/aborts", "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
 
                     if (commitCnt != null && !"0".equals(commitCnt)) {
                         System.out.println("SUCCESS participant was recovered after " + (i * 2) + " seconds. Number of commits: " + commitCnt);
@@ -63,7 +69,7 @@ public class ParticipantRecovery {
          * Send two web service requests. Include the resource url for registering durable participation
          * in the transaction with the request
          */
-        String serviceRequest = SERVICE_URL + "?enlistURL=" + txn.getDurableParticipantEnlistmentURI();
+        String serviceRequest = serviceUrl + "?enlistURL=" + txn.getDurableParticipantEnlistmentURI();
 
         String wId1 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
         String wId2 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
@@ -79,6 +85,17 @@ public class ParticipantRecovery {
 
         // the web service should have received prepare and commit requests from the transaction manager
 
+        // shutdown the embedded JAX-RS server
+        stopServer();
+    }
+
+    public static void startServer(String serviceUrl) {
+        int servicePort = Integer.valueOf(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
+        // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
+        JaxrsServer.startServer("localhost", servicePort);
+    }
+
+    public static void stopServer() {
         // shutdown the embedded JAX-RS server
         JaxrsServer.stopServer();
     }

@@ -6,22 +6,27 @@ import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
 
 public class MultipleParticipants {
-    // construct the endpoint for the example web service that will take part in a transaction
-    private static final int SERVICE_PORT = 58082;
-    private static final String SERVICE_URL =  "http://localhost:" + SERVICE_PORT + '/' + TransactionAwareResource.PSEGMENT;
 
     public static void main(String[] args) {
-        // POSTing to the transaction coordinator url will create a new REST transaction
-        String coordinatorUrl="http://localhost:8080/rest-at-coordinator/tx/transaction-manager";
+        String coordinatorUrl = null; // the endpoint of the resource for creating transaction coordinators
+        String serviceUrl = null; // the endpoint for the example web service that will take part in a transaction
 
-        if (args.length > 0 && args[0].startsWith("coordinator="))
-            coordinatorUrl = args[0].substring("coordinator=".length());
+        for (String arg : args)
+            if (arg.startsWith("coordinator="))
+                coordinatorUrl = arg.substring("coordinator=".length());
+            else if (arg.startsWith("service="))
+                serviceUrl = arg.substring("service=".length());
 
-        // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
-        JaxrsServer.startServer("localhost", SERVICE_PORT);
+        if (coordinatorUrl == null || serviceUrl == null)
+            throw new RuntimeException("Missing coordinator or service URLs");
+
+        startServer(serviceUrl);
 
         // get a helper for using REST Atomic Transactions, passing in the well know resource endpoint for the transaction coordinator
         TxSupport txn = new TxSupport(coordinatorUrl);
+
+        int oldCommitCnt = Integer.valueOf(txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
+                TxMediaType.PLAIN_MEDIA_TYPE, null, null));
 
         // start a REST Atomic transaction
         txn.startTx();
@@ -32,10 +37,11 @@ public class MultipleParticipants {
          *
          * Each request should cause the service to enlist a unit of work within the transaction.
          */
-        String serviceRequest = SERVICE_URL + "?enlistURL=" + txn.getDurableParticipantEnlistmentURI();
+        String serviceRequest = serviceUrl + "?enlistURL=" + txn.getDurableParticipantEnlistmentURI();
 
         txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET",
                 TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+
         txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET",
                 TxMediaType.PLAIN_MEDIA_TYPE, null, null);
 
@@ -49,16 +55,27 @@ public class MultipleParticipants {
 
         // the web service should have received prepare and commit requests from the transaction coordinator
         // (TXN_MGR_URL) for each work unit
-        String cnt = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, SERVICE_URL + "/query", "GET",
-                TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+        int newCommitCnt = Integer.valueOf(txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
+                TxMediaType.PLAIN_MEDIA_TYPE, null, null));
 
-        // shutdown the embedded JAX-RS server
-        JaxrsServer.stopServer();
+        stopServer();
 
         // check that the service has been asked to commit twice
-        if ("2".equals(cnt))
-            System.out.println("SUCCESS: Both service work loads received commit requests");
+        if (oldCommitCnt + 2 == newCommitCnt)
+            System.out.printf("SUCCESS: Both service work loads received commit requests%n");
         else
-            throw new RuntimeException("FAILURE: At least one server work load did not receive a commit request: " + cnt);
+            throw new RuntimeException("FAILURE: At least one server work load did not receive a commit request: " +
+                    (newCommitCnt - oldCommitCnt));
+    }
+
+    public static void startServer(String serviceUrl) {
+        int servicePort = Integer.valueOf(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
+        // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
+        JaxrsServer.startServer("localhost", servicePort);
+    }
+
+    public static void stopServer() {
+        // shutdown the embedded JAX-RS server
+        JaxrsServer.stopServer();
     }
 }

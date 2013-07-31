@@ -3,7 +3,7 @@ set -m
 
 echo "Running simple quickstart"
 
-mvn compile exec:exec
+mvn clean compile exec:java
 if [ "$?" != "0" ]; then
 	exit -1
 fi
