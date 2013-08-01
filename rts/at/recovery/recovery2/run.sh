@@ -1,19 +1,19 @@
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
-echo "Running recovery quickstart"
+echo "Running recovery2 quickstart"
 
-mvn clean compile exec:java -Dexec.mainClass=quickstart.ParticipantRecovery -Dexec.args="-f"
+mvn -P fail clean compile exec:java
+
 # We expect this to fail
-#if [ "$?" != "0" ]; then
-#   exit -1
-#fi
+[ "$?" != "0" ] || exit -1
+
 echo "Recovering failed service - this could take up to 2 minutes"
-mvn compile exec:java -Dexec.mainClass=quickstart.ParticipantRecovery -Dexec.args="-r"
+mvn -P recover exec:java
 if [ "$?" != "0" ]; then
-    echo "Service recovery example FAILED"
+    echo "Service recovery2 example FAILED"
     exit -1
 else
-    echo "Service recovery example SUCCEEDED"
+    echo "Service recovery2 example SUCCEEDED"
 fi
 

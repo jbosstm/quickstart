@@ -15,7 +15,8 @@ The changes to the service1 quickstart are:
 1. The pom includes two extra dependencies (restat-integration and narayana-jts-jacorb).
 
 2. The integration API is implemented as a JAX-RS service so it needs to be
-   registered with the container running the example service. The example runs in the Grizzly JAX-RS
+   registered with the container running the example service. The example runs in th
+   `e Grizzly JAX-RS
    container and the registration is done by adding the package name of the "ParticipantResource"
    service (see quickstart.JaxrsServer for details) in the src folder.
    The integration API also needs to be told what URL the web service container is running on. This is done

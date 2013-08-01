@@ -1,150 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>recovery2</artifactId>
-  <groupId>org.jboss.narayana.quickstart.rts</groupId>
-  <version>5.0.0.M4-SNAPSHOT</version>
-  <name>RESTAT Quickstart: Participant Service with Recovery</name>
-  <description>Example of how a web service can recover from failures during transaction completion</description>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>recovery2</artifactId>
+    <groupId>org.jboss.narayana.quickstart.rts</groupId>
+    <version>5.0.0.M4-SNAPSHOT</version>
+    <name>RESTAT Quickstart: Participant Service with Recovery 2</name>
+    <description>Example of how a web service can recover from failures during transaction completion (using the integration API</description>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+    </properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  
-  <repositories>
-    <!-- Jersey -->
-    <repository>
-      <id>maven2-repository.dev.java.net</id>
-      <name>Java.net Repository for Maven</name>
-      <url>http://download.java.net/maven/2/</url>
-      <layout>default</layout>
-    </repository>
-    <!-- end Jersey -->
-  </repositories>
-  <dependencies>
-    <!-- REST-AT participant manager -->
-    <dependency>
-      <groupId>org.jboss.narayana.rts</groupId>
-      <artifactId>restat-integration</artifactId>
-       <version>5.0.0.M4-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.narayana.jts</groupId>
-      <artifactId>narayana-jts-jacorb</artifactId>
-      <version>5.0.0.M4-SNAPSHOT</version>
-    </dependency>
-
-    <!-- RESTAT utils -->
-    <dependency>
-      <groupId>org.jboss.narayana.rts</groupId>
-      <artifactId>restat-util</artifactId>
-      <version>5.0.0.M4-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.logging</groupId>
-      <artifactId>jboss-logging</artifactId>
-      <version>3.1.0.GA</version>
-    </dependency>
-    <!-- Jersey container for running participant services -->
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-server</artifactId>
-      <version>1.5-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-client</artifactId>
-      <version>1.5-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.grizzly</groupId>
-      <artifactId>grizzly-servlet-webserver</artifactId>
-      <version>1.9.18-i</version>
-    </dependency>
-    <!-- end Jersey -->
-  </dependencies>
-  <profiles>
-    <profile>
-      <id>fail</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
+    <build>
         <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.2</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <executable>java</executable>
-              <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
-              <arguments>
-                <!--argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8788</argument-->
-                <argument>-classpath</argument>
-                <classpath/>
-                <argument>quickstart.ParticipantRecovery</argument>
-                <argument>-f</argument>
-                <argument>coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager</argument>
-              </arguments>
-            </configuration>
-          </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
         </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>recover</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.2</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <executable>java</executable>
-              <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
-              <arguments>
-                <argument>-classpath</argument>
-                <classpath/>
-                <argument>quickstart.ParticipantRecovery</argument>
-                <argument>-r</argument>
-                <argument>coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager</argument>
-              </arguments>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+    </build>
+
+    <repositories>
+        <!-- Jersey -->
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
+        <!-- end Jersey -->
+    </repositories>
+    <dependencies>
+        <!-- REST-AT participant manager -->
+        <dependency>
+            <groupId>org.jboss.narayana.rts</groupId>
+            <artifactId>restat-integration</artifactId>
+            <version>5.0.0.M4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.jts</groupId>
+            <artifactId>narayana-jts-jacorb</artifactId>
+            <version>5.0.0.M4-SNAPSHOT</version>
+        </dependency>
+
+        <!-- RESTAT utils -->
+        <dependency>
+            <groupId>org.jboss.narayana.rts</groupId>
+            <artifactId>restat-util</artifactId>
+            <version>5.0.0.M4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.1.0.GA</version>
+        </dependency>
+        <!-- Jersey container for running participant services -->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.grizzly</groupId>
+            <artifactId>grizzly-servlet-webserver</artifactId>
+            <version>1.9.18-i</version>
+        </dependency>
+        <!-- end Jersey -->
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>fail</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>java</executable>
+                            <mainClass>quickstart.ParticipantRecovery</mainClass>
+                            <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
+                            <arguments>
+                                <!--argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8788</argument-->
+                                <argument>-f</argument>
+                                <argument>coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager</argument>
+                                <argument>service=http://localhost:58082/service</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>recover</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>java</executable>
+                            <mainClass>quickstart.ParticipantRecovery</mainClass>
+                            <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
+                            <arguments>
+                                <argument>-r</argument>
+                                <argument>coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager</argument>
+                                <argument>service=http://localhost:58082/service</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

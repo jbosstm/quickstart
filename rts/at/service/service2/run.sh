@@ -1,9 +1,9 @@
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
-echo "Running service quickstart"
+echo "Running service2 quickstart"
 
-mvn clean compile exec:exec
+mvn clean compile exec:java
 if [ "$?" != "0" ]; then
 	exit -1
 fi
