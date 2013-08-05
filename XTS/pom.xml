@@ -26,5 +26,6 @@
     <module>jta-over-wsat</module>
     <module>wsba-to-jta</module>
     <module>wsba-simple</module>
+    <module>compensatable-annotation</module>
   </modules>
 </project>
