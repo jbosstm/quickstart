@@ -34,6 +34,7 @@
 			<!-- Compiler settings -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
 				<inherited>true</inherited>
 				<configuration>
 					<source>1.5</source>
