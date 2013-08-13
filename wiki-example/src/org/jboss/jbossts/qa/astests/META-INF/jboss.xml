@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<jboss>
+   <enterprise-beans>
+      <session>
+         <ejb-name>OTSEjb2StatelessBean</ejb-name>
+         <jndi-name>OTSEjb2StatelessBean</jndi-name>
+          <invoker-bindings>
+              <invoker>
+                  <invoker-proxy-binding-name>iiop</invoker-proxy-binding-name>
+              </invoker>
+          </invoker-bindings>
+      </session>
+
+      <session>
+         <ejb-name>Ejb2StatelessBean</ejb-name>
+         <jndi-name>Ejb2StatelessBean</jndi-name>
+      </session>
+   </enterprise-beans>
+</jboss>
