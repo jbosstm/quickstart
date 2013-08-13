@@ -1,0 +1,100 @@
+
+There is short article on the WIKI covering distributed transactions: https://www.jboss.org/community/docs/DOC-13179
+
+To run the example configure the JBoss AS using AS trunk (will be JBoss AS6) to use the JTS version of the JBossTM
+product (there is an ant build script in the examples/jts directory of the distribution that does this
+automatically - I normally just copy the all configuration to jts and change the server name in build.xml to jts).
+After running the script I then copy jts to jts2 so I can run two instances.
+
+AS6 (M2) with JBOSSTS_4_9_0_GA
+------------------------------
+
+In AS6 JBossTS uses a bean based configuration:
+
+Prepare two servers with JBossTS JTS support.
+On both servers enable the alwaysPropagateContext property by editing the file <server>/deploy/transaction-jboss-beans.xml :
+    <bean name="JTSEnvironmentBean" class="com.arjuna.ats.jts.common.JTSEnvironmentBean">
+        <annotation>@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="jboss.jta:name=JTSEnvironmentBean", exposedInterface=com.arjuna.ats.jts.common.JTSEnvironmentBeanMBean.class, registerDirectly=true)</annotation>
+        <constructor factoryClass="com.arjuna.ats.jts.common.jtsPropertyManager" factoryMethod="getJTSEnvironmentBean"/>
+        <property name="alwaysPropagateContext">true</property>
+    </bean>
+
+On the second server edit the same file and set the socketProcessIdPort to use any port. Find the bean CoreEnvironmentBean
+in <server>/deploy/transaction-jboss-beans.xml and replace socketProcessIdPort with:
+	<property name="socketProcessIdPort">0</property>
+
+
+AS5.1 ...
+---------
+TODO
+
+Modify the client ant build script
+----------------------------------
+
+Set JBOSS_HOME and start two JBoss servers with configuration changes referred to above.
+eg:
+    $JBOSS_HOME/bin/run.sh -c jts -b <IP 1>
+    $JBOSS_HOME/bin/run.sh -c jts2 -b <IP 2>
+
+1) Make sure JBOSS_HOME is set.
+2) Change build.xml to ensure that the properties jboss.server and jboss.server2 match the names above.
+3) Change the properties host.from and host.to to match the IPs of the two servers (or specify them via the command
+   line using -Dhost.from=<host 1> -Dhost.to=<host 2>):
+	<property name="host.from" value="<host 1>" />
+	<property name="host.to" value="<host 2>" />
+4) deploy the EJBs for the example:
+	ant deploy
+
+5) run the tests.
+
+	The odd numbered tests invoke an EJB method marked with the transaction attribute REQUIRED on two
+	different servers.
+
+	The even numbered tests invoke an EJB method marked with the transaction attribute REQUIRED which
+	in turn invokes an EJB method on the second server that is marked with the transaction attribute MANDATORY.
+	[Note that these tests fail if the call to the second EJB do not carry a transaction (because MANDATORY
+	requires a transaction)].
+
+	Tests 2b, 4b and 6b do not start a client side transaction (relying on the server to create the
+	transaction). The remaining tests all start a transaction on the client side.
+
+	EJB calls exercise both EJB models. The odd numbered tests make calls to an EJB2 on one server and
+	an EJB3 on the other, whereas each even numbered tests are repeated twice:
+	- the invoked EJB invokes an EJB2 on the other server;
+	- the invoked EJB invokes an EJB3 on the other server.
+
+	Tests 7 and 8 make EJB3 calls over IIOP.
+
+	Tests which are known to fail:
+	-----------------------------
+	Tests 7, 8 and 8b and the second half of tests 6 and 6b are known to fail since EJB3 over IIOP is
+	not supported in AS5 an AS6.
+
+	The tests:
+	---------
+	To run all the tests: ant -Dtest.id= -Diiop=1
+
+	To run tests that do not use EJB3 over IIOP: ant -Dtest.id=
+
+	To run an individual test: ant -Dtest.id=<test id>
+
+    Client User Transaction Tests (EJB calls over JRMP)
+
+	ant -Dtest.id=1		# EJB2 (call EJBs in different servers within the same transaction)
+    ant -Dtest.id=2 	# EJB2 (call EJB in one server which then propagates the tx to other server)
+    ant -Dtest.id=2b 	# EJB2 (call EJB in one server which then propagates the tx to other server)
+    ant -Dtest.id=3 	# EJB3 (call EJBs in different servers within the same transaction)
+    ant -Dtest.id=4 	# EJB3 (call EJB in one server which then propagates the tx to other server)
+    ant -Dtest.id=4b 	# EJB3 (call EJB in one server which then propagates the tx to other server)
+
+    OTS Transaction Tests (with EJB2 model, calls over IIOP)
+
+    ant -Dtest.id=5 	# EJB2 (call EJBs in different servers within the same transaction)
+    ant -Dtest.id=6 	# EJB2 (call EJB in one server which then propagates the tx to other server)
+    ant -Dtest.id=6b 	# EJB2 (call EJB in one server which then propagates the tx to other server)
+
+    OTS Transaction Tests (with EJB3 model, calls over IIOP)
+
+    ant -Dtest.id=7 -Diiop=1	# EJB3 (IIOP calls to EJBs running in different servers within the same transaction)
+    ant -Dtest.id=8 -Diiop=1	# EJB3 (IIOP call to an EJB which in turn propagates the tx to the other server)
+    ant -Dtest.id=8b -Diiop=1	# EJB3 (IIOP call to an EJB which in turn propagates the tx to the other server)
