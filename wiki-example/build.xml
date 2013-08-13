@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+
+<project name="Transaction Propagation with JBossTS" default="run" basedir=".">
+
+	<property environment="env"/>
+	<property name="jboss.home" value="${env.JBOSS_HOME}"/>
+	<property name="jboss.server" value="${jboss.home}/server/jts"/>
+	<property name="jboss.server2" value="${jboss.home}/server/jts2"/>
+	<property name="jboss.serverx" value="${jboss.home}/server/server1"/>
+
+	<property name="host.from" value="jts" />
+	<property name="host.from" value="172.17.130.36" />
+	<property name="host.to" value="jts2" />
+	<property name="host.to" value="172.17.130.36" />
+	<property name="storeDir" value="${jboss.server2}/data/tx-object-store" />
+	<property name="iiop" value="" />
+
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="res.dir" value="${basedir}/resources" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="build.classes.dir" value="${build.dir}/classes" />
+
+	<property name="dbg.suspend" value="n" />
+	<property name="dbg.port" value="5006" />
+
+	<property name="astest.dir" value="org/jboss/jbossts/qa/astests"/>
+	<property name="main.class" value="com.arjuna.ats.tools.TxTest" />
+
+	<path id="ejb-jars">
+	  <fileset dir="${jboss.home}">
+        <include name="common/lib/jboss-iiop.jar"/>
+		<include name="client/jbossall-client.jar"/>
+		<include name="client/jboss-javaee.jar"/>
+		<include name="client/log4j.jar" />
+		<include name="client/jbossjts.jar" />
+		<include name="client/jbossjts-jacorb.jar" />
+		<include name="client/jboss-ejb3-ext-api.jar" />
+		<include name="common/lib/jbossts-common.jar" />
+	  </fileset>
+	</path>
+
+	<path id="runtime-cp">
+	  <pathelement location="${jboss.server}/lib/jacorb.jar"/>
+	</path>
+
+	<path id="classpath">
+		<pathelement location="${build.classes.dir}"/>
+		<pathelement location="${res.dir}"/>
+		<path refid="ejb-jars"/>
+		<path refid="runtime-cp"/>
+	</path>
+
+	<target name="init">
+		<mkdir dir="${res.dir}"/>
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.classes.dir}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src.dir}"
+			   destdir="${build.classes.dir}"
+			   debug="on"
+			   includeantruntime="false"
+			   deprecation="on"
+			   optimize="off"
+			   includes="**">
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<java classname="${main.class}" fork="yes" dir=".">
+			<classpath refid="classpath"/>
+<!--
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=${dbg.suspend},address=${dbg.port}" />
+-->
+			<jvmarg value="-Djava.security.manager" />
+			<jvmarg value="-Djava.security.policy=${src.dir}/${astest.dir}/resources/java.policy" />
+			<arg value="host.from=${host.from}" />
+			<arg value="host.to=${host.to}" />
+			<arg value="test=${test.id}" />
+			<arg value="iiop=${iiop}" />
+<!--
+			<arg value="work=fc" />
+-->
+			<arg value="storeDir=${storeDir}" />
+		</java>
+	</target>
+
+	<target name="as-ejbjar" depends="compile" >
+	  <jar jarfile="${build.dir}/astest.jar">
+		 <fileset dir="${build.classes.dir}">
+			<include name="${astest.dir}/**/*.class"/>
+			<exclude name="${astest.dir}/ejb3/**/*.class"/>
+		 </fileset>
+		 <fileset dir="${src.dir}/${astest.dir}">
+			<include name="META-INF/*.xml"/>
+		 </fileset>
+		 <fileset dir="${src.dir}/${astest.dir}/resources">
+			<include name="java.policy"/>
+		 </fileset>
+	  </jar>
+	</target>
+	<target name="as-ejb3jar" depends="compile" >
+	  <jar jarfile="${build.dir}/astest2.jar">
+		 <fileset dir="${build.classes.dir}">
+			<include name="${astest.dir}/ejb3/**/*.class"/>
+		 </fileset>
+	  </jar>
+	</target>
+
+	<target name="deploy" depends="as-ejbjar,as-ejb3jar" >
+		<copy file="${build.dir}/astest.jar" tofile="${jboss.server}/deploy/astest.jar"/>
+		<copy file="${build.dir}/astest2.jar" tofile="${jboss.server}/deploy/astest2.jar"/>
+		<copy file="${build.dir}/astest.jar" tofile="${jboss.server2}/deploy/astest.jar"/>
+		<copy file="${build.dir}/astest2.jar" tofile="${jboss.server2}/deploy/astest2.jar"/>
+	</target>
+	<target name="undeploy" >
+		<delete file="${jboss.server}/deploy/astest.jar"/>
+		<delete file="${jboss.server}/deploy/astest2.jar"/>
+		<delete file="${jboss.server2}/deploy/astest.jar"/>
+		<delete file="${jboss.server2}/deploy/astest2.jar"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="logs"/>
+	</target>
+</project>
