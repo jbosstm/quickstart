@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN' 'http://java.sun.com/dtd/ejb-jar_2_0.dtd'>
+<ejb-jar>
+  <enterprise-beans>
+        <session>
+            <description>Test transaction propagation using EJB2 (over IIOP) </description>
+            <ejb-name>OTSEjb2StatelessBean</ejb-name>
+            <home>org.jboss.jbossts.qa.astests.ejb2.EJB2Home</home>
+            <remote>org.jboss.jbossts.qa.astests.ejb2.EJB2Remote</remote>
+            <ejb-class>org.jboss.jbossts.qa.astests.ejb2.EJB2StatelessBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
+
+        <session>
+            <description>Test transaction propagation using EJB2 (over JRMP)</description>
+            <ejb-name>Ejb2StatelessBean</ejb-name>
+            <home>org.jboss.jbossts.qa.astests.ejb2.EJB2Home</home>
+            <remote>org.jboss.jbossts.qa.astests.ejb2.EJB2Remote</remote>
+            <ejb-class>org.jboss.jbossts.qa.astests.ejb2.EJB2StatelessBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
+  </enterprise-beans>
+
+  <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>OTSEjb2StatelessBean</ejb-name>
+                <method-name>foo</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>OTSEjb2StatelessBean</ejb-name>
+                <method-name>foo2</method-name>
+            </method>
+            <trans-attribute>Mandatory</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>Ejb2StatelessBean</ejb-name>
+                <method-name>foo</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>Ejb2StatelessBean</ejb-name>
+                <method-name>foo2</method-name>
+            </method>
+            <trans-attribute>Mandatory</trans-attribute>
+        </container-transaction>
+    </assembly-descriptor>
+</ejb-jar>
