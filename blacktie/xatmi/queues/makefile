@@ -15,7 +15,7 @@ LDFLAGS=-L$(LDIR) -lblacktie-xatmi -lblacktie-core -blacktie-tx
 all: client txsender log4cxx.properties
 
 log4cxx.properties:
-	jar xf $(BLACKTIE_HOME)/lib/java/codeGeneration-5.0.0.M4-SNAPSHOT.jar log4cxx.properties
+	jar xf $(BLACKTIE_HOME)/lib/java/codeGeneration-5.0.0.M5-SNAPSHOT-SNAPSHOT.jar log4cxx.properties
 
 client: queues.c 
 	gcc -o $@ $^ $(CFLAGS) $(LDFLAGS)
