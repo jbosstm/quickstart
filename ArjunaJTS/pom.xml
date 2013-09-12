@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.jbossts.quickstart.jts</groupId>
   <artifactId>narayana-quickstarts-jts</artifactId>
-  <version>4.17.10.Final</version>
+  <version>4.17.11.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JTS Examples</name>
   <description>All quickstarts of JTS</description>
@@ -96,7 +96,7 @@
     <dependency>
       <groupId>org.jboss.jbossts.jts</groupId>
       <artifactId>jbossjts-jacorb</artifactId>
-      <version>4.17.10.Final</version>
+      <version>4.17.11.Final-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
