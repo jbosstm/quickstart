@@ -69,5 +69,6 @@
     <module>service</module>
     <module>recovery</module>
     <module>restat-simple</module>
+    <module>bridge</module>
   </modules>
 </project>
