@@ -27,5 +27,6 @@
     <module>wsba-to-jta</module>
     <module>wsba-simple</module>
     <module>non-transactional_resource</module>
+    <module>travel-agent</module>
   </modules>
 </project>
