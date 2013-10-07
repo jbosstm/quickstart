@@ -13,6 +13,28 @@ if [ -z "${JBOSSAS_IP_ADDR+x}" ]; then
   JBOSSAS_IP_ADDR=localhost
 fi
 
+
+if [ -n "${NARAYANA_CURRENT_VERSION+x}" ]; then
+  echo NARAYANA_CURRENT_VERSION is set
+else
+  echo NARAYANA_CURRENT_VERSION not set
+  exit -1
+fi
+
+if [ -n "${BLACKTIE_DIST_HOME+x}" ]; then
+  echo BLACKTIE_DIST_HOME is set
+else
+  echo BLACKTIE_DIST_HOME not set
+  exit -1
+fi
+
+if [ -n "${JBOSS_HOME+x}" ]; then
+  echo JBOSS_HOME is set
+else
+  echo JBOSS_HOME not set
+  exit -1
+fi
+
 # KILL ANY PREVIOUS BUILD REMNANTS
 ps -f
 for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
