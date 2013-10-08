@@ -130,7 +130,6 @@
     <module>ArjunaJTS</module>
     <module>rts</module>
     <module>XTS</module>
-    <module>fileio</module>
     <module>blacktie</module>
   </modules>
 </project>
