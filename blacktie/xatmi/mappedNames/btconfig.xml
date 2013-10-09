@@ -24,12 +24,12 @@
 			pathToExecutable="./hiprio"
 			workingDirectory="."
 			serverId="1"
-			argLine =" -p 12341"/>
+			argLine =" -p 12341 -t 127.0.0.1:8881"/>
 		<MACHINE id="loprio1" hostname="${HOSTNAME}"
 			pathToExecutable="./loprio"
 			workingDirectory="."
 			serverId="1"
-			argLine =" -p 12342"/>
+			argLine =" -p 12342 -t 127.0.0.1:8882"/>
 	</MACHINES>
 	<SERVERS>
 		<SERVER name='hiprio'>
