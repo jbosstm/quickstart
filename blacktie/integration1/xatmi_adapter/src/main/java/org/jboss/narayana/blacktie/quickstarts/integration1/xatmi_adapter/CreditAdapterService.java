@@ -55,7 +55,7 @@ public class CreditAdapterService extends MDBBlacktieService implements javax.jm
         try {
             Context ctx = new InitialContext();
             CreditRemote bean = (CreditRemote) ctx
-                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.0.0.M6-SNAPSHOT/blacktie-quickstarts-integration1-ejb-5.0.0.M6-SNAPSHOT/CreditBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.CreditRemote");
+                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.0.0.M6/blacktie-quickstarts-integration1-ejb-5.0.0.M6/CreditBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.CreditRemote");
             log.debug("resolved CreditBean");
             resp = bean.credit(acct_no, amount);
         } catch (NamingException e) {
