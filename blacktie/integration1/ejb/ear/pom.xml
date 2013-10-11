@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
     <artifactId>blacktie-quickstarts-integration1-ejb-ear</artifactId>
-    <version>5.0.0.M6</version>
+    <version>5.0.0.Final-SNAPSHOT</version>
     <name>Integration1 - Quickstart EJB Ear</name>
     <packaging>ear</packaging>
     <description>A BlackTie component</description>
@@ -101,7 +101,7 @@
         <dependency>
             <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
             <artifactId>blacktie-quickstarts-integration1-ejb</artifactId>
-            <version>5.0.0.M6</version>
+            <version>5.0.0.Final-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
