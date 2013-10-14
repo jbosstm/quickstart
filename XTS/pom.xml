@@ -22,7 +22,7 @@
   <modules>
     <module>legacy-api-quickstarts/demo</module>
     <module>legacy-api-quickstarts/wsat-jta-multi_hop</module>
-    <module>legacy-api-quickstarts/wsat-jta-multi_service</module>
+    <module>wsat-jta-multi_service</module>
     <module>non-transactional_resource</module>
     <module>travel-agent</module>
   </modules>
