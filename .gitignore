@@ -10,7 +10,5 @@ target/
 .DS_Store
 
 instantclient_11_2/
-jboss-as-7.1.1.Final.zip
-jbossesb-4.9.zip
-instantclient-basiclite-win32-11.2.0.1.0.zip
-instantclient-sdk-win32-11.2.0.1.0.zip
+*.zip
+*.tar.gz
