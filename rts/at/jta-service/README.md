@@ -1,11 +1,11 @@
-REST-AT Bridge: Example of Using REST-AT Bridge with JPA and JMS
+REST-AT with JTA: Example of Using REST-AT with JPA and JMS
 ======================================================
 Author: Gytis Trikleris (gytis@redhat.com)
 Technologies: REST-AT to JTA Bridge, JPA, JMS
 
 What is it?
 -----------
-This example demonstrates the use of REST-AT Bridge with services using JPA and JMS.
+This example demonstrates the use of bridging REST-AT to JTA with services using JPA and JMS.
 
 Quickstart consists of two modules: JPA and JMS. Both of them are completely independent and can be executed separately.
 
