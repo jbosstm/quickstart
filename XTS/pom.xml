@@ -20,7 +20,7 @@
     </plugins>
   </build>
   <modules>
-    <module>legacy-api-quickstarts/demo</module>
+    <module>raw-xts-api-demo</module>
     <module>wsat-jta-multi_service</module>
     <module>wsat-jta-multi_hop</module>
   </modules>
