@@ -43,6 +43,7 @@ the README.md file or call the run.[sh|bat] file.
 
 The available quickstarts are a follows:
 
+
 Simple
 ======
 
@@ -56,6 +57,12 @@ quickstart are provided, the first uses HTTP calls to start/end and enlist resou
 uses an integration API which simplifies writing of participants. These two quickstarts deploy a transactional
 service into an embedded JAX-RS container. We also provide a alternate version of each which shows the same
 behaviour but with the service deployed into an external (wildfly) JAX-RS container.
+
+
+JTA Service
+===========
+This quickstart demonstrates how a Web Service using JTA can participate in a REST-AT transaction. The example uses JPA
+to update a database and JMS to send a message.
 
 Recovery
 ========

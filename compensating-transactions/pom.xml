@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.narayana.quickstart.xts</groupId>
-  <artifactId>narayana-quickstarts-xts</artifactId>
+  <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
+  <artifactId>narayana-quickstarts-compensations</artifactId>
   <version>5.0.0.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>XTS Examples</name>
-  <description>All quickstarts of XTS</description>
+  <name>Compensating Transactions Examples</name>
+  <description>All quickstarts of for usage of Compensations API</description>
   <build>
     <plugins>
       <plugin>
@@ -20,8 +20,7 @@
     </plugins>
   </build>
   <modules>
-    <module>raw-xts-api-demo</module>
-    <module>wsat-jta-multi_service</module>
-    <module>wsat-jta-multi_hop</module>
+    <module>non-transactional_resource</module>
+    <module>travel-agent</module>
   </modules>
 </project>
