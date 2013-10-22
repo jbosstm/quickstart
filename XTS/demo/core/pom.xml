@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jboss.jbossts.quickstarts.xts.demo</groupId>
         <artifactId>xts-demo-all</artifactId>
-        <version>4.17.15.Final</version>
+        <version>4.17.16.Final-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>org.jboss.jbossts.xts</groupId>
             <artifactId>jbossxts</artifactId>
-            <version>4.17.15.Final</version>
+            <version>4.17.16.Final-SNAPSHOT</version>
             <classifier>api</classifier>
             <scope>provided</scope>
         </dependency>
