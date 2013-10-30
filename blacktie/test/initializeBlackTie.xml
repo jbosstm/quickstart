@@ -1,54 +1,5 @@
 <?xml version="1.0"?>
 <project name="extract-blacktie">
-    <target name="initializeDatabase">
-        <delete dir="instantclient_11_2"/>
-        <mkdir dir="./instantclient_11_2/network/admin"/>
-        <copy file="./tnsnames.ora" tofile="./instantclient_11_2/network/admin/tnsnames.ora"/>
-        <unzip src="./instantclient-basiclite-win32-11.2.0.1.0.zip" dest="."/>
-        <unzip src="./instantclient-sdk-win32-11.2.0.1.0.zip" dest="."/>
-        <move tofile="./instantclient_11_2/OCI" file="./instantclient_11_2/sdk"/>
-        <move tofile="./instantclient_11_2/OCI/lib/MSVC2" file="./instantclient_11_2/OCI/lib/msvc"/>
-        <move tofile="./instantclient_11_2/OCI/lib/MSVC" file="./instantclient_11_2/OCI/lib/MSVC2"/>
-        <mkdir dir="./instantclient_11_2/bin"/>
-        <move todir="./instantclient_11_2/bin">
-            <fileset dir="./instantclient_11_2/">
-                <include name="*.dll"/>
-            </fileset>
-        </move>
-    </target>
-    <target name="initializeJBoss">
-	<!-- ENABLE THE NAME_SERVICE for TM -->
-        <delete dir="jboss-as"/>
-        <copy todir="jboss-as">
-            <fileset dir="${JBOSS_HOME}"/>
-        </copy>
-        <copy file="jboss-as/docs/examples/configs/standalone-blacktie.xml" tofile="jboss-as/standalone/configuration/standalone-blacktie.xml" overwrite="true" />
-        <echo file="jboss-as/bin/standalone.conf.bat" append="true">set "JAVA_OPTS=%JAVA_OPTS% -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
-	<echo file="jboss-as/bin/standalone.conf" append="true">JAVA_OPTS="$JAVA_OPTS -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
-	<!-- Enable transactions for the orb -->
-        <replaceregexp byline="true" match="&quot;spec&quot;" replace="&quot;on&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Enable JTS -->
-        <replaceregexp byline="true" match="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;" replace="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;&#10;            &lt;jts/&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Enable log4j categories -->
-        <replaceregexp byline="true" match="&lt;root-logger&gt;" replace="&lt;logger category=&quot;org.jboss.ejb.client&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.as.ejb3&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.narayana.blacktie&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.codehaus.stomp&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.hornetq&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;root-logger&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Add some jms-destinations for BlackTie to use -->
-        <replaceregexp byline="true" match="&lt;/hornetq-server&gt;" replace="&lt;jms-destinations&gt;&#10;                    &lt;jms-queue name=&quot;BTR_TestOne&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_TestOne&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_TestOne&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTR_TestTwo&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_TestTwo&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_TestTwo&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTC_ConvService&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTC_ConvService&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTC_ConvService&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTR_JAVA_Converse&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_JAVA_Converse&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_JAVA_Converse&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-topic name=&quot;BTR_JAVA_Topic&quot;&gt;&#10;                        &lt;entry name=&quot;topic/BTR_JAVA_Topic&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/topic/BTR_JAVA_Topic&quot;/&gt;&#10;                    &lt;/jms-topic&gt;&lt;/jms-destinations&gt;&#10;                    &#10;            &lt;/hornetq-server&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Configure security settings for the queues -->
-        <replaceregexp byline="true" match="&lt;security-settings&gt;" replace="&lt;security-settings&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_BTDomainAdmin&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;blacktie&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;blacktie&quot;/&gt;&#10;                    &lt;/security-setting&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_BTStompAdmin&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;blacktie&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;blacktie&quot;/&gt;&#10;                    &lt;/security-setting&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Allow the role blacktie for access -->
-        <replaceregexp byline="true" match="#guest=guest" replace="guest=guest,blacktie&#10;
-dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/application-roles.properties"/>
-	<!-- Add some security settings for the quickstarts -->
-        <replaceregexp byline="true" match="&lt;security-settings&gt;" replace="&lt;security-settings&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_SECURE&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;dynsub&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;dynsub&quot;/&gt;&#10;                    &lt;/security-setting&gt;&#10;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Disable dead connection testing for the invm connection factory -->
-        <replaceregexp byline="true" match="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;" replace="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Disable dead connection testing for the hornetq-ra connection factory -->
-        <replaceregexp byline="true" match="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;" replace="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-
-	<copy todir="jboss-as/" overwrite="true">
-		<fileset dir="blacktie/test/config/"/>
-	</copy>
-    </target>
     <target name="_extract-init">
         <delete dir="${BT_HOME}"/>
         <mkdir dir="${BT_HOME}"/>
@@ -76,7 +27,7 @@ dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/applicatio
         <echo message="${ESC_BT_HOME}"/>
         <delete file="bthome.tmp.file"/>
     </target>
-    <target name="initializeBlackTie" depends="_extract-msvc,_extract-gcc">
+    <target name="initializeJBoss" depends="_extract-msvc,_extract-gcc">
         <echo message="${ESC_BT_HOME}"/>
         <replaceregexp byline="true" match="REPLACE_WITH_INSTALL_LOCATION" replace="${ESC_BT_HOME}blacktie-${VERSION}">
             <fileset dir="${BT_HOME}/">
@@ -88,11 +39,64 @@ dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/applicatio
                 <include name="*/setenv.*"/>
             </fileset>
         </replaceregexp>
+
+        <delete dir="jboss-as"/>
+        <copy todir="jboss-as">
+            <fileset dir="${JBOSS_HOME}"/>
+        </copy>
+        <unzip dest="jboss-as">
+          <fileset dir="${BT_HOME}">
+            <include name="wildfly-blacktie-build-*-bin.zip"/>
+          </fileset>
+        </unzip>
+
+	<!-- ENABLE THE NAME_SERVICE for TM -->
+        <copy file="jboss-as/docs/examples/configs/standalone-blacktie.xml" tofile="jboss-as/standalone/configuration/standalone-blacktie.xml" overwrite="true" />
+        <echo file="jboss-as/bin/standalone.conf.bat" append="true">set "JAVA_OPTS=%JAVA_OPTS% -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
+	<echo file="jboss-as/bin/standalone.conf" append="true">JAVA_OPTS="$JAVA_OPTS -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
+	<!-- Enable transactions for the orb -->
+        <replaceregexp byline="true" match="&quot;spec&quot;" replace="&quot;on&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+	<!-- Enable JTS -->
+        <replaceregexp byline="true" match="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;" replace="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;&#10;            &lt;jts/&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+	<!-- Enable log4j categories -->
+        <replaceregexp byline="true" match="&lt;root-logger&gt;" replace="&lt;logger category=&quot;org.jboss.ejb.client&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.as.ejb3&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.narayana.blacktie&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.codehaus.stomp&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.hornetq&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;root-logger&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+	<!-- Add some jms-destinations for BlackTie to use -->
+        <replaceregexp byline="true" match="&lt;/hornetq-server&gt;" replace="&lt;jms-destinations&gt;&#10;                    &lt;jms-queue name=&quot;BTR_TestOne&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_TestOne&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_TestOne&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTR_TestTwo&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_TestTwo&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_TestTwo&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTC_ConvService&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTC_ConvService&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTC_ConvService&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-queue name=&quot;BTR_JAVA_Converse&quot;&gt;&#10;                        &lt;entry name=&quot;queue/BTR_JAVA_Converse&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/queue/BTR_JAVA_Converse&quot;/&gt;&#10;                    &lt;/jms-queue&gt;&#10;                    &lt;jms-topic name=&quot;BTR_JAVA_Topic&quot;&gt;&#10;                        &lt;entry name=&quot;topic/BTR_JAVA_Topic&quot;/&gt;&#10;                        &lt;entry name=&quot;java:jboss/exported/jms/topic/BTR_JAVA_Topic&quot;/&gt;&#10;                    &lt;/jms-topic&gt;&lt;/jms-destinations&gt;&#10;                    &#10;            &lt;/hornetq-server&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+	<!-- Configure security settings for the queues -->
+        <replaceregexp byline="true" match="&lt;security-settings&gt;" replace="&lt;security-settings&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_BTDomainAdmin&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;blacktie&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;blacktie&quot;/&gt;&#10;                    &lt;/security-setting&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_BTStompAdmin&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;blacktie&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;blacktie&quot;/&gt;&#10;                    &lt;/security-setting&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+	<!-- Allow the role blacktie for access -->
+        <replaceregexp byline="true" match="#guest=guest" replace="guest=guest,blacktie&#10;
+dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/application-roles.properties"/>
+	<!-- Add some security settings for the quickstarts -->
+        <replaceregexp byline="true" match="&lt;security-settings&gt;" replace="&lt;security-settings&gt;&#10;                    &lt;security-setting match=&quot;jms.queue.BTR_SECURE&quot;&gt;&#10;                       &lt;permission type=&quot;send&quot; roles=&quot;dynsub&quot;/&gt;&#10;                       &lt;permission type=&quot;consume&quot; roles=&quot;dynsub&quot;/&gt;&#10;                    &lt;/security-setting&gt;&#10;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+	<!-- Disable dead connection testing for the invm connection factory -->
+        <replaceregexp byline="true" match="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;" replace="&lt;connection-factory name=&quot;InVmConnectionFactory&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+	<!-- Disable dead connection testing for the hornetq-ra connection factory -->
+        <replaceregexp byline="true" match="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;" replace="&lt;pooled-connection-factory name=&quot;hornetq-ra&quot;&gt;&#10;                        &lt;connection-ttl&gt;-1&lt;/connection-ttl&gt;&#10;                        &lt;client-failure-check-period&gt;86400000&lt;/client-failure-check-period&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+        <copy todir="jboss-as/" overwrite="true">
+            <fileset dir="blacktie/test/config/"/>
+        </copy>
         <copy todir="jboss-as/standalone/deployments">
             <fileset dir="${BT_HOME}blacktie-${VERSION}/blacktie-admin-services/">
                 <include name="*.ear"/>
             </fileset>
         </copy>
+    </target>
+    <target name="initializeDatabase">
+        <delete dir="instantclient_11_2"/>
+        <mkdir dir="./instantclient_11_2/network/admin"/>
+        <copy file="./tnsnames.ora" tofile="./instantclient_11_2/network/admin/tnsnames.ora"/>
+        <unzip src="./instantclient-basiclite-win32-11.2.0.1.0.zip" dest="."/>
+        <unzip src="./instantclient-sdk-win32-11.2.0.1.0.zip" dest="."/>
+        <move tofile="./instantclient_11_2/OCI" file="./instantclient_11_2/sdk"/>
+        <move tofile="./instantclient_11_2/OCI/lib/MSVC2" file="./instantclient_11_2/OCI/lib/msvc"/>
+        <move tofile="./instantclient_11_2/OCI/lib/MSVC" file="./instantclient_11_2/OCI/lib/MSVC2"/>
+        <mkdir dir="./instantclient_11_2/bin"/>
+        <move todir="./instantclient_11_2/bin">
+            <fileset dir="./instantclient_11_2/">
+                <include name="*.dll"/>
+            </fileset>
+        </move>
     </target>
     <target name="tweak-txfooapp-for-environment">
         <replaceregexp byline="true" match="DB=blacktie" replace="DB=orcl.buildnet.ncl.jboss.com">
