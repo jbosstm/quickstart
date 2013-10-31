@@ -19,9 +19,9 @@ package org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.jaxrs;
 import java.net.URI;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -57,10 +57,10 @@ public class TaskResource {
 
     public static final String TASKS_PATH_SEGMENT = "tasks";
 
-    @Inject
+    @EJB
     private UserDao userDao;
 
-    @Inject
+    @EJB
     private TaskDao taskDao;
 
     @POST

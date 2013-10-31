@@ -39,12 +39,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.surefire.plugin>2.10</version.surefire.plugin>
-        <version.jboss.bom>1.0.4.Final</version.jboss.bom>
-        <version.org.wildfly>8.0.0.Beta1-SNAPSHOT</version.org.wildfly>
-        <version.org.jboss.resteasy>3.0.1.Final</version.org.jboss.resteasy>
+        <version.surefire.plugin>2.11</version.surefire.plugin>
+        <version.jboss.bom>1.0.7.Final</version.jboss.bom>
+        <version.org.wildfly>8.0.0.Beta2-SNAPSHOT</version.org.wildfly>
         <version.org.codehaus.jettison>1.3.2</version.org.codehaus.jettison>
-        <version.org.jboss.spec.javax.transaction>1.0.0.Beta1</version.org.jboss.spec.javax.transaction>
     </properties>
 
     <dependencyManagement>
