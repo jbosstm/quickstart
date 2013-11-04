@@ -44,11 +44,13 @@
         <copy todir="jboss-as">
             <fileset dir="${JBOSS_HOME}"/>
         </copy>
+        <echo message="1"/>
         <unzip dest="jboss-as">
-          <fileset dir="${BT_HOME}">
+          <fileset dir="${ESC_BT_HOME}blacktie-${VERSION}">
             <include name="wildfly-blacktie-build-*-bin.zip"/>
           </fileset>
         </unzip>
+        <echo message="2"/>
 
 	<!-- ENABLE THE NAME_SERVICE for TM -->
         <copy file="jboss-as/docs/examples/configs/standalone-blacktie.xml" tofile="jboss-as/standalone/configuration/standalone-blacktie.xml" overwrite="true" />

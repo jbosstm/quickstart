@@ -14,13 +14,6 @@ if [ -z "${JBOSSAS_IP_ADDR+x}" ]; then
 fi
 
 
-if [ -n "${NARAYANA_CURRENT_VERSION+x}" ]; then
-  echo NARAYANA_CURRENT_VERSION is set
-else
-  echo NARAYANA_CURRENT_VERSION not set
-  exit -1
-fi
-
 if [ -n "${BLACKTIE_DIST_HOME+x}" ]; then
   echo BLACKTIE_DIST_HOME is set
 else
@@ -54,7 +47,8 @@ else
 fi
 
 # INITIALIZE JBOSS and CREATE BLACKTIE DISTRIBUTION
-ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -Dbasedir=.. -DJBOSS_HOME=$JBOSS_HOME -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=$NARAYANA_CURRENT_VERSION -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME initializeJBoss -debug
+ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -Dbasedir=.. -DJBOSS_HOME=$JBOSS_HOME -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.0.0.M9-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME initializeJBoss -debug
+
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
@@ -86,8 +80,8 @@ if [ "$?" != "0" ]; then
 fi
 
 # RUN ALL THE SAMPLES
-chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-$NARAYANA_CURRENT_VERSION/setenv.sh
-. $WORKSPACE/blacktie/target/dist/blacktie-$NARAYANA_CURRENT_VERSION/setenv.sh
+chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-5.0.0.M9-SNAPSHOT/setenv.sh
+. $WORKSPACE/blacktie/target/dist/blacktie-5.0.0.M9-SNAPSHOT/setenv.sh
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
