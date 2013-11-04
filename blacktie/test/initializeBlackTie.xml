@@ -79,10 +79,11 @@ dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/applicatio
             <fileset dir="blacktie/test/config/"/>
         </copy>
         <copy todir="jboss-as/standalone/deployments">
-            <fileset dir="${BT_HOME}blacktie-${VERSION}/blacktie-admin-services/">
-                <include name="*.ear"/>
+            <fileset dir="${ESC_BT_HOME}blacktie-${VERSION}/">
+                <include name="blacktie-admin-services-*.ear"/>
             </fileset>
         </copy>
+        <echo message="bar"/>
     </target>
     <target name="initializeDatabase">
         <delete dir="instantclient_11_2"/>
