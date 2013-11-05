@@ -15,6 +15,7 @@ set BLACKTIE_SERVER_ID=
 rem Successful
 
 rem Running txsender queue quickstart
+echo "Quickstart: Running transactional queue quickstart"
 call generate_client -Dclient.includes=txsender.c -Dclient.output.file=txsender -Dx.define=WIN32
 IF %ERRORLEVEL% NEQ 0 exit -1
 call generate_client -Dclient.includes=queues.c -Dx.define=WIN32
@@ -28,6 +29,7 @@ set BLACKTIE_SERVER_ID=
 rem Successful
 
 rem Running propagated transaction queue quickstart
+echo "Quickstart: Running propagated transaction queue quickstart"
 call generate_client -Dclient.includes=queues.c -Dclient.output.file=client
 IF %ERRORLEVEL% NEQ 0 exit -1
 call generate_server -Dserver.includes=BarService.c  -Dservice.names=QUEUES -Dserver.name=queues
