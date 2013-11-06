@@ -51,6 +51,7 @@ static int put_messages(unsigned int cnt, unsigned int msgid, unsigned int pri) 
 
 		mopts.priority = pri;
 		mopts.ttl = 0;
+		mopts.schedtime = 0;
 
 		(void) sprintf(msg, (char*) "%d", id);
 		len = strlen(msg) + 1;
@@ -84,7 +85,7 @@ static int put_messages(unsigned int cnt, unsigned int msgid, unsigned int pri) 
  */
 static int get_messages(unsigned int cnt, int txmode, long millis) {
 	int msgCnt = 0;
-	msg_opts_t mopts = {0, 0L};
+	msg_opts_t mopts = {0, 0L, 0L};
 
 	mopts.ttl = millis;
 	btlogger((char*) "Preparing to dequeue the messages: %d", cnt);
