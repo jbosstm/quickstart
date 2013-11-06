@@ -59,7 +59,7 @@ static int send_one(msg_opts_t* mopts, const char* data) {
  * An quickstart showing how to decouple sender and receiver using queues with optional priorities.
  */
 int main(int argc, char **argv) {
-	msg_opts_t mopts;
+	msg_opts_t mopts = {0, 0L, 0L};
 	char response;
 	int index;
 

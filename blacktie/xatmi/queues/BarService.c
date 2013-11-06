@@ -32,6 +32,7 @@ void QUEUES(TPSVCINFO * svcinfo) {
 
 	mopts.priority = 0;
 	mopts.ttl = 0;
+	mopts.schedtime = 0;
 	rc = btenqueue((char*) "TestOne", &mopts, svcinfo->data, svcinfo->len, 0);
 
 	sendlen = 15;
