@@ -56,7 +56,7 @@ public class DebitAdapterService extends MDBBlacktieService implements javax.jms
         try {
             Context ctx = new InitialContext();
             DebitRemote bean = (DebitRemote) ctx
-                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.0.0.M9-SNAPSHOT/blacktie-quickstarts-integration1-ejb-5.0.0.M9-SNAPSHOT/DebitBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.DebitRemote");
+                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.0.0.CR1/blacktie-quickstarts-integration1-ejb-5.0.0.CR1/DebitBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.DebitRemote");
             log.debug("resolved DebitBean");
             resp = bean.debit(acct_no, amount);
         } catch (NamingException e) {
