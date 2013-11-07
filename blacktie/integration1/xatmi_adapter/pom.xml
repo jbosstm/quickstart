@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
     <artifactId>blacktie-quickstarts-integration1-xatmi_adapter</artifactId>
-    <version>5.0.0.CR1</version>
+    <version>5.0.0.CR2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Integration 1 - Quickstart XATMI Adapter</name>
     <description>A BlackTie component</description>
@@ -121,7 +121,7 @@
         <dependency>
             <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
             <artifactId>blacktie-quickstarts-integration1-ejb</artifactId>
-            <version>5.0.0.CR1</version>
+            <version>5.0.0.CR2-SNAPSHOT</version>
             <classifier>client</classifier>
         </dependency>
         <dependency>
@@ -139,7 +139,7 @@
         <dependency>
             <groupId>org.jboss.narayana.blacktie</groupId>
             <artifactId>blacktie-jatmibroker-xatmi</artifactId>
-            <version>5.0.0.CR1</version>
+            <version>5.0.0.CR2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

@@ -17,7 +17,7 @@ tasklist
 
 rem INITIALIZE JBOSS and CREATE BLACKTIE DISTRIBUTION
 for /f "delims=" %%a in ('hostname') do @set MACHINE_ADDR=%%a
-call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=%JBOSS_HOME% -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.CR1 -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME%  -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
+call ant -f %WORKSPACE%/blacktie/test/initializeBlackTie.xml -DJBOSS_HOME=%JBOSS_HOME% -DBT_HOME=%WORKSPACE%\blacktie\target\dist\ -DVERSION=5.0.0.CR2-SNAPSHOT -DMACHINE_ADDR=%MACHINE_ADDR% -DJBOSSAS_IP_ADDR=%JBOSSAS_IP_ADDR% -DBLACKTIE_DIST_HOME=%BLACKTIE_DIST_HOME%  -Dbasedir=%WORKSPACE% initializeDatabase initializeJBoss -debug
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 3" & tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 set JBOSS_HOME=
 
@@ -36,7 +36,7 @@ rem RUN THE SAMPLES
 set PATH=%PATH%;%ORACLE_HOME%\bin;%ORACLE_HOME%\vc9
 
 echo calling generated setenv - error %ERRORLEVEL%
-call %WORKSPACE%\blacktie\target\dist\blacktie-5.0.0.CR1\setenv.bat
+call %WORKSPACE%\blacktie\target\dist\blacktie-5.0.0.CR2-SNAPSHOT\setenv.bat
 IF %ERRORLEVEL% NEQ 0 echo "Failing build 5 with error %ERRORLEVEL%" & tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul & exit -1
 
 cd %WORKSPACE%\blacktie\
