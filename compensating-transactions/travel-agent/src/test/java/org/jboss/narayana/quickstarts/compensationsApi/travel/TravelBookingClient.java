@@ -42,6 +42,20 @@ public class TravelBookingClient {
             taxi2BookingID = taxi2BookingClient.makeBooking(name, date);
         }
 
+        /**
+         * This is here in order to eliminate participant completion race condition.
+         * See these blog posts:
+         *      http://jbossts.blogspot.co.uk/2013/01/ws-ba-participant-completion-race.html
+         *      http://jbossts.blogspot.co.uk/2013/01/ws-ba-participant-completion-race_30.html
+         * And JIRA:
+         *      https://issues.jboss.org/browse/JBTM-1718
+         */
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            // Ignore
+        }
+
         return new TravelBookingResult(hotelBookingID, taxi1BookingID, taxi2BookingID);
     }
 
