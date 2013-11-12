@@ -25,6 +25,21 @@ public class BookService {
         invoicePrinter.print(orderId.getAndIncrement(), "Invoice body would go here, blah blah blah");
 
         //other activities, such as updating inventory and charging the customer
+
+
+        /**
+         * This is here in order to eliminate participant completion race condition.
+         * See these blog posts:
+         *      http://jbossts.blogspot.co.uk/2013/01/ws-ba-participant-completion-race.html
+         *      http://jbossts.blogspot.co.uk/2013/01/ws-ba-participant-completion-race_30.html
+         * And JIRA:
+         *      https://issues.jboss.org/browse/JBTM-1718
+         */
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            // Ignore
+        }
     }
 
 }
