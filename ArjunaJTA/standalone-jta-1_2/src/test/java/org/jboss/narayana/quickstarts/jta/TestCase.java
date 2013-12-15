@@ -19,6 +19,9 @@ package org.jboss.narayana.quickstarts.jta;
 import com.arjuna.ats.jta.utils.JNDIManager;
 import com.arjuna.ats.jta.common.jtaPropertyManager;
 import junit.framework.Assert;
+import org.h2.jdbcx.JdbcDataSource;
+import org.jboss.narayana.quickstarts.jta.jpa.TestEntity;
+import org.jboss.narayana.quickstarts.jta.jpa.TestEntityRepository;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jnp.interfaces.NamingParser;
@@ -47,6 +50,8 @@ public class TestCase {
 
     private MandatoryCounterManager mandatoryCounterManager;
 
+    private TestEntityRepository testEntityRepository;
+
     private Weld weld;
 
     @BeforeClass
@@ -64,6 +69,13 @@ public class TestCase {
         jtaPropertyManager.getJTAEnvironmentBean()
                 .setTransactionSynchronizationRegistryJNDIContext("java:/jboss/TransactionSynchronizationRegistry");
         JNDIManager.bindJTAImplementation();
+
+        JdbcDataSource dataSource = new JdbcDataSource();
+        dataSource.setURL("jdbc:h2:mem:test;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+        dataSource.setUser("sa");
+        dataSource.setPassword("");
+        InitialContext context = new InitialContext();
+        context.bind("java:/jboss/testDS1", dataSource);
     }
 
     @AfterClass
@@ -83,6 +95,7 @@ public class TestCase {
         // Bootstrap our beans
         requiredCounterManager = weldContainer.instance().select(RequiredCounterManager.class).get();
         mandatoryCounterManager = weldContainer.instance().select(MandatoryCounterManager.class).get();
+        testEntityRepository = weldContainer.instance().select(TestEntityRepository.class).get();
     }
 
     @After
@@ -142,5 +155,15 @@ public class TestCase {
         transactionManager.resume(suspendedTransaction);
         transactionManager.rollback();
     }
+
+    @Test
+    public void testJpa() {
+        System.out.println(testEntityRepository.save(new TestEntity("test1")));
+        System.out.println(testEntityRepository.save(new TestEntity("test2")));
+        System.out.println(testEntityRepository.save(new TestEntity("test3")));
+        org.junit.Assert.assertEquals(3, testEntityRepository.findAll().size());
+
+    }
+
 
 }
