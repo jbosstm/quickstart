@@ -1,4 +1,4 @@
-Example JBoss Transactions, Iron Jacamar, and Tomcat.
+Example Narayana Transactions, Iron Jacamar, and Tomcat.
 ==================================================================================================
 Author: Gytis Trikleris;
 Level: Intermediate;
@@ -7,7 +7,7 @@ Technologies: JTA, JCA, Tomcat
 What is it?
 -----------
 
-This example demonstrates how to integrate JBossTS, IronJacamar, and Tomcat.
+This example demonstrates how to integrate Narayana, IronJacamar, and Tomcat.
 The code is based on _JTA_ and _cmt_ quickstarts.
 
 Embedded IronJacamar container is used in this quickstart. All its dependencies can be found in pom.xml.
