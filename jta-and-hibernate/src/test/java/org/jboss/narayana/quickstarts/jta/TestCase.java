@@ -162,8 +162,6 @@ public class TestCase {
         System.out.println(testEntityRepository.save(new TestEntity("test2")));
         System.out.println(testEntityRepository.save(new TestEntity("test3")));
         org.junit.Assert.assertEquals(3, testEntityRepository.findAll().size());
-
     }
-
 
 }

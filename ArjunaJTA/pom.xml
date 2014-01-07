@@ -119,6 +119,5 @@
     <module>recovery</module>
     <module>maven</module>
     <module>jee_transactional_app</module>
-    <module>standalone-jta-1_2</module>
   </modules>
 </project>
