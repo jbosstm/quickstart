@@ -47,7 +47,7 @@ else
 fi
 
 # INITIALIZE JBOSS and CREATE BLACKTIE DISTRIBUTION
-ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -Dbasedir=.. -DJBOSS_HOME=$JBOSS_HOME -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=6.0.0.Alpha1-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME initializeJBoss -debug
+ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -Dbasedir=.. -DJBOSS_HOME=$JBOSS_HOME -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.1.0.Alpha1-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME initializeJBoss -debug
 
 if [ "$?" != "0" ]; then
 	ps -f
@@ -80,8 +80,8 @@ if [ "$?" != "0" ]; then
 fi
 
 # RUN ALL THE SAMPLES
-chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-6.0.0.Alpha1-SNAPSHOT/setenv.sh
-. $WORKSPACE/blacktie/target/dist/blacktie-6.0.0.Alpha1-SNAPSHOT/setenv.sh
+chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-5.1.0.Alpha1-SNAPSHOT/setenv.sh
+. $WORKSPACE/blacktie/target/dist/blacktie-5.1.0.Alpha1-SNAPSHOT/setenv.sh
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
