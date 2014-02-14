@@ -127,6 +127,7 @@
     <module>jca-and-tomcat</module>
     <module>jca-and-hibernate</module>
     <module>jta-and-hibernate</module>
+    <module>jta-1_2-in-wildfly</module>
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
     <module>ArjunaJTS</module>
