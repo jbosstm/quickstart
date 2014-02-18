@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
   <artifactId>narayana-quickstarts-compensations</artifactId>
-  <version>5.1.0.Alpha1-SNAPSHOT-SNAPSHOT</version>
+  <version>5.0.1.Final-SNAPSHOT-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Compensating Transactions Examples</name>
   <description>All quickstarts of for usage of Compensations API</description>
