@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jboss.jbossts.quickstart.jta</groupId>
     <artifactId>quickstarts</artifactId>
-    <version>4.17.18.Final</version>
+    <version>4.17.19.Final-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <description>
