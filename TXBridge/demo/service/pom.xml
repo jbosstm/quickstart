@@ -4,14 +4,14 @@
     <parent>
         <groupId>org.jboss.jbossts</groupId>
         <artifactId>jbosstxbridge-demo</artifactId>
-        <version>4.17.18.Final-SNAPSHOT</version>
+        <version>4.17.18.Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.jbossts</groupId>
     <artifactId>jbosstxbridge-demo-service</artifactId>
-    <version>4.17.18.Final-SNAPSHOT</version>
+    <version>4.17.18.Final</version>
     <packaging>jar</packaging>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
@@ -56,7 +56,7 @@
             <groupId>org.jboss.jbossts.xts</groupId>
             <artifactId>jbossxts</artifactId>
             <classifier>api</classifier>
-            <version>4.17.18.Final-SNAPSHOT</version>
+            <version>4.17.18.Final</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.jboss.jbossts.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>4.17.18.Final-SNAPSHOT</version>
+            <version>4.17.18.Final</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>org.jboss.jbossts</groupId>
             <artifactId>jbosstxbridge</artifactId>
-            <version>4.17.18.Final-SNAPSHOT</version>
+            <version>4.17.18.Final</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
