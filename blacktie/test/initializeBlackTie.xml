@@ -107,7 +107,7 @@ dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/applicatio
                 <include name="xatmi/txfooapp/cli/btconfig.xml"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL112">
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL">
             <fileset dir="../">
                 <include name="xatmi/txfooapp/cli/btconfig.xml"/>
             </fileset>
@@ -117,7 +117,7 @@ dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/applicatio
                 <include name="xatmi/txfooapp/svr/btconfig.xml"/>
             </fileset>
         </replaceregexp>
-        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL112">
+        <replaceregexp byline="true" match="SqlNet=blacktie" replace="SqlNet=ORCL">
             <fileset dir="../">
                 <include name="xatmi/txfooapp/svr/btconfig.xml"/>
             </fileset>

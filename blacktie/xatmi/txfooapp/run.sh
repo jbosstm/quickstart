@@ -17,9 +17,36 @@ if [ "$1" = "db2" ]; then
 	[[ "$?" != "0" ]] && exit 1
 elif [ "$1" = "ora" ]; then
 	echo "using RMs for Oracle only"
-	generate_server -Dservice.names=TXFOOAPP -Dserver.includes="request.c ora.c DbService.c" -Dx.inc.dir="$ORACLE_INC_DIR" -Dx.lib.dir="$ORACLE_LIB_DIR" -Dx.libs="occi clntsh" -Dx.define="ORACLE" -Dserver.name=txfooap
+	rm -rf instantclient_11_2
+	OS_BITS=`uname -m`
+	if [ "$OS_BITS" = "x86_64" ]; then
+		unzip ~/instantclient-basic-linux.x64-11.2.0.4.0.zip
+		unzip ~/instantclient-sdk-linux.x64-11.2.0.4.0.zip
+  else
+		unzip ~/instantclient-basic-linux-11.2.0.4.0.zip
+		unzip ~/instantclient-sdk-linux-11.2.0.4.0.zip
+	fi
+	ORACLE_HOME=`pwd`/instantclient_11_2
+	mkdir $ORACLE_HOME/lib
+	mkdir -p $ORACLE_HOME/network/admin
+	ORACLE_INC_DIR=$ORACLE_HOME/include
+	ORACLE_LIB_DIR=$ORACLE_HOME/lib
+	mv $ORACLE_HOME/lib*.so* $ORACLE_LIB_DIR
+	ln -s $ORACLE_LIB_DIR/libocci.so.11.1 $ORACLE_LIB_DIR/libocci.so
+	ln -s $ORACLE_LIB_DIR/libclntsh.so.11.1 $ORACLE_LIB_DIR/libclntsh.so
+	mv $ORACLE_HOME/sdk/include $ORACLE_INC_DIR
+	cp tnsnames.ora $ORACLE_HOME/network/admin
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ORACLE_LIB_DIR
+	export ORACLE_HOME
+
+	sed -i /201/,+2s#P/scott/tiger#P/dtf11/dtf11# cli/btconfig.xml
+	sed -i /201/,+2s#P/scott/tiger#P/dtf11/dtf11# svr/btconfig.xml
+	sed -i /203/,+2s#P/scott/tiger#P/dtf12/dtf12# cli/btconfig.xml
+	sed -i /203/,+2s#P/scott/tiger#P/dtf12/dtf12# svr/btconfig.xml
+
+	generate_server -Dservice.names=TXFOOAPP -Dserver.includes="request.c ora.c DbService.c" -Dx.inc.dir="$ORACLE_INC_DIR" -Dx.lib.dir="$ORACLE_LIB_DIR" -Dx.libs="occi clntsh nnz11" -Dx.define="ORACLE" -Dserver.name=txfooap
 	[[ "$?" != "0" ]] && exit 1
-	generate_client -Dclient.includes="client.c request.c ora.c cutil.c" -Dx.inc.dir="$ORACLE_INC_DIR" -Dx.lib.dir="$ORACLE_LIB_DIR" -Dx.libs="occi clntsh" -Dx.define="ORACLE"
+	generate_client -Dclient.includes="client.c request.c ora.c cutil.c" -Dx.inc.dir="$ORACLE_INC_DIR" -Dx.lib.dir="$ORACLE_LIB_DIR" -Dx.libs="occi clntsh nnz11" -Dx.define="ORACLE"
 	[[ "$?" != "0" ]] && exit 1
 else
 	echo "using RMs for Oracle and DB2"
@@ -49,6 +76,9 @@ unset LOG4CXXCONFIG
 export BLACKTIE_CONFIGURATION_DIR=cli
 export export BLACKTIE_CONFIGURATION=linux
 ./client
+if [ "$?" != "0" ]; then
+	exit -1
+fi
 
 # SHUTDOWN THE SERVER RUNNING THE btadmin TOOL
 export BLACKTIE_CONFIGURATION=linux

@@ -97,7 +97,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ORACLE_LIB_DIR
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DB2_LIB_DIR
 
 cd $WORKSPACE/blacktie/
-./run_all_quickstarts.sh
+./run_all_quickstarts.sh tx ora
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
