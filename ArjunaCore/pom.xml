@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.jbossts.arjunacore.quickstart</groupId>
   <artifactId>quickstarts</artifactId>
-  <version>4.17.19.Final</version>
+  <version>4.17.20.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBoss Core Examples</name>
   <description>All quickstarts of JBoss Core</description>
