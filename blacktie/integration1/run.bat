@@ -20,13 +20,13 @@ cd ..\ejb
 call mvn install
 IF %ERRORLEVEL% NEQ 0 exit -1
 cd ear
-call mvn install jboss-as:deploy
+call mvn install wildfly:deploy
 IF %ERRORLEVEL% NEQ 0 exit -1
 cd ..\..\xatmi_adapter\
 call mvn install
 IF %ERRORLEVEL% NEQ 0 exit -1
 cd ear\
-call mvn install jboss-as:deploy
+call mvn install wildfly:deploy
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 cd ..\..\client\
@@ -36,8 +36,8 @@ IF %ERRORLEVEL% NEQ 0 exit -1
 .\client
 IF %ERRORLEVEL% NEQ 0 exit -1
 cd ..\xatmi_adapter\ear\
-call mvn jboss-as:undeploy
+call mvn wildfly:undeploy
 IF %ERRORLEVEL% NEQ 0 exit -1
 cd ..\..\ejb\ear
-call mvn jboss-as:undeploy
+call mvn wildfly:undeploy
 IF %ERRORLEVEL% NEQ 0 exit -1

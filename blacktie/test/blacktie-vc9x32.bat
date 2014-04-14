@@ -45,5 +45,5 @@ IF %ERRORLEVEL% NEQ 0 echo "Failing build 6 with error %ERRORLEVEL%" & tasklist 
 
 rem SHUTDOWN ANY PREVIOUS BUILD REMNANTS
 tasklist & call jboss-as\bin\jboss-cli.bat --connect command=:shutdown & @ping 127.0.0.1 -n 10 -w 1000 > nul
-FOR /F "usebackq tokens=5" %%i in (`"netstat -ano|findstr 9999.*LISTENING"`) DO taskkill /F /PID %%i
+FOR /F "usebackq tokens=5" %%i in (`"netstat -ano|findstr 9990.*LISTENING"`) DO taskkill /F /PID %%i
 echo "Finished build"

@@ -8,7 +8,7 @@ mvn clean install -DskipTests
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd ear && mvn clean install jboss-as:deploy)
+(cd ear && mvn clean install wildfly:deploy)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
@@ -17,7 +17,7 @@ mvn surefire:test
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd ear && mvn jboss-as:undeploy)
+(cd ear && mvn wildfly:undeploy)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
