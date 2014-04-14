@@ -22,5 +22,6 @@
   <modules>
     <module>non-transactional_resource</module>
     <module>travel-agent</module>
+    <module>mongodb-simple</module>
   </modules>
 </project>
