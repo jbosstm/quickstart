@@ -32,7 +32,7 @@ cd ..
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd ejb/ear/ && mvn install jboss-as:deploy)
+(cd ejb/ear/ && mvn install wildfly:deploy)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
@@ -40,7 +40,7 @@ fi
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd xatmi_adapter/ear/ && mvn install jboss-as:deploy)
+(cd xatmi_adapter/ear/ && mvn install wildfly:deploy)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
@@ -56,11 +56,11 @@ sleep 5
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd ../xatmi_adapter/ear/ && mvn jboss-as:undeploy)
+(cd ../xatmi_adapter/ear/ && mvn wildfly:undeploy)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd ../ejb/ear/ && mvn jboss-as:undeploy)
+(cd ../ejb/ear/ && mvn wildfly:undeploy)
 if [ "$?" != "0" ]; then
 	exit -1
 fi

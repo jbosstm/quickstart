@@ -59,7 +59,7 @@
 	<!-- Enable transactions for the orb -->
         <replaceregexp byline="true" match="&quot;spec&quot;" replace="&quot;on&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
 	<!-- Enable JTS -->
-        <replaceregexp byline="true" match="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;" replace="&lt;coordinator-environment default-timeout=&quot;300&quot;/&gt;&#10;            &lt;jts/&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+        <replaceregexp byline="true" match="&quot;txn-status-manager&quot;/&gt;" replace="&quot;txn-status-manager&quot;/&gt;&#10;            &lt;jts/&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
 	<!-- Enable log4j categories -->
         <replaceregexp byline="true" match="&lt;root-logger&gt;" replace="&lt;logger category=&quot;org.jboss.ejb.client&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.as.ejb3&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.narayana.blacktie&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.codehaus.stomp&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.hornetq&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;root-logger&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
 	<!-- Add some jms-destinations for BlackTie to use -->
