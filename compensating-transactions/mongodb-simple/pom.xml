@@ -5,7 +5,7 @@
 
     <groupId>org.jboss.narayana.quickstart.xts.mongodb-simple</groupId>
     <artifactId>mongodb-simple-all</artifactId>
-    <version>5.0.2.Final-SNAPSHOT</version>
+    <version>5.0.2.Final</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with MongoDB</name>
     <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with MongoDB
