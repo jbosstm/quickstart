@@ -87,8 +87,13 @@ read this as the JBoss stack of the Java EE 6 Web Profile APIs) -->
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            <scope>provided</scope>
         </dependency>
+    <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <version>3.1.3.GA</version>
+      <scope>runtime</scope>
+    </dependency>
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
