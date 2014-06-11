@@ -52,7 +52,7 @@ public class XTSDemoTest {
     private static final Logger log = Logger.getLogger(XTSDemoTest.class);
     private static final int IMPLICIT_WAIT_S = 120;
 
-    private static final String XTS_DEMO_DIR = "../ear/target/xts-demo-ear-4.17.21.Final-SNAPSHOT.ear";
+    private static final String XTS_DEMO_DIR = "../ear/target/xts-demo-ear-4.17.21.Final.ear";
     private static final String XTS_DEMO_ARCHIVE = "xts-demo.ear";
     private static final String DEMO_APP_CONTEXT = "xts-demo";
 
