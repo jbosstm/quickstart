@@ -72,6 +72,15 @@ public class BridgeFromJTATest {
             rollbackIfActive(ut);
         }
     }
+    @Test
+    public void testSingle() throws Exception {
+        System.out.println("[CLIENT] Beginning the first JTA transaction XXX");
+        ut.begin();
+        System.out.println("[CLIENT] Calling incrementCounter on the WS firstClient stub. The registered interceptor will bridge rom JTA to WS-AT");
+        firstClient.incrementCounter(1);
+        System.out.println("[CLIENT] Update successful, about to commit the JTA transaction. This will also cause the bridged WS-AT transaction to commit");
+        ut.commit();
+    }
 
     @Test
     public void testCommit() throws Exception {

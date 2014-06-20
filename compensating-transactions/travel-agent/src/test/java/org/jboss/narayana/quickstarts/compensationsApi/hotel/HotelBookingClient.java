@@ -41,7 +41,7 @@ public class HotelBookingClient {
      * @param fail
      * @return
      */
-    @Compensatable
+    @Compensatable(distributed = true)
     public Integer makeBooking(String name, Date date, boolean fail) {
 
         lastBookingId = client.makeBooking(name, date);

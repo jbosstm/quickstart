@@ -47,10 +47,20 @@ public class BookServiceTest {
     @Deployment
     public static WebArchive createTestArchive() {
 
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, BookService.class.getPackage().getName())
-                .addAsWebInfResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
-                .setManifest(new StringAsset(ManifestMF));
+                .addAsManifestResource("services/javax.enterprise.inject.spi.Extension")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+
+
+
+        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
+
+        final String ManifestMF = "Manifest-Version: 1.0\n"
+                + "Dependencies: org.jboss.narayana.txframework,org.jboss.xts\n";
+        archive.setManifest(new StringAsset(ManifestMF));
+
+        return archive;
     }
 
     @Before

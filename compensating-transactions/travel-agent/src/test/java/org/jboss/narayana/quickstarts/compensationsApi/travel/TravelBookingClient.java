@@ -28,7 +28,7 @@ public class TravelBookingClient {
         taxi2BookingClient = createTaxi2ServiceClient();
     }
 
-    @Compensatable
+    @Compensatable(distributed = true)
     public TravelBookingResult makeBooking(String name, Date date) {
 
         Integer hotelBookingID = hotelBookingClient.makeBooking(name, date);

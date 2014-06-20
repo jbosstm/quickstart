@@ -20,6 +20,8 @@
  */
 package org.jboss.narayana.quickstarts.mongodb.simple;
 
+import com.arjuna.mw.wscf.model.sagas.api.CoordinatorManager;
+import com.arjuna.mw.wscf11.model.sagas.CoordinatorManagerFactory;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -56,10 +58,21 @@ public class BankingServiceTest {
         //Use 'Shrinkwrap Resolver' to include the mongodb java driver in the deployment
         File lib = Maven.resolver().loadPomFromFile("pom.xml").resolve("org.mongodb:mongo-java-driver:2.10.1").withoutTransitivity().asSingleFile();
 
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, BankingService.class.getPackage().getName())
-                .addAsWebInfResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
+                .addAsManifestResource("services/javax.enterprise.inject.spi.Extension")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsLibraries(lib);
+
+
+
+        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
+
+        final String ManifestMF = "Manifest-Version: 1.0\n"
+                + "Dependencies: org.jboss.narayana.txframework,org.jboss.xts\n";
+        archive.setManifest(new StringAsset(ManifestMF));
+
+        return archive;
     }
 
 
