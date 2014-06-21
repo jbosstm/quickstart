@@ -64,12 +64,10 @@ public class BankingServiceTest {
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsLibraries(lib);
 
-
-
         archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
 
         final String ManifestMF = "Manifest-Version: 1.0\n"
-                + "Dependencies: org.jboss.narayana.compensations,org.jboss.xts\n";
+                + "Dependencies: org.jboss.narayana.compensations\n";
         archive.setManifest(new StringAsset(ManifestMF));
 
         return archive;

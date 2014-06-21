@@ -46,9 +46,6 @@ public class TravelBookingTest {
     @Inject
     TravelBookingClient client;
 
-    private static final String ManifestMF = "Manifest-Version: 1.0\n"
-            + "Dependencies: org.jboss.xts\n";
-
     @Deployment
     public static JavaArchive createTestArchive() {
 
@@ -58,8 +55,7 @@ public class TravelBookingTest {
                 .addPackages(true, Taxi2ServiceImpl.class.getPackage().getName())
                 .addPackages(true, TravelBookingTest.class.getPackage().getName())
                 .addAsManifestResource("persistence.xml")
-                .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
-                .setManifest(new StringAsset(ManifestMF));
+                .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
     }
 
 

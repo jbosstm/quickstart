@@ -38,9 +38,6 @@ import javax.inject.Inject;
 @RunWith(Arquillian.class)
 public class BookServiceTest {
 
-    private static final String ManifestMF = "Manifest-Version: 1.0\n"
-            + "Dependencies: org.jboss.xts,org.jboss.xts,org.jboss.msc,org.jboss.jts\n";
-
     @Inject
     BookService bookService;
 
@@ -52,12 +49,10 @@ public class BookServiceTest {
                 .addAsManifestResource("services/javax.enterprise.inject.spi.Extension")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
-
-
         archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
 
         final String ManifestMF = "Manifest-Version: 1.0\n"
-                + "Dependencies: org.jboss.narayana.compensations,org.jboss.xts\n";
+                + "Dependencies: org.jboss.narayana.compensations\n";
         archive.setManifest(new StringAsset(ManifestMF));
 
         return archive;
