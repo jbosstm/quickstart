@@ -19,6 +19,11 @@
  * @author JBoss, by Red Hat.
  */
 import javax.transaction.TransactionManager;
+import javax.transaction.xa.XAException;
+import javax.transaction.xa.XAResource;
+import javax.transaction.xa.Xid;
+
+import com.arjuna.ats.arjuna.common.arjPropertyManager;
 
 /**
  * This example shows how you can access the transaction manager.
@@ -35,11 +40,49 @@ public class TransactionManagerExample {
 	 *             In case of error.
 	 */
 	public static void main(String[] args) throws Exception {
+		arjPropertyManager.getCoreEnvironmentBean().setNodeIdentifier("1");
 		TransactionManager tm = com.arjuna.ats.jta.TransactionManager
 				.transactionManager();
 
 		tm.begin();
 		System.err.println(tm.getTransaction());
+		tm.getTransaction().enlistResource(new XAResource() {
+			public void commit(Xid arg0, boolean arg1) throws XAException {
+			}
+
+			public void end(Xid arg0, int arg1) throws XAException {
+			}
+
+			public void forget(Xid arg0) throws XAException {
+			}
+
+			public int getTransactionTimeout() throws XAException {
+				return 0;
+			}
+
+			public boolean isSameRM(XAResource arg0) throws XAException {
+				return false;
+			}
+
+			public int prepare(Xid arg0) throws XAException {
+				return 0;
+			}
+
+			public Xid[] recover(int arg0) throws XAException {
+				return null;
+			}
+
+			public void rollback(Xid arg0) throws XAException {
+			}
+
+			public boolean setTransactionTimeout(int arg0) throws XAException {
+				return false;
+			}
+
+			public void start(Xid arg0, int arg1) throws XAException {
+			}
+			
+		});
 
 		tm.rollback();
 		System.err.println(tm.getTransaction());
