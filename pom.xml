@@ -135,5 +135,6 @@
     <module>rts</module>
     <module>XTS</module>
     <module>blacktie</module>
+    <module>wildfly/setCheckedActionFactoryExample</module>
   </modules>
 </project>
