@@ -5,7 +5,7 @@
 
     <groupId>org.jboss.jbossts</groupId>
     <artifactId>jbosstxbridge-demo</artifactId>
-    <version>4.17.24.Final-SNAPSHOT</version>
+    <version>4.17.24.Final</version>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <packaging>pom</packaging>
