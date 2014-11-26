@@ -278,7 +278,7 @@
             <activation><property><name>ipv6</name></property></activation>
             <properties>
                 <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
-                <node0>[::1]</node0>
+                <node0>::1</node0>
             </properties>
         </profile>
 
