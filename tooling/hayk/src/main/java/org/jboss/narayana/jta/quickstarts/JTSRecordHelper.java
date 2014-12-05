@@ -24,135 +24,107 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import com.arjuna.ats.arjuna.common.Uid;
+import com.arjuna.ats.arjuna.common.*;
+import com.arjuna.ats.arjuna.exceptions.ObjectStoreException;
 import com.arjuna.ats.arjuna.objectstore.ObjectStoreIterator;
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.internal.arjuna.objectstore.hornetq.HornetqJournalEnvironmentBean;
-import com.arjuna.ats.jta.xa.XATxConverter;
+import com.arjuna.ats.internal.jts.ORBManager;
+import com.arjuna.ats.jta.xa.XidImple;
+import com.arjuna.ats.jts.common.jtsPropertyManager;
 import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
-import com.arjuna.ats.arjuna.common.CoreEnvironmentBean;
-import com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean;
-import com.arjuna.ats.arjuna.common.RecoveryEnvironmentBean;
-import com.arjuna.ats.jta.common.JTAEnvironmentBean;
 import com.arjuna.ats.arjuna.objectstore.StoreManager;
 import com.arjuna.ats.arjuna.state.InputObjectState;
-import com.arjuna.ats.arjuna.tools.osb.mbean.*;
-
-import javax.transaction.xa.Xid;
+import com.arjuna.orbportability.OA;
+import com.arjuna.orbportability.ORB;
+import org.omg.CORBA.ORBPackage.InvalidName;
 
 public class JTSRecordHelper implements HayksJTSHelper {
-    private static ObjStoreBrowser osb;
-
     private static final String JTS_PARTICIPANT_REC_TYPE = "CosTransactions/XAResourceRecord";
-    private static final String JTS_REC_TYPE = "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple";
 
     private static final String[] JTS_TYPES = new String[] {
             "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple",
             "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/AssumedCompleteHeuristicTransaction",
-            "/StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/AssumedCompleteTransaction",
-            "/StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/AssumedCompleteHeuristicServerTransaction",
-            "/StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/AssumedCompleteServerTransaction",
-            "/StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/ServerTransaction",
-            "/StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/ServerTransaction/JCA"
+            "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/AssumedCompleteTransaction",
+            "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/AssumedCompleteHeuristicServerTransaction",
+            "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/AssumedCompleteServerTransaction",
+            "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/ServerTransaction",
+            "StateManager/BasicAction/TwoPhaseCoordinator/ArjunaTransactionImple/ServerTransaction/JCA"
     };
 
-    private static Set<String> recordTypes = new HashSet<String> ();
-    private Set<String> types;
-    private Map<String, ArjunaTransactionWrapper> jtsTxns;
-    private Collection<XidWrapper> xids;
-    private Map<ArjunaTransactionWrapper, Collection<XidWrapper>> jtsTxnParticipants;
+    private Map<Uid, ArjunaTransactionWrapper> txns = new HashMap<Uid, ArjunaTransactionWrapper>();
+    private Collection<JTSXAResourceRecordWrapper> xarUids = new ArrayList<JTSXAResourceRecordWrapper>();
 
-    /*
-     * Hayks spec:
-     * Read the xids of pending transactions. To check the count of pending transactions.
-     * Read participant ids of pending transaction. To check the count of participants.
-     * Read participant resources. To check participant status.
-     */
+    private static Set<String> recordTypes = new HashSet<String> ();
+    private ORB orb;
+    private OA oa;
 
     public static void main(String[] args) throws Exception {
         //String storeDir = "/home/mmusgrov/source/forks/narayana/master/ArjunaJTS/jtax/target/test-classes/ObjectStore";
         //String storeDir = "/home/mmusgrov/source/forks/narayana/master/eap-tests-transactions/integration/jbossts/target/jbossas-jbossts/standalone/data/tx-object-store";
         //String storeDir = "/home/mmusgrov/source/forks/wildfly/wildfly/build/target/wildfly-9.0.0.Alpha2-SNAPSHOT-node2/standalone/data/tx-object-store";
         String storeDir = "/home/mmusgrov/Downloads/tx-object-store"; // the one gytis gave me
-        String nodeName = "1";
 
-        JTSRecordHelper h = new JTSRecordHelper(nodeName, storeDir);
+        JTSRecordHelper h = new JTSRecordHelper(storeDir);
 
-        System.out.printf("Types:%n");
-        for (String type : h.types)
-            System.out.printf("\t%s%n", type);
+        for (Map.Entry<Uid, ArjunaTransactionWrapper> e :h.txns.entrySet()) {
+            Collection<JTSXAResourceRecordWrapper> participants = e.getValue().getParticipants();
 
-        System.out.printf("Pending xids:%n");
-        for (XidWrapper w : h.xids) {
-            System.out.printf("\tgtid=%s heuristic=%d%n", w.getGlobalTransactionId(), w.getHeuristicValue());
+            System.out.printf("\tParticipants of %s%n", h.convertXidBytes(e.getValue().getGtid()).toString());
+
+            for (JTSXAResourceRecordWrapper w : participants)
+                System.out.printf("\t\tgtid=%s bqual=%s heuristic=%d%n",
+                        h.convertXidBytes(w.getGlobalTransactionId()), h.convertXidBytes(w.getBranchQualifier()),
+                        w.getHeuristicValue());
         }
-
-        System.out.printf("Participants by txn:%n");
-        for (Map.Entry<String, ArjunaTransactionWrapper> e : h.jtsTxns.entrySet()) {
-            Collection<XidWrapper> participants = h.getParticipants(e.getValue());
-
-            System.out.printf("\tParticipants of %s%n", e.getValue().getXidWrapper().getGlobalTransactionId());
-
-            for (XidWrapper w : participants)
-                System.out.printf("\t\tbqual=%s heuristic=%d%n", w.getBranchQualifier(), w.getHeuristicValue());
-        }
-
-        RecoveryManager.manager().terminate();
-        StoreManager.shutdown();
-
     }
 
-    public JTSRecordHelper(String nodeName, String osDir) throws Exception {
-        jtsTxns = new HashMap<String, ArjunaTransactionWrapper>();
-        xids = new ArrayList<XidWrapper>();
-        jtsTxnParticipants = new HashMap<ArjunaTransactionWrapper, Collection<XidWrapper>> ();
-
-        setupStore(nodeName, osDir, false);
+    public JTSRecordHelper(String osDir) throws Exception {
+        setupStore(osDir, false);
+        initOrb();
 
         refresh();
+
+        shutdown();
     }
 
-    public void refresh() throws Exception {
-        types = getTypes();
-        jtsTxns.clear();
-        xids.clear();
-        jtsTxnParticipants.clear();
+    public void shutdown() {
+        RecoveryManager.manager().terminate(true);
+        StoreManager.shutdown();
+        oa.destroy();
+        orb.destroy();
+    }
+
+    public void refresh() throws ObjectStoreException, IOException {
+        Collection<Uid> uids = getUids(JTS_PARTICIPANT_REC_TYPE);
 
         for (String type : JTS_TYPES)
-            getPendingTxns(jtsTxns, type);
+            for (Uid uid : getUids(type))
+                txns.put(uid, new ArjunaTransactionWrapper(type, uid));
 
-        getPendingXids(xids);
+        for (Uid xarUid : uids) {
+            JTSXAResourceRecordWrapper wrapper = new JTSXAResourceRecordWrapper(xarUid);
+            XidImple xid = (XidImple) wrapper.getXid();
+            Uid txOfXar = new Uid(xid.getGlobalTransactionId());
+            ArjunaTransactionWrapper txn = txns.get(txOfXar);
 
-        for (ArjunaTransactionWrapper txn : jtsTxns.values()) {
-            Xid txid = XATxConverter.getXid(txn.get_uid(), false, XATxConverter.FORMAT_ID);
-            String gtid = convertXidBytes(txid.getGlobalTransactionId()).toString();
+            xarUids.add(wrapper);
 
-            for (XidWrapper xid : xids) {
-                Collection<XidWrapper> participants = new ArrayList<XidWrapper>();
-
-                if (gtid.equals(xid.getGlobalTransactionId()))
-                    participants.add(xid);
-
-                jtsTxnParticipants.put(txn, participants);
-            }
+            if (txn != null)
+                txn.add(wrapper);
         }
     }
 
-    public Collection<XidWrapper> getParticipants(ArjunaTransactionWrapper txn) {
-        return jtsTxnParticipants.get(txn);
+    public Collection<JTSXAResourceRecordWrapper> getParticipants(ArjunaTransactionWrapper txn) {
+        return txn.getParticipants();
     }
 
-    public void getPendingJTSTxns(Map<String, ArjunaTransactionWrapper> txns) {
-        txns.putAll(jtsTxns);
+    public Map<Uid, ArjunaTransactionWrapper> getPendingJTSTxns() {
+        return txns;
     }
 
-    public void getPendingXids(Collection<XidWrapper> xids) {
-        for (Uid uid : getUids(JTS_PARTICIPANT_REC_TYPE)) {
-            JTSXAResourceRecordWrapper w = new JTSXAResourceRecordWrapper(uid);
-            XidWrapper xidWrapper = new XidWrapper(w.xidImple, uid, w.heuristic);
-
-            xids.add(xidWrapper);
-        }
+    public Collection<JTSXAResourceRecordWrapper> getPendingXids() {
+        return xarUids;
     }
 
     public Set<String> getTypes() throws Exception {
@@ -177,25 +149,7 @@ public class JTSRecordHelper implements HayksJTSHelper {
         return recordTypes;
     }
 
-
-    private void getPendingTxns(Map<String, ArjunaTransactionWrapper> txns, String jtsRecType) {
-        for (Uid uid : getUids(jtsRecType)) {
-            ArjunaTransactionWrapper txn =  new ArjunaTransactionWrapper(jtsRecType, uid);
-            XidWrapper xidWrapper = txn.getXidWrapper();
-
-            txns.put(xidWrapper.getGlobalTransactionId(), txn);
-        }
-    }
-
-    private void setupStore(String nodeName, String storeDir, boolean hqstore) throws Exception {
-        BeanPopulator.getDefaultInstance(RecoveryEnvironmentBean.class).setRecoveryModuleClassNames(Arrays.asList(
-                "com.arjuna.ats.internal.jta.recovery.arjunacore.CommitMarkableResourceRecordRecoveryModule",
-                "com.arjuna.ats.internal.arjuna.recovery.AtomicActionRecoveryModule",
-                "com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule"
-        ));
-
-        BeanPopulator.getDefaultInstance(CoreEnvironmentBean.class).setNodeIdentifier(nodeName);
-        BeanPopulator.getDefaultInstance(JTAEnvironmentBean.class).setXaRecoveryNodes(Arrays.asList(new String[] {}));
+    private void setupStore(String storeDir, boolean hqstore) throws Exception {
 
         if (hqstore) {
             final String storeClassName =  com.arjuna.ats.internal.arjuna.objectstore.hornetq.HornetqObjectStoreAdaptor.class.getName();
@@ -214,16 +168,22 @@ public class JTSRecordHelper implements HayksJTSHelper {
             BeanPopulator.getNamedInstance(ObjectStoreEnvironmentBean.class, "communicationStore").setObjectStoreDir(storeDir);
             BeanPopulator.getNamedInstance(ObjectStoreEnvironmentBean.class, null).setObjectStoreDir(storeDir);
         }
+    }
 
-        //       RecoveryManager.manager(RecoveryManager.INDIRECT_MANAGEMENT).suspend(true);
+    private void initOrb() throws InvalidName {
+        final Properties initORBProperties = new Properties();
+        initORBProperties.setProperty("com.sun.CORBA.POA.ORBServerId", "1");
+        initORBProperties.setProperty("com.sun.CORBA.POA.ORBPersistentServerPort", ""
+                + jtsPropertyManager.getJTSEnvironmentBean().getRecoveryManagerPort());
 
-        if (osb != null)
-            osb.stop();
+        orb = ORB.getInstance("test");
+        oa = OA.getRootOA(orb);
 
-        osb = new ObjStoreBrowser(storeDir);
-        osb.setExposeAllRecordsAsMBeans(true);
-        osb.start(); // only required if we want to use JMX
-        // RecoveryManager.manager(RecoveryManager.INDIRECT_MANAGEMENT).suspend(true);
+        orb.initORB(new String[] {}, initORBProperties);
+        oa.initOA();
+
+        ORBManager.setORB(orb);
+        ORBManager.setPOA(oa);
     }
 
     private Collection<Uid> getUids(String type) {
@@ -242,11 +202,12 @@ public class JTSRecordHelper implements HayksJTSHelper {
         return uids;
     }
 
-    private StringBuilder convertXidBytes(byte[] bytes) {
+    public StringBuilder convertXidBytes(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < bytes.length; i++)
             sb.append(bytes[i]);
+
         return sb;
     }
 }
