@@ -20,7 +20,7 @@
 
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>service2b</artifactId>
-    <version>5.0.4.Final</version>
+    <version>5.0.5.Final-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>RESTAT Quickstart: Participant Service</name>
     <description>Example shows how a web service deployed to wildfly can participate in a transaction</description>
@@ -87,20 +87,20 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-integration</artifactId>
-            <version>5.0.4.Final</version>
+            <version>5.0.5.Final-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-jacorb</artifactId>
-            <version>5.0.4.Final</version>
+            <version>5.0.5.Final-SNAPSHOT</version>
         </dependency>
 
         <!-- REST-AT helper -->
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-util</artifactId>
-            <version>5.0.4.Final</version>
+            <version>5.0.5.Final-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -174,7 +174,7 @@
                 <dependency>
                     <groupId>org.jboss.narayana.rts</groupId>
                     <artifactId>restat-util</artifactId>
-                    <version>5.0.4.Final</version>
+                    <version>5.0.5.Final-SNAPSHOT</version>
                 </dependency>
             </dependencies>
             <build>
