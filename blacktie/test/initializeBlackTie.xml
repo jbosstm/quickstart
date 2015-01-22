@@ -57,7 +57,7 @@
         <echo file="jboss-as/bin/standalone.conf.bat" append="true">set "JAVA_OPTS=%JAVA_OPTS% -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
 	<echo file="jboss-as/bin/standalone.conf" append="true">JAVA_OPTS="$JAVA_OPTS -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
 	<!-- Enable transactions for the orb -->
-        <replaceregexp byline="true" match="&quot;spec&quot;" replace="&quot;on&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
+        <replaceregexp byline="true" match="&quot;spec&quot;" replace="&quot;full&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
 	<!-- Enable JTS -->
         <replaceregexp byline="true" match="&quot;txn-status-manager&quot;/&gt;" replace="&quot;txn-status-manager&quot;/&gt;&#10;            &lt;jts/&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
 	<!-- Enable log4j categories -->
