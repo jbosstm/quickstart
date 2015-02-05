@@ -108,5 +108,6 @@
   <modules>
     <module>trailmap</module>
     <module>recovery</module>
+    <module>standalone</module>
   </modules>
 </project>
