@@ -33,6 +33,25 @@
         <url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
       </license>
     </licenses>
+
+    <repositories>
+      <repository>
+        <id>jbossThirdParty</id>
+        <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
+      </repository>
+      <repository>
+        <id>jboss-public-repository-group</id>
+        <name>JBoss Public Maven Repository Group</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        <releases>
+          <enabled>true</enabled>
+        </releases>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>
+      </repository>
+    </repositories>
+  
 <!--
   <build>
     <plugins>
