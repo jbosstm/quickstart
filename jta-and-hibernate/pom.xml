@@ -47,8 +47,8 @@
         <version.com.h2database>1.3.171</version.com.h2database>
         <version.org.hibernate>4.3.0.Final</version.org.hibernate>
         <version.org.jboss.weld.se>2.1.1.Final</version.org.jboss.weld.se>
-        <version.org.jboss>7.1.0.Final</version.org.jboss>
         <version.javax>7.0</version.javax>
+        <version.org.jboss.jboss-transaction-spi>7.1.1.Final</version.org.jboss.jboss-transaction-spi>
     </properties>
 
     <repositories>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jboss-transaction-spi</artifactId>
-            <version>${version.org.jboss}</version>
+            <version>${version.org.jboss.jboss-transaction-spi}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.logging</groupId>
