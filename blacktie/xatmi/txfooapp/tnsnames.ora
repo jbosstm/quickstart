@@ -29,6 +29,6 @@ ORCL =
 			      )
 	       (CONNECT_DATA =
 			      (SERVER = DEDICATED)
-			      (SERVICE_NAME = orcl.buildnet.ncl.jboss.com)
+			      (SERVICE_NAME = orcl.eng.hst.ams2.redhat.com)
 				      )
 		     )
