@@ -97,6 +97,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Import the CDI API, we use provided scope as the API is included
         in JBoss AS 7 -->
         <dependency>
