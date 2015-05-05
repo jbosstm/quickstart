@@ -39,6 +39,20 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>jaxrs-api</artifactId>
+            <version>${version.org.jboss.resteasy}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+           <groupId>org.jboss.resteasy</groupId>
+           <artifactId>resteasy-client</artifactId>
+           <version>${version.org.jboss.resteasy}</version>
+           <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.jboss.spec.javax.jms</groupId>
             <artifactId>jboss-jms-api_1.1_spec</artifactId>
             <scope>provided</scope>
