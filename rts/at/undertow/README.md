@@ -2,14 +2,15 @@ OVERVIEW
 --------
 This example shows how you can make your web services transactional using undertow and resteasy.
 
-Running the demo wil start 3 Undertow servers:
+The quickstart runs 3 Undertow servers:
+
 - one for the RESTAT coordinator
-- two servers for running participants
+- two servers for deploying participants
 
-You may drive the demo using any HTTP client. For linux users the quickstart includes a bash script which uses curl
-as the client.
+The example can be ran programmatically or interactively.
 
-Alternatively, you may run the demo using programmed example (simply press enter after starting the quickstart)/
+Any HTTP client can be used to interact with the coordinator and services. The programmatic approach uses the
+JAX-RS client API and for linux users we provide a bash script for the interactive approach using curl.
 
 
 USAGE
@@ -20,10 +21,13 @@ USAGE
 EXPECTED OUTPUT
 ---------------
 
-1. Three messages showing 
+1. Three messages showing undertow servers starting up:
+
+```
 starting undertow (coordinator)
 starting undertow (service 1)
 starting undertow (service 2)
+```
 
 2. The quickstart now waits for the user to press enter
 
@@ -34,24 +38,29 @@ starting undertow (service 2)
    The quickstart ends the transaction by PUTting to the coordinator.
    The coordinator PUTs to each participant to tell it to prepare and commit:
 
+```
 Service ep http://localhost:8094/eg/service/2/terminator: PUT request to terminate url: wId=2, status:=txstatus=TransactionPrepared
 Service ep http://localhost:8092/eg/service/1/terminator: PUT request to terminate url: wId=1, status:=txstatus=TransactionPrepared
 Service ep http://localhost:8092/eg/service/1/terminator: PUT request to terminate url: wId=1, status:=txstatus=TransactionCommitted
 Service ep http://localhost:8094/eg/service/2/terminator: PUT request to terminate url: wId=2, status:=txstatus=TransactionCommitted
+```
 
 4. The client checks that the services got the commit requests by asking them for the contents of the document:
 
+```
 Service 1 value:value
 Service 2 value:value
+```
 
 INTERACTIVE USAGE
 -----------------
 
-After starting the quickstart the example pauses waiting for the user to press enter. This is so that the user
-can start and stop transactions and make transactional service requests manually from the command line.
+After starting the three servers and deploying the JAX-RS services the quickstart pauses waiting for the user
+to press enter. This pause gives the user the opportunity to start and stop transactions and make transactional
+service requests manually from an external client.
 
-For linux users we provide a shell script to facilitate this manual interaction with the quickstart. Make sure it is
-executable using the chmod command:
+For linux users we provide a shell script based on curl to facilitate this manual interaction with the quickstart.
+Make sure it is executable using the chmod command:
 
     chmod 755 txctl.sh
 
@@ -59,15 +68,16 @@ For help type:
 
     txctl.sh
 
-For example to start a transaction, perform a transaction service request to each participant, end the transaction and finally query each service for the contents of the document that was updated:
+For example to start a transaction, perform a transaction service request to each participant,
+end the transaction and finally query each service for the contents of the document that was updated:
 
-txctl.sh -s 1000000 # start transaction
-txctl.sh -w http://localhost:8092/eg/service newVal <enlist url> # enlist service 1
-txctl.sh -w http://localhost:8094/eg/service newVal <enlist url> # enlist service 2
-txctl.sh -c <txn terminator url> # end the transaction
+    txctl.sh -s 1000000 # start transaction
+    txctl.sh -w http://localhost:8092/eg/service newVal <enlist url> # enlist a service 1 participant
+    txctl.sh -w http://localhost:8094/eg/service newVal <enlist url> # enlist a service 2 participant
+    txctl.sh -c <txn terminator url> # end the transaction
 
-txctl.sh -q http://localhost:8092/eg/service # query the value to see if the commit updated it
-txctl.sh -q http://localhost:8094/eg/service # query the value to see if the commit updated it
+    txctl.sh -q http://localhost:8092/eg/service # query the value to see if the commit updated it
+    txctl.sh -q http://localhost:8094/eg/service # query the value to see if the commit updated it
 
 The following is an example of the expected output:
 
@@ -117,4 +127,3 @@ txstatus=TransactionCommitted[mmusgrov@localhost meetings](master)$
 newVal[mmusgrov@localhost meetings](master)$ txctl.sh -q http://localhost:8094/eg/service
 newVal[mmusgrov@localhost meetings](master)$ 
 ```
-
