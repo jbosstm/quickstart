@@ -23,7 +23,7 @@
     </appender>
 
     <category name="org.jboss.narayana.rts">
-        <level value="TRACE"/>
+        <level value="INFO"/>
         <appender-ref ref="console"/>
         <appender-ref ref="file"/>
     </category>
