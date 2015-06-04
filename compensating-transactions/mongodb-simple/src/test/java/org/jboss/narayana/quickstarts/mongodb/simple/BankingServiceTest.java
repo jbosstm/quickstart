@@ -20,8 +20,6 @@
  */
 package org.jboss.narayana.quickstarts.mongodb.simple;
 
-import com.arjuna.mw.wscf.model.sagas.api.CoordinatorManager;
-import com.arjuna.mw.wscf11.model.sagas.CoordinatorManagerFactory;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -30,10 +28,8 @@ import com.mongodb.MongoClient;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.compensations.api.TransactionCompensatedException;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,15 +56,8 @@ public class BankingServiceTest {
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, BankingService.class.getPackage().getName())
-                .addAsManifestResource("services/javax.enterprise.inject.spi.Extension")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsLibraries(lib);
-
-        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
-
-        final String ManifestMF = "Manifest-Version: 1.0\n"
-                + "Dependencies: org.jboss.narayana.compensations\n";
-        archive.setManifest(new StringAsset(ManifestMF));
 
         return archive;
     }

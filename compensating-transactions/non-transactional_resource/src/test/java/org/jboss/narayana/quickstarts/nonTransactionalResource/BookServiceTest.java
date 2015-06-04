@@ -24,10 +24,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.quickstarts.nonTransactionalResource.bookService.BookService;
 import org.jboss.narayana.quickstarts.nonTransactionalResource.bookService.InvoicePrinter;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,14 +44,7 @@ public class BookServiceTest {
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, BookService.class.getPackage().getName())
-                .addAsManifestResource("services/javax.enterprise.inject.spi.Extension")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-
-        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
-
-        final String ManifestMF = "Manifest-Version: 1.0\n"
-                + "Dependencies: org.jboss.narayana.compensations\n";
-        archive.setManifest(new StringAsset(ManifestMF));
 
         return archive;
     }
