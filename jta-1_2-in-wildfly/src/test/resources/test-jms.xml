@@ -20,8 +20,8 @@
 ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
-<messaging-deployment xmlns="urn:jboss:messaging-deployment:1.0">
-    <hornetq-server>
+<messaging-deployment xmlns="urn:jboss:messaging-activemq-deployment:1.0">
+    <server>
         <jms-destinations>
             <jms-queue name="quickstartTestQueue">
                 <entry name="queue/test"/>
@@ -29,5 +29,5 @@
                 <durable>false</durable>
             </jms-queue>
         </jms-destinations>
-    </hornetq-server>
+    </server>
 </messaging-deployment>
