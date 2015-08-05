@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstarts</groupId>
         <artifactId>jboss-as-jts-parent</artifactId>
-        <version>5.2.1.Final-SNAPSHOT</version>
+        <version>5.2.1.Final</version>
     </parent>
 
     <url>http://jboss.org/jbossas</url>
