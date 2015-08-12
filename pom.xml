@@ -137,5 +137,6 @@
     <module>blacktie</module>
     <module>wildfly/setCheckedActionFactoryExample</module>
     <module>STM</module>
+    <module>jts-docker</module>
   </modules>
 </project>

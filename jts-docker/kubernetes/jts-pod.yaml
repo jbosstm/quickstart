@@ -1,0 +1,19 @@
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  name: "jts"
+spec:
+  containers:
+    - name: "jacorb-name-server"
+      image: "jboss/jacorb-name-server"
+      ports:
+        - containerPort: 3528
+    - name: "jts-transaction-service"
+      image: "jboss/jts-transaction-service"
+      ports:
+        - containerPort: 4710
+      env:
+        - name: "JACORB_NAME_SERVER_IP"
+          value: "127.0.0.1"
+        - name: "JACORB_NAME_SERVER_ENV_NAME_SERVER_PORT"
+          value: "3528"
