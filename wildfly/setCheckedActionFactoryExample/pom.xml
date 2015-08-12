@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>org.jboss.narayana.jta</groupId>
 			<artifactId>jta</artifactId>
-			<version>5.2.2.Final</version>
+			<version>5.2.3.Final-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

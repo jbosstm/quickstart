@@ -15,7 +15,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>maven</artifactId>
-    <version>5.2.2.Final</version>
+    <version>5.2.3.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>basic maven example</name>
     <description>basic maven example</description>
@@ -97,7 +97,7 @@ read this as the JBoss stack of the Java EE 6 Web Profile APIs) -->
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>5.2.2.Final</version>
+            <version>5.2.3.Final-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

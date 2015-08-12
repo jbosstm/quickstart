@@ -17,7 +17,7 @@
 
     <groupId>org.jboss.narayana</groupId>
     <artifactId>rts-qs</artifactId>
-    <version>5.2.2.Final</version>
+    <version>5.2.3.Final-SNAPSHOT</version>
 
     <name>Narayana: ArjunaJTA jta performance tests</name>
     <description>Narayana: ArjunaJTA jta performance tests</description>
