@@ -1,0 +1,6 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
+    <entry key="OrbPortabilityEnvironmentBean.bindMechanism">NAME_SERVICE</entry>
+    <entry key="OrbPortabilityEnvironmentBean.resolveService">NAME_SERVICE</entry>
+</properties>
