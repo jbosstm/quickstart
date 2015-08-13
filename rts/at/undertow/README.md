@@ -16,7 +16,8 @@ JAX-RS client API and for linux users we provide a bash script for the interacti
 USAGE
 -----
 
-    mvn clean compile exec:java
+    mvn clean package
+    java -jar target/rts-undertow-qs.jar
 
 EXPECTED OUTPUT
 ---------------
@@ -29,9 +30,7 @@ starting undertow (service 1)
 starting undertow (service 2)
 ```
 
-2. The quickstart now waits for the user to press enter
-
-3. The quickstart begins a transaction by POSTing a request to the coordinator running in the first container.
+2. The quickstart begins a transaction by POSTing a request to the coordinator running in the first container.
    It then makes a transactional service request to the two services passing the coordinator enlistment
    url asking it to create a document with content "value".
    Each service enlists itself with the transaction manager
@@ -45,7 +44,7 @@ Service ep http://localhost:8092/eg/service/1/terminator: PUT request to termina
 Service ep http://localhost:8094/eg/service/2/terminator: PUT request to terminate url: wId=2, status:=txstatus=TransactionCommitted
 ```
 
-4. The client checks that the services got the commit requests by asking them for the contents of the document:
+3. The client checks that the services got the commit requests by asking them for the contents of the document:
 
 ```
 Service 1 value:value
@@ -55,9 +54,13 @@ Service 2 value:value
 INTERACTIVE USAGE
 -----------------
 
-After starting the three servers and deploying the JAX-RS services the quickstart pauses waiting for the user
-to press enter. This pause gives the user the opportunity to start and stop transactions and make transactional
-service requests manually from an external client.
+Pass the argument "-i" to the java command line to run the quickstart in interactive mode.
+
+In this mode after starting the three servers and deploying the JAX-RS services the quickstart pauses waiting
+for the user to press enter. This pause gives the user the opportunity to start and stop transactions and make
+transactional service requests manually from an external client.
+
+To exit interactive mode pres the enter key.
 
 For linux users we provide a shell script based on curl to facilitate this manual interaction with the quickstart.
 Make sure it is executable using the chmod command:

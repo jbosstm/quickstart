@@ -17,19 +17,9 @@
 package org.jboss.narayana.rts;
 
 import io.undertow.Undertow;
-import org.apache.http.HttpHost;
-import org.apache.http.client.HttpClient;
 
-import org.apache.http.conn.routing.HttpRoute;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.jboss.jbossts.star.service.TMApplication;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient4Engine;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Application;
 
 public class JAXRSServer {

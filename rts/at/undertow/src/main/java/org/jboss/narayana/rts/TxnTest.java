@@ -110,7 +110,9 @@ public class TxnTest {
         log.tracef("setup%n");
         setup();
 
-        System.in.read(new byte[100]);
+        if (args.length > 0 && "-i".equals(args[0]))
+            System.in.read(new byte[100]);
+
         runTxn();
 
         log.tracef("tearDown%n");
