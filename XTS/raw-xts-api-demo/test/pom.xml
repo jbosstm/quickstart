@@ -14,11 +14,11 @@
     <packaging>jar</packaging>
 
     <properties>
-        <version.jbossas>8.0.0.Final</version.jbossas>
         <version.org.jboss.arquillian>1.0.3.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.drone>1.1.0.Final</version.org.jboss.arquillian.drone>
         <version.org.jboss.arquillian.graphene>2.0.0.Alpha2</version.org.jboss.arquillian.graphene>
         <version.org.jboss.shrinkwrap.resolver>2.0.0-alpha-4</version.org.jboss.shrinkwrap.resolver>
+        <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <version.selenium>2.25.0</version.selenium>
         <version.junit>4.10</version.junit>
 
@@ -234,9 +234,9 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.jbossas}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -250,9 +250,9 @@
             <id>arq-jbossas-remote</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${version.jbossas}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

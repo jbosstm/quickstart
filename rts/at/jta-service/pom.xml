@@ -41,9 +41,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.surefire.plugin>2.11</version.surefire.plugin>
         <version.jboss.bom>1.0.7.Final</version.jboss.bom>
-        <version.org.wildfly>8.0.0.Final</version.org.wildfly>
         <version.org.codehaus.jettison>1.3.2</version.org.codehaus.jettison>
         <version.org.jboss.resteasy>3.0.5.Final</version.org.jboss.resteasy>
+        <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
     </properties>
 
     <dependencyManagement>
@@ -72,32 +72,7 @@
 
     <profiles>
         <profile>
-            <id>arq</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.wildfly</groupId>
-                    <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.org.wildfly}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <skip>false</skip>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <!-- This profile will start a new JBoss AS instance, and execute the test, shutting it down when done -->
+            <!-- This profile will start a new WildFly instance, execute the test, and shutting it down when done -->
             <!-- Run with: mvn clean test -->
             <id>arq-jbossas-managed</id>
             <activation>
@@ -105,9 +80,9 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.org.wildfly}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -126,14 +101,14 @@
         </profile>
 
         <profile>
-            <!-- An optional Arquillian testing profile that executes tests in a remote JBoss AS instance -->
+            <!-- An optional Arquillian testing profile that executes tests in a remote WildFly instance -->
             <!-- Run with: mvn clean test -Parq-jbossas-remote -->
             <id>arq-jbossas-remote</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${version.org.wildfly}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
