@@ -17,8 +17,8 @@
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jboss-as.version>8.0.0.Final</jboss-as.version>
         <narayana.version>5.2.3.Final-SNAPSHOT</narayana.version>
+        <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
     </properties>
 
     <dependencyManagement>
@@ -179,9 +179,9 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${jboss-as.version}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -211,9 +211,9 @@
             <id>arq-jbossas-remote</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${jboss-as.version}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

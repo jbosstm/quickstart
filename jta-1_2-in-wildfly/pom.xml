@@ -37,14 +37,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
-        <jboss-as.version>8.0.0.Final</jboss-as.version>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
         <version.org.jboss.spec.javax.ejb>1.0.0.Final</version.org.jboss.spec.javax.ejb>
         <version.org.jboss.spec.javax.jms>1.0.0.Final</version.org.jboss.spec.javax.jms>
         <version.org.hibernate.javax.persistence>1.0.0.Final</version.org.hibernate.javax.persistence>
         <version.javax.enterprise>1.1</version.javax.enterprise>
         <version.junit>4.11</version.junit>
-        <version.org.jboss.arquillian>1.1.2.Final</version.org.jboss.arquillian>
+        <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
+        <version.org.jboss.arquillian>1.1.8.Final</version.org.jboss.arquillian>
     </properties>
 
     <repositories>
@@ -135,7 +135,7 @@
 
     <profiles>
         <profile>
-            <!-- This profile will start a new JBoss AS instance, and execute the test, shutting it down when done -->
+            <!-- This profile will start a new WildFly instance, execute the test, and shut it down when done -->
             <!-- Run with: mvn clean test -->
             <id>arq-jbossas-managed</id>
             <activation>
@@ -143,9 +143,9 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${jboss-as.version}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -164,14 +164,14 @@
         </profile>
 
         <profile>
-            <!-- An optional Arquillian testing profile that executes tests in a remote JBoss AS instance -->
+            <!-- An optional Arquillian testing profile that executes tests in a remote WildFly instance -->
             <!-- Run with: mvn clean test -Parq-jbossas-remote -->
             <id>arq-jbossas-remote</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${jboss-as.version}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
