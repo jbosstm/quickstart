@@ -19,7 +19,7 @@
 
     <groupId>org.jboss.narayana</groupId>
     <artifactId>rts-undertow-qs</artifactId>
-    <version>5.2.6.Final</version>
+    <version>5.2.7.Final-SNAPSHOT</version>
 
     <name>Narayana Quickstarts: REST-AT with undertow</name>
     <description>Narayana: rest-at with undertow quickstart</description>
