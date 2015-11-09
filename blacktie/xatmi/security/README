@@ -76,13 +76,12 @@ generate_client -Dclient.includes=client.c
 
 5. DEPLOY THE STOMPCONNECTSERVICE
 Undeploy any older versions of the blacktie admin service
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/server/all-with-hornetq/deploy
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/stompconnectservice-<VERSION.ear into $JBOSS_HOME/server/all-with-hornetq/deploy
+Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/standalone/deployments
 
 
 6. RUN AND CONFIGURE THE APPLICATION SERVER
 Make sure that the naming, messaging and transaction services are running, by running the JBoss server:
-<JBOSS_HOME>/bin/run.sh|bat -c all-with-hornetq
+<JBOSS_HOME>/bin/standalone.sh|bat -c standalone-blacktie.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR
 You will need to configure the security settings at the HornetQ level in this release of BlackTie and moving forward.
 What you will need to do is:
 6.1 CONFIGURE USERS AND ROLES
