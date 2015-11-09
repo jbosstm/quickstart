@@ -204,9 +204,9 @@ C:\blacktie\dist\blacktie-5.2.8.Final-SNAPSHOT\bin\generate-executables.xml:144:
 3. RUNNING THE EXAMPLE
 ======================
 Undeploy any older versions of the blacktie admin service
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/server/all-with-hornetq/deploy
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/stompconnectservice-<VERSION.ear into $JBOSS_HOME/server/all-with-hornetq/deploy
-Start the JBoss server (<JBOSS_HOME>/bin/run.sh|bat -c all-with-hornetq)
+Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/standalone/deployments
+Start the JBoss server
+<JBOSS_HOME>/bin/standalone.sh|bat -c standalone-blacktie.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR
 
 Make sure all required libraries are on the library path:
 

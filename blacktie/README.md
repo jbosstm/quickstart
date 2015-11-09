@@ -2,7 +2,7 @@
 OVERVIEW
 --------
 
-BlackTie is an [XATMI](http://pubs.opengroup.org/onlinepubs/9694999399/toc.pdf) implmentation. XATMI is a set of APIs for writing distributed client/server applications. BlackTie bridges the gap between JEE and XATMI and provides the tools to allow existing XATMI application programs written in C/C++ to integrate seamlessly into the wildfly/JBoss stack allowing these applications to migrate easily to the services provided by the wildfly application server. As well as providing C++ APIs to support the X/Open XATMI specification, Blacktie also provides the JAtmiBroker API to support clients and services written in Java. Here you find a variety of quickstarts to get you started using BlackTie
+BlackTie is an [XATMI](http://pubs.opengroup.org/onlinepubs/9694999399/toc.pdf) implmentation. XATMI is a set of APIs for writing distributed client/server applications. BlackTie bridges the gap between JEE and XATMI and provides the tools to allow existing XATMI application programs written in C/C++ to integrate seamlessly into the wildfly/JBoss stack allowing these applications to migrate easily to the services provided by the wildfly application server. As well as providing C++ APIs to support the X/Open XATMI specification, Blacktie also provides the JAtmiBroker API to support clients and services written in Java. Here you find a variety of quickstarts to get you started using BlackTie. Note that it should integrate with the lastest wildfly master.
 
 xatmi
 -----
