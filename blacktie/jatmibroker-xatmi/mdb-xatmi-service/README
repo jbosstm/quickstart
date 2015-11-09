@@ -33,8 +33,8 @@ On Windows:
 Then, execute the script setenv
 
 2. RUN JBOSS
-<JBOSS_HOME>/bin/run.[sh|bat] -c all-with-hornetq
-NOTE: Make sure you have stompconnectservice and blacktie-admin-services installed
+NOTE: Make sure you have blacktie-admin-services installed
+<JBOSS_HOME>/bin/standalone.sh|bat -c standalone-blacktie.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR
 
 3. RUN THE EXAMPLE
 This quickstart makes use of maven to build, deploy and test an XATMI service deployed 
