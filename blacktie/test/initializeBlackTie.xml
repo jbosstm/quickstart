@@ -51,30 +51,8 @@
           </fileset>
         </unzip>
         <echo message="2"/>
-
-	<!-- ENABLE THE NAME_SERVICE for TM -->
-        <copy file="jboss-as/docs/examples/configs/standalone-blacktie.xml" tofile="jboss-as/standalone/configuration/standalone-blacktie.xml" overwrite="true" />
-        <echo file="jboss-as/bin/standalone.conf.bat" append="true">set "JAVA_OPTS=%JAVA_OPTS% -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
-	<echo file="jboss-as/bin/standalone.conf" append="true">JAVA_OPTS="$JAVA_OPTS -DOrbPortabilityEnvironmentBean.resolveService=NAME_SERVICE"</echo>
-	<!-- Enable transactions for the orb -->
-        <replaceregexp byline="true" match="&quot;spec&quot;" replace="&quot;full&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Enable JTS -->
-        <replaceregexp byline="true" match="&quot;txn-status-manager&quot;/&gt;" replace="&quot;txn-status-manager&quot;/&gt;&#10;            &lt;jts/&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Enable log4j categories -->
-        <replaceregexp byline="true" match="&lt;root-logger&gt;" replace="&lt;logger category=&quot;org.jboss.ejb.client&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.as.ejb3&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.jboss.narayana.blacktie&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.codehaus.stomp&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;logger category=&quot;org.apache.activemq&quot;&gt;&#10;                &lt;level name=&quot;ALL&quot;/&gt;&#10;            &lt;/logger&gt;&#10;            &lt;root-logger&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Add some jms-destinations for BlackTie to use -->
-        <replaceregexp byline="true" match="DLQ&quot;/&gt;" replace="DLQ&quot;/&gt;&#10;                &lt;jms-queue name=&quot;BTR_TestOne&quot; entries=&quot;queue/BTR_TestOne java:/jms/queue/BTR_TestOne&quot;/&gt;&#10;                &lt;jms-queue name=&quot;BTR_TestTwo&quot; entries=&quot;queue/BTR_TestTwo java:/jms/queue/BTR_TestTwo&quot;/&gt;&#10;                &lt;jms-queue name=&quot;BTC_ConvService&quot; entries=&quot;queue/BTC_ConvService java:/jms/queue/BTC_ConvService&quot;/&gt;&#10;                &lt;jms-queue name=&quot;BTR_JAVA_Converse&quot; entries=&quot;queue/BTR_JAVA_Converse java:/jms/queue/BTR_JAVA_Converse&quot;/&gt;&#10;                &lt;jms-topic name=&quot;BTR_JAVA_Topic&quot; entries=&quot;topic/BTR_JAVA_Topic java:/jms/topic/BTR_JAVA_Topic&quot;/&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Configure security settings for the queues -->
-        <replaceregexp byline="true" match="&lt;/security-setting&gt;" replace="&lt;/security-setting&gt;&#10;                &lt;security-setting name=&quot;jms.queue.BTR_BTDomainAdmin&quot;&gt;&#10;                    &lt;role name=&quot;blacktie&quot; send=&quot;true&quot; consume=&quot;true&quot;/&gt;&#10;                &lt;/security-setting&gt;&#10;                &lt;security-setting name=&quot;jms.queue.BTR_BTStompAdmin&quot;&gt;&#10;                    &lt;role name=&quot;blacktie&quot; send=&quot;true&quot; consume=&quot;true&quot;/&gt;&#10;                &lt;/security-setting&gt;&#10;                &lt;security-setting name=&quot;jms.queue.BTR_SECURE&quot;&gt;&#10;                    &lt;role name=&quot;dynsub&quot; send=&quot;true&quot; consume=&quot;true&quot;/&gt;&#10;                &lt;/security-setting&gt;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Allow the role blacktie for access -->
-        <replaceregexp byline="true" match="#guest=guest" replace="guest=guest,blacktie&#10;
-dynsub=guest,blacktie,dynsub" file="jboss-as/standalone/configuration/application-roles.properties"/>
-	<!-- Disable dead connection testing for the invm connection factory -->
-        <replaceregexp byline="true" match="connection-factory name=&quot;InVmConnectionFactory&quot;" replace="connection-factory name=&quot;InVmConnectionFactory&quot; connection-ttl=&quot;-1&quot; client-failure-check-period=&quot;86400000&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
-	<!-- Disable dead connection testing for the activemq-ra connection factory -->
-        <replaceregexp byline="true" match="connection-factory name=&quot;activemq-ra&quot;" replace="connection-factory name=&quot;activemq-ra&quot; connection-ttl=&quot;-1&quot; client-failure-check-period=&quot;86400000&quot;" file="jboss-as/standalone/configuration/standalone-blacktie.xml"/>
         <copy todir="jboss-as/" overwrite="true">
-            <fileset dir="blacktie/test/config/"/>
+            <fileset dir="narayana/blacktie/scripts/hudson/config/"/>
         </copy>
         <copy todir="jboss-as/standalone/deployments">
             <fileset dir="${ESC_BT_HOME}blacktie-${VERSION}/">

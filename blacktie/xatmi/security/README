@@ -74,9 +74,8 @@ C:\blacktie\dist\blacktie-5.2.9.Final-SNAPSHOT\bin\generate-executables.xml:144:
 generate_client -Dclient.includes=client.c
 
 
-5. DEPLOY THE STOMPCONNECTSERVICE
-Undeploy any older versions of the blacktie admin service
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/standalone/deployments
+5. INSTALL THE BLACKTIE SUBSYSTEM AND DEPLOY THE ADMIN SERVICE
+Follow the instructions in $BLACKTIE_HOME/README
 
 
 6. RUN AND CONFIGURE THE APPLICATION SERVER
