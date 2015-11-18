@@ -39,9 +39,8 @@ On Windows:
 	generate_client -Dclient.includes=txsender.c -Dclient.output.file=txsender -Dx.define=WIN32
 
 
-3. DEPLOY THE BLACKTIE ADMIN SERVICE
-Undeploy any older versions of the blacktie admin service
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/standalone/deployments
+3. INSTALL THE BLACKTIE SUBSYSTEM AND DEPLOY THE ADMIN SERVICE
+Follow the instructions in $BLACKTIE_HOME/README
 
 
 4. RUN THE APPLICATION SERVER

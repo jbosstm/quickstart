@@ -67,9 +67,8 @@ generate_library -Dlibrary.includes=BarService.c
 generate_client -Dclient.includes=client.c
 
 
-4. DEPLOY THE BLACKTIE ADMIN SERVICE
-Undeploy any older versions of the blacktie admin service
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/standalone/deployments
+4. INSTALL THE BLACKTIE SUBSYSTEM AND DEPLOY THE ADMIN SERVICE
+Follow the instructions in $BLACKTIE_HOME/README
 
 
 5. RUN THE APPLICATION SERVER

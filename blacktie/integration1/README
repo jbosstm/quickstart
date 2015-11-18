@@ -40,9 +40,8 @@ On Windows:
 You MUST use an environment configured with the VC++ development tools, e.g. launch:
 C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat
 
-2. DEPLOY THE BLACKTIE ADMIN SERVICE
-Undeploy any older versions of the blacktie admin service
-Copy the file $BLACKTIE_HOME/blacktie-admin-services/blacktie-admin-services-<VERSION>.ear into $JBOSS_HOME/standalone/deployments
+2. INSTALL THE BLACKTIE SUBSYSTEM AND DEPLOY THE ADMIN SERVICE
+Follow the instructions in $BLACKTIE_HOME/README
 
 3. RUN THE APPLICATION SERVER
 Make sure that the naming, messaging and transaction services are running, by running the JBoss server:

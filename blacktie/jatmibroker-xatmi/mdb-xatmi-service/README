@@ -32,11 +32,14 @@ On Windows:
 	%BLACKTIE_HOME%\setenv.bat
 Then, execute the script setenv
 
-2. RUN JBOSS
+2. INSTALL THE BLACKTIE SUBSYSTEM AND DEPLOY THE ADMIN SERVICE
+Follow the instructions in https://github.com/jbosstm/narayana/blob/master/blacktie/blacktie/README
+
+3. RUN JBOSS
 NOTE: Make sure you have blacktie-admin-services installed
 <JBOSS_HOME>/bin/standalone.sh|bat -c standalone-blacktie.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR
 
-3. RUN THE EXAMPLE
+4. RUN THE EXAMPLE
 This quickstart makes use of maven to build, deploy and test an XATMI service deployed 
 as an MDB.
 
