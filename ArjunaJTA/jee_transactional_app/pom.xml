@@ -15,7 +15,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>jee_transactional_app</artifactId>
-    <version>5.2.8.Final</version>
+    <version>5.2.9.Final-SNAPSHOT</version>
     <name>basic integration example</name>
     <description>basic integration example</description>
     <packaging>war</packaging>
@@ -182,7 +182,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>5.2.8.Final</version>
+            <version>5.2.9.Final-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Import the injection annotations -->
