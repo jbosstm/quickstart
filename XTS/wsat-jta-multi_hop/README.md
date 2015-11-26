@@ -23,7 +23,7 @@ Console 1
 
 Console 2
 
-    mvn clean test -Parq-jbossas-remote | egrep "stdout|stderr|started in"
+    mvn clean test -Parq | egrep "stdout|stderr|started in"
 
 
 Expected Output

@@ -23,4 +23,4 @@ In order to run quickstart in the managed Wildfly application server, run the fo
 
 In order to run quickstart in the remote Wildfly application server, run the following command:
 
-        mvn clean install -Parq-jbossas-remote
+        mvn clean install -Parq

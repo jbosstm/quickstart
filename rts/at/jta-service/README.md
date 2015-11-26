@@ -22,6 +22,6 @@ In order to run quickstarts in the managed Wildfly application server, run the f
 
 In order to run quickstarts in the remote Wildfly application server, run the following command:
 
-        mvn clean install -Parq-jbossas-remote
+        mvn clean install -Parq
 
 Test output can be found in quickstarts surefire-report directories, if managed application server was used. And in Wildfly server log, if remote application server was used.

@@ -23,7 +23,7 @@ Console 1
 
 Console 2
 
-    mvn clean test -Parq-jbossas-remote
+    mvn clean test -Parq
 
 
 Expected Output
