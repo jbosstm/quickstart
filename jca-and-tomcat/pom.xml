@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstarts</groupId>
     <artifactId>jca-and-tomcat</artifactId>
-    <version>5.2.11.Final-SNAPSHOT</version>
+    <version>5.2.11.Final</version>
     <packaging>war</packaging>
 
     <name>Narayana Quickstarts: JBTM, IronJacamar, and Tomcat</name>

@@ -16,7 +16,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.narayana.quickstart.stm</groupId>
 	<artifactId>optimistic</artifactId>
-	<version>5.2.11.Final-SNAPSHOT</version>
+	<version>5.2.11.Final</version>
 	<packaging>jar</packaging>
 	<repositories>
 		<repository>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>org.jboss.narayana.stm</groupId>
 			<artifactId>stm</artifactId>
-			<version>5.2.11.Final-SNAPSHOT</version>
+			<version>5.2.11.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
