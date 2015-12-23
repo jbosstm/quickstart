@@ -11,6 +11,20 @@
     <description>JBoss Narayana Quickstarts: Two WS-BA Web services backed by Databases accessed in a JTA Transaction
     </description>
 
+    <repositories>
+      <repository>
+        <id>jboss-public-repository-group</id>
+        <name>JBoss Public Maven Repository Group</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        <releases>
+          <enabled>true</enabled>
+        </releases>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>
+      </repository>
+    </repositories>
+    
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following
        message: -->

@@ -11,6 +11,20 @@
     <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with MongoDB
     </description>
 
+    <repositories>
+      <repository>
+        <id>jboss-public-repository-group</id>
+        <name>JBoss Public Maven Repository Group</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        <releases>
+          <enabled>true</enabled>
+        </releases>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>
+      </repository>
+    </repositories>
+    
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following
        message: -->
