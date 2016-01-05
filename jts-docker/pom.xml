@@ -5,7 +5,7 @@
     <parent>
         <artifactId>narayana-quickstarts-all</artifactId>
         <groupId>org.jboss.narayana.quickstart.jta</groupId>
-        <version>5.2.12.Final-SNAPSHOT</version>
+        <version>5.2.12.Final</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
