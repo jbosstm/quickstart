@@ -11,7 +11,11 @@ This quickstart shows how you can use checked actions inside the WildFly contain
 Running the Quickstart
 ----------------------
 
-You will need a WildFly server
+If you are using the "master" version of the quickstarts, you will need to build Narayana master locally (https://github.com/jbosstm/narayana/). When using a tagged version of the quickstarts the artifact should exist in JBoss nexus (or maven central).
+
+You will also need the current version of WildFly to run this quickstart. WildFly is available from http://wildfly.org/downloads/
+
+To run the example, type:
 
     mvn clean install
     cp target/ROOT.war <WFLY_HOME>/standalone/deployments
