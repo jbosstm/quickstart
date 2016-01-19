@@ -27,6 +27,7 @@
         <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
         <node0>127.0.0.1</node0>
         <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
+        <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <skipX11Tests>false</skipX11Tests>
     </properties>
 
@@ -198,7 +199,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.11</version>
+                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <skip>${skipX11Tests}</skip>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -261,6 +262,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
                         <configuration>
                             <skip>false</skip>
                         </configuration>

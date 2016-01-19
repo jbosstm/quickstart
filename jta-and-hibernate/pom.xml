@@ -38,7 +38,7 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.maven-surefire-plugin>2.16</version.maven-surefire-plugin>
+        <version.maven-surefire-plugin>2.19.1</version.maven-surefire-plugin>
         <version.org.jboss.narayana>${project.version}</version.org.jboss.narayana>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
         <version.org.jboss.naming>5.0.3.GA</version.org.jboss.naming>
@@ -49,6 +49,7 @@
         <version.org.jboss.weld.se>2.1.1.Final</version.org.jboss.weld.se>
         <version.javax>7.0</version.javax>
         <version.org.jboss.jboss-transaction-spi>7.1.1.Final</version.org.jboss.jboss-transaction-spi>
+        <version.surefire.plugin>2.19.1</version.surefire.plugin>
     </properties>
 
     <repositories>

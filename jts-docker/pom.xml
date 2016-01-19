@@ -14,7 +14,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.surefire>2.18.1</version.surefire>
+        <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <version.org.jboss.logging>3.2.1.Final</version.org.jboss.logging>
         <version.jacorb>2.3.1jboss.patch01-brew</version.jacorb>
         <version.org.slf4j>1.7.2.jbossorg-1</version.org.slf4j>
@@ -78,7 +78,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.surefire}</version>
+                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -97,6 +97,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
                         <configuration>
                             <skip>false</skip>
                         </configuration>
