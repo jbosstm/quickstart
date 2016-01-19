@@ -23,6 +23,7 @@
         <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>
         <jvm.args.debug></jvm.args.debug>
         <jvm.args.other>-server</jvm.args.other>
+        <version.surefire.plugin>2.19.1</version.surefire.plugin>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -152,7 +153,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.9</version>
+                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -190,6 +191,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
                         <configuration>
                             <skip>false</skip>
                             <systemPropertyVariables combine.children="append">
@@ -222,6 +224,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
                         <configuration>
                             <skip>false</skip>
                             <argLine>${ipv6.server.jvm.args}</argLine>

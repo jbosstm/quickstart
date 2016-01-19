@@ -39,7 +39,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.surefire.plugin>2.11</version.surefire.plugin>
+        <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <version.jboss.bom>1.0.7.Final</version.jboss.bom>
         <version.org.codehaus.jettison>1.3.2</version.org.codehaus.jettison>
         <version.org.jboss.resteasy>3.0.5.Final</version.org.jboss.resteasy>
@@ -93,6 +93,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
                         <configuration>
                             <skip>false</skip>
                             <systemPropertyVariables combine.children="append">
@@ -125,6 +126,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
                         <configuration>
                             <skip>false</skip>
                             <argLine>${ipv6.server.jvm.args}</argLine>
