@@ -19,7 +19,6 @@
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <packaging>jar</packaging>
-    <!--
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -33,7 +32,6 @@
             </snapshots>
         </repository>
     </repositories>
--->
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>

@@ -10,7 +10,7 @@
     <name>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with a non-transactional resource</name>
     <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with a non-transactional resource</description>
 
-     <repositories>
+    <repositories>
       <repository>
         <id>jboss-public-repository-group</id>
         <name>JBoss Public Maven Repository Group</name>
