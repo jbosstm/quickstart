@@ -5,7 +5,7 @@
 
     <groupId>org.jboss.narayana.quickstart.txbridge.wsat-jta-multi_service</groupId>
     <artifactId>wsat-jta-multi_service-all</artifactId>
-    <version>5.3.0.Final</version>
+    <version>5.3.1.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers</name>
     <description>Boss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers
@@ -17,7 +17,7 @@
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <narayana.version>5.3.0.Final</narayana.version>
+        <narayana.version>5.3.1.Final-SNAPSHOT</narayana.version>
         <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
         <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>
