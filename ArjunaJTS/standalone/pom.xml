@@ -21,7 +21,7 @@
 
     <groupId>org.jboss.narayana.quickstart.jts</groupId>
     <artifactId>standalone</artifactId>
-    <version>5.3.0.Final-SNAPSHOT</version>
+    <version>5.3.0.Final</version>
     <packaging>jar</packaging>
     <name>Standalone JTS Transaction Example</name>
     <description>Standalone JTS Transaction Example</description>
@@ -89,7 +89,7 @@
     <dependency>
       <groupId>org.jboss.narayana.jta</groupId>
       <artifactId>narayana-jta</artifactId>
-      <version>5.3.0.Final-SNAPSHOT</version>
+      <version>5.3.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.logging</groupId>
@@ -106,7 +106,7 @@
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>narayana-jts-jacorb</artifactId>
-      <version>5.3.0.Final-SNAPSHOT</version>
+      <version>5.3.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.jacorb</groupId>
@@ -118,7 +118,7 @@
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>narayana-jts-idlj</artifactId>
-      <version>5.3.0.Final-SNAPSHOT</version>
+      <version>5.3.0.Final</version>
     </dependency>
   </dependencies>
 
