@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
         <artifactId>xts-demo-all</artifactId>
-        <version>5.3.0.Final-SNAPSHOT</version>
+        <version>5.3.0.Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -30,13 +30,13 @@
         <dependency>
             <groupId>org.jboss.narayana.arjunacore</groupId>
             <artifactId>arjunacore</artifactId>
-            <version>5.3.0.Final-SNAPSHOT</version>
+            <version>5.3.0.Final</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.xts</groupId>
             <artifactId>jbossxts</artifactId>
-            <version>5.3.0.Final-SNAPSHOT</version>
+            <version>5.3.0.Final</version>
             <classifier>api</classifier>
             <scope>provided</scope>
         </dependency>
