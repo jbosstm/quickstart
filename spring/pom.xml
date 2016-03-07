@@ -29,12 +29,13 @@
     <version>5.3.3.Final-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Narayana Quickstarts: JBTM and Spring</name>
+    <name>Narayana and Spring Quickstarts</name>
     <description>Examples show how to integrate with Spring</description>
 
     <url>http://jboss.org/jbosstm</url>
 
     <modules>
-      <module>jta</module>
+        <module>jta</module>
+        <module>narayana-spring-boot</module>
     </modules>
 </project>
