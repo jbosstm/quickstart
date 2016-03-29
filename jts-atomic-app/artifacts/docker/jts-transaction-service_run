@@ -1,0 +1,1 @@
+docker run -d --name jts-transaction-service -e PROXY_IP=$proxy_ip -p $jts_host_port:4711 --link jacorb-name-server:jacorb-name-server $jts_image
