@@ -1,0 +1,33 @@
+---
+specversion: 0.0.2
+id: jts-app
+metadata:
+  name: JTS Atomic App
+  appversion: 0.0.1
+  description: Atomic app for deploying JTS transaction service and JacORB name server
+params:
+  - name: provider
+    description: The provider used to deploy application
+    default: docker
+graph:
+  - name: jts-app
+    params:
+      - name: jacorb_image
+        description: Jacorb name server Docker image
+        default: jboss/jacorb-name-server
+      - name: jts_image
+        description: JTS transaction service Docker images
+        default: jboss/jts-transaction-service
+      - name: jacorb_host_port
+        description: Port to access Jacorb name server
+        default: 3528
+      - name: jts_host_port
+        description: Port to access JTS transaction service
+        default: 4711
+      - name: proxy_ip
+        description: Remotely accessible IP address for JTS transaction service
+        default: 192.168.33.10
+    artifacts:
+      docker:
+        - file://artifacts/docker/jacorb-name-server_run
+        - file://artifacts/docker/jts-transaction-service_run
