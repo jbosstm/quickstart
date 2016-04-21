@@ -13,6 +13,10 @@
     <artifactId>xts-demo-core</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+      <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
+    </properties>
+
     <repositories>
       <repository>
         <id>jboss-public-repository-group</id>
@@ -30,13 +34,13 @@
         <dependency>
             <groupId>org.jboss.narayana.arjunacore</groupId>
             <artifactId>arjunacore</artifactId>
-            <version>5.3.3.Final-SNAPSHOT</version>
+            <version>${version.narayana}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.xts</groupId>
             <artifactId>jbossxts</artifactId>
-            <version>5.3.3.Final-SNAPSHOT</version>
+            <version>${version.narayana}</version>
             <classifier>api</classifier>
             <scope>provided</scope>
         </dependency>

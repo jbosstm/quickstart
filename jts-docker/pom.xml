@@ -19,6 +19,7 @@
         <version.jacorb>2.3.1jboss.patch01-brew</version.jacorb>
         <version.org.slf4j>1.7.2.jbossorg-1</version.org.slf4j>
         <version.junit>4.12</version.junit>
+        <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <repositories>
@@ -40,7 +41,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-jacorb</artifactId>
-            <version>${project.version}</version>
+            <version>${version.narayana}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

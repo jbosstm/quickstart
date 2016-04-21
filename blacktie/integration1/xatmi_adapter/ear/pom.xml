@@ -103,7 +103,7 @@
         <dependency>
             <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
             <artifactId>blacktie-quickstarts-integration1-xatmi_adapter</artifactId>
-            <version>5.3.3.Final-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
