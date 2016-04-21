@@ -18,6 +18,9 @@
 	<artifactId>stm-jta</artifactId>
 	<version>5.2.18.Final-SNAPSHOT</version>
 	<packaging>jar</packaging>
+        <properties>
+                <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
+        </properties>
 	<repositories>
 		<repository>
 			<id>jboss-public-repository-group</id>
@@ -90,12 +93,12 @@
 		<dependency>
 			<groupId>org.jboss.narayana.jta</groupId>
 			<artifactId>narayana-jta</artifactId>
-			<version>5.2.18.Final-SNAPSHOT</version>
+                        <version>${version.narayana}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.narayana.stm</groupId>
 			<artifactId>stm</artifactId>
-			<version>5.2.18.Final-SNAPSHOT</version>
+                        <version>${version.narayana}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.logging</groupId>

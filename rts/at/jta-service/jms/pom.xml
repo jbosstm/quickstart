@@ -45,6 +45,7 @@
       <jvm.args.debug></jvm.args.debug>
       <jvm.args.other>-server</jvm.args.other>
       <version.surefire.plugin>2.19.1</version.surefire.plugin>
+      <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <repositories>
@@ -91,7 +92,7 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-util</artifactId>
-            <version>${project.version}</version>
+            <version>${version.narayana}</version>
             <scope>provided</scope>
         </dependency>
 

@@ -22,6 +22,7 @@
   </repositories>
   <properties>
     <version.surefire.plugin>2.19.1</version.surefire.plugin>
+    <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
   </properties>
   <build>
     <pluginManagement>
@@ -95,7 +96,7 @@
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>narayana-jts-jacorb</artifactId>
-      <version>5.2.18.Final-SNAPSHOT</version>
+      <version>${version.narayana}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

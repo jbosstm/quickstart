@@ -23,6 +23,9 @@
   <packaging>jar</packaging>
   <name>TXOJ example</name>
   <description>TXOJ example</description>
+  <properties>
+    <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
+  </properties>
   <build>
     <plugins>
       <!-- This plugin allows our example to be executed by maven -->
@@ -52,7 +55,7 @@
     <dependency>
       <groupId>org.jboss.narayana.arjunacore</groupId>
       <artifactId>arjunacore</artifactId>
-      <version>5.2.18.Final-SNAPSHOT</version>
+      <version>${version.narayana}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

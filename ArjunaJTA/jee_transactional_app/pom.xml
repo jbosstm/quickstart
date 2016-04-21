@@ -35,6 +35,7 @@
             to work with JBoss EAP 6. It requires you have access to the JBoss EAP 6 
             maven repository. -->
         <!-- <version.org.jboss.bom>1.0.0.Final-redhat-1</version.org.jboss.bom>> -->
+        <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
         <!-- other plugin versions -->
         <version.compiler.plugin>2.3.1</version.compiler.plugin>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
@@ -182,7 +183,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>5.2.18.Final-SNAPSHOT</version>
+            <version>${version.narayana}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Import the injection annotations -->

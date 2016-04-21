@@ -26,6 +26,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+    <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
   </properties>
 
     <repositories>
@@ -71,7 +72,7 @@
     <dependency>
       <groupId>org.jboss.narayana.rts</groupId>
       <artifactId>restat-util</artifactId>
-      <version>5.2.18.Final-SNAPSHOT</version>
+      <version>${version.narayana}</version>
     </dependency>
     <!-- JBoss logging -->
     <dependency>
