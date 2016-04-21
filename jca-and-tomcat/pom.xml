@@ -44,7 +44,7 @@
         <version.org.hibernate>5.0.1.Final</version.org.hibernate>
         <version.org.javassist>3.16.1-GA</version.org.javassist>
         <version.org.jboss.jboss-common-core>2.2.17.GA</version.org.jboss.jboss-common-core>
-        <version.org.jboss.narayana>${project.version}</version.org.jboss.narayana>
+        <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
         <version.org.jboss.logging.jboss-logging>3.1.2.GA</version.org.jboss.logging.jboss-logging>
         <version.org.jboss.logging.jboss-logging-spi>2.2.0.CR1</version.org.jboss.logging.jboss-logging-spi>
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
@@ -382,7 +382,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>${version.org.jboss.narayana}</version>
+            <version>${version.narayana}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.servlet</groupId>
@@ -393,7 +393,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-integration</artifactId>
-            <version>${version.org.jboss.narayana}</version>
+            <version>${version.narayana}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.servlet</groupId>

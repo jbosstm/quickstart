@@ -10,6 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
+                <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
 	</properties>
   <repositories>
     <repository>
@@ -28,7 +29,7 @@
 		<dependency>
 			<groupId>org.jboss.narayana.jta</groupId>
 			<artifactId>jta</artifactId>
-			<version>5.2.18.Final-SNAPSHOT</version>
+			<version>${version.narayana}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
