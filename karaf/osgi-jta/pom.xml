@@ -37,7 +37,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
-        <version.org.jboss.narayana>5.2.9.Final</version.org.jboss.narayana>
+        <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
         <version.org.jboss.jboss-transaction-spi>7.3.0.Final</version.org.jboss.jboss-transaction-spi>
         <osgi.version>6.0.0</osgi.version>
         <karaf.version>4.1.0-SNAPSHOT</karaf.version>
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.jboss.narayana.osgi</groupId>
             <artifactId>narayana-osgi-jta</artifactId>
-            <version>${version.org.jboss.narayana}</version>
+            <version>${version.narayana}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -14,6 +14,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+    <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
   </properties>
 
   <repositories>
@@ -63,7 +64,7 @@
     <dependency>
       <groupId>org.jboss.narayana.rts</groupId>
       <artifactId>restat-api</artifactId>
-      <version>5.3.3.Final-SNAPSHOT</version>
+      <version>${version.narayana}</version>
     </dependency>
     <!-- Jersey container for running participant services -->
     <dependency>

@@ -37,6 +37,10 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
+    </properties>
+
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -69,7 +73,7 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-util</artifactId>
-            <version>${project.version}</version>
+            <version>${version.narayana}</version>
             <scope>provided</scope>
         </dependency>
 

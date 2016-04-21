@@ -20,6 +20,9 @@
 	<packaging>jar</packaging>
 	<description>A BlackTie component</description>
 	<name>Blacktie XATMI MDB Quickstart</name>
+        <properties>
+            <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
+        </properties>
 	<repositories>
 		<repository>
 			<id>jboss-public-repository-group</id>
@@ -69,7 +72,7 @@
 		<dependency>
 			<groupId>org.jboss.narayana.blacktie</groupId>
 			<artifactId>blacktie-jatmibroker-xatmi</artifactId>
-			<version>5.3.3.Final-SNAPSHOT</version>
+                        <version>${version.narayana}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.spec.javax.jms</groupId>
