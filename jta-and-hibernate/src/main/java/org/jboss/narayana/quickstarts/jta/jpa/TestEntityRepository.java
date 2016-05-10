@@ -16,34 +16,38 @@
  */
 package org.jboss.narayana.quickstarts.jta.jpa;
 
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
-
+@Transactional
 public class TestEntityRepository {
 
     @Inject
     EntityManager entityManager;
 
-    @Transactional
     public List<TestEntity> findAll() {
         assert entityManager != null;
-        return (List<TestEntity>) this.entityManager.createQuery("select te from TestEntity te").getResultList();
+        List<TestEntity> entities = entityManager.createQuery("select te from TestEntity te", TestEntity.class).getResultList();
+        System.out.println("Found entities: " + entities);
+        return entities;
     }
 
-    @Transactional
     public Long save(TestEntity testEntity) {
         assert entityManager != null;
         if (testEntity.isTransient()) {
             entityManager.persist(testEntity);
-            entityManager.flush();
         } else {
             entityManager.merge(testEntity);
-            entityManager.flush();
         }
+        System.out.println("Saved entity: " + testEntity);
         return testEntity.getId();
     }
+
+    public void clear() {
+        assert entityManager != null;
+        findAll().forEach(entityManager::remove);
+    }
+
 }

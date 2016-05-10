@@ -17,14 +17,12 @@
 package org.jboss.narayana.quickstarts.jta;
 
 import com.arjuna.ats.jta.utils.JNDIManager;
-import com.arjuna.ats.jta.common.jtaPropertyManager;
 import junit.framework.Assert;
 import org.h2.jdbcx.JdbcDataSource;
 import org.jboss.narayana.quickstarts.jta.jpa.TestEntity;
 import org.jboss.narayana.quickstarts.jta.jpa.TestEntityRepository;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
-import org.jnp.interfaces.NamingParser;
 import org.jnp.server.NamingBeanImpl;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -62,25 +60,16 @@ public class TestCase {
         // Bind JTA implementation with default names
         JNDIManager.bindJTAImplementation();
 
-        // Bind JTA implementation with JBoss names. Needed for JTA 1.2 implementation.
-        // See https://issues.jboss.org/browse/JBTM-2054
-        NAMING_BEAN.getNamingInstance().createSubcontext(new NamingParser().parse("jboss"));
-        jtaPropertyManager.getJTAEnvironmentBean().setTransactionManagerJNDIContext("java:/jboss/TransactionManager");
-        jtaPropertyManager.getJTAEnvironmentBean()
-                .setTransactionSynchronizationRegistryJNDIContext("java:/jboss/TransactionSynchronizationRegistry");
-        JNDIManager.bindJTAImplementation();
-
+        // Setup datasource
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:mem:test;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
         dataSource.setUser("sa");
         dataSource.setPassword("");
-        InitialContext context = new InitialContext();
-        context.bind("java:/jboss/testDS1", dataSource);
+        new InitialContext().bind("java:/quickstartDataSource", dataSource);
     }
 
     @AfterClass
     public static void afterClass() {
-        // Stop JNDI server
         NAMING_BEAN.stop();
     }
 
@@ -92,7 +81,7 @@ public class TestCase {
         weld = new Weld();
         final WeldContainer weldContainer = weld.initialize();
 
-        // Bootstrap our beans
+        // Bootstrap the beans
         requiredCounterManager = weldContainer.instance().select(RequiredCounterManager.class).get();
         mandatoryCounterManager = weldContainer.instance().select(MandatoryCounterManager.class).get();
         testEntityRepository = weldContainer.instance().select(TestEntityRepository.class).get();
@@ -105,26 +94,25 @@ public class TestCase {
         } catch (final Throwable t) {
         }
 
-        // Shutdown Weld container
         weld.shutdown();
     }
 
     @Test
     public void testRequiredTransactionWithExistingTransaction() throws Exception {
         transactionManager.begin();
-        Assert.assertEquals(true, requiredCounterManager.isTransactionAvailable());
+        Assert.assertTrue(requiredCounterManager.isTransactionAvailable());
         transactionManager.rollback();
     }
 
     @Test
     public void testRequiredTransactionWithoutExistingTransaction() {
-        Assert.assertEquals(true, requiredCounterManager.isTransactionAvailable());
+        Assert.assertTrue(requiredCounterManager.isTransactionAvailable());
     }
 
     @Test
     public void testMandatoryTransactionWithExistingTransaction() throws Exception {
         transactionManager.begin();
-        Assert.assertEquals(true, mandatoryCounterManager.isTransactionAvailable());
+        Assert.assertTrue(mandatoryCounterManager.isTransactionAvailable());
         transactionManager.rollback();
     }
 
@@ -157,11 +145,23 @@ public class TestCase {
     }
 
     @Test
-    public void testJpa() {
-        System.out.println(testEntityRepository.save(new TestEntity("test1")));
-        System.out.println(testEntityRepository.save(new TestEntity("test2")));
-        System.out.println(testEntityRepository.save(new TestEntity("test3")));
-        org.junit.Assert.assertEquals(3, testEntityRepository.findAll().size());
+    public void testJpaCommit() throws Exception {
+        testEntityRepository.clear();
+        transactionManager.begin();
+        testEntityRepository.save(new TestEntity("test1"));
+        testEntityRepository.save(new TestEntity("test2"));
+        transactionManager.commit();
+        Assert.assertEquals(2, testEntityRepository.findAll().size());
+    }
+
+    @Test
+    public void testJpaRollback() throws Exception {
+        testEntityRepository.clear();
+        transactionManager.begin();
+        testEntityRepository.save(new TestEntity("test1"));
+        testEntityRepository.save(new TestEntity("test2"));
+        transactionManager.rollback();
+        Assert.assertEquals(0, testEntityRepository.findAll().size());
     }
 
 }

@@ -23,19 +23,13 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
-    <persistence-unit name="cdi-presistence-unit" transaction-type="JTA">
-        <jta-data-source>jboss/testDS1</jta-data-source>
+    <persistence-unit name="quickstart-persistence-unit" transaction-type="JTA">
+        <jta-data-source>java:/quickstartDataSource</jta-data-source>
         <class>org.jboss.narayana.quickstarts.jta.jpa.TestEntity</class>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.current_session_context_class" value="jta"/>
-            <property name="hibernate.transaction.flush_before_completion" value="true"/>
-            <property name="hibernate.connection.release_mode" value="auto"/>
-            <!--<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform" />-->
-            <!--<property name="hibernate.transaction.factory_class" value="org.hibernate.engine.transaction.internal.jta.CMTTransactionFactory" />-->
+            <property name="hibernate.transaction.jta.platform" value="JBossTS"/>
         </properties>
     </persistence-unit>
 
