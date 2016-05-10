@@ -126,7 +126,7 @@
   <modules>
     <module>jca-and-tomcat</module>
     <module>jca-and-hibernate</module>
-    <module>jta-and-hibernate</module>
+    <module>jta-1_2-standalone</module>
     <module>jta-1_2-in-wildfly</module>
     <module>spring</module>
     <module>ArjunaCore</module>
@@ -140,5 +140,6 @@
     <module>STM</module>
     <module>jts-docker</module>
     <module>karaf/osgi-jta</module>
+    <module>jta-and-hibernate-standalone</module>
   </modules>
 </project>
