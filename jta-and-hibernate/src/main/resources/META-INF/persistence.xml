@@ -24,12 +24,14 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
     <persistence-unit name="quickstart-persistence-unit" transaction-type="JTA">
-        <jta-data-source>java:/quickstartDataSource</jta-data-source>
+        <!--<jta-data-source>java:/quickstartDataSource</jta-data-source>-->
         <class>org.jboss.narayana.quickstarts.jta.jpa.TestEntity</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.transaction.jta.platform" value="JBossTS"/>
+
+            <property name="hibernate.connection.provider_class" value="org.jboss.narayana.quickstarts.jta.jpa.TransactionalConnectionProvider" />
         </properties>
     </persistence-unit>
 

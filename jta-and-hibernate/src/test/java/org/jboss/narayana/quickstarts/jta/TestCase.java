@@ -17,7 +17,6 @@
 package org.jboss.narayana.quickstarts.jta;
 
 import com.arjuna.ats.jta.utils.JNDIManager;
-import junit.framework.Assert;
 import org.h2.jdbcx.JdbcDataSource;
 import org.jboss.narayana.quickstarts.jta.jpa.TestEntity;
 import org.jboss.narayana.quickstarts.jta.jpa.TestEntityRepository;
@@ -26,6 +25,7 @@ import org.jboss.weld.environment.se.WeldContainer;
 import org.jnp.server.NamingBeanImpl;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

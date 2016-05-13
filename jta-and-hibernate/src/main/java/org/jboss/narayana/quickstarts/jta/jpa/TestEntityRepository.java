@@ -21,7 +21,6 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 public class TestEntityRepository {
 
     @Inject
@@ -34,6 +33,7 @@ public class TestEntityRepository {
         return entities;
     }
 
+    @Transactional
     public Long save(TestEntity testEntity) {
         assert entityManager != null;
         if (testEntity.isTransient()) {

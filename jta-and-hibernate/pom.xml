@@ -41,7 +41,7 @@
         <version.maven-surefire-plugin>2.19.1</version.maven-surefire-plugin>
         <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
         <version.jnpserver>5.0.3.GA</version.jnpserver>
-        <version.junit>4.10</version.junit>
+        <version.junit>4.11</version.junit>
         <version.h2>1.4.191</version.h2>
         <version.hibernate>5.1.0.Final</version.hibernate>
         <version.weld>2.3.4.Final</version.weld>
