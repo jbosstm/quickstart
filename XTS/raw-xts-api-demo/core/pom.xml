@@ -7,29 +7,11 @@
         <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
         <artifactId>xts-demo-all</artifactId>
         <version>5.3.3.Final-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>xts-demo-core</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-      <version.narayana>5.3.3.Final-SNAPSHOT</version.narayana>
-    </properties>
-
-    <repositories>
-      <repository>
-        <id>jboss-public-repository-group</id>
-        <name>JBoss Public Maven Repository Group</name>
-        <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-        <releases>
-          <enabled>true</enabled>
-        </releases>
-        <snapshots>
-          <enabled>true</enabled>
-        </snapshots>
-      </repository>
-    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.arjunacore</groupId>
@@ -45,12 +27,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
-            <version>1.0.0.Final</version>
-            <type>pom</type>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${version.javaee}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>

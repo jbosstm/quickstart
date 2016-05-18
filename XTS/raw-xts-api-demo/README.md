@@ -1,7 +1,7 @@
 Author: Ivo Studensky <istudens@redhat.com>
 
 
-Note: This demo has been written for, and tested on, JBoss 8.0.0.Alpha1-SNAPSHOT It may work with other versions of JBoss 7. Please download and install this app server from the JBoss website.
+Note: This demo has been written for, and tested on, WildFly 10.0.0.Final and WildFly 10.1.0.Final-SNAPSHOT. It may work with other versions of WildFly. Please download and install this app server from the WildFly website and set the appropriate Narayana version in the pom.xml. You can check which Narayana version was used in each WildFly tag over here: https://github.com/wildfly/wildfly/blob/10.0.0.Final/pom.xml.
 
 
 Note: The java.awt.headless property is needed for the demo as it starts a Java Swing user interface for each or the participant services. This is done for demonstration purposes; it is unlikely that a typical JEE application will ever do this. 
@@ -22,14 +22,9 @@ Full source code for the services and the client is included, along with a Maven
 
 # Installation Content
 
-You should have the following content in an XTS install of Narayana:
+You will require a Web services platform on which to deploy and run the product. This release of the XML Transaction component of Narayana is designed to run within WildFly.
 
-* lib/xts/: jar files for the Narayana components and their 3rd party prerequisites.
-* bin/ws*war: pre built J2EE web applications for the product components.
-
-In addition, you will require a Web services platform on which to deploy and run the product. This release of the XML Transaction component of Narayana is designed to run within JBoss.
-
-To compile, deploy and run the sample application we also recommend using Java SDK 1.6 and Apache Maven 3.0.3 or later. If you do not already have these, you can download them from java website and the Maven website.
+To compile, deploy and run the sample application we also recommend using Java SDK 1.7 and Apache Maven 3.3.3 or later. If you do not already have these, you can download them from java website and the Maven website.
 
 
 # Deploying the sample application
@@ -48,18 +43,18 @@ To proceed, you will need to install Maven to take advantage of the supplied bui
 2. Copy XTS subsystem's configuration file:
 
         cp docs/examples/configs/standalone-xts.xml standalone/configuration/
+
+3. Go to the quickstart's home directory and build it:
         
-3. Start Wildfly with enabled XTS subsystem:
-
-        ./bin/standalone.sh -c standalone-xts.xml -Djava.awt.headless=false
-
-4. Go to the quickstart's home directory and build it:
-
         mvn clean install
         
-5. Deploy the quickstart:
+4. Start Wildfly from WildFly directory with enabled XTS subsystem:
 
-        mvn -f ear/pom.xml jboss-as:deploy
+        ./bin/standalone.sh -c standalone-xts.xml -Djava.awt.headless=false
+        
+5. Deploy the quickstart from the quickstart's home directory:
+
+        mvn -f ear/pom.xml wildfly:deploy
         
 6. Open a browser and enter the xts-demo url (e.g. http://localhost:8080/xts-demo) 
 

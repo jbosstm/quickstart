@@ -7,174 +7,63 @@
         <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
         <artifactId>xts-demo-all</artifactId>
         <version>5.3.3.Final-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>xts-demo-test</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <version.org.jboss.arquillian>1.0.3.Final</version.org.jboss.arquillian>
-        <version.org.jboss.arquillian.drone>1.1.0.Final</version.org.jboss.arquillian.drone>
-        <version.org.jboss.arquillian.graphene>2.0.0.Alpha2</version.org.jboss.arquillian.graphene>
-        <version.org.jboss.shrinkwrap.resolver>2.0.0-alpha-4</version.org.jboss.shrinkwrap.resolver>
-        <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
-        <version.selenium>2.25.0</version.selenium>
-        <version.junit>4.10</version.junit>
-
         <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
         <jvm.args.ip.server>${jvm.args.ip}</jvm.args.ip.server>
         <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
         <node0>127.0.0.1</node0>
         <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
-        <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <skipX11Tests>false</skipX11Tests>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Arquillian Core dependencies --> 
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>${version.org.jboss.arquillian}</version>
+                <version>${version.arquillian}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- Arquillian Drone dependencies and Selenium dependencies --> 
-            <dependency>
-                <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-drone-bom</artifactId>
-                <version>${version.org.jboss.arquillian.drone}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- ShrinkWrap Resolver -->
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                <artifactId>shrinkwrap-resolver-bom</artifactId>
-                <version>${version.org.jboss.shrinkwrap.resolver}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- Graphene -->
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver</artifactId>
-                <version>${version.org.jboss.arquillian.graphene}</version>
-                <type>pom</type>
-            </dependency>
-            <!-- Running with managed container -->
-            <dependency>
-                <groupId>org.wildfly</groupId>
-                <artifactId>wildfly-arquillian-container-managed</artifactId>
-                <version>${version.jbossas}</version>
-            </dependency>
-            
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <!-- Arquillian Graphene -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
             <artifactId>graphene-webdriver</artifactId>
+            <version>${version.arquillian.graphene}</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
-        
-        <dependency>
-		  <groupId>org.jboss.arquillian.graphene</groupId>
-		  <artifactId>graphene-selenium-impl</artifactId>
-		  <version>${version.org.jboss.arquillian.graphene}</version>
-		  <scope>test</scope>
-		</dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
             <version>${version.junit}</version>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
-        </dependency>   
-        
-        <!-- Selenium dependecies -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>${version.selenium}</version>
-            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${version.selenium}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-support</artifactId>
-            <version>${version.selenium}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Selenium driver -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-htmlunit-driver</artifactId>
-            <version>${version.selenium}</version>
-            <scope>test</scope>
-        </dependency>
-               
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Repository Group</name>
-            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Repository Group</name>
-            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>7.1.0.Final</version>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.plugin}</version>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${version.compiler.plugin}</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -182,7 +71,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
+                <version>${version.clear.plugin}</version>
                 <configuration>
                     <filesets>
                         <fileset>
@@ -204,7 +93,6 @@
                     <skip>${skipX11Tests}</skip>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <enableAssertions>true</enableAssertions>
-                    <!--<workingDirectory>${basedir}/target/workdir</workingDirectory> &lt;!&ndash; Work in submodule's own dir. &ndash;&gt;-->
 
                     <!-- Forked process timeout -->
                     <forkedProcessTimeoutInSeconds>${surefire.forked.process.timeout}</forkedProcessTimeoutInSeconds>
@@ -215,10 +103,13 @@
                     <systemPropertyVariables>
                         <node0>${node0}</node0>
                         <!--
-                            Used in arquillian.xml - arguments for all JBoss AS instances.
+                            Used in arquillian.xml - arguments for all WildFly instances.
                             System properties are duplicated here until ARQ-647 is implemented.
                         -->
-                        <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip.server} -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0} -Djava.awt.headless=false</server.jvm.args>
+                        <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip.server}
+                            -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}
+                            -Djava.awt.headless=false
+                        </server.jvm.args>
                         <!-- For arquillian -->
                         <jbossHome>${env.JBOSS_HOME}</jbossHome>
                     </systemPropertyVariables>
@@ -229,7 +120,7 @@
 
     <profiles>
         <profile>
-            <id>arq-jbossas-managed-7</id>
+            <id>arq-wildfly-managed</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -237,47 +128,23 @@
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.org.wildfly.arquillian}</version>
+                    <version>${version.arquillian.wildfly}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
         </profile>
-
         <profile>
-
-            <!-- An optional Arquillian testing profile that executes tests
-      in a remote JBoss AS instance -->
-            <!-- Run with: mvn clean test -Parq-jbossas-remote -->
-            <id>arq-jbossas-remote</id>
+            <!-- An optional Arquillian testing profile that executes tests in a remote JBoss AS instance -->
+            <!-- Run with: mvn clean test -Parq-wildfly-remote -->
+            <id>arq-wildfly-remote</id>
             <dependencies>
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${version.org.wildfly.arquillian}</version>
+                    <version>${version.arquillian.wildfly}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${version.surefire.plugin}</version>
-                        <configuration>
-                            <skip>false</skip>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>ipv6</id>
-            <activation><property><name>ipv6</name></property></activation>
-            <properties>
-                <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
-                <node0>::1</node0>
-            </properties>
         </profile>
     </profiles>
 </project>
