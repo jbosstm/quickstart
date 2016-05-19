@@ -150,6 +150,9 @@ public class TestCase {
         transactionManager.begin();
         testEntityRepository.save(new TestEntity("test1"));
         testEntityRepository.save(new TestEntity("test2"));
+        Transaction suspendedTransaction = transactionManager.suspend();
+        Assert.assertEquals(0, testEntityRepository.findAll().size());
+        transactionManager.resume(suspendedTransaction);
         transactionManager.commit();
         Assert.assertEquals(2, testEntityRepository.findAll().size());
     }

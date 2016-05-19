@@ -1,5 +1,6 @@
 package org.jboss.narayana.quickstarts.jta.jpa;
 
+import com.arjuna.ats.internal.jdbc.ConnectionManager;
 import com.arjuna.ats.jdbc.TransactionalDriver;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.service.UnknownUnwrapTypeException;
@@ -32,14 +33,19 @@ public class TransactionalConnectionProvider implements ConnectionProvider {
         properties.setProperty(TransactionalDriver.userName, USERNAME);
         properties.setProperty(TransactionalDriver.password, PASSWORD);
 
-        return transactionalDriver.connect("jdbc:arjuna:" + DATABASE_JNDI, properties);
+        Connection connection = transactionalDriver.connect("jdbc:arjuna:" + DATABASE_JNDI, properties);
+        System.out.println("TransactionalConnectionProvider.getConnection: " + connection);
 //        return ConnectionManager.create(DATABASE_JNDI, properties);
+
+        return connection;
     }
 
     @Override
     public void closeConnection(Connection connection) throws SQLException {
-        System.out.println("TransactionalConnectionProvider.closeConnection");
-        connection.close();
+        System.out.println("TransactionalConnectionProvider.closeConnection: " + connection);
+        if (!connection.isClosed()) {
+            connection.close();
+        }
     }
 
     @Override
