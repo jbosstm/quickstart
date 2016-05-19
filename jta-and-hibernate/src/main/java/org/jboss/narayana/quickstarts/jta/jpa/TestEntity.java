@@ -25,10 +25,10 @@ import javax.persistence.Id;
 public class TestEntity {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private String name;
+    private String name;
 
     public TestEntity() {
     }
@@ -37,24 +37,28 @@ public class TestEntity {
         this.name = name;
     }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public boolean isTransient()
-    {
+    public boolean isTransient() {
         return this.id == null;
     }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+	@Override
+    public String toString() {
+        return "[" + TestEntity.class.getSimpleName() + ": id=" + id + ", name=" + name + "]";
+    }
 }

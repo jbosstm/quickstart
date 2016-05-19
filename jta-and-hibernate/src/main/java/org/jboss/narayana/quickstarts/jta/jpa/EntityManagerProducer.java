@@ -25,7 +25,7 @@ public class EntityManagerProducer {
 
     @Produces
     public EntityManager createEntityManager(EntityManagerFactory entityManagerFactory) {
-        return (EntityManager) JtaEntityManagerProxy.newInstance(entityManagerFactory.createEntityManager());
+        return entityManagerFactory.createEntityManager();
     }
 
     public void close(@Disposes EntityManager entityManager) {

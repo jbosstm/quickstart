@@ -25,7 +25,7 @@ public class EntityManagerFactoryProducer {
 
     @Produces
     public EntityManagerFactory createEntityManagerFactory() {
-        return Persistence.createEntityManagerFactory("cdi-presistence-unit");
+        return Persistence.createEntityManagerFactory("quickstart-persistence-unit");
     }
 
     public void close(@Disposes EntityManagerFactory entityManagerFactory) {
