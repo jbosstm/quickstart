@@ -134,7 +134,7 @@
     <module>compensating-transactions</module>
     <module>rts</module>
     <module>XTS</module>
-    <module>blacktie</module>
+    <!--<module>blacktie</module>-->
     <module>wildfly/setCheckedActionFactoryExample</module>
     <module>STM</module>
     <module>jts-docker</module>
