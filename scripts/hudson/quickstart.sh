@@ -72,22 +72,4 @@ cd ..
 rm -rf wildfly-$WILDFLY_MASTER_VERSION
 cp -rp narayana/jboss-as/build/target/wildfly-${WILDFLY_MASTER_VERSION}/ .
 export JBOSS_HOME=$PWD/wildfly-$WILDFLY_MASTER_VERSION
-cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
-cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
-
-git clone https://github.com/apache/karaf.git apache-karaf
-cd apache-karaf
-mvn -Pfastinstall
-cd ..
-
-echo Running quickstarts
-set +e
-BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ mvn clean install -DskipX11Tests=true
-
-if [ $? != 0 ]; then
-  comment_on_pull "Pull failed: $BUILD_URL";
-  exit -1
-else
-  comment_on_pull "Pull passed: $BUILD_URL"
-fi
-set -e
+echo $JBOSS_HOME
