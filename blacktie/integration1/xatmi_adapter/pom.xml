@@ -64,6 +64,9 @@
             <url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
         </license>
     </licenses>
+    <properties>
+        <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
+    </properties>
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -121,7 +124,7 @@
         <dependency>
             <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
             <artifactId>blacktie-quickstarts-integration1-ejb</artifactId>
-            <version>5.2.18.Final-SNAPSHOT</version>
+            <version>${project.version}</version>
             <classifier>client</classifier>
         </dependency>
         <dependency>
@@ -139,7 +142,7 @@
         <dependency>
             <groupId>org.jboss.narayana.blacktie</groupId>
             <artifactId>blacktie-jatmibroker-xatmi</artifactId>
-            <version>5.2.18.Final-SNAPSHOT</version>
+            <version>${version.narayana}</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

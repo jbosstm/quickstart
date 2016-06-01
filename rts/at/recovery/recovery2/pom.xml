@@ -10,6 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+        <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <build>
@@ -52,19 +53,19 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-integration</artifactId>
-            <version>5.2.18.Final-SNAPSHOT</version>
+            <version>${version.narayana}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-jacorb</artifactId>
-            <version>5.2.18.Final-SNAPSHOT</version>
+            <version>${version.narayana}</version>
         </dependency>
 
         <!-- RESTAT utils -->
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-util</artifactId>
-            <version>5.2.18.Final-SNAPSHOT</version>
+            <version>${version.narayana}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.logging</groupId>
