@@ -19,7 +19,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>service-quickstarts</artifactId>
-  <version>5.3.3.Final</version>
+  <version>5.3.4.Final-SNAPSHOT</version>
   <name>RESTAT Service Quickstarts</name>
   <description>Provides examples of how to create REST based transactional services</description>
   <packaging>pom</packaging>
