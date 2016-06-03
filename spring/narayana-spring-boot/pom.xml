@@ -33,7 +33,7 @@
     <description>Narayana Spring Boot example</description>
 
     <properties>
-        <version.org.springframework.boot>1.4.0.M2</version.org.springframework.boot>
+        <version.org.springframework.boot>1.4.0.M3</version.org.springframework.boot>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
