@@ -51,7 +51,6 @@ DEP=`find  ~/.m2 -name '*centos70x64*.md5'|grep -v blacktie|wc -l`
     cd -
     fi
 fi
-set -e
 
 # INITIALIZE ENV
 export M2_HOME=/usr/local/apache-maven-3.0.4
@@ -62,10 +61,22 @@ export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
 #rm -rf ~/.m2/repository/
 rm -rf narayana
 git clone https://github.com/jbosstm/narayana.git
+if [ $? != 0 ]; then
+  comment_on_pull "Checkout failed: $BUILD_URL";
+  exit -1
+fi
 cd narayana
-WORKSPACE=$PWD PROFILE=BLACKTIE ./scripts/hudson/narayana.sh -DskipTests -Pcommunity
+WORKSPACE=$PWD COMMENT_ON_PULL="" PROFILE=BLACKTIE ./scripts/hudson/narayana.sh -DskipTests -Pcommunity
+if [ $? != 0 ]; then
+  comment_on_pull "Narayana build failed: $BUILD_URL";
+  exit -1
+fi
 cd jboss-as
 WILDFLY_MASTER_VERSION=`awk "/wildfly-parent/ {getline;print;}" pom.xml | cut -d \< -f 2|cut -d \> -f 2`
+if [ $? != 0 ]; then
+  comment_on_pull "WildFly version check failed: $BUILD_URL";
+  exit -1
+fi
 cd ..
 cd ..
 
@@ -76,12 +87,19 @@ cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/c
 cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
 
 git clone https://github.com/apache/karaf.git apache-karaf
+if [ $? != 0 ]; then
+  comment_on_pull "Karaf clone failed: $BUILD_URL";
+  exit -1
+fi
 cd apache-karaf
 mvn -Pfastinstall
+if [ $? != 0 ]; then
+  comment_on_pull "Karaf build failed: $BUILD_URL";
+  exit -1
+fi
 cd ..
 
 echo Running quickstarts
-set +e
 BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ mvn clean install -DskipX11Tests=true
 
 if [ $? != 0 ]; then
@@ -90,4 +108,3 @@ if [ $? != 0 ]; then
 else
   comment_on_pull "Pull passed: $BUILD_URL"
 fi
-set -e
