@@ -15,7 +15,6 @@ function comment_on_pull
 }
 
 
-export COMMENT_ON_PULL=1;
 export GIT_ACCOUNT=jbosstm
 export GIT_REPO=quickstart
 export MFACTOR=2 # double wait timeout period for crash recovery QA tests
