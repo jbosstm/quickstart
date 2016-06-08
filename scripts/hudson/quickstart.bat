@@ -28,10 +28,11 @@ git clone https://github.com/jbosstm/narayana.git
 cd narayana
 set OLDWORKSPACE=%WORKSPACE%
 set WORKSPACE=%WORKSPACE%\narayana\
+set CACHED_COMMENT=%COMMENT_ON_PULL%
 set COMMENT_ON_PULL=0
 call scripts\hudson\narayana.bat -DskipTests
-if %ERRORLEVEL% NEQ 0 exit -1
-set COMMENT_ON_PULL=1
+if %ERRORLEVEL% NEQ 0 (set COMMENT_ON_PULL=%CACHED_COMMENT% & call:comment_on_pull "Narayana build failed %BUILD_URL%" & exit -1)
+set COMMENT_ON_PULL=%CACHED_COMMENT%
 set WORKSPACE=%OLDWORKSPACE%
 rem git checkout 4.17
 rem call build.bat clean install -DskipTests
@@ -55,9 +56,9 @@ copy %JBOSS_HOME%\docs\examples\configs\standalone-xts.xml %JBOSS_HOME%\standalo
 rem RTS config
 copy %JBOSS_HOME%\docs\examples\configs\standalone-rts.xml %JBOSS_HOME%\standalone\configuration\
 
-git clone https://github.com/apache/karaf apache-karaf
+git clone https://github.com/apache/karaf apache-karaf || (call:comment_on_pull "Karaf clone failed %BUILD_URL%" & exit -1)
 cd apache-karaf
-call mvn -Pfastinstall
+call mvn -Pfastinstall || (call:comment_on_pull "Karaf build failed %BUILD_URL%" & exit -1)
 cd ..
 
 echo Running quickstarts
