@@ -146,6 +146,11 @@ public class DummyXAResource implements XAResource {
         } catch (IOException e) {
             throw new XAException(XAException.XAER_RMERR);
         }
+
+        if (fault.equals(faultType.HEURISTIC)) {
+            throw new XAException(XAException.XA_HEURCOM);
+        }
+
         return XA_OK;
     }
 
@@ -183,5 +188,5 @@ public class DummyXAResource implements XAResource {
         return (true);
     }
 
-    public enum faultType {HALT, NONE}
+    public enum faultType {HALT, HEURISTIC, NONE}
 }
