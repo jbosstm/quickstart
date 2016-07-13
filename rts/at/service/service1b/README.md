@@ -11,9 +11,12 @@ You do however need to declare a dependency on the RESTAT subsystem in the war m
 
 Deploy the service into a running wildfly applications server:
 
-    mvn clean package jboss-as:deploy
+    mvn clean package wildfly:deploy
 
 Now run a client which will start a RESTAT transaction and make calls on the deployed service:
 
-    mvn -P client compile exec:exec
+    mvn -P client compile exec:java
 
+And finally undeploy the service:
+
+    mvn package wildfly:undeploy

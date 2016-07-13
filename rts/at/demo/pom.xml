@@ -15,6 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
     <version.narayana>5.3.4.Final-SNAPSHOT</version.narayana>
+    <version.wildfly-maven-plugin>1.1.0.Alpha10</version.wildfly-maven-plugin>
   </properties>
 
   <repositories>
@@ -46,11 +47,11 @@
   <build>
     <finalName>ROOT</finalName>
     <plugins>
-      <!-- JBoss AS plugin to deploy war as a convenience -->
+      <!-- wildfly AS plugin to deploy artifacts as a convenience -->
       <plugin>
-        <groupId>org.jboss.as.plugins</groupId>
-        <artifactId>jboss-as-maven-plugin</artifactId>
-        <version>7.0.0.CR1</version>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>${version.wildfly-maven-plugin}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

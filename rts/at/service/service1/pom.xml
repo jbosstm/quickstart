@@ -48,6 +48,11 @@
             <artifactId>restat-util</artifactId>
             <version>${version.narayana}</version>
         </dependency>
+        <dependency>
+          <groupId>org.jboss.resteasy</groupId>
+          <artifactId>resteasy-jaxrs</artifactId>
+          <version>3.0.16.Final</version>
+        </dependency>
         <!-- Jersey container for running participant services -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
