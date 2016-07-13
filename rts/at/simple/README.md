@@ -7,7 +7,7 @@ USAGE
 -----
 Prior to running the example make sure that the [RESTAT coordinator is deployed](../README.md#usage).
 
-    mvn clean compile exec:exec
+    mvn clean compile exec:java
 
 or use the run script
 
