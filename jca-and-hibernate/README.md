@@ -28,3 +28,11 @@ Build and Deploy the Quickstart
         mvn clean test
         
 3. You will see the TRACE level logs of the quickstart execution in the output.
+
+
+What just happened
+------------------
+
+Quickstart executes two test cases: testAddCustomer and testAddDuplicateCustomer.
+As a result of the former test case, transaction is started and a new customer is added to the database. Later transaction is closed and database records are printed.
+Later test case does the same at first. However after adding one user it tries to add a second user with the same name. This leads to an error and the transaction being rolled back.
