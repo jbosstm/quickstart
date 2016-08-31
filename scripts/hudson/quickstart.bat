@@ -37,7 +37,12 @@ set WORKSPACE=%OLDWORKSPACE%
 rem git checkout 4.17
 rem call build.bat clean install -DskipTests
 
-for /f "usebackq delims=<,> tokens=3" %%i in (`findstr "version.org.wildfly.wildfly-parent" blacktie\pom.xml`) do @set WILDFLY_MASTER_VERSION=%%i
+set WILDFLY_MASTER_VERSION=
+for /f "usebackq delims=<,> tokens=3" %%i in (`findstr "<version>1" jboss-as\pom.xml`) do (
+	if not defined WILDFLY_MASTER_VERSION (
+		@set WILDFLY_MASTER_VERSION=%%i
+	)
+)
 cd ..
 
 rmdir wildfly-%WILDFLY_MASTER_VERSION% /s /q
