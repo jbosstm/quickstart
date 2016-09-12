@@ -38,7 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
         <version.narayana>5.3.5.Final-SNAPSHOT</version.narayana>
-        <version.org.jboss.jboss-transaction-spi>7.3.0.Final</version.org.jboss.jboss-transaction-spi>
+        <version.org.jboss.jboss-transaction-spi>7.3.4.Final</version.org.jboss.jboss-transaction-spi>
         <osgi.version>6.0.0</osgi.version>
         <karaf.version>4.1.0-SNAPSHOT</karaf.version>
         <felix.plugin.version>3.0.1</felix.plugin.version>
