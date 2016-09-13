@@ -12,6 +12,7 @@
 		of the GNU Lesser General Public License, v.2.1 along with this distribution; 
 		if not, write to the Free Software Foundation, Inc., 51 Franklin Street, 
 		Fifth Floor, Boston, MA 02110-1301, USA. (C) 2009, @author JBoss Inc. (jonathan.halliday@redhat.com) -->
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.jbossts.quickstart.jta</groupId>
   <artifactId>narayana-quickstarts-all</artifactId>
