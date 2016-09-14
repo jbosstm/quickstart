@@ -52,9 +52,6 @@ DEP=`find  ~/.m2 -name '*centos70x64*.md5'|grep -v blacktie|wc -l`
 fi
 
 # INITIALIZE ENV
-export M2_HOME=/usr/local/apache-maven-3.0.4
-export ANT_HOME=/home/hudson/apache-ant-1.8.2
-export PATH=$M2_HOME/bin:$ANT_HOME/bin:$PATH
 export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
 
 #rm -rf ~/.m2/repository/
