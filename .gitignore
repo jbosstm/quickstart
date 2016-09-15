@@ -6,6 +6,8 @@
 .idea
 
 target/
+/tools/maven
+/tools/maven.zip
 
 .DS_Store
 
