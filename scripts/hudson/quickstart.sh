@@ -61,13 +61,20 @@ cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/c
 cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
 
 git clone https://github.com/apache/karaf.git apache-karaf
-cd apache-karaf
-mvn -Pfastinstall
-cd ..
+if [ $? != 0 ]; then
+  comment_on_pull "Karaf clone failed: $BUILD_URL";
+  exit -1
+fi
+set +e
+./build.sh -f apache-karaf/pom.xml -Pfastinstall
+if [ $? != 0 ]; then
+  comment_on_pull "Karaf build failed: $BUILD_URL";
+  exit -1
+fi
 
 echo Running quickstarts
 set +e
-mvn clean install -DskipX11Tests=true
+./build.sh clean install -DskipX11Tests=true
 
 if [ $? != 0 ]; then
   comment_on_pull "Pull failed: $BUILD_URL";
