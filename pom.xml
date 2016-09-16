@@ -132,5 +132,6 @@
     <!-- Currently depends on the XTS demo -->
     <module>TXBridge</module>
     <module>fileio</module>
+    <module>blacktie</module>
   </modules>
 </project>
