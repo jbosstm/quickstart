@@ -64,7 +64,6 @@
     <target name="initializeDatabase">
         <delete dir="instantclient_11_2"/>
         <mkdir dir="./instantclient_11_2/network/admin"/>
-        <copy file="./tnsnames.ora" tofile="./instantclient_11_2/network/admin/tnsnames.ora"/>
         <unzip src="./instantclient-basiclite-win32-11.2.0.1.0.zip" dest="."/>
         <unzip src="./instantclient-sdk-win32-11.2.0.1.0.zip" dest="."/>
         <move tofile="./instantclient_11_2/OCI" file="./instantclient_11_2/sdk"/>
