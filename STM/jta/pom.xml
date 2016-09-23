@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-transaction-spi</artifactId>
-			<version>7.3.4.Final</version>
+			<version>7.5.0.Final</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

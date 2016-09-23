@@ -42,7 +42,7 @@
         <version.jnpserver>5.0.3.GA</version.jnpserver>
         <version.junit>4.11</version.junit>
         <version.weld>2.3.4.Final</version.weld>
-        <version.jboss-transaction-spi>7.3.4.Final</version.jboss-transaction-spi>
+        <version.jboss-transaction-spi>7.5.0.Final</version.jboss-transaction-spi>
         <version.log4j>1.2.17</version.log4j>
     </properties>
 
