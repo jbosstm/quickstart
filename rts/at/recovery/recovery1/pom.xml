@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>recovery1</artifactId>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
-    <version>5.2.18.Final-SNAPSHOT</version>
+    <version>5.2.18.Final</version>
     <name>RESTAT Quickstart: Participant Service with Recovery</name>
     <description>Example of how a web service can recover from failures during transaction completion</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-        <version.narayana>5.2.18.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.2.18.Final</version.narayana>
     </properties>
 
     <repositories>
