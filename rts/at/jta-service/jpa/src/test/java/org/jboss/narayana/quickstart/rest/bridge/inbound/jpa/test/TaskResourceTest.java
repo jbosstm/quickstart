@@ -20,12 +20,10 @@ import org.codehaus.jettison.json.JSONArray;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.jbossts.star.util.TxLinkNames;
+import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
 import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.jaxrs.TaskResource;
 import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.Task;
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
-import org.jboss.resteasy.spi.Link;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -35,6 +33,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.Response;
 import java.io.File;
 
 /**
@@ -95,8 +97,8 @@ public class TaskResourceTest {
             // Ignore
         }
 
-        new ClientRequest(TASKS_URL).delete();
-        new ClientRequest(USERS_URL).delete();
+        ClientBuilder.newClient().target(TASKS_URL).request().delete();
+        ClientBuilder.newClient().target(USERS_URL).request().delete();
     }
 
     @Test
@@ -175,14 +177,16 @@ public class TaskResourceTest {
         Assert.assertEquals(0, jsonArray.length());
     }
 
-    private ClientResponse<String> createTask(final String userName, final String title) throws Exception {
+    private Response createTask(final String userName, final String title) throws Exception {
         System.out.println("Creating task " + title + " for user " + userName);
 
-        final Link participantEnlistmentLink = new Link(TxLinkNames.PARTICIPANT, TxLinkNames.PARTICIPANT,
-                txSupport.getDurableParticipantEnlistmentURI(), null, null);
+        final Link participantEnlistmentLink = Link.fromUri(txSupport.getDurableParticipantEnlistmentURI())
+                .title(TxLinkNames.PARTICIPANT).rel(TxLinkNames.PARTICIPANT).type(TxMediaType.PLAIN_MEDIA_TYPE).build();
 
-        ClientResponse<String> response = new ClientRequest(TASKS_URL + "/" + userName + "/" + title)
-                .addLink(participantEnlistmentLink).post(String.class);
+        Client client = ClientBuilder.newClient();
+
+        Response response = client.target(TASKS_URL + "/" + userName + "/" + title).request()
+                .header("Link", participantEnlistmentLink).post(null);
         Assert.assertEquals(201, response.getStatus());
 
         return response;
@@ -190,8 +194,8 @@ public class TaskResourceTest {
 
     private JSONArray getUserTasks(final String userName) throws Exception {
         System.out.println("Getting all tasks of " + userName + "...");
-        final ClientResponse<String> response = new ClientRequest(TASKS_URL + "/" + userName).get(String.class);
-        final JSONArray jsonArray = new JSONArray(response.getEntity());
+        final String response = ClientBuilder.newClient().target(TASKS_URL + "/" + userName).request().get(String.class);
+        final JSONArray jsonArray = new JSONArray(response);
 
         System.out.println("Received tasks:");
         System.out.println(jsonArray);

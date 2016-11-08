@@ -21,10 +21,8 @@ import java.io.File;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.jbossts.star.util.TxLinkNames;
+import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
-import org.jboss.resteasy.spi.Link;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -33,6 +31,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -115,21 +117,22 @@ public class QueueResourceTest {
     }
 
     private void sendMessage(final String message) throws Exception {
-        final Link participantEnlistmentLink = new Link(TxLinkNames.PARTICIPANT, TxLinkNames.PARTICIPANT,
-                txSupport.getDurableParticipantEnlistmentURI(), null, null);
+        final Link participantEnlistmentLink = Link.fromUri(txSupport.getDurableParticipantEnlistmentURI())
+                .title(TxLinkNames.PARTICIPANT).rel(TxLinkNames.PARTICIPANT).type(TxMediaType.PLAIN_MEDIA_TYPE).build();
 
         System.out.println("Sending message...");
-        final ClientResponse<String> response = new ClientRequest(DEPLOYMENT_URL)
-                .queryParameter(MESSAGE_QUERY_PARAMETER, message).addLink(participantEnlistmentLink)
-                .post(String.class);
+        final Response response = ClientBuilder.newClient().target(DEPLOYMENT_URL)
+                .queryParam(MESSAGE_QUERY_PARAMETER, message).request()
+                .header("Link", participantEnlistmentLink).post(null);
         Assert.assertEquals(200, response.getStatus());
     }
 
     private String getMessage() throws Exception {
         System.out.println("Getting message...");
-        final ClientResponse<String> response = new ClientRequest(DEPLOYMENT_URL).get(String.class);
-        System.out.println("Received message: " + response.getEntity());
+        final String response = ClientBuilder.newClient().target(DEPLOYMENT_URL).request().get(String.class);
 
-        return response.getEntity();
+        System.out.println("Received message: " + response);
+
+        return response;
     }
 }
