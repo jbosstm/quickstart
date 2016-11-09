@@ -32,7 +32,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
-                <version.narayana>5.4.0.Final</version.narayana>
+                <version.narayana>5.4.1.Final-SNAPSHOT</version.narayana>
 	</properties>
   <repositories>
     <repository>
