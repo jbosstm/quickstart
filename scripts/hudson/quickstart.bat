@@ -77,12 +77,10 @@ rem RTS config
 copy %JBOSS_HOME%\docs\examples\configs\standalone-rts.xml %JBOSS_HOME%\standalone\configuration\
 
 git clone https://github.com/apache/karaf apache-karaf || (call:comment_on_pull "Karaf clone failed %BUILD_URL%" & exit -1)
-cd apache-karaf
-call mvn -Pfastinstall || (call:comment_on_pull "Karaf build failed %BUILD_URL%" & exit -1)
-cd ..
+call build.bat -f apache-karaf/pom.xml -Pfastinstall || (call:comment_on_pull "Karaf build failed %BUILD_URL%" & exit -1)
 
 echo Running quickstarts
-call mvn clean install || (call:comment_on_pull "Pull failed %BUILD_URL%" && exit -1)
+call build.bat clean install || (call:comment_on_pull "Pull failed %BUILD_URL%" && exit -1)
 
 
 call:comment_on_pull "Pull passed %BUILD_URL%"
