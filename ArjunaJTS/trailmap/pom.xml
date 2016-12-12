@@ -15,12 +15,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart.jts</groupId>
     <artifactId>narayana-jts-quickstart-trailmap</artifactId>
-    <version>5.2.21.Final-SNAPSHOT</version>
+    <version>5.2.21.Final</version>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <packaging>jar</packaging>
     <properties>
-        <version.narayana>5.2.21.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.2.21.Final</version.narayana>
     </properties>
     <repositories>
         <repository>
