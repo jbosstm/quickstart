@@ -67,7 +67,7 @@
                 </os>
             </activation>
             <properties>
-		<mvn.exe>mvn</mvn.exe>
+		<mvn.exe>mvn.bat</mvn.exe>
 	    </properties>
             <build>
                 <plugins>
