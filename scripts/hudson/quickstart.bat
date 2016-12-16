@@ -76,8 +76,9 @@ copy %JBOSS_HOME%\docs\examples\configs\standalone-xts.xml %JBOSS_HOME%\standalo
 rem RTS config
 copy %JBOSS_HOME%\docs\examples\configs\standalone-rts.xml %JBOSS_HOME%\standalone\configuration\
 
-git clone https://github.com/apache/karaf apache-karaf || (call:comment_on_pull "Karaf clone failed %BUILD_URL%" & exit -1)
-call build.bat -f apache-karaf/pom.xml -Pfastinstall || (call:comment_on_pull "Karaf build failed %BUILD_URL%" & exit -1)
+rem JBTM-2820 disable the karaf build
+rem git clone https://github.com/apache/karaf apache-karaf || (call:comment_on_pull "Karaf clone failed %BUILD_URL%" & exit -1)
+rem call build.bat -f apache-karaf/pom.xml -Pfastinstall || (call:comment_on_pull "Karaf build failed %BUILD_URL%" & exit -1)
 
 echo Running quickstarts
 call build.bat clean install || (call:comment_on_pull "Pull failed %BUILD_URL%" && exit -1)
