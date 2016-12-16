@@ -99,16 +99,17 @@ export JBOSS_HOME=$PWD/wildfly-$WILDFLY_MASTER_VERSION
 cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
 cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
 
-git clone https://github.com/apache/karaf.git apache-karaf
-if [ $? != 0 ]; then
-  comment_on_pull "Karaf clone failed: $BUILD_URL";
-  exit -1
-fi
-./build.sh -f apache-karaf/pom.xml -Pfastinstall
-if [ $? != 0 ]; then
-  comment_on_pull "Karaf build failed: $BUILD_URL";
-  exit -1
-fi
+# JBTM-2820 disable the karaf build
+#git clone https://github.com/apache/karaf.git apache-karaf
+#if [ $? != 0 ]; then
+#  comment_on_pull "Karaf clone failed: $BUILD_URL";
+#  exit -1
+#fi
+#./build.sh -f apache-karaf/pom.xml -Pfastinstall
+#if [ $? != 0 ]; then
+#  comment_on_pull "Karaf build failed: $BUILD_URL";
+#  exit -1
+#fi
 
 echo Running quickstarts
 BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ ./build.sh clean install -DskipX11Tests=true
