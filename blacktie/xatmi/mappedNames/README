@@ -38,11 +38,11 @@ generate_server -Dservice.names=THREE,FOUR -Dserver.output.file=loprio  -Dserver
 
 NOTE: If you get the following error you have not installed ant-contrib into your ANT distribution:
 	BUILD FAILED
-	/home/tom/blacktie/dist/blacktie-5.5.1.Final-SNAPSHOT/bin/generate-executables.xml:160: Problem: failed to create task or type propertycopy
+	/home/tom/blacktie/dist/blacktie-5.5.1.Final/bin/generate-executables.xml:160: Problem: failed to create task or type propertycopy
 NOTE: If you get the following error you have not installed cpp-tasks into your ANT distribution:
 	BUILD FAILED
-	/home/tom/blacktie/dist/blacktie-5.5.1.Final-SNAPSHOT/bin/generate-executables.xml:113: The following error occurred while executing this line:
-	/home/tom/blacktie/dist/blacktie-5.5.1.Final-SNAPSHOT/bin/generate-executables.xml:140: Problem: failed to create task or type cc
+	/home/tom/blacktie/dist/blacktie-5.5.1.Final/bin/generate-executables.xml:113: The following error occurred while executing this line:
+	/home/tom/blacktie/dist/blacktie-5.5.1.Final/bin/generate-executables.xml:140: Problem: failed to create task or type cc
 NOTE: If you get the following error you have not edited or executed setenv correctly:
 java org.apache.tools.ant.launch.Launcher -f ...
 Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/tools/ant/launch/Launcher
@@ -57,9 +57,9 @@ Caused by: java.lang.ClassNotFoundException: org.apache.tools.ant.launch.Launche
 Could not find the main class: org.apache.tools.ant.launch.Launcher.  Program will exit.
 NOTE: On Windows - If you get the following error you have not used a command prompt with VC++ tools in it:
 BUILD FAILED
-C:\blacktie\dist\blacktie-5.5.1.Final-SNAPSHOT\bin\generate-executables.xml:117: The following error occurred while executing this line:
-C:\blacktie\dist\blacktie-5.5.1.Final-SNAPSHOT\bin\generate-executables.xml:144: Could not launch cl: java.io.IOException: Cannot run program "cl" (in directory "C:
-\blacktie\dist\blacktie-5.5.1.Final-SNAPSHOT\quickstarts\xatmi\fooapp\target\classes"): CreateProcess error=2, The system cannot find the file specified
+C:\blacktie\dist\blacktie-5.5.1.Final\bin\generate-executables.xml:117: The following error occurred while executing this line:
+C:\blacktie\dist\blacktie-5.5.1.Final\bin\generate-executables.xml:144: Could not launch cl: java.io.IOException: Cannot run program "cl" (in directory "C:
+\blacktie\dist\blacktie-5.5.1.Final\quickstarts\xatmi\fooapp\target\classes"): CreateProcess error=2, The system cannot find the file specified
 
 
 3. CREATE THE CLIENT
