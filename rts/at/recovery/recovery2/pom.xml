@@ -24,14 +24,14 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>recovery2</artifactId>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
-    <version>5.5.1.Final</version>
+    <version>5.5.2.Final-SNAPSHOT</version>
     <name>RESTAT Quickstart: Participant Service with Recovery 2</name>
     <description>Example of how a web service can recover from failures during transaction completion (using the integration API</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-        <version.narayana>5.5.1.Final</version.narayana>
+        <version.narayana>5.5.2.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <build>
