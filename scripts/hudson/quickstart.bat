@@ -53,16 +53,11 @@ set WORKSPACE=%OLDWORKSPACE%
 rem git checkout 4.17
 rem call build.bat clean install -DskipTests
 
-set WILDFLY_MASTER_VERSION=
-for /f "usebackq delims=<,> tokens=3" %%i in (`findstr "<version>1" jboss-as\pom.xml`) do (
-	if not defined WILDFLY_MASTER_VERSION (
-		@set WILDFLY_MASTER_VERSION=%%i
-	)
-)
-cd ..
+
+set WILDFLY_MASTER_VERSION=10.1.0.Final
 
 rmdir wildfly-%WILDFLY_MASTER_VERSION% /s /q
-copy narayana\jboss-as\dist\target\wildfly-%WILDFLY_MASTER_VERSION%.zip .
+wget -N http://download.jboss.org/wildfly/%WILDFLY_MASTER_VERSION%/wildfly-%WILDFLY_MASTER_VERSION%.zip
 unzip wildfly-%WILDFLY_MASTER_VERSION%.zip
 set JBOSS_HOME=C:\hudson\workspace\%JOB_NAME%\wildfly-%WILDFLY_MASTER_VERSION%
 copy narayana\blacktie\blacktie\target\blacktie-*-vc9x32-bin.zip .
