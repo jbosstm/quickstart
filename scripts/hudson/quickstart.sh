@@ -84,17 +84,12 @@ if [ $? != 0 ]; then
   comment_on_pull "Narayana build failed: $BUILD_URL";
   exit -1
 fi
-cd jboss-as
-WILDFLY_MASTER_VERSION=`awk "/wildfly-parent/ {getline;print;}" pom.xml | cut -d \< -f 2|cut -d \> -f 2`
-if [ $? != 0 ]; then
-  comment_on_pull "WildFly version check failed: $BUILD_URL";
-  exit -1
-fi
-cd ..
-cd ..
+
+WILDFLY_MASTER_VERSION=10.1.0.Final
 
 rm -rf wildfly-$WILDFLY_MASTER_VERSION
-cp -rp narayana/jboss-as/build/target/wildfly-${WILDFLY_MASTER_VERSION}/ .
+wget -N http://download.jboss.org/wildfly/$WILDFLY_MASTER_VERSION/wildfly-$WILDFLY_MASTER_VERSION.zip
+unzip wildfly-$WILDFLY_MASTER_VERSION.zip
 export JBOSS_HOME=$PWD/wildfly-$WILDFLY_MASTER_VERSION
 cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
 cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
