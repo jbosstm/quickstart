@@ -47,7 +47,7 @@
         <version.org.jboss.logging.jboss-logging>3.1.2.GA</version.org.jboss.logging.jboss-logging>
         <version.log4j>1.2.16</version.log4j>
         <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
-        <version.org.jboss.jboss-transaction-spi>7.5.0.Final</version.org.jboss.jboss-transaction-spi>
+        <version.org.jboss.jboss-transaction-spi>7.5.1.Final</version.org.jboss.jboss-transaction-spi>
         <version.com.h2database>1.3.171</version.com.h2database>
         <version.junit>4.10</version.junit>
     </properties>
