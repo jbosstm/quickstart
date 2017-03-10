@@ -15,7 +15,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstarts.blacktie</groupId>
     <artifactId>blacktie-quickstarts-all</artifactId>
-    <version>5.5.5.Final-SNAPSHOT</version>
+    <version>5.5.5.Final</version>
     <packaging>jar</packaging>
     <name>blacktie-all</name>
     <description>All the blacktie quickstarts</description>
