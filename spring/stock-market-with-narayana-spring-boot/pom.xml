@@ -43,7 +43,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <narayana.version>5.5.1.Final</narayana.version>
-        <jboss-transaction-spi.version>7.5.0.Final</jboss-transaction-spi.version>
+        <jboss-transaction-spi.version>7.5.2.Final</jboss-transaction-spi.version>
     </properties>
 
     <dependencies>
