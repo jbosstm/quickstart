@@ -20,7 +20,7 @@
     <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
     <artifactId>xts-demo-all</artifactId>
     <packaging>pom</packaging>
-    <version>5.5.5.Final-SNAPSHOT</version>
+    <version>5.5.5.Final</version>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <url>http://narayana.io</url>
