@@ -124,6 +124,7 @@
     <url>https://github.com/jbosstm/quickstart</url>
   </scm>
   <modules>
+    <module>tooling/browser</module>
     <module>jca-and-tomcat</module>
     <module>jca-and-hibernate</module>
     <module>jta-1_2-standalone</module>
