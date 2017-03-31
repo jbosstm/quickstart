@@ -124,6 +124,7 @@
     <url>https://github.com/jbosstm/quickstart</url>
   </scm>
   <modules>
+<!--
     <module>jca-and-tomcat</module>
     <module>jca-and-hibernate</module>
     <module>jta-1_2-standalone</module>
@@ -131,7 +132,9 @@
     <module>spring</module>
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
+-->
     <module>ArjunaJTS</module>
+<!--
     <module>compensating-transactions</module>
     <module>rts</module>
     <module>XTS</module>
@@ -139,8 +142,11 @@
     <module>wildfly/setCheckedActionFactoryExample</module>
     <module>STM</module>
     <module>jts-docker</module>
+-->
     <!-- JBTM-2820 disable the osgi quickstart until the karaf release the 4.1.0-->
     <!-- <module>karaf/osgi-jta</module> -->
+<!--
     <module>jta-and-hibernate-standalone</module>
+-->
   </modules>
 </project>

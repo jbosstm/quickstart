@@ -1,0 +1,29 @@
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/iiop/EjbIIOPTransactionInterceptor.java b/ejb3/src/main/java/org/jboss/as/ejb3/iiop/EjbIIOPTransactionInterceptor.java
+index 968679c..52a1e86 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/iiop/EjbIIOPTransactionInterceptor.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/iiop/EjbIIOPTransactionInterceptor.java
+@@ -22,12 +22,10 @@
+ 
+ package org.jboss.as.ejb3.iiop;
+ 
+-import javax.ejb.TransactionAttributeType;
+ import javax.transaction.Transaction;
+ 
+ import org.jboss.as.ee.component.Component;
+ import org.jboss.as.ee.component.ComponentView;
+-import org.jboss.as.ejb3.logging.EjbLogger;
+ import org.jboss.as.ejb3.component.EJBComponent;
+ import org.jboss.as.ejb3.component.MethodIntf;
+ import org.jboss.invocation.ImmediateInterceptorFactory;
+@@ -62,11 +60,6 @@ public class EjbIIOPTransactionInterceptor implements Interceptor {
+                     methodIntf = MethodIntf.BEAN;
+                 }
+             }
+-
+-            final TransactionAttributeType attr = component.getTransactionAttributeType(methodIntf, invocation.getMethod());
+-            if (attr != TransactionAttributeType.NOT_SUPPORTED && attr != TransactionAttributeType.REQUIRES_NEW) {
+-                throw EjbLogger.ROOT_LOGGER.transactionPropagationNotSupported();
+-            }
+         }
+         return invocation.proceed();
+     }

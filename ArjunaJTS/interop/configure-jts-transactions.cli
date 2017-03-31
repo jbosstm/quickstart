@@ -1,0 +1,24 @@
+# Batch script to configure the WildFly server for JTS transactions
+
+# Start batching commands
+batch
+
+# Configure transactions for JTS
+/subsystem=iiop-openjdk/:write-attribute(name=transactions,value=full)
+/subsystem=transactions/:write-attribute(name=jts,value=true)
+/subsystem=transactions/:write-attribute(name=node-identifier,value=${jboss.tx.node.id})
+
+# compile CORBA stubs on demand (TODO is this already the default)
+#/system-property=com.sun.CORBA.ORBUseDynamicStub:add(value=true)
+
+# makes some changes for interoperabilit with glassfish
+# override the transaction propagation slot id to the standard one
+#/system-property=com.arjuna.ats.jts.transactionServiceId:add(value=0)
+#/system-property=GLASSFISH-21532-WORKAROUND:add(value=true)
+
+# Run the batch commands
+run-batch
+
+# Reload the server configuration
+:reload
+
