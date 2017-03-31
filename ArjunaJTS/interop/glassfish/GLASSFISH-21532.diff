@@ -1,0 +1,25 @@
+Index: appserver/transaction/jts/src/main/java/com/sun/jts/CosTransactions/GlobalTID.java
+===================================================================
+--- appserver/transaction/jts/src/main/java/com/sun/jts/CosTransactions/GlobalTID.java	(revision 64262)
++++ appserver/transaction/jts/src/main/java/com/sun/jts/CosTransactions/GlobalTID.java	(working copy)
+@@ -310,13 +310,16 @@
+ 
+         // Add up the values in the XID.
+ 
+-        if( realTID.tid != null )
+-            for( int pos = 0; pos < realTID.tid.length; pos++ )
++        if( realTID.tid != null ) {
++            int gtid_len = realTID.tid.length - realTID.bqual_length;
++
++            for( int pos = 0; pos < gtid_len; pos++ )
+                 hashCode += realTID.tid[pos];
++        }
+ 
+-        // Add in the formatId and branch qualifier length.
++        // Add in the formatId but ignore the branch qualifier.
+ 
+-        hashCode += realTID.formatID + realTID.bqual_length;
++        hashCode += realTID.formatID;// + realTID.bqual_length;
+ 
+         // Multiply the result by the "magic hashing constant".
+ 

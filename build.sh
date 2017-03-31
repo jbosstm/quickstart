@@ -167,6 +167,9 @@ main() {
     #  Setup some build properties
     MVN_OPTS="$MVN_OPTS -Dbuild.script=$0"
 
+    #  un in non-interactive (batch) mode
+    MVN_OPTS="$MVN_OPTS -B"
+
     #  Change to the directory where the script lives, so users are not forced
     #  to be in the same directory as build.xml.
     cd $DIRNAME
