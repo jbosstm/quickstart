@@ -136,7 +136,7 @@ function run_quickstarts {
 int_env
 comment_on_pull "Started testing this pull request: $BUILD_URL"
 rebase_quickstart_repo
-get_bt_dependencies # TODO uncomment after testing
+#get_bt_dependencies # TODO uncomment after testing
 build_narayana
 configure_wildfly
 #build_apache-karaf # JBTM-2820 disable the karaf build
