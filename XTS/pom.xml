@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.xts</groupId>
   <artifactId>narayana-quickstarts-xts</artifactId>
-  <version>5.5.7.Final-SNAPSHOT</version>
+  <version>5.6.0.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>XTS Examples</name>
   <description>All quickstarts of XTS</description>
