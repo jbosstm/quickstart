@@ -1,4 +1,4 @@
-# How to configure Wildfly and XTS to use SSL
+# How to configure WildFly and XTS to use SSL
 
 This example walks you through the steps required to setup two servers (client and server) that communicate via Web services over a secure connection.
 The example show how this can be done for WS-Atomic Transaction, but the same applies for WS Business Activity.
@@ -8,66 +8,53 @@ For example, a section entitled "Tab 1" , is stating that the commands in that s
 
 
 ## Tab 1
-Obtain Wildfly master and make two copies of the distribution. One for the client and one for the server.
+
+Obtain WildFly master and make two copies of the distribution. One for the client and one for the server.
 
     git clone https://github.com/wildfly/wildfly.git
     mvn clean install -DskipTests -f wildfly/pom.xml
-    cp -r wildfly/build/target/wildfly-8.0.0.Beta2-SNAPSHOT/ wildfly-client
-    cp -r wildfly/build/target/wildfly-8.0.0.Beta2-SNAPSHOT/ wildfly-server
+    cp -r wildfly/build/target/wildfly-*-SNAPSHOT/ wildfly-client
+    cp -r wildfly/build/target/wildfly-*-SNAPSHOT/ wildfly-server
 
-Now clone the Wildfly quickstarts. We will be using an existing WS-AT example (wsat-simple) in this guide.
+Now clone the WildFly quickstarts. We will be using an existing WS-AT example (wsat-simple) in this guide.
 
     git clone https://github.com/wildfly/quickstart.git
     cd quickstart/wsat-simple/
 
-Now you need to create two aliased network interfaces, so that you can run two Wildfly servers on the same machine. You could also use port-offsetting.
+For being possible to run two WildFly servers on the local machines will use port-offsetting
+for each one binding different ports.
 
-On Linux (tested with Fedora):
+We need to make few adjustments in code of the `wsat-simple` to count with the port
+offsets and with usage of HTTPS.
 
-    sudo ifconfig lo:2 127.0.0.2
-    sudo ifconfig lo:3 127.0.0.3
+| In file  | Text to find | To change to
+| --- | --- | --- |
+| ./src/main/webapp/WEB-INF/classes/org/jboss/as/quickstarts/wsat/simple/jaxws/RestaurantServiceAT.wsdl  | http://localhost:8080/jboss-as-wsat-simple/RestaurantServiceAT  | https://localhost:8643/jboss-as-wsat-simple/RestaurantServiceAT |
+| ./src/test/java/org/jboss/as/quickstarts/wsat/simple/Client.java | http://localhost:8080/wsat-simple/RestaurantServiceAT?wsdl | https://localhost:8643/wsat-simple/RestaurantServiceAT?wsdl |
 
-On OSX:
+The `wsat-simple` war archive has to be built with dependency to `org.jboss.xts` module.
+If this is not configured in `pom.xml` already we need to add maven war plugin configuration under `<build>` element.
 
-    sudo ifconfig lo0 alias 127.0.0.2
-    sudo ifconfig lo1 alias 127.0.0.3
-
-Now use the following instructions to replace http urls with https urls, and change the destination IP.
-
-in:
-
-    ./src/main/webapp/WEB-INF/classes/org/jboss/as/quickstarts/wsat/simple/jaxws/RestaurantServiceAT.wsdl
-
-Change:
-
-    http://localhost:8080/jboss-as-wsat-simple/RestaurantServiceAT
-
-To:
-
-    https://127.0.0.3:8443/jboss-as-wsat-simple/RestaurantServiceAT
-
-in:
-
-    ./src/test/java/org/jboss/as/quickstarts/wsat/simple/Client.java
-
-Change:
-
-    http://localhost:8080/wsat-simple/RestaurantServiceAT?wsdl
-
-To:
-
-    https://127.0.0.3:8443/wsat-simple/RestaurantServiceAT?wsdl
-
-in:
-    ./src/main/java/org/jboss/as/quickstarts/wsat/simple/jaxws/RestaurantServiceATService.java
-
-Change:
-
-    @WebServiceClient(name = "RestaurantServiceATService", targetNamespace = "http://www.jboss.org/jboss-jdf/jboss-as-quickstart/wsat/simple/Restaurant")
-
-To:
-
-    @WebServiceClient(name = "RestaurantServiceATService", targetNamespace = "http://www.jboss.org/jboss-jdf/jboss-as-quickstart/wsat/simple/Restaurant", wsdlLocation = "WEB-INF/classes/org/jboss/as/quickstarts/wsat/simple/jaxws/RestaurantServiceAT.wsdl")
+```xml
+  <build>
+      <!-- Set the name of the WAR, used as the context root when the app is deployed. -->
+      <finalName>${project.artifactId}</finalName>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-war-plugin</artifactId>
+              <configuration>
+                  <archive>
+                      <manifest/>
+                      <manifestEntries>
+                          <Dependencies>org.jboss.xts</Dependencies>
+                      </manifestEntries>
+                  </archive>
+              </configuration>
+          </plugin>
+      </plugins>
+  </build>
+```
 
 
 Now build the example.
@@ -76,19 +63,16 @@ Now build the example.
     cd ../..
 
 
-
-
 ## Tab 2 (client)
 
-Create a client configuration and configure it to use one of our aliased interfaces.
+Use `standalone-xts.xml` at the client and configure it to with port offset.
 
     cd wildfly-client/
     cp docs/examples/configs/standalone-xts.xml standalone/configuration/
-    sed -ie 's/127\.0\.0\.1/127\.0\.0\.2/g' standalone/configuration/standalone-xts.xml
 
 Configure the keystore and export the public key.
 
-    keytool -genkey -alias client -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass client -storepass client -dname "cn=client, ou=GSS, o=Red Hat, l=Raleigh, st=NC, c=US"
+    keytool -genkey -alias client -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass client -storepass client -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
     keytool -export -keystore ./standalone/configuration/server.keystore -alias client -file client.cer -keypass client -storepass client
 
 
@@ -98,13 +82,15 @@ Start the server, ready to connect the JBoss CLI tool.
 
 
 ## Tab 4 (admin)
-Connect to the client server and configure SSL. Remember to change the commands to refer to the location where you created the server.keystore.
+Connect to the client server and configure SSL. Remember to change the commands to refer to the location where you created the `server.keystore`.
 
     cd wildfly-client
-    ./bin/jboss-cli.sh --connect --controller=127.0.0.2:9990
+    ./bin/jboss-cli.sh --connect
 
     /core-service=management/security-realm=SSLRealm:add()
     /core-service=management/security-realm=SSLRealm/server-identity=ssl:add(keystore-path=./standalone/configuration/server.keystore, keystore-password=client, alias=client)
+    /subsystem=undertow/server=default-server/https-listener=https:remove()
+    :reload()
     /subsystem=undertow/server=default-server/https-listener=https:add(socket-binding="https", security-realm="SSLRealm")
 
 
@@ -115,10 +101,10 @@ kill the server and then edit the config, to make sure the client's XTS coordina
 
 change:
 
-    <xts-environment url="http://${jboss.bind.address:127.0.0.2}:8080/ws-c11/ActivationService"/>
+    <xts-environment url="http://${jboss.bind.address:127.0.0.1}:8080/ws-c11/ActivationService"/>
 to:
 
-    <xts-environment url="https://${jboss.bind.address:127.0.0.2}:8443/ws-c11/ActivationService"/>
+    <xts-environment url="https://${jboss.bind.address:127.0.0.4}:8543/ws-c11/ActivationService"/>
 
 
 ## Tab 3 (server)
@@ -126,11 +112,10 @@ Create a server configuration and configure it to use one of our aliased interfa
 
     cd wildfly-server/
     cp docs/examples/configs/standalone-xts.xml standalone/configuration/
-    sed -ie 's/127\.0\.0\.1/127\.0\.0\.3/g' standalone/configuration/standalone-xts.xml
 
 Configure the keystore and export the public key.
 
-    keytool -genkey -alias server -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass server -storepass server -dname "cn=$HOSTNAME, ou=GSS, o=Red Hat, l=Raleigh, st=NC, c=US"
+    keytool -genkey -alias server -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass server -storepass server -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
     keytool -export -keystore ./standalone/configuration/server.keystore -alias server -file server.cer -keypass server -storepass server
 
 Start the server, ready to connect the JBoss CLI tool.
@@ -141,10 +126,12 @@ Start the server, ready to connect the JBoss CLI tool.
 ## Tab 4 (admin)
 Connect to the client server and configure SSL. Remember to change the commands to refer to the location where you created the server.keystore.
 
-    ./bin/jboss-cli.sh --connect --controller=127.0.0.3:9990
+    ./bin/jboss-cli.sh --connect
 
     /core-service=management/security-realm=SSLRealm:add()
     /core-service=management/security-realm=SSLRealm/server-identity=ssl:add(keystore-path=./standalone/configuration/server.keystore, keystore-password=server, alias=server)
+    /subsystem=undertow/server=default-server/https-listener=https:remove()
+    :reload()
     /subsystem=undertow/server=default-server/https-listener=https:add(socket-binding="https", security-realm="SSLRealm")
 
 
@@ -155,11 +142,11 @@ kill the server and then edit the config, to make sure the client's XTS coordina
 
 change:
 
-    <xts-environment url="http://${jboss.bind.address:127.0.0.3}:8080/ws-c11/ActivationService"/>
+    <xts-environment url="http://${jboss.bind.address:127.0.0.1}:8080/ws-c11/ActivationService"/>
 
 to:
 
-    <xts-environment url="https://${jboss.bind.address:127.0.0.3}:8443/ws-c11/ActivationService"/>
+    <xts-environment url="https://${jboss.bind.address:127.0.0.1}:8643/ws-c11/ActivationService"/>
 
 
 ## Tab 2 (client)
@@ -177,20 +164,20 @@ Import the client's public key into the server's truststore
 ## Tab 1
 Deploy the example application to both servers.
 
-    cp quickstart/wsat-simple/target/jboss-as-wsat-simple.war ./wildfly-client/standalone/deployments/
-    cp quickstart/wsat-simple/target/jboss-as-wsat-simple.war ./wildfly-server/standalone/deployments/
+    cp quickstart/wsat-simple/target/wsat-simple.war ./wildfly-client/standalone/deployments/
+    cp quickstart/wsat-simple/target/wsat-simple.war ./wildfly-server/standalone/deployments/
 
 
 ## Tab 3 (server)
 Start the server.
 
-    ./bin/standalone.sh -c standalone-xts.xml -Djavax.net.ssl.trustStore=./standalone/configuration/server.keystore -Djavax.net.ssl.trustStorePassword=server -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore=./standalone/configuration/server.keystore -Djavax.net.ssl.keyStorePassword=server
+    ./bin/standalone.sh -c standalone-xts.xml -Djavax.net.ssl.trustStore=./standalone/configuration/server.keystore -Djavax.net.ssl.trustStorePassword=server -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore=./standalone/configuration/server.keystore -Djavax.net.ssl.keyStorePassword=server -Dcxf.tls-client.disableCNCheck=true -Djboss.socket.binding.port-offset=200
 
 
 ## Tab 2 (client)
 Start the client.
 
-    ./bin/standalone.sh -c standalone-xts.xml -Djavax.net.ssl.trustStore=./standalone/configuration/server.keystore -Djavax.net.ssl.trustStorePassword=client -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore=./standalone/configuration/server.keystore -Djavax.net.ssl.keyStorePassword=client
+    ./bin/standalone.sh -c standalone-xts.xml -Djavax.net.ssl.trustStore=./standalone/configuration/server.keystore -Djavax.net.ssl.trustStorePassword=client -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore=./standalone/configuration/server.keystore -Djavax.net.ssl.keyStorePassword=client -Dcxf.tls-client.disableCNCheck=true -Djboss.socket.binding.port-offset=100
 
 
-Now visit the servlet on the client, to see if it works: http://127.0.0.2:8080/jboss-as-wsat-simple/WSATSimpleServletClient. You should see no exceptions in either server log; in which case you now have XTS and the application configured to use SSL.
+Now visit the servlet on the client, to see if it works: http://127.0.0.1:8180/WSATSimpleServletClient. You should see no exceptions in either server log; in which case you now have XTS and the application configured to use SSL.
