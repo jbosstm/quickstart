@@ -19,7 +19,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>restat-quickstarts</artifactId>
-  <version>5.2.24.Final-SNAPSHOT</version>
+  <version>5.2.24.Final</version>
   <name>RESTAT Quickstarts</name>
   <description>Provides examples of how to use transactions with web applications</description>
   <packaging>pom</packaging>
