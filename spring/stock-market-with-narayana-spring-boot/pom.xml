@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstart.spring</groupId>
     <artifactId>stock-market-with-narayana-spring-boot</artifactId>
-    <version>5.5.24.Final</version>
+    <version>5.5.25.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>stock-market-with-narayana-spring-boot</name>
