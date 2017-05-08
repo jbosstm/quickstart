@@ -33,28 +33,10 @@
     <description>Narayana Spring Boot example</description>
 
     <properties>
-        <version.org.springframework.boot>1.4.0.M3</version.org.springframework.boot>
+        <version.org.springframework.boot>1.5.3.RELEASE</version.org.springframework.boot>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
-    <!-- Needed until Spring with Narayana integration is released properly -->
-    <repositories>
-        <repository>
-            <id>spring-milestone</id>
-            <name>Spring Milestone Repository</name>
-            <url>https://repo.spring.io/milestone</url>
-        </repository>
-    </repositories>
-
-    <!-- Needed until Spring with Narayana integration is released properly -->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestone</id>
-            <name>Spring Milestone Repository</name>
-            <url>https://repo.spring.io/milestone</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencyManagement>
         <dependencies>
