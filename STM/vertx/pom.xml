@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.jboss.narayana.quickstart.stm</groupId>
+  <artifactId>stm-vertx-demo</artifactId>
+  <version>5.6.0.Final-SNAPSHOT</version>
+
+  <name>Narayana - STM and vertx demo </name>
+
+  <properties>
+    <!-- the main class -->
+    <exec.mainClass>demo.demo12.VolatileTheatreVerticle</exec.mainClass>
+    <vertx.version>3.3.3</vertx.version>
+    <narayana.version>${project.version}</narayana.version>
+    <jboss-logging.version>3.1.4.GA</jboss-logging.version>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>demo1</id>
+      <properties>
+        <exec.mainClass>demo.demo12.VolatileTheatreVerticle</exec.mainClass>
+      </properties>
+    </profile>
+    <profile>
+      <id>demo2</id>
+      <properties>
+        <exec.mainClass>demo.demo12.PersistentSharedTheatreVerticle</exec.mainClass>
+      </properties>
+    </profile>
+    <profile>
+      <id>demo3</id>
+      <properties>
+        <exec.mainClass>demo.demo3.TripSTMVerticle</exec.mainClass>
+      </properties>
+    </profile>
+    <profile>
+      <id>stress</id>
+      <properties>
+        <exec.mainClass>demo.util.Stress</exec.mainClass>
+      </properties>
+    </profile>
+  </profiles>
+
+  <dependencies>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-core</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-unit</artifactId>
+            <version>3.3.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.narayana.stm</groupId>
+            <artifactId>stm</artifactId>
+            <version>${narayana.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${jboss-logging.version}</version>
+            <scope>compile</scope>
+        </dependency>
+  </dependencies>
+
+  <build>
+
+    <pluginManagement>
+      <plugins>
+        <!-- We specify the Maven compiler plugin as we need to set it to Java 1.8 -->
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <!--
+    You only need the part below if you want to build your application into a fat executable jar.
+    This is a jar that contains all the dependencies required to run it, so you can just run it with
+    java -jar
+    -->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>${exec.mainClass}</Main-Class>
+                  </manifestEntries>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/services/io.vertx.core.spi.VerticleFactory</resource>
+                </transformer>
+              </transformers>
+              <artifactSet>
+              </artifactSet>
+              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-fat.jar</outputFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
+        <executions>
+          <execution>
+            <!-- run the application using the fat jar -->
+            <id>run-app</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <cleanupDaemonThreads>false</cleanupDaemonThreads>
+              <executable>java</executable>
+              <arguments>
+                <argument>-jar</argument>
+                <argument>target/${project.artifactId}-${project.version}-fat.jar</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
