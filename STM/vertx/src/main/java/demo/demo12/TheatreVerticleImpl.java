@@ -5,7 +5,10 @@ import demo.domain.Booking;
 import demo.domain.TheatreService;
 import io.vertx.core.AbstractVerticle;
 
-public class TheatreVerticleImpl extends AbstractVerticle {
+/**
+ * The base class encapsulates the domain and STM specific logic
+ */
+class TheatreVerticleImpl extends AbstractVerticle {
     // STM manipulation
     int getBookings(Booking service) throws Exception {
         AtomicAction A = new AtomicAction();

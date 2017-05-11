@@ -17,6 +17,7 @@ public abstract class TheatreVerticle extends TheatreVerticleImpl {
     TheatreVerticle() {
     }
 
+    // concreate classes clone either volatile or persistent STM objects
     abstract TheatreService getClone();
 
     @Override
@@ -65,7 +66,6 @@ public abstract class TheatreVerticle extends TheatreVerticleImpl {
         try {
             int bookings = getBookings(serviceClone);
 
-            System.out.printf("%s: cnt: %d%n", SERVICE_NAME, serviceClone.getBookings());
             routingContext.response()
                     .setStatusCode(201)
                     .putHeader("content-type", "application/json; charset=utf-8")

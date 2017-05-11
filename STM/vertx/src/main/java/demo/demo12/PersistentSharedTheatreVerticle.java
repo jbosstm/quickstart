@@ -18,12 +18,16 @@ public class PersistentSharedTheatreVerticle extends TheatreVerticle {
     private static String uid;
     private static Container<TheatreService> container;
 
+    /**
+     * STM initialization and verticle deployment
+     */
     public static void main(String[] args) {
         container = new Container<>(Container.TYPE.PERSISTENT, Container.MODEL.SHARED);
 
         uid = args.length != 0 ? args[0] : System.getProperty("uid");
 
         if (uid != null) {
+            // if uid is set then the STM object is shared with another JVM so listen on a different endpoint
             port = 8082;
         } else {
             TheatreService service = container.create(new TheatreServiceImpl());

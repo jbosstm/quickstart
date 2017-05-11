@@ -17,6 +17,9 @@ public class VolatileTheatreVerticle extends TheatreVerticle {
     private static TheatreService service;
     private static Container<TheatreService> container;
 
+    /**
+     * STM initialization and verticle deployment
+     */
     public static void main(String[] args) {
         container = new Container<>();
 

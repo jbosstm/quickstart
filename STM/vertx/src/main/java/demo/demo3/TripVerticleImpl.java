@@ -7,7 +7,10 @@ import demo.domain.TaxiService;
 import demo.domain.TheatreService;
 import io.vertx.core.AbstractVerticle;
 
-public class TripVerticleImpl extends AbstractVerticle {
+/**
+ * The base class encapsulates the domain and STM specific logic
+ */
+class TripVerticleImpl extends AbstractVerticle {
 
     // STM manipulation
     ServiceResult bookTrip(String serviceName, TheatreService theatreService, TaxiService taxiService, TaxiService altTaxiService) throws Exception {

@@ -31,6 +31,9 @@ public class TripSTMVerticle extends TripVerticleImpl {
 
     private static int tripServicePort = 8080;
 
+    /**
+     * STM initialization and verticle deployment
+     */
     public static void main(String[] args) {
         ProgArgs options = new ProgArgs(args);
 
@@ -82,7 +85,7 @@ public class TripSTMVerticle extends TripVerticleImpl {
 
         getRoutes(router);
 
-        // Create the HTTP server and pass the "accept" method to the request handler.
+        // Create the HTTP server
         vertx
                 .createHttpServer()
                 .requestHandler(router::accept)
