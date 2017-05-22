@@ -48,6 +48,8 @@ set CACHED_COMMENT=%COMMENT_ON_PULL%
 set COMMENT_ON_PULL=0
 call scripts\hudson\narayana.bat -DskipTests
 if %ERRORLEVEL% NEQ 0 (set COMMENT_ON_PULL=%CACHED_COMMENT% & call:comment_on_pull "Narayana build failed %BUILD_URL%" & exit -1)
+cd ..
+
 set COMMENT_ON_PULL=%CACHED_COMMENT%
 set WORKSPACE=%OLDWORKSPACE%
 rem git checkout 4.17
