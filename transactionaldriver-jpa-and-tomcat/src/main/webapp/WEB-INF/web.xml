@@ -1,0 +1,6 @@
+<web-app>
+    <listener>
+        <!-- Register context listener to bootstrap Narayana services -->
+        <listener-class>org.jboss.narayana.tomcat.jta.NarayanaJtaServletContextListener</listener-class>
+    </listener>
+</web-app>
