@@ -15,8 +15,8 @@ sleep 10
 
 for i in {1..10}
 do
-  curl --data "test$i" http://localhost:8080/transactionaldriver-and-tomcat
+  curl -f --data "test$i" http://localhost:8080/transactionaldriver-and-tomcat
 done
 
-curl http://localhost:8080/transactionaldriver-and-tomcat
+curl -f http://localhost:8080/transactionaldriver-and-tomcat
 $TOMCAT_HOME/bin/catalina.sh stop
