@@ -159,6 +159,18 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.maven-compiler-plugin}</version>
                 <configuration>
@@ -172,6 +184,21 @@
                 <version>${version.maven-surefire-plugin}</version>
                 <configuration>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <environmentVariables>
+                        <BYTEMAN_HOME></BYTEMAN_HOME>
+                    </environmentVariables>
+                    <systemProperties>
+                        <property>
+                            <name>org.jboss.byteman.home</name>
+                            <value></value>
+                        </property>
+                    </systemProperties>
+                    <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <argLine>-javaagent:${org.jboss.byteman:byteman:jar}=port:9091,boot:${org.jboss.byteman:byteman:jar}</argLine>
+                    <systemPropertyVariables>
+                        <org.jboss.byteman.contrib.bmunit.agent.inhibit>true</org.jboss.byteman.contrib.bmunit.agent.inhibit>
+                        <org.jboss.byteman.contrib.bmunit.agent.port>9091</org.jboss.byteman.contrib.bmunit.agent.port>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
