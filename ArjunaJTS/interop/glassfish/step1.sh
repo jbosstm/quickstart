@@ -18,6 +18,11 @@ function build_narayana {
 
   cd $WORKSPACE 
 
+  if [[ "$NARAYANA_CURRENT_VERSION" != *SNAPSHOT ]]
+  then
+    git checkout $NARAYANA_CURRENT_VERSION
+  fi
+  
   PROFILE=NONE AS_BUILD=1 NARAYANA_BUILD=1 NARAYANA_TESTS=0 BLACKTIE=0 XTS_AS_TESTS=0 XTS_TESTS=0 TXF_TESTS=0 txbridge=0 RTS_AS_TESTS=0 RTS_TESTS=0 JTA_CDI_TESTS=0 QA_TESTS=0 SUN_ORB=0 JAC_ORB=0 JTA_AS_TESTS=0 OSGI_TESTS=0 ./scripts/hudson/narayana.sh -B -DskipTests
   [ $? = 0 ] || fatal "Build narayana failed"
 
