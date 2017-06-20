@@ -72,6 +72,8 @@ public class StringsResource {
             transactionManager.rollback();
             System.out.println(this.getClass().getSimpleName() + " transaction rolled back");
             throw e;
+        } finally {
+            stringDao.close();
         }
     }
 

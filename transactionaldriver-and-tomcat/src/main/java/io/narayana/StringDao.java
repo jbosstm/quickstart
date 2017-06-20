@@ -43,7 +43,9 @@ public class StringDao {
 
     private static final String INSERT_STRING_QUERY = "INSERT INTO strings VALUES ('%s')";
 
-    public StringDao() {
+    private Connection connection;
+
+    public StringDao() throws SQLException {
         initDatabase();
     }
 
@@ -55,13 +57,15 @@ public class StringDao {
      */
     public List<String> getAll() throws SQLException {
         List<String> strings = new LinkedList<>();
-        try (Connection connection = getDataSource().getConnection();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(FIND_ALL_STRINGS_QUERY)) {
-            while (resultSet.next()) {
-                strings.add(resultSet.getString("string"));
+        getConnection();
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(FIND_ALL_STRINGS_QUERY)) {
+                while (resultSet.next()) {
+                    strings.add(resultSet.getString("string"));
+                }
             }
         }
+
         return strings;
     }
 
@@ -74,8 +78,8 @@ public class StringDao {
      */
     public void save(String string) throws SQLException {
         // Connection must be closed by transaction
-        try (Connection connection = getDataSource().getConnection();
-            Statement statement = connection.createStatement()) {
+        getConnection();
+        try (Statement statement = connection.createStatement()) {
             statement.execute(String.format(INSERT_STRING_QUERY, string));
         }
     }
@@ -83,20 +87,33 @@ public class StringDao {
     /**
      * Create strings table if it doesn't exist.
      */
-    private void initDatabase() {
-        try (Connection connection = getDataSource().getConnection(); Statement statement = connection.createStatement()) {
+    private void initDatabase() throws SQLException {
+        getConnection();
+        try (Statement statement = connection.createStatement()) {
             statement.execute(CREATE_TABLE_QUERY);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        close();
     }
 
-    private DataSource getDataSource() {
-        try {
-            return InitialContext.doLookup("java:comp/env/transactionalDataSource");
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+    private void getConnection() {
+        if (connection == null) {
+            try {
+                DataSource ds = InitialContext.doLookup("java:comp/env/transactionalDataSource");
+                connection = ds.getConnection();
+            } catch (NamingException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
+    public void close() throws SQLException {
+        if (connection != null) {
+            connection.close();
+            connection = null;
+        }
+    }
 }
