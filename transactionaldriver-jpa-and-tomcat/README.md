@@ -9,7 +9,7 @@ The following steps show how to execute the quickstart by hand. You can also exe
 ### Start Tomcat
 
 You must add a $TOMCAT_HOME/bin/setenv.sh with the following content:
-`export JAVA_OPTS="-Dcom.arjuna.ats.io.narayana.jta.recovery.XAResourceRecovery1=com.arjuna.ats.internal.jdbc.recovery.BasicXARecovery\;abs://$QUICKSTART_HOME/src/main/resources/h2recoveryproperties.xml\ \;1"`
+`export JAVA_OPTS="-Dcom.arjuna.ats.jta.recovery.XAResourceRecovery1=com.arjuna.ats.internal.jdbc.recovery.BasicXARecovery\;abs://$QUICKSTART_HOME/src/main/resources/h2recoveryproperties.xml\ \;1"`
 
 Start Tomcat in the usual manner, for example:
 `$TOMCAT_HOME/bin/catalina.sh  run`
