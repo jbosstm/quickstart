@@ -64,7 +64,7 @@ else
 fi
 
 # INITIALIZE JBOSS and CREATE BLACKTIE DISTRIBUTION
-ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -Dbasedir=.. -DJBOSS_HOME=$JBOSS_HOME -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.6.2.Final -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME initializeJBoss -debug
+ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml -Dbasedir=.. -DJBOSS_HOME=$JBOSS_HOME -DBT_HOME=$WORKSPACE/blacktie/target/dist/ -DVERSION=5.6.3.Final-SNAPSHOT -DMACHINE_ADDR=`hostname` -DJBOSSAS_IP_ADDR=$JBOSSAS_IP_ADDR -DBLACKTIE_DIST_HOME=$BLACKTIE_DIST_HOME initializeJBoss -debug
 
 # INITIALIZE JBOSS
 ant -f $WORKSPACE/narayana/blacktie/scripts/hudson/initializeJBoss.xml -DJBOSS_HOME=$WORKSPACE/jboss-as initializeJBoss
@@ -100,8 +100,8 @@ if [ "$?" != "0" ]; then
 fi
 
 # RUN ALL THE SAMPLES
-chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-5.6.2.Final/setenv.sh
-. $WORKSPACE/blacktie/target/dist/blacktie-5.6.2.Final/setenv.sh
+chmod u+x $WORKSPACE/blacktie/target/dist/blacktie-5.6.3.Final-SNAPSHOT/setenv.sh
+. $WORKSPACE/blacktie/target/dist/blacktie-5.6.3.Final-SNAPSHOT/setenv.sh
 if [ "$?" != "0" ]; then
 	ps -f
 	for i in `ps -eaf | grep java | grep "standalone.*xml" | grep -v grep | cut -c10-15`; do kill -9 $i; done
