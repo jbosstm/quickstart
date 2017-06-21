@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.jts</groupId>
   <artifactId>narayana-quickstarts-jts</artifactId>
-  <version>5.5.25.Final-SNAPSHOT</version>
+  <version>5.5.25.Final</version>
   <packaging>pom</packaging>
   <name>JTS Examples</name>
   <description>All quickstarts of JTS</description>
@@ -43,7 +43,7 @@
   </repositories>
   <properties>
     <version.surefire.plugin>2.19.1</version.surefire.plugin>
-    <version.narayana>5.5.25.Final-SNAPSHOT</version.narayana>
+    <version.narayana>5.5.25.Final</version.narayana>
   </properties>
   <build>
     <pluginManagement>

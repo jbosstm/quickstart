@@ -23,7 +23,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
-    <version>5.5.25.Final-SNAPSHOT</version>
+    <version>5.5.25.Final</version>
     <artifactId>service1</artifactId>
     <name>RESTAT Quickstart: Participant Service</name>
     <description>Example shows how a web service can participate in a transaction</description>
@@ -31,7 +31,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-        <version.narayana>5.5.25.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.5.25.Final</version.narayana>
     </properties>
 
     <repositories>
