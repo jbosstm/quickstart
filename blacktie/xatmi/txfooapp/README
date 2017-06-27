@@ -196,9 +196,9 @@ Could not find the main class: org.apache.tools.ant.launch.Launcher.  Program wi
 
 NOTE: On Windows - If you get the following error you have not used a command prompt with VC++ tools in it:
 BUILD FAILED
-C:\blacktie\dist\blacktie-5.5.26.Final\bin\generate-executables.xml:117: The following error occurred while executing this line:
-C:\blacktie\dist\blacktie-5.5.26.Final\bin\generate-executables.xml:144: Could not launch cl: java.io.IOException: Cannot run program "cl" (in directory "C:
-\blacktie\dist\blacktie-5.5.26.Final\quickstarts\xatmi\txfooapp\target\classes"): CreateProcess error=2, The system cannot find the file specified
+C:\blacktie\dist\blacktie-5.5.27.Final-SNAPSHOT\bin\generate-executables.xml:117: The following error occurred while executing this line:
+C:\blacktie\dist\blacktie-5.5.27.Final-SNAPSHOT\bin\generate-executables.xml:144: Could not launch cl: java.io.IOException: Cannot run program "cl" (in directory "C:
+\blacktie\dist\blacktie-5.5.27.Final-SNAPSHOT\quickstarts\xatmi\txfooapp\target\classes"): CreateProcess error=2, The system cannot find the file specified
 
 
 3. RUNNING THE EXAMPLE
