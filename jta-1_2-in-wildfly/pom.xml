@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstarts</groupId>
     <artifactId>jta-1_2-in-wildfly</artifactId>
-    <version>5.5.27.Final</version>
+    <version>5.5.28.Final-SNAPSHOT</version>
 
     <name>Narayana Quickstarts: JTA 1.2 in Wildfly</name>
     <description>Example demonstrates new JTA 1.2 features inside the Wildfly application server</description>
