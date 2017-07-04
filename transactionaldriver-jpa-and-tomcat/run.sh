@@ -2,10 +2,10 @@
 set -e
 
 export QUICKSTART_NAME=${PWD##*/}
-wget -nc http://mirror.vorboss.net/apache/tomcat/tomcat-7/v7.0.78/bin/apache-tomcat-7.0.78.zip
-rm -rf apache-tomcat-7.0.78
-unzip apache-tomcat-7.0.78.zip
-export TOMCAT_HOME=$(pwd)/apache-tomcat-7.0.78/
+wget -nc http://mirror.vorboss.net/apache/tomcat/tomcat-7/v7.0.79/bin/apache-tomcat-7.0.79.zip
+rm -rf apache-tomcat-7.0.79
+unzip apache-tomcat-7.0.79.zip
+export TOMCAT_HOME=$(pwd)/apache-tomcat-7.0.79/
 echo "export JAVA_OPTS=\"-Dcom.arjuna.ats.jta.recovery.XAResourceRecovery1=com.arjuna.ats.internal.jdbc.recovery.BasicXARecovery\;abs://$(pwd)/src/main/resources/h2recoveryproperties.xml\ \;1\"" > $TOMCAT_HOME/bin/setenv.sh
 chmod +x $TOMCAT_HOME/bin/catalina.sh
 mvn package
