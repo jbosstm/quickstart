@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstart.xts.non-transactional-resource</groupId>
     <artifactId>non-transactional-resource-all</artifactId>
-    <version>5.5.28.Final-SNAPSHOT</version>
+    <version>5.5.28.Final</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with a non-transactional resource</name>
     <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with a non-transactional resource</description>
@@ -51,7 +51,7 @@
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.narayana>5.5.28.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.5.28.Final</version.narayana>
         <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
         <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>
