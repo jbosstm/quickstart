@@ -7,7 +7,7 @@
 
   <groupId>org.jboss.narayana.quickstart.stm</groupId>
   <artifactId>stm-vertx-demo</artifactId>
-  <version>5.6.3.Final</version>
+  <version>5.6.4.Final-SNAPSHOT</version>
 
   <name>Narayana - STM and vertx demo </name>
 

@@ -26,7 +26,7 @@
     <parent>
         <artifactId>narayana-quickstarts-all</artifactId>
         <groupId>org.jboss.narayana.quickstart.jta</groupId>
-        <version>5.6.3.Final</version>
+        <version>5.6.4.Final-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -40,7 +40,7 @@
         <version.jacorb>2.3.1jboss.patch01-brew</version.jacorb>
         <version.org.slf4j>1.7.2.jbossorg-1</version.org.slf4j>
         <version.junit>4.12</version.junit>
-        <version.narayana>5.6.3.Final</version.narayana>
+        <version.narayana>5.6.4.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <repositories>
