@@ -19,14 +19,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>simple</artifactId>
-  <version>5.5.29.Final</version>
+  <version>5.5.30.Final-SNAPSHOT</version>
   <name>RESTAT Quickstart: Basic</name>
   <description>Basic example of how to start and stop a REST Atomic transaction</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-    <version.narayana>5.5.29.Final</version.narayana>
+    <version.narayana>5.5.30.Final-SNAPSHOT</version.narayana>
   </properties>
 
     <repositories>
