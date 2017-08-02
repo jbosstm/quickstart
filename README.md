@@ -1,9 +1,11 @@
-Quickstarts
------------
+# Quickstarts
 
-Guidelines for contributing a quickstart are as per:
-https://docs.jboss.org/author/display/AS71/Writing+a+quickstart
+## Contacting us
 
+We are always happy to talk transactions and how-to use Narayana in exotic and not so exotic environments. If you have ideas for what we can add to the quickstarts to make them more useful please do reach out to us over on our forum:
+https://developer.jboss.org/en/jbosstm/
+
+## Running a quickstart
 
 To run the quickstarts:
 
