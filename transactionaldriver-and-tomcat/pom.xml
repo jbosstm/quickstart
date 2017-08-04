@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.narayana</groupId>
     <artifactId>transactionaldriver-and-tomcat</artifactId>
-    <version>5.6.4.Final</version>
+    <version>5.6.5.Final-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
-        <version.narayana>5.6.4.Final</version.narayana>
+        <version.narayana>5.6.5.Final-SNAPSHOT</version.narayana>
         <version.resteasy>3.0.19.Final</version.resteasy>
         <version.h2>1.4.182</version.h2>
         <version.tomcat.plugin>2.2</version.tomcat.plugin>
