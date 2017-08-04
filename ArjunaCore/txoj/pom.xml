@@ -15,7 +15,7 @@
   <parent>
     <groupId>org.jboss.narayana.arjunacore.quickstart</groupId>
     <artifactId>quickstarts</artifactId>
-    <version>5.5.30.Final-SNAPSHOT</version>
+    <version>5.5.30.Final</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -24,7 +24,7 @@
   <name>TXOJ example</name>
   <description>TXOJ example</description>
   <properties>
-    <version.narayana>5.5.30.Final-SNAPSHOT</version.narayana>
+    <version.narayana>5.5.30.Final</version.narayana>
   </properties>
   <build>
     <plugins>

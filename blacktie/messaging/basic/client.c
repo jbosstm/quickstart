@@ -28,7 +28,7 @@
 
 static HttpClient _wc;
 
-const char *qname = "http://localhost:8080/bt-messaging-5.5.30.Final-SNAPSHOT/queues/jms.queue.testQueue";
+const char *qname = "http://localhost:8080/bt-messaging-5.5.30.Final/queues/jms.queue.testQueue";
 
 static const char* PULL_CONSUMERS = "msg-pull-consumers";
 static const char* CREATE_WITH_ID = "msg-create-with-id";
