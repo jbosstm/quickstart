@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.narayana</groupId>
     <artifactId>transactionaldriver-jpa-and-tomcat</artifactId>
-    <version>5.6.4.Final-SNAPSHOT</version>
+    <version>5.6.4.Final</version>
     <packaging>war</packaging>
 
     <properties>
-        <version.narayana>5.6.4.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.6.4.Final</version.narayana>
         <version.resteasy>3.0.23.Final</version.resteasy>
         <version.hibernate>5.1.7.Final</version.hibernate>
         <version.h2>1.4.182</version.h2>
