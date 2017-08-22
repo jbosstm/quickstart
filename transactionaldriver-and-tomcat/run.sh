@@ -1,10 +1,11 @@
 #/bin/bash
 set -e
 
-wget -nc http://mirror.vorboss.net/apache/tomcat/tomcat-7/v7.0.79/bin/apache-tomcat-7.0.79.zip
-rm -rf apache-tomcat-7.0.79
-unzip apache-tomcat-7.0.79.zip
-export TOMCAT_HOME=$(pwd)/apache-tomcat-7.0.79/
+TOMCAT_VERSION=7.0.81
+wget -nc http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-7/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
+rm -rf apache-tomcat-$TOMCAT_VERSION
+unzip apache-tomcat-$TOMCAT_VERSION.zip
+export TOMCAT_HOME=$(pwd)/apache-tomcat-$TOMCAT_VERSION/
 echo "export JAVA_OPTS=\"-Dcom.arjuna.ats.jta.recovery.XAResourceRecovery1=com.arjuna.ats.internal.jdbc.recovery.BasicXARecovery\;abs://$(pwd)/src/main/resources/h2recoveryproperties.xml\ \;1\"" > $TOMCAT_HOME/bin/setenv.sh
 chmod +x $TOMCAT_HOME/bin/catalina.sh
 mvn package
