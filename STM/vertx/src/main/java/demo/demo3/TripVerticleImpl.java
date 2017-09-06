@@ -8,7 +8,7 @@ import demo.domain.TheatreService;
 import io.vertx.core.AbstractVerticle;
 
 /**
- * The base class encapsulates the domain and STM specific logic
+ * The base class encapsulates the filter and STM specific logic
  */
 class TripVerticleImpl extends AbstractVerticle {
 
