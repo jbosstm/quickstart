@@ -101,6 +101,7 @@ or
 
   java -cp target/stm-vertx-demo-5.6.0.Final-SNAPSHOT-fat.jar demo.demo12.PersistentSharedTheatreVerticle
 
+
 Start a second verticle that will share the same STM object. In the output of the above command
 look for the line that reports the uid of the STM object, for example:
 
