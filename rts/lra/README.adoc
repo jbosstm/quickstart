@@ -1,0 +1,57 @@
+## Build the demo
+
+```bash
+mvn clean package
+```
+
+## Trip Demo
+
+    start LRA 1
+        Book hotel
+        start LRA 2
+            start LRA 3
+                Book flight option 1
+            start LRA 4
+                Book flight option 2
+    cancel LRA 3
+    close LRA 1 (results in the hotel and flight option 2 being confirmed)
+
+### Make sure the LRA coordinator and various services are running 
+
+For simplicity the trip, hotel and flight services all run in the same JVM and all listen on the same http port. However, inter-service requests are still performed using http so running each service in a separate JVM will also work.
+
+Start the coordinator:
+
+```bash
+java -jar target/lra-test/WEB-INF/lib/lra-coordinator-5.6.5.Final-SNAPSHOT-swarm.jar -Dswarm.http.port=8080
+```
+
+Start the trip, hotel and flight services:
+
+```bash
+mvn wildfly-swarm:run -DskipTests -Dswarm.http.port=8081 -Dlra.http.port=8080
+```
+
+The system property *lra.http.port* specifies the port on which the LRA coordinator is listening.
+
+(If you want to enable source level debugging use -Dswarm.debug.port=<port>).
+
+### Update a trip booking
+
+Make a provisional booking and then amend it before confirming the booking. Apart from using
+Jackson for parsing Json the client (TripClient) only uses Java SE APIs.
+
+```bash
+java -cp target/classes:target/lra-test/WEB-INF/lib/* -Dlra.http.port=8080 -Dservice.http.port=8081 TripClient
+```
+
+The system properties *lra.http.port* and *service.http.port* specify the ports on which the LRA
+coordinator and example service are is listening, respectively.
+
+### One shot bookings using curl:
+
+```bash
+curl -X POST  "http://localhost:8081/trip/book?hotelName=Rex"
+curl -X POST  "http://localhost:8081/trip/book?flightNumber=BA123"
+```
+
