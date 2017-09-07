@@ -30,6 +30,8 @@ import java.io.Closeable;
 @SpringBootApplication
 public class QuickstartApplication {
 
+    public static final Object TO_WAIT = new Object();
+
     public static void main(String[] args) throws Exception {
         if (args.length != 1 && args.length != 2) {
             throw new IllegalArgumentException("Invalid arguments provided. See README.md for usage examples");
@@ -42,7 +44,10 @@ public class QuickstartApplication {
 
         switch (CompleteAction.valueOf(args[0].toUpperCase())) {
             case COMMIT:
-                quickstartService.demonstrateCommit(args[1]);
+                synchronized (TO_WAIT) {
+                    quickstartService.demonstrateCommit(args[1]);
+                    TO_WAIT.wait();
+                }
                 break;
             case ROLLBACK:
                 quickstartService.demonstrateRollback(args[1]);

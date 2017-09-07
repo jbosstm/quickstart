@@ -32,6 +32,9 @@ public class MessagesListener {
     @JmsListener(destination = QUEUE_NAME)
     public void onMessage(String message) {
         System.out.println("Message received: " + message);
+        synchronized (QuickstartApplication.TO_WAIT) {
+            QuickstartApplication.TO_WAIT.notify();
+        }
     }
 
 }
