@@ -16,23 +16,37 @@ mvn clean package
     cancel LRA 3
     close LRA 1 (results in the hotel and flight option 2 being confirmed)
 
+### Before you start
+
+Obtain and unzip the Narayana distribution containing the LRA swarm coordinator to $NARAYANA_INSTALL_LOCATION
+	
 ### Make sure the LRA coordinator and various services are running 
 
-For simplicity the trip, hotel and flight services all run in the same JVM and all listen on the same http port. However, inter-service requests are still performed using http so running each service in a separate JVM will also work.
+The trip, hotel and flight services all run in different JVMs and all listen on the different http ports.
 
-Start the coordinator:
+There are two coordinators ran in the example. You can simplify this to one coordinator by not running the
+second coordinator process and changing the lra.http.port of the flight-service. Running multiple coordinators
+simulates how different trust domains can interoperate.
+
+Start the coordinators:
 
 ```bash
-java -jar target/lra-test/WEB-INF/lib/lra-coordinator-5.6.5.Final-SNAPSHOT-swarm.jar -Dswarm.http.port=8080
+java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080
+java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8081
 ```
 
 Start the trip, hotel and flight services:
 
 ```bash
-mvn wildfly-swarm:run -DskipTests -Dswarm.http.port=8081 -Dlra.http.port=8080
+java -jar hotel-service/target/lra-test-swarm.jar -Dswarm.http.port=8082
+java -jar flight-service/target/lra-test-swarm.jar -Dswarm.http.port=8083 -Dlra.http.port=8081
+java -jar trip-controller/target/lra-test-swarm.jar -Dswarm.http.port=8084 -Dlra.http.port=8080
 ```
 
 The system property *lra.http.port* specifies the port on which the LRA coordinator is listening.
+
+As you can see the flight service uses it's own coordinator to simulate a different domain
+participating in the same transaction.
 
 (If you want to enable source level debugging use -Dswarm.debug.port=<port>).
 
@@ -42,16 +56,25 @@ Make a provisional booking and then amend it before confirming the booking. Apar
 Jackson for parsing Json the client (TripClient) only uses Java SE APIs.
 
 ```bash
-java -cp target/classes:target/lra-test/WEB-INF/lib/* -Dlra.http.port=8080 -Dservice.http.port=8081 TripClient
+mvn -f trip-client/pom.xml exec:java -Dservice.http.host="localhost" -Dservice.http.port=8084
 ```
 
 The system properties *lra.http.port* and *service.http.port* specify the ports on which the LRA
 coordinator and example service are is listening, respectively.
 
-### One shot bookings using curl:
+## Running the demo on Minishift
 
+You will need to have installed Minishift and have the tools in your command line.
+
+Assuming that is the case and the LRA coordinator is available in $NARAYANA_INSTALL_LOCATION/rts/lra/
+you can execute the script minishift.sh to deploy the services, coordinators and execute a simple client
+application.
+
+To check the logs you can look at:
 ```bash
-curl -X POST  "http://localhost:8081/trip/book?hotelName=Rex"
-curl -X POST  "http://localhost:8081/trip/book?flightNumber=BA123"
+oc logs -f `oc get pods | grep ^flight-service | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^hotel-service | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^trip-controller | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^lra-coordinator | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^flight-lra-coordinator | grep Running | awk '{ print $1 }'`
 ```
-
