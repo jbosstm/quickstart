@@ -90,6 +90,18 @@ function build_narayana {
   #rm -rf ~/.m2/repository/
   rm -rf narayana
   git clone https://github.com/${NARAYANA_REPO}/narayana.git
+  echo "Checking if need Narayana PR"
+  if [ -n "$NY_BRANCH" ]; then
+    echo "Building NY PR"
+    [ $? = 0 ] || fatal "git clone https://github.com/${NARAYANA_REPO}/narayana.git failed"
+    cd narayana
+    git fetch origin +refs/pull/*/head:refs/remotes/jbosstm/pull/*/head
+    [ $? = 0 ] || fatal "git fetch of pulls failed"
+    git checkout $NY_BRANCH
+    [ $? = 0 ] || fatal "git fetch of pull branch failed"
+    cd ../
+  fi
+  
   if [ $? != 0 ]; then
     comment_on_pull "Checkout failed: $BUILD_URL";
     exit -1
@@ -99,6 +111,13 @@ function build_narayana {
   if [ $? != 0 ]; then
     comment_on_pull "Narayana build failed: $BUILD_URL";
     exit -1
+  fi
+  if [ -d rts/lra/ ]; then
+    ./build.sh -f rts/lra/pom.xml -DskipTests
+    if [ $? != 0 ]; then
+      comment_on_pull "Narayana build failed: $BUILD_URL";
+      exit -1
+    fi
   fi
 }
 
