@@ -35,8 +35,6 @@
         <version.junit>4.12</version.junit>
         <version.arquillian>1.1.12.Final</version.arquillian>
 
-        <version.narayana>${project.version}</version.narayana>
-
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -49,7 +47,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom</artifactId>
+                <artifactId>bom-all</artifactId>
                 <version>${version.wildfly-swarm}</version>
                 <scope>import</scope>
                 <type>pom</type>
@@ -106,6 +104,10 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>microprofile</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>transactions</artifactId>
+        </dependency>
 
          <!-- LRA JAXRS filters -->
         <dependency>
@@ -120,12 +122,6 @@
             <artifactId>resteasy-client</artifactId>
             <version>${version.resteasy-client}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.narayana.rts</groupId>
-            <artifactId>lra-coordinator</artifactId>
-            <version>${project.version}</version>
-            <classifier>swarm</classifier>
         </dependency>
     </dependencies>
 </project>

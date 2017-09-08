@@ -75,9 +75,10 @@ public class TripController extends Compensator {
     @PostConstruct
     private void initController() {
         try {
+            String serviceHost = System.getProperty("service.http.host", "localhost");
             int servicePort = Integer.getInteger("service.http.port", 8081);
-            URL HOTEL_SERVICE_BASE_URL = new URL("http://localhost:" + servicePort);
-            URL FLIGHT_SERVICE_BASE_URL = new URL("http://localhost:" + servicePort);
+            URL HOTEL_SERVICE_BASE_URL = new URL("http://" + serviceHost + ":" + servicePort);
+            URL FLIGHT_SERVICE_BASE_URL = new URL("http://" + serviceHost + ":" + servicePort);
 
             hotelClient = ClientBuilder.newClient();
             flightClient = ClientBuilder.newClient();
