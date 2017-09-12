@@ -21,6 +21,7 @@
  */
 package participant.service;
 
+import io.narayana.lra.client.GenericLRAException;
 import io.narayana.lra.client.LRAClient;
 import io.narayana.lra.client.LRAClientAPI;
 import participant.model.Booking;
@@ -30,6 +31,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +60,12 @@ public class TripService extends BookingStore{
 
         // check the booking to see if the client wants to requestCancel any dependent bookings
         Arrays.stream(tripBooking.getDetails()).filter(Booking::isCancelPending).forEach(b -> {
-            lraClient.cancelLRA(LRAClient.lraToURL(b.getId(), "Invalid " + b.getType() + " tripBooking id format"));
+            URL url = LRAClient.lraToURL(b.getId(), "Invalid " + b.getType() + " tripBooking id format");
+            try {
+                new LRAClient(url.getHost(), url.getPort()).cancelLRA(LRAClient.lraToURL(b.getId(), "Invalid " + b.getType() + " tripBooking id format"));
+            } catch (URISyntaxException e) {
+                throw new GenericLRAException(url, Response.Status.BAD_REQUEST.getStatusCode(),String.format("%s: %s", "Invalid " + b.getType() + " tripBooking id format"), e);
+            }
             b.setCanceled();
         });
 

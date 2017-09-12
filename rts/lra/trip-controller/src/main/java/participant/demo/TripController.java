@@ -61,6 +61,13 @@ import static io.narayana.lra.client.LRAClient.LRA_HTTP_HEADER;
 @Path(TripController.TRIP_PATH)
 @LRA(LRA.Type.SUPPORTS)
 public class TripController extends Compensator {
+    public static final String HOTEL_PATH = "/hotel";
+    public static final String HOTEL_NAME_PARAM = "hotelName";
+    public static final String HOTEL_BEDS_PARAM = "beds";
+    public static final String FLIGHT_PATH = "/flight";
+    public static final String FLIGHT_NUMBER_PARAM = "flightNumber";
+    public static final String ALT_FLIGHT_NUMBER_PARAM = "altFlightNumber";
+    public static final String FLIGHT_SEATS_PARAM = "flightSeats";
     public static final String TRIP_PATH = "/trip";
 
     private Client hotelClient;
@@ -75,16 +82,14 @@ public class TripController extends Compensator {
     @PostConstruct
     private void initController() {
         try {
-            String serviceHost = System.getProperty("service.http.host", "localhost");
-            int servicePort = Integer.getInteger("service.http.port", 8081);
-            URL HOTEL_SERVICE_BASE_URL = new URL("http://" + serviceHost + ":" + servicePort);
-            URL FLIGHT_SERVICE_BASE_URL = new URL("http://" + serviceHost + ":" + servicePort);
+            URL HOTEL_SERVICE_BASE_URL = new URL("http://" + System.getProperty("hotel.service.http.host", "localhost") + ":" + Integer.getInteger("hotel.service.http.port", 8082));
+            URL FLIGHT_SERVICE_BASE_URL = new URL("http://" + System.getProperty("flight.service.http.host", "localhost") + ":" + Integer.getInteger("flight.service.http.port", 8083));
 
             hotelClient = ClientBuilder.newClient();
             flightClient = ClientBuilder.newClient();
 
-            hotelTarget = hotelClient.target(URI.create(new URL(HOTEL_SERVICE_BASE_URL, HotelController.HOTEL_PATH).toExternalForm()));
-            flightTarget = flightClient.target(URI.create(new URL(FLIGHT_SERVICE_BASE_URL, FlightController.FLIGHT_PATH).toExternalForm()));
+            hotelTarget = hotelClient.target(URI.create(new URL(HOTEL_SERVICE_BASE_URL, HOTEL_PATH).toExternalForm()));
+            flightTarget = flightClient.target(URI.create(new URL(FLIGHT_SERVICE_BASE_URL, FLIGHT_PATH).toExternalForm()));
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -117,11 +122,11 @@ public class TripController extends Compensator {
     // delayClose because we want the LRA to be associated with a booking until the user confirms the booking
     @LRA(value = LRA.Type.REQUIRED, delayClose = true)
     public Response bookTrip( @HeaderParam(LRA_HTTP_HEADER) String lraId,
-                              @QueryParam(HotelController.HOTEL_NAME_PARAM) @DefaultValue("") String hotelName,
-                              @QueryParam(HotelController.HOTEL_BEDS_PARAM) @DefaultValue("1") Integer hotelGuests,
-                              @QueryParam(FlightController.FLIGHT_NUMBER_PARAM) @DefaultValue("") String flightNumber,
-                              @QueryParam(FlightController.ALT_FLIGHT_NUMBER_PARAM) @DefaultValue("") String altFlightNumber,
-                              @QueryParam(FlightController.FLIGHT_SEATS_PARAM) @DefaultValue("1") Integer flightSeats,
+                              @QueryParam(HOTEL_NAME_PARAM) @DefaultValue("") String hotelName,
+                              @QueryParam(HOTEL_BEDS_PARAM) @DefaultValue("1") Integer hotelGuests,
+                              @QueryParam(FLIGHT_NUMBER_PARAM) @DefaultValue("") String flightNumber,
+                              @QueryParam(ALT_FLIGHT_NUMBER_PARAM) @DefaultValue("") String altFlightNumber,
+                              @QueryParam(FLIGHT_SEATS_PARAM) @DefaultValue("1") Integer flightSeats,
                               @QueryParam("mstimeout") @DefaultValue("500") Long timeout) throws BookingException {
 
         Booking hotelBooking = bookHotel(hotelName, hotelGuests);
@@ -182,7 +187,7 @@ public class TripController extends Compensator {
 
         WebTarget webTarget = hotelTarget
                 .path("book")
-                .queryParam(HotelController.HOTEL_NAME_PARAM, name).queryParam(HotelController.HOTEL_BEDS_PARAM, beds);
+                .queryParam(HOTEL_NAME_PARAM, name).queryParam(HOTEL_BEDS_PARAM, beds);
 
         Response response = webTarget.request().post(Entity.text(""));
 
@@ -198,8 +203,8 @@ public class TripController extends Compensator {
 
         WebTarget webTarget = flightTarget
                 .path("book")
-                .queryParam(FlightController.FLIGHT_NUMBER_PARAM, flightNumber)
-                .queryParam(FlightController.FLIGHT_SEATS_PARAM, seats);
+                .queryParam(FLIGHT_NUMBER_PARAM, flightNumber)
+                .queryParam(FLIGHT_SEATS_PARAM, seats);
 
         Response response = webTarget.request().post(Entity.text(""));
 
