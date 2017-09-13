@@ -1,0 +1,140 @@
+## Build the demo
+
+```bash
+mvn clean package
+```
+
+## Trip Demo
+
+    start LRA 1
+        Book hotel
+        start LRA 2
+            start LRA 3
+                Book flight option 1
+            start LRA 4
+                Book flight option 2
+    cancel LRA 3
+    close LRA 1 (results in the hotel and flight option 2 being confirmed)
+
+### Before you start
+
+Obtain and unzip the Narayana distribution containing the LRA swarm coordinator to $NARAYANA_INSTALL_LOCATION
+	
+### Make sure the LRA coordinator and various services are running 
+
+The trip, hotel and flight services all run in different JVMs and all listen on the different http ports.
+
+Start the coordinators:
+
+```bash
+java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080
+java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8081
+```
+
+Start the trip, hotel and flight services:
+
+```bash
+java -jar hotel-service/target/lra-test-swarm.jar -Dswarm.http.port=8082
+java -jar flight-service/target/lra-test-swarm.jar -Dswarm.http.port=8083 -Dlra.http.port=8081
+java -jar trip-controller/target/lra-test-swarm.jar -Dswarm.http.port=8084 -Dlra.http.port=8080
+```
+
+The system property *lra.http.port* specifies the port on which the LRA coordinator is listening.
+
+As you can see the flight service uses it's own coordinator to simulate a different domain
+participating in the same transaction.
+
+(If you want to enable source level debugging use -Dswarm.debug.port=<port>).
+
+### Update a trip booking
+
+Make a provisional booking and then amend it before confirming the booking. Apart from using
+Jackson for parsing Json the client (TripClient) only uses Java SE APIs.
+
+```bash
+mvn -f trip-client/pom.xml exec:java -Dservice.http.host="localhost" -Dservice.http.port=8084
+```
+
+The system properties *lra.http.port* and *service.http.port* specify the ports on which the LRA
+coordinator and example service are is listening, respectively.
+
+### One shot bookings using curl:
+
+```bash
+curl -X POST  "http://localhost:8081/trip/book?hotelName=Rex"
+curl -X POST  "http://localhost:8081/trip/book?flightNumber=BA123"
+```
+
+## Running the demo on Minishift
+
+You will need to have installed Minishift and have the tools in your command line.
+
+We provisioned Minishift as:
+```bash
+minishift start
+```
+
+Once you have the Minishift environment running the following steps allow you to provision and 
+run the quickstart on the PaaS
+```bash
+# Create a new project
+oc new-project lra-minishift
+
+# Deploy the LRA coordinator
+cd lra-coordinator && rm -rf target/ && mkdir target
+oc new-build --binary --name=lra-coordinator -l app=lra-coordinator
+cp $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar target/
+sleep 10
+oc start-build lra-coordinator --from-dir=. --follow
+oc new-app lra-coordinator -l app=lra-coordinator
+oc expose service lra-coordinator
+# Deploy the Flight LRA coordinator
+oc new-build --binary --name=flight-lra-coordinator -l app=flight-lra-coordinator
+sleep 10
+oc start-build flight-lra-coordinator --from-dir=. --follow
+oc new-app flight-lra-coordinator -l app=flight-lra-coordinator
+oc expose service flight-lra-coordinator
+cd ..
+
+# Deploy the Flight Service
+cd flight-service
+oc new-build --binary --name=flight-service -l app=flight-service
+mvn clean package
+oc start-build flight-service --from-dir=. --follow
+oc new-app flight-service -l app=flight-service
+oc expose service flight-service
+cd ..
+# Deploy the Hotel Service
+cd hotel-service
+oc new-build --binary --name=hotel-service -l app=hotel-service
+mvn clean package
+oc start-build hotel-service --from-dir=. --follow
+oc new-app hotel-service -l app=hotel-service
+oc expose service hotel-service
+cd ..
+# Deploy the Trip Controller
+cd trip-controller
+oc new-build --binary --name=trip-controller -l app=trip-controller
+mvn clean package
+oc start-build trip-controller --from-dir=. --follow
+oc new-app trip-controller -l app=trip-controller
+oc expose service trip-controller
+cd ..
+```
+
+You can then run the client as above:
+
+```bash
+cd trip-client
+mvn exec:java -Dservice.http.host="trip-controller-lra-minishift.`minishift ip`.nip.io" -Dservice.http.port=80 cancel
+mvn exec:java -Dservice.http.host="trip-controller-lra-minishift.`minishift ip`.nip.io" -Dservice.http.port=80 confirm
+```
+
+To check the logs you can look at:
+```bash
+oc logs -f `oc get pods | grep ^flight-service | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^hotel-service | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^trip-controller | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^lra-coordinator | grep Running | awk '{ print $1 }'`
+oc logs -f `oc get pods | grep ^flight-lra-coordinator | grep Running | awk '{ print $1 }'`
+```

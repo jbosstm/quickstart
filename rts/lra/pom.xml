@@ -17,8 +17,8 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.narayana.quickstart.rts</groupId>
-  <artifactId>rts-quickstarts</artifactId>
+  <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
+  <artifactId>lra-quickstarts</artifactId>
   <version>5.6.5.Final-SNAPSHOT</version>
   <name>RESTTX Quickstarts</name>
   <description>Provides examples of how to use transactions with web applications</description>
@@ -37,7 +37,9 @@
     </repository>
   </repositories>
   <modules>
-    <module>at</module>
-    <module>lra</module>
+    <module>flight-service</module>
+    <module>hotel-service</module>
+    <module>trip-controller</module>
+    <module>trip-client</module>
   </modules>
 </project>
