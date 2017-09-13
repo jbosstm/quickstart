@@ -21,14 +21,13 @@
  */
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import participant.demo.FlightController;
-import participant.demo.HotelController;
-import participant.demo.TripController;
 import participant.model.Booking;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
@@ -36,20 +35,29 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class TripClient {
+    public static final String TRIP_PATH = "/trip";
     private static String PRIMARY_SERVER;
     private static String TRIP_SERVICE_BASE_URL;
     private static String HOTEL_SERVICE_BASE_URL;
     private static String FLIGHT_SERVICE_BASE_URL;
 
     ObjectMapper objectMapper = new ObjectMapper();
+    public static final String HOTEL_PATH = "/hotel";
+    public static final String HOTEL_NAME_PARAM = "hotelName";
+    public static final String HOTEL_BEDS_PARAM = "beds";
+    public static final String FLIGHT_PATH = "/flight";
+    public static final String FLIGHT_NUMBER_PARAM = "flightNumber";
+    public static final String ALT_FLIGHT_NUMBER_PARAM = "altFlightNumber";
+    public static final String FLIGHT_SEATS_PARAM = "flightSeats";
 
     private static void initClient() {
+        String serviceHost = System.getProperty("service.http.host", "localhost");
         int servicePort = Integer.getInteger("service.http.port", 8081);
 
-        PRIMARY_SERVER = "http://localhost:" + servicePort;
-        TRIP_SERVICE_BASE_URL = String.format("%s%s", PRIMARY_SERVER, TripController.TRIP_PATH);
-        HOTEL_SERVICE_BASE_URL = String.format("%s%s", PRIMARY_SERVER, HotelController.HOTEL_PATH);
-        FLIGHT_SERVICE_BASE_URL = String.format("%s%s", PRIMARY_SERVER, FlightController.FLIGHT_PATH);
+        PRIMARY_SERVER = "http://"+serviceHost +":" + servicePort;
+        TRIP_SERVICE_BASE_URL = String.format("%s%s", PRIMARY_SERVER, TRIP_PATH);
+        HOTEL_SERVICE_BASE_URL = String.format("%s%s", PRIMARY_SERVER, HOTEL_PATH);
+        FLIGHT_SERVICE_BASE_URL = String.format("%s%s", PRIMARY_SERVER, FLIGHT_PATH);
     }
 
     public static void main(String[] args) throws Exception {
@@ -71,7 +79,19 @@ public class TripClient {
 
         Arrays.stream(booking.getDetails()).forEach(b -> System.out.printf("\t%s%n", b));
 
-        Booking confirmation = (args.length > 0 && args[0].equals("cancel"))
+        boolean cancel = false;
+        if (args.length == 0) {
+            System.out.println("Cancel (y) or Confirm (n) ?");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            cancel = reader.readLine().equals("y");
+            reader.close();
+        } else if (args[0].equals("cancel")) {
+            cancel = true;
+        }
+
+        System.out.println("Trying to cancel: " + cancel);
+
+        Booking confirmation = (cancel)
                     ? tripClient.cancel(booking)
                     : tripClient.confirm(booking);
 
@@ -84,11 +104,11 @@ public class TripClient {
         StringBuilder tripRequest =
                 new StringBuilder(TRIP_SERVICE_BASE_URL)
                         .append("/book?")
-                        .append(HotelController.HOTEL_NAME_PARAM).append('=').append(hotelName).append('&')
-                        .append(HotelController.HOTEL_BEDS_PARAM).append('=').append(hotelGuests).append('&')
-                        .append(FlightController.FLIGHT_NUMBER_PARAM).append('=').append(flightNumber).append('&')
-                        .append(FlightController.ALT_FLIGHT_NUMBER_PARAM).append('=').append(altFlightNumber).append('&')
-                        .append(FlightController.FLIGHT_SEATS_PARAM).append('=').append(flightSeats);
+                        .append(HOTEL_NAME_PARAM).append('=').append(hotelName).append('&')
+                        .append(HOTEL_BEDS_PARAM).append('=').append(hotelGuests).append('&')
+                        .append(FLIGHT_NUMBER_PARAM).append('=').append(flightNumber).append('&')
+                        .append(ALT_FLIGHT_NUMBER_PARAM).append('=').append(altFlightNumber).append('&')
+                        .append(FLIGHT_SEATS_PARAM).append('=').append(flightSeats);
 
         URL url = new URL(tripRequest.toString());
         String json = updateResource(url, "POST", "");
