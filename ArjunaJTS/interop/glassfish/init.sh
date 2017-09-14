@@ -9,12 +9,12 @@ function fatal {
 [ $NARAYANA_CURRENT_VERSION ] || fatal "please set NARAYANA_CURRENT_VERSION"
 
 QS_DIR=${WORKSPACE}/ArjunaJTS/interop/glassfish
-JBOSS_SRC=${QS_DIR}/tmp/narayana/jboss-as
-if [ -f "${JBOSS_SRC}/pom.xml" ]; then
-  WILDFLY_MASTER_VERSION=`awk "/wildfly-parent/ {getline;print;}" ${JBOSS_SRC}/pom.xml | cut -d \< -f 2|cut -d \> -f 2`
-fi
 
-export JBOSS_HOME="$JBOSS_SRC/build/target/wildfly-$WILDFLY_MASTER_VERSION"
+if ls ${QS_DIR}/wildfly-*/ 1> /dev/null 2>&1; then
+  cd ${QS_DIR}/wildfly-*/
+  export JBOSS_HOME=$(pwd)
+  cd ..
+fi
 
 if [ -d "/home/jenkins/glassfish4" ]; then
   GLASSFISH=/home/jenkins/glassfish4

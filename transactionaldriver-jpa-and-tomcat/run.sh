@@ -22,3 +22,4 @@ done
 
 curl -f http://localhost:8080/${QUICKSTART_NAME} | grep test10
 $TOMCAT_HOME/bin/catalina.sh stop
+rm -rf apache-tomcat-$TOMCAT_VERSION
