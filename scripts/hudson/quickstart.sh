@@ -76,6 +76,7 @@ function get_bt_dependencies {
       if [ "$DEP" -ne "6" ]; then
       wget http://${JENKINS_HOST}/userContent/blacktie-thirdparty-centos70x64.tgz
       tar xzvf blacktie-thirdparty-centos70x64.tgz
+      rm blacktie-thirdparty-centos70x64.tgz
       fi
   fi
 }
@@ -84,8 +85,6 @@ function build_narayana {
   cd $WORKSPACE
   # INITIALIZE ENV
   export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
-
-  [ $PROFILE ] || PROFILE=BLACKTIE 
 
   #rm -rf ~/.m2/repository/
   rm -rf narayana
@@ -107,18 +106,16 @@ function build_narayana {
     exit -1
   fi
   cd narayana
-  WORKSPACE=$PWD COMMENT_ON_PULL="" PROFILE=$PROFILE ./scripts/hudson/narayana.sh -DskipTests -Pcommunity
+  WORKSPACE=$PWD COMMENT_ON_PULL="" PROFILE=BLACKTIE ./scripts/hudson/narayana.sh -DskipTests -Pcommunity
+  ./build.sh clean install -DskipTests
   if [ $? != 0 ]; then
     comment_on_pull "Narayana build failed: $BUILD_URL";
     exit -1
   fi
-  if [ -d rts/lra/ ]; then
-    ./build.sh -f rts/lra/pom.xml -DskipTests
-    if [ $? != 0 ]; then
-      comment_on_pull "Narayana build failed: $BUILD_URL";
-      exit -1
-    fi
-  fi
+  echo "Deleting check out - assuming all artifacts are in the .m2"
+  cp -rp narayana-full/target/narayana-full-5.6.5.Final-SNAPSHOT-bin.zip $WORKSPACE
+  cd ..
+  rm -rf narayana
 }
 
 function configure_wildfly {

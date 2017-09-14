@@ -21,3 +21,4 @@ done
 
 curl -f http://localhost:8080/transactionaldriver-and-tomcat
 $TOMCAT_HOME/bin/catalina.sh stop
+rm -rf apache-tomcat-$TOMCAT_VERSION
