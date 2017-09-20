@@ -40,7 +40,7 @@
         <version.narayana>5.6.5.Final-SNAPSHOT</version.narayana>
         <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
         <osgi.version>6.0.0</osgi.version>
-        <karaf.version>4.1.0-SNAPSHOT</karaf.version>
+        <karaf.version>4.1.2</karaf.version>
         <felix.plugin.version>3.0.1</felix.plugin.version>
     </properties>
 
