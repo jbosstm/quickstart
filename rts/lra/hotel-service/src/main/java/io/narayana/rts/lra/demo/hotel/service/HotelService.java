@@ -33,8 +33,8 @@ import java.util.Map;
 public class HotelService {
     private Map<String, Booking> bookings = new HashMap<>();
 
-    public Booking book(String bid, String hotel, Integer beds) {;
-        Booking booking = new Booking(bid, hotel, beds, "Hotel");
+    public Booking book(String bid, String hotel) {
+        Booking booking = new Booking(bid, hotel, "Hotel");
         Booking earlierBooking = bookings.putIfAbsent(booking.getId(), booking);
         return earlierBooking == null ? booking : earlierBooking;
     }

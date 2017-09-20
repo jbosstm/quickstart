@@ -29,32 +29,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class TripClient {
-    public static final String TRIP_PATH = "/trip";
-    private static String PRIMARY_SERVER;
-    private static String TRIP_SERVICE_BASE_URL;
-
     static ObjectMapper objectMapper = new ObjectMapper();
-    public static final String HOTEL_NAME_PARAM = "hotelName";
-    public static final String HOTEL_BEDS_PARAM = "beds";
-    public static final String FLIGHT_NUMBER_PARAM = "flightNumber";
-    public static final String ALT_FLIGHT_NUMBER_PARAM = "altFlightNumber";
-    public static final String FLIGHT_SEATS_PARAM = "flightSeats";
-    public static final String BOOKING_ID = "bookingId";
+    private static String TRIP_SERVICE_BASE_URL;
 
     public static void main(String[] args) throws Exception {
         String serviceHost = System.getProperty("service.http.host", "localhost");
         int servicePort = Integer.getInteger("service.http.port", 8084);
 
-        PRIMARY_SERVER = "http://"+serviceHost +":" + servicePort;
-        TRIP_SERVICE_BASE_URL = String.format("%s%s", PRIMARY_SERVER, TRIP_PATH);
+        TRIP_SERVICE_BASE_URL = "http://" + serviceHost + ":" + servicePort;
 
         TripClient tripClient = new TripClient();
 
-        Booking booking = tripClient.bookTrip("TheGrand", 2, "BA123", "RH456", 2);
+        Booking booking = tripClient.bookTrip("TheGrand", "BA123", "RH456");
 
         if (booking == null)
             return;
@@ -83,22 +74,16 @@ public class TripClient {
         Arrays.stream(response.getDetails()).forEach(b -> System.out.printf("\tAssociated Booking: %s%n", b));
     }
 
-    private Booking bookTrip(String hotelName, Integer hotelGuests,
-                            String flightNumber, String altFlightNumber, Integer flightSeats) throws Exception {
+    private Booking bookTrip(String hotelName, String flightNumber, String altFlightNumber) throws Exception {
         StringBuilder tripRequest =
                 new StringBuilder(TRIP_SERVICE_BASE_URL)
-                        .append("/book?")
-                        .append(HOTEL_NAME_PARAM).append('=').append(hotelName).append('&')
-                        .append(HOTEL_BEDS_PARAM).append('=').append(hotelGuests).append('&')
-                        .append(FLIGHT_NUMBER_PARAM).append('=').append(flightNumber).append('&')
-                        .append(ALT_FLIGHT_NUMBER_PARAM).append('=').append(altFlightNumber).append('&')
-                        .append(FLIGHT_SEATS_PARAM).append('=').append(flightSeats);
+                        .append("/?")
+                        .append("hotelName").append('=').append(hotelName).append('&')
+                        .append("flightNumber1").append('=').append(flightNumber).append('&')
+                        .append("flightNumber2").append('=').append(altFlightNumber);
 
         URL url = new URL(tripRequest.toString());
         String json = updateResource(url, "POST", "");
-
-        if (json == null)
-            return null;
 
         return objectMapper.readValue(json, Booking.class);
     }
@@ -106,14 +91,11 @@ public class TripClient {
     private Booking cancelTrip(Booking booking) throws Exception {
         StringBuilder tripRequest =
                 new StringBuilder(TRIP_SERVICE_BASE_URL)
-                        .append("/cancel?")
-                        .append(BOOKING_ID).append('=').append(booking.getId());
+                        .append("/")
+                        .append(URLEncoder.encode(booking.getId().toString(), "UTF-8"));
 
         URL url = new URL(tripRequest.toString());
-        String json = updateResource(url, "POST", "");
-
-        if (json == null)
-            return null;
+        String json = updateResource(url, "DELETE", "");
 
         return objectMapper.readValue(json, Booking.class);
     }
@@ -121,14 +103,11 @@ public class TripClient {
     private Booking confirmTrip(Booking booking) throws Exception {
         StringBuilder tripRequest =
                 new StringBuilder(TRIP_SERVICE_BASE_URL)
-                        .append("/confirm?")
-                        .append(BOOKING_ID).append('=').append(booking.getId());
+                        .append("/")
+                        .append(URLEncoder.encode(booking.getId().toString(), "UTF-8"));
 
         URL url = new URL(tripRequest.toString());
-        String json = updateResource(url, "POST", "");
-
-        if (json == null)
-            return null;
+        String json = updateResource(url, "PUT", "");
 
         return objectMapper.readValue(json, Booking.class);
     }
@@ -150,7 +129,7 @@ public class TripClient {
 
             try (InputStream ins = responseCode >= 400 ? connection.getErrorStream() : connection.getInputStream()) {
                 Scanner responseScanner = new java.util.Scanner(ins).useDelimiter("\\A");
-                String res = responseScanner.hasNext()? responseScanner.next() : null;
+                String res = responseScanner.hasNext() ? responseScanner.next() : null;
 
                 if (res != null && responseCode >= 400) {
                     System.out.println(res);

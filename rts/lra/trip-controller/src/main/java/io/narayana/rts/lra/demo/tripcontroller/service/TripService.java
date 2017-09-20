@@ -21,6 +21,7 @@
  */
 package io.narayana.rts.lra.demo.tripcontroller.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.narayana.lra.client.LRAClientAPI;
 import io.narayana.rts.lra.demo.model.Booking;
 
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
@@ -44,39 +46,28 @@ public class TripService {
     private LRAClientAPI lraClient;
 
     private Map<String, Booking> bookings = new HashMap<>();
-    private Map<Booking, URL> transactions = new HashMap<>();
 
-    public Booking confirmBooking(Booking booking) throws URISyntaxException, IOException {
+    public void confirmBooking(Booking booking) throws URISyntaxException, IOException {
         System.out.printf("Confirming tripBooking id %s (%s) status: %s%n",
                 booking.getId(), booking.getName(), booking.getStatus());
 
-        URL url = transactions.get(booking);
-        String response = lraClient.closeLRA(url);
+        String response = lraClient.closeLRA(new URL(booking.getId()));
 
-        Booking prev = bookings.putIfAbsent(booking.getId(), booking);
-        prev.setConfirmed();
-        mergeBookingResponse(prev, response);
-        prev.setStatus(Booking.BookingStatus.CONFIRMED);
-        return prev;
+        mergeBookingResponse(booking, response);
+        booking.setStatus(Booking.BookingStatus.CONFIRMED);
     }
 
-    public Booking cancelBooking(Booking booking) throws URISyntaxException, IOException {
+    public void cancelBooking(Booking booking) throws URISyntaxException, IOException {
         System.out.printf("Canceling booking id %s (%s) status: %s%n",
                 booking.getId(), booking.getName(), booking.getStatus());
 
-        String response = lraClient.cancelLRA(transactions.get(booking));
-
-        Booking prev = bookings.putIfAbsent(booking.getId(), booking);
-        prev.setCanceled();
-        mergeBookingResponse(prev, response);
-        prev.setStatus(Booking.BookingStatus.CANCELLED);
-        return prev;
+        String response = lraClient.cancelLRA(new URL(booking.getId()));
+        mergeBookingResponse(booking, response);
+        booking.setStatus(Booking.BookingStatus.CANCELLED);
     }
 
-    public void recordProvisionalBooking(Booking booking, URL transaction) {
+    public void recordProvisionalBooking(Booking booking) throws MalformedURLException {
         bookings.putIfAbsent(booking.getId(), booking);
-
-        transactions.put(booking, transaction);
     }
 
     public Booking get(String bookingId) throws NotFoundException {
@@ -87,7 +78,10 @@ public class TripService {
     }
 
     private void mergeBookingResponse(Booking tripBooking, String responseData) throws URISyntaxException, IOException {
-        List<Booking> bookingDetails = Booking.getBookingArray(responseData);
+        responseData = responseData.replaceAll("\"", "");
+        responseData = responseData.replaceAll("\\\\", "\"");
+        List<Booking> bookingDetails = Arrays.asList(new ObjectMapper().readValue(responseData, Booking[].class));
+
         Map<String, Booking> bookings = bookingDetails.stream()
                 .collect(Collectors.toMap(Booking::getId, Function.identity()));
 

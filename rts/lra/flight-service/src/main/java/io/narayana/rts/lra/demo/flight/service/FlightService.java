@@ -40,8 +40,8 @@ public class FlightService {
 
     private Map<String, Booking> bookings = new HashMap<>();
 
-    public Booking book(String bid, String flightNumber, Integer seats) {
-        Booking booking = new Booking(bid, flightNumber, seats, "Flight");
+    public Booking book(String bid, String flightNumber) {
+        Booking booking = new Booking(bid, flightNumber, "Flight");
         Booking earlierBooking = bookings.putIfAbsent(booking.getId(), booking);
         return earlierBooking == null ? booking : earlierBooking;
     }
@@ -57,9 +57,10 @@ public class FlightService {
         get(bookingId).setStatus(status);
     }
 
-    public void cancel(String bookingId) {
+    public Booking cancel(String bookingId) {
         Booking booking = get(bookingId);
         booking.setStatus(Booking.BookingStatus.CANCEL_REQUESTED);
         lraClient.cancelLRA(LRAClient.lraToURL(bookingId));
+        return booking;
     }
 }
