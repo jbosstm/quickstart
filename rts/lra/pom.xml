@@ -15,32 +15,33 @@
 	Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 	02110-1301, USA.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-  <artifactId>lra-quickstarts</artifactId>
-  <version>5.6.5.Final-SNAPSHOT</version>
-  <name>RESTTX Quickstarts</name>
-  <description>Provides examples of how to use transactions with web applications</description>
-  <packaging>pom</packaging>
-  <repositories>
-    <repository>
-      <id>jboss-public-repository-group</id>
-      <name>JBoss Public Maven Repository Group</name>
-      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  <modules>
-    <module>flight-service</module>
-    <module>hotel-service</module>
-    <module>trip-controller</module>
-    <module>trip-client</module>
-    <module>lra-test</module>
-  </modules>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
+    <artifactId>lra-quickstarts</artifactId>
+    <version>5.6.5.Final-SNAPSHOT</version>
+    <name>RESTTX Quickstarts</name>
+    <description>Provides examples of how to use transactions with web applications</description>
+    <packaging>pom</packaging>
+    <repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <modules>
+        <module>flight-service</module>
+        <module>hotel-service</module>
+        <module>trip-controller</module>
+        <module>trip-client</module>
+        <module>lra-test</module>
+    </modules>
 </project>

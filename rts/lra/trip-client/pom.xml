@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -49,15 +49,15 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.4.0</version>
-                    <configuration>
-                        <mainClass>TripClient</mainClass>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
+                <configuration>
+                    <mainClass>TripClient</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
 
-         <!-- LRA JAXRS filters -->
+        <!-- LRA JAXRS filters -->
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>lra-filters</artifactId>
