@@ -4,7 +4,7 @@ ENV JAVA_APP_JAR lra-coordinator-swarm.jar
 ENV AB_ENABLED off
 # to get more info about LRA processing in console you can add switch
 # -Dswarm.logging=TRACE
-ENV JAVA_OPTIONS -Xmx512m
+ENV JAVA_OPTIONS -Xmx512m -Dswarm.transactions.object-store-path=../../data
 
 EXPOSE 8080
 

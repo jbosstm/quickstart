@@ -19,18 +19,35 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.narayana.rts.lra.demo.tripcontroller.participant;
+package io.narayana.rts.lra.demo.hotel;
 
-public class BookingException extends RuntimeException {
-    int reason;
+import io.narayana.rts.lra.demo.model.Booking;
 
-    public BookingException(int reason, String message) {
-        super(message);
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-        this.reason = reason;
+@ApplicationScoped
+public class HotelService {
+    private Map<String, Booking> bookings = new HashMap<>();
+
+    public Booking book(String bid, String hotel) {
+        Booking booking = new Booking(bid, hotel, "Hotel");
+        Booking earlierBooking = bookings.putIfAbsent(booking.getId(), booking);
+        return earlierBooking == null ? booking : earlierBooking;
     }
 
-    public int getReason() {
-        return reason;
+    public Booking get(String bookingId) throws NotFoundException {
+        if (!bookings.containsKey(bookingId))
+            throw new NotFoundException(Response.status(404).entity("Invalid bookingId id: " + bookingId).build());
+
+        return bookings.get(bookingId);
+    }
+
+    public Collection<Booking> getAll() {
+        return bookings.values();
     }
 }

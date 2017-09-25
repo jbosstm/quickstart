@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.narayana.rts.lra.demo.flight.service;
+package io.narayana.rts.lra.demo.flight;
 
 import io.narayana.lra.client.LRAClient;
 import io.narayana.lra.client.LRAClientAPI;
@@ -29,7 +29,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @ApplicationScoped
@@ -53,14 +55,14 @@ public class FlightService {
         return bookings.get(bookingId);
     }
 
-    public void updateBookingStatus(String bookingId, Booking.BookingStatus status) {
-        get(bookingId).setStatus(status);
-    }
-
     public Booking cancel(String bookingId) {
         Booking booking = get(bookingId);
         booking.setStatus(Booking.BookingStatus.CANCEL_REQUESTED);
         lraClient.cancelLRA(LRAClient.lraToURL(bookingId));
         return booking;
+    }
+
+    public Collection<Booking> getAll() {
+        return bookings.values();
     }
 }

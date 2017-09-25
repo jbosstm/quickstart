@@ -19,13 +19,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.narayana.rts.lra.demo.tripcontroller.participant;
+package io.narayana.rts.lra.demo.tripcontroller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.narayana.lra.annotation.LRA;
 import io.narayana.lra.client.LRAClient;
 import io.narayana.lra.client.LRAClientAPI;
 import io.narayana.rts.lra.demo.model.Booking;
-import io.narayana.rts.lra.demo.tripcontroller.service.TripService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -33,6 +33,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -57,6 +58,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -84,7 +86,7 @@ public class TripController {
     private LRAClientAPI lraClient;
 
     @Inject
-    private TripService tripService;
+    private TripService service;
 
     @PostConstruct
     private void initController() throws MalformedURLException {
@@ -104,9 +106,9 @@ public class TripController {
     @Produces(MediaType.APPLICATION_JSON)
     // delayClose because we want the LRA to be associated with a booking until the user confirms the booking
     @LRA(delayClose = true, join = false)
-    public Response bookTrip(@QueryParam("hotelName") @DefaultValue("") String hotelName,
-                             @QueryParam("flightNumber1") @DefaultValue("") String flightNumber,
-                             @QueryParam("flightNumber2") @DefaultValue("") String altFlightNumber,
+    public Response bookTrip(@QueryParam("hotelName") @DefaultValue("TheGrand") String hotelName,
+                             @QueryParam("flightNumber1") @DefaultValue("firstClass") String flightNumber,
+                             @QueryParam("flightNumber2") @DefaultValue("secondClass") String altFlightNumber,
                              @Context UriInfo uriInfo) throws BookingException, MalformedURLException, UnsupportedEncodingException {
         String lraId = lraClient.getCurrent().toString();
         Booking hotelBooking = bookHotel(hotelName, lraId);
@@ -115,7 +117,7 @@ public class TripController {
 
         Booking tripBooking = new Booking(lraId, "Trip", hotelBooking, flightBooking1, flightBooking2);
 
-        tripService.recordProvisionalBooking(tripBooking);
+        service.recordProvisionalBooking(tripBooking);
 
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(URLEncoder.encode(tripBooking.getId(), "UTF-8"));
@@ -126,7 +128,7 @@ public class TripController {
     @Path("/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response confirmTrip(@PathParam("bookingId") String bookingId) throws NotFoundException, URISyntaxException, IOException {
-        Booking tripBooking = tripService.get(bookingId);
+        Booking tripBooking = service.get(bookingId);
         if (tripBooking.getStatus() == Booking.BookingStatus.CANCEL_REQUESTED)
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST)
                     .entity("Trying to setConfirmed a tripBooking which needs to be cancelled")
@@ -140,17 +142,17 @@ public class TripController {
             try {
                 webTarget = flightTarget.path(URLEncoder.encode(b.getId().toString(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                throw new BookingException(-1, "flight cancel problem");
+                throw new BookingException(-1, "flight cancel problem: UnsupportedEncodingException" + e);
             }
 
             Response response = webTarget.request().delete();
             if (response.getStatus() != Response.Status.OK.getStatusCode())
-                throw new BookingException(response.getStatus(), "flight cancel problem");
+                throw new BookingException(response.getStatus(), "flight cancel problem: " + b.getId());
 
             b.setStatus(Booking.BookingStatus.CANCELLED);
         });
 
-        tripService.confirmBooking(tripBooking);
+        service.confirmBooking(tripBooking);
         return Response.ok(tripBooking.toJson()).build();
     }
 
@@ -158,11 +160,26 @@ public class TripController {
     @Path("/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response cancelTrip(@PathParam("bookingId") String bookingId) throws NotFoundException, URISyntaxException, IOException {
-        Booking tripBooking = tripService.get(bookingId);
+        Booking tripBooking = service.get(bookingId);
         if (tripBooking.getStatus() != Booking.BookingStatus.CANCEL_REQUESTED && tripBooking.getStatus() != Booking.BookingStatus.PROVISIONAL)
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity("Too late to requestCancel booking").build());
-        tripService.cancelBooking(tripBooking);
+        service.cancelBooking(tripBooking);
         return Response.ok(tripBooking.toJson()).build();
+    }
+
+    @GET
+    @Path("/{bookingId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @LRA(LRA.Type.NOT_SUPPORTED)
+    public Booking getBooking(@PathParam("bookingId") String bookingId) throws JsonProcessingException {
+        return service.get(bookingId);
+    }
+
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Booking> getAll() {
+        return service.getAll();
     }
 
     private Booking bookHotel(String name, String bookingId) throws BookingException {
