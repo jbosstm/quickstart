@@ -33,10 +33,10 @@ esac
 rm -rf $NARAYANA_INSTALL_LOCATION
 unzip $WORKSPACE/narayana-full-5.6.5.Final-SNAPSHOT-bin.zip
 
-java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs &
+java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 ((PORT++))
-java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8081 &
+java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8081 -Dswarm.transactions.object-store-path=../flight-lra-coordinator-logs &
 ID2=$!
 ((PORT++))
 java $(getDebugArgs $PORT) -jar hotel-service/target/lra-test-swarm.jar -Dswarm.http.port=8082 &
@@ -50,20 +50,39 @@ ID5=$!
 ((PORT++))
 
 echo "Waiting for all the servers to start"
-sleep 40
+sleep 30
 
-mvn -f trip-client/pom.xml exec:java -Dservice.http.host="localhost" -Dservice.http.port=8084 -Dexec.args=confirm
-mvn -f trip-client/pom.xml exec:java -Dservice.http.host="localhost" -Dservice.http.port=8084 -Dexec.args=cancel
+mvn -f trip-client/pom.xml exec:java -Dexec.args=confirm
+mvn -f trip-client/pom.xml exec:java -Dexec.args=cancel
 
 echo -e "\n\n\n"
-BOOKINGID=`curl -X POST http://localhost:8084/?hotelName=TheGrand\&flightNumber=BA123\&flightNumber2=RH456 -sS | jq -r ".id"`
-echo "The booking ID for http://localhost:8084/?hotelName=TheGrand\&flightNumber=BA123\&flightNumber2=RH456 was: $BOOKINGID"
+BOOKINGID=$(curl -X POST "http://localhost:8084/?hotelName=TheGrand&flightNumber1=BA123&flightNumber2=RH456" -sS | jq -r ".id")
 kill -9 $ID1
-java $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs &
+java $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 echo "Waiting for all the coordinator to recover"
 sleep 20
+set +e
+until curl -X GET http://localhost:8080/lra-coordinator | jq
+do
+    echo "Waiting to try again"
+    sleep 10
+done
+set -e
+echo "LRA coordinator"
+curl -X GET http://localhost:8080/lra-coordinator -sS | jq
+echo "Flight LRA coordinator"
+curl -X GET http://localhost:8081/lra-coordinator -sS | jq
+echo "HOTEL"
+curl -X GET http://localhost:8082 -sS | jq
+echo "FLIGHT"
+curl -X GET http://localhost:8083 -sS | jq
+echo "TRIP"
+curl -X GET http://localhost:8084 -sS | jq
 echo -e "\n\n\n"
+
+echo "Confirming with curl -X PUT http://localhost:8084/`urlencode $BOOKINGID`"
+
 curl -X PUT http://localhost:8084/`urlencode $BOOKINGID`
 echo ""
 

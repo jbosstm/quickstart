@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.narayana.rts.lra.demo.tripcontroller.service;
+package io.narayana.rts.lra.demo.tripcontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.narayana.lra.client.LRAClientAPI;
@@ -34,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,5 +90,9 @@ public class TripService {
         Arrays.stream(tripBooking.getDetails()) // the array of bookings in this trip booking
                 .filter(b -> bookings.containsKey(b.getId())) // pick out bookings for which we have updated data
                 .forEach(b -> b.merge(bookings.get(b.getId()))); // merge in the changes (returned from the setConfirmed request)
+    }
+
+    public Collection<Booking> getAll() {
+        return bookings.values();
     }
 }

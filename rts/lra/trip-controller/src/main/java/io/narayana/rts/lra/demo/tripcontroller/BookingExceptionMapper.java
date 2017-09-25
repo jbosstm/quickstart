@@ -19,34 +19,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.narayana.rts.lra.demo.hotel.service;
+package io.narayana.rts.lra.demo.tripcontroller;
 
-import io.narayana.rts.lra.demo.model.Booking;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
-import java.util.Map;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
-@ApplicationScoped
-public class HotelService {
-    private Map<String, Booking> bookings = new HashMap<>();
-
-    public Booking book(String bid, String hotel) {
-        Booking booking = new Booking(bid, hotel, "Hotel");
-        Booking earlierBooking = bookings.putIfAbsent(booking.getId(), booking);
-        return earlierBooking == null ? booking : earlierBooking;
-    }
-
-    public Booking get(String bookingId) throws NotFoundException {
-        if (!bookings.containsKey(bookingId))
-            throw new NotFoundException(Response.status(404).entity("Invalid bookingId id: " + bookingId).build());
-
-        return bookings.get(bookingId);
-    }
-
-    public void updateBookingStatus(String bookingId, Booking.BookingStatus status) {
-        get(bookingId).setStatus(status);
+@Provider
+public class BookingExceptionMapper implements ExceptionMapper<BookingException> {
+    @Override
+    public Response toResponse(BookingException exception) {
+        return Response.status(exception.getReason())
+                .entity(exception.getMessage()).build();
     }
 }

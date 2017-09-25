@@ -19,17 +19,18 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.narayana.rts.lra.demo.tripcontroller.participant;
+package io.narayana.rts.lra.demo.tripcontroller;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+public class BookingException extends RuntimeException {
+    int reason;
 
-@Provider
-public class BookingExceptionMapper implements ExceptionMapper<BookingException> {
-    @Override
-    public Response toResponse(BookingException exception) {
-        return Response.status(exception.getReason())
-                .entity(exception.getMessage()).build();
+    public BookingException(int reason, String message) {
+        super(message);
+
+        this.reason = reason;
+    }
+
+    public int getReason() {
+        return reason;
     }
 }

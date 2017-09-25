@@ -4,7 +4,7 @@ ENV JAVA_APP_JAR lra-test-swarm.jar
 ENV AB_ENABLED off
 # to get more info about the service in console you can add switch
 # -Dswarm.logging=TRACE
-ENV JAVA_OPTIONS -Xmx512m -Dlra.http.host=lra-coordinator -Dlra.http.port=8080 -Dhotel.service.http.host=hotel-service -Dhotel.service.http.port=8080 -Dflight.service.http.host=flight-service -Dflight.service.http.port=8080
+ENV JAVA_OPTIONS -Xmx512m -Dlra.http.host=lra-coordinator -Dlra.http.port=8080 -Dhotel.service.http.host=hotel -Dhotel.service.http.port=8080 -Dflight.service.http.host=flight -Dflight.service.http.port=8080
 
 EXPOSE 8080
 
