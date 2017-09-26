@@ -106,8 +106,10 @@ function build_narayana {
     exit -1
   fi
   cd narayana
-  WORKSPACE=$PWD COMMENT_ON_PULL="" PROFILE=BLACKTIE ./scripts/hudson/narayana.sh -DskipTests -Pcommunity
-  ./build.sh clean install -DskipTests
+  ./build.sh clean install -DskipTests -Pcommunity
+  ./build.sh -f blacktie/wildfly-blacktie/pom.xml clean install
+  ./build.sh -f blacktie/pom.xml clean install -DskipTests
+  
   if [ $? != 0 ]; then
     comment_on_pull "Narayana build failed: $BUILD_URL";
     exit -1
