@@ -45,7 +45,7 @@ function int_env {
   export GIT_REPO=quickstart
   export MFACTOR=2 # double wait timeout period for crash recovery QA tests
 
-  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="5.6.5.Final-SNAPSHOT" 
+  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="5.7.0.Final" 
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
   PULL_DESCRIPTION=$(curl -ujbosstm-bot:$BOT_PASSWORD -s https://api.github.com/repos/$GIT_ACCOUNT/$GIT_REPO/pulls/$PULL_NUMBER)
@@ -115,7 +115,7 @@ function build_narayana {
     exit -1
   fi
   echo "Deleting check out - assuming all artifacts are in the .m2"
-  cp -rp narayana-full/target/narayana-full-5.6.5.Final-SNAPSHOT-bin.zip $WORKSPACE
+  cp -rp narayana-full/target/narayana-full-5.7.0.Final-bin.zip $WORKSPACE
   cd ..
   rm -rf narayana
 }
