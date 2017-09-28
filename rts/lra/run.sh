@@ -61,14 +61,7 @@ kill -9 $ID1
 java $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 echo "Waiting for all the coordinator to recover"
-sleep 20
-set +e
-until curl -X GET http://localhost:8080/lra-coordinator | jq
-do
-    echo "Waiting to try again"
-    sleep 10
-done
-set -e
+sleep 40
 echo "LRA coordinator"
 curl -X GET http://localhost:8080/lra-coordinator -sS | jq
 echo "Flight LRA coordinator"
