@@ -57,25 +57,15 @@ mvn -f trip-client/pom.xml exec:java -Dexec.args=cancel
 
 echo -e "\n\n\n"
 BOOKINGID=$(curl -X POST "http://localhost:8084/?hotelName=TheGrand&flightNumber1=BA123&flightNumber2=RH456" -sS | jq -r ".id")
+echo "Booking ID was: $BOOKINGID"
 kill -9 $ID1
 java $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 echo "Waiting for all the coordinator to recover"
 sleep 40
-echo "LRA coordinator"
-curl -X GET http://localhost:8080/lra-coordinator -sS | jq
-echo "Flight LRA coordinator"
-curl -X GET http://localhost:8081/lra-coordinator -sS | jq
-echo "HOTEL"
-curl -X GET http://localhost:8082 -sS | jq
-echo "FLIGHT"
-curl -X GET http://localhost:8083 -sS | jq
-echo "TRIP"
-curl -X GET http://localhost:8084 -sS | jq
 echo -e "\n\n\n"
 
 echo "Confirming with curl -X PUT http://localhost:8084/`urlencode $BOOKINGID`"
-
 curl -X PUT http://localhost:8084/`urlencode $BOOKINGID`
 echo ""
 
