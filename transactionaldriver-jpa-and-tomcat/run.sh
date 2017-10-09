@@ -2,8 +2,8 @@
 set -e
 
 export QUICKSTART_NAME=${PWD##*/}
-TOMCAT_VERSION=7.0.81
-wget -nc http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-7/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
+TOMCAT_VERSION=7.0.82
+wget -nc https://archive.apache.org/dist/tomcat/tomcat-7/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip
 rm -rf apache-tomcat-$TOMCAT_VERSION
 unzip apache-tomcat-$TOMCAT_VERSION.zip
 export TOMCAT_HOME=$(pwd)/apache-tomcat-$TOMCAT_VERSION/
