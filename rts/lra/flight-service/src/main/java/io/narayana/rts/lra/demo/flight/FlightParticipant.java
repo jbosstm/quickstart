@@ -36,6 +36,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -63,7 +64,7 @@ public class FlightParticipant {
         return service.book(lraId, flightNumber);
     }
 
-    @POST
+    @PUT
     @Path("/complete")
     @Produces(MediaType.APPLICATION_JSON)
     @Complete
@@ -72,7 +73,7 @@ public class FlightParticipant {
         return Response.ok(service.get(lraId).toJson()).build();
     }
 
-    @POST
+    @PUT
     @Path("/compensate")
     @Produces(MediaType.APPLICATION_JSON)
     @Compensate
