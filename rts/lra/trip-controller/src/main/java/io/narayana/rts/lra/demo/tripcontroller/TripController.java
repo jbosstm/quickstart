@@ -152,7 +152,7 @@ public class TripController {
             b.setStatus(Booking.BookingStatus.CANCELLED);
         });
 
-        service.confirmBooking(tripBooking);
+        service.confirmBooking(tripBooking, hotelTarget, flightTarget);
         return Response.ok(tripBooking.toJson()).build();
     }
 
@@ -163,7 +163,7 @@ public class TripController {
         Booking tripBooking = service.get(bookingId);
         if (tripBooking.getStatus() != Booking.BookingStatus.CANCEL_REQUESTED && tripBooking.getStatus() != Booking.BookingStatus.PROVISIONAL)
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity("Too late to requestCancel booking").build());
-        service.cancelBooking(tripBooking);
+        service.cancelBooking(tripBooking, hotelTarget, flightTarget);
         return Response.ok(tripBooking.toJson()).build();
     }
 
