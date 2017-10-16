@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.narayana.lra.client.LRAClientAPI;
 import io.narayana.rts.lra.demo.model.Booking;
 
+import javax.ws.rs.client.WebTarget;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
@@ -41,6 +42,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+
 @ApplicationScoped
 public class TripService {
     @Inject
@@ -48,22 +51,29 @@ public class TripService {
 
     private Map<String, Booking> bookings = new HashMap<>();
 
-    public void confirmBooking(Booking booking) throws URISyntaxException, IOException {
+    public void confirmBooking(Booking booking, WebTarget hotelTarget, WebTarget flightTarget) throws URISyntaxException, IOException {
         System.out.printf("Confirming tripBooking id %s (%s) status: %s%n",
                 booking.getId(), booking.getName(), booking.getStatus());
 
         String response = lraClient.closeLRA(new URL(booking.getId()));
 
-        mergeBookingResponse(booking, response);
+        if (!TripCheck.validateBooking(booking, hotelTarget, flightTarget))
+            throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
+
+//        mergeBookingResponse(booking, response);
         booking.setStatus(Booking.BookingStatus.CONFIRMED);
     }
 
-    public void cancelBooking(Booking booking) throws URISyntaxException, IOException {
+    public void cancelBooking(Booking booking, WebTarget hotelTarget, WebTarget flightTarget) throws URISyntaxException, IOException {
         System.out.printf("Canceling booking id %s (%s) status: %s%n",
                 booking.getId(), booking.getName(), booking.getStatus());
 
         String response = lraClient.cancelLRA(new URL(booking.getId()));
-        mergeBookingResponse(booking, response);
+
+        if (!TripCheck.validateBooking(booking, hotelTarget, flightTarget))
+            throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
+
+//        mergeBookingResponse(booking, response);
         booking.setStatus(Booking.BookingStatus.CANCELLED);
     }
 
