@@ -46,6 +46,8 @@ set OLDWORKSPACE=%WORKSPACE%
 set WORKSPACE=%WORKSPACE%\narayana\
 set CACHED_COMMENT=%COMMENT_ON_PULL%
 set COMMENT_ON_PULL=0
+set NOTBT=1
+set NOTMAIN=1
 call scripts\hudson\narayana.bat -DskipTests
 if %ERRORLEVEL% NEQ 0 (set COMMENT_ON_PULL=%CACHED_COMMENT% & call:comment_on_pull "Narayana build failed %BUILD_URL%" & exit -1)
 cd ..
