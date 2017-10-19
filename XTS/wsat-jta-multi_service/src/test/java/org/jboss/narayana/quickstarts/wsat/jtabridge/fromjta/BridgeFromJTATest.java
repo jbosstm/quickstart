@@ -18,6 +18,8 @@
 package org.jboss.narayana.quickstarts.wsat.jtabridge.fromjta;
 
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.container.test.api.TargetsContainer;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.FirstServiceATImpl;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.jaxws.FirstServiceAT;
@@ -57,8 +59,9 @@ public class BridgeFromJTATest {
      *
      * @return a JavaArchive representing the required deployment
      */
-    @Deployment
-    public static JavaArchive createTestArchive() {
+    @Deployment(name = "deployment-jboss1")
+    @TargetsContainer("jboss1")
+    public static JavaArchive createTestArchive1() {
 
         JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "bridge.jar")
                 .addPackages(true, FirstServiceATImpl.class.getPackage())
@@ -73,8 +76,23 @@ public class BridgeFromJTATest {
         return archive;
     }
 
+    @Deployment(name="deployment-jboss2")
+    @TargetsContainer("jboss2")
+    public static JavaArchive createTestArchive2() {
+
+        JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "bridge.jar")
+                .addPackages(true, SecondServiceATImpl.class.getPackage())
+                .addAsManifestResource("persistence.xml");
+
+        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
+
+        archive.setManifest(new StringAsset(ManifestMF));
+
+        return archive;
+    }
 
     @Before
+    @OperateOnDeployment("deployment-jboss1")
     public void setupTest() throws Exception {
         Context initialContext = new InitialContext();
         ut = (UserTransaction)initialContext.lookup("java:comp/UserTransaction");
@@ -83,6 +101,7 @@ public class BridgeFromJTATest {
     }
 
     @After
+    @OperateOnDeployment("deployment-jboss1")
     public void teardownTest() throws Exception {
         rollbackIfActive(ut);
         try {
@@ -96,6 +115,7 @@ public class BridgeFromJTATest {
     }
 
     @Test
+    @OperateOnDeployment("deployment-jboss1")
     public void testCommit() throws Exception {
         System.out.println("[CLIENT] Beginning the first JTA transaction (to increment the counter)");
         ut.begin();
@@ -119,6 +139,7 @@ public class BridgeFromJTATest {
     }
 
     @Test
+    @OperateOnDeployment("deployment-jboss1")
     public void testClientDrivenRollback() throws Exception {
         System.out.println("[CLIENT] Beginning the first JTA transaction (to increment the counter)");
         ut.begin();
