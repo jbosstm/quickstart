@@ -45,6 +45,8 @@
         <jvm.args.debug></jvm.args.debug>
         <jvm.args.other>-server</jvm.args.other>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
+        <jboss1.home>${env.JBOSS_HOME_1}</jboss1.home>
+        <jboss2.home>${env.JBOSS_HOME_2}</jboss2.home>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -221,6 +223,8 @@
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
                                 <node.address>127.0.0.1</node.address>
+                                <jboss1.home>${jboss1.home}</jboss1.home>
+                                <jboss2.home>${jboss2.home}</jboss2.home>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -256,7 +260,66 @@
                                 <node.address>[::1]</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                            <jboss1.home>${jboss1.home}</jboss1.home>
+                            <jboss2.home>${jboss2.home}</jboss2.home>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- To get two instances of JBOSS_HOME directory for tests -->
+        <profile>
+            <id>make.jboss1.home.directory</id>
+            <activation>
+                <property>
+                    <name>!env.JBOSS_HOME_1</name>
+                </property>
+                <file>
+                    <missing>${basedir}/target/jboss1</missing>
+                </file>
+            </activation>
+            <properties>
+                <jboss1.home>${basedir}/target/jboss1</jboss1.home>
+                <jboss2.home>${basedir}/target/jboss2</jboss2.home>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources-jboss1</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss1.home}</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${env.JBOSS_HOME}</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-resources-jboss2</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss2.home}</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${env.JBOSS_HOME}</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
