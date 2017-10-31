@@ -22,8 +22,9 @@ function fatal {
 }
 
 [ $WORKSPACE ] || fatal "please set WORKSPACE to the quickstarts directory"
-NARAYANA_REPO=jbosstm
-NARAYANA_BRANCH="master"
+NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
+NARAYANA_BRANCH="${NARAYANA_BRANCH:-master}"
+QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-5.7.2.Final-SNAPSHOT}
 
 function comment_on_pull
 {
@@ -88,7 +89,7 @@ function build_narayana {
 
   #rm -rf ~/.m2/repository/
   rm -rf narayana
-  git clone https://github.com/${NARAYANA_REPO}/narayana.git
+  git clone https://github.com/${NARAYANA_REPO}/narayana.git -b ${NARAYANA_BRANCH}
   echo "Checking if need Narayana PR"
   if [ -n "$NY_BRANCH" ]; then
     echo "Building NY PR"
@@ -148,7 +149,7 @@ function build_apache-karaf {
 function run_quickstarts {
   cd $WORKSPACE
   echo Running quickstarts
-  BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ ./build.sh -B clean install -DskipX11Tests=true
+  BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ ./build.sh -B clean install -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION
 
   if [ $? != 0 ]; then
     comment_on_pull "Pull failed: $BUILD_URL";
