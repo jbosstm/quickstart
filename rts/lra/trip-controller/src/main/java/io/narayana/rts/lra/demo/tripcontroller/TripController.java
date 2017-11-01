@@ -89,11 +89,15 @@ public class TripController {
     private TripService service;
 
     @PostConstruct
-    private void initController() throws MalformedURLException {
-        hotelClient = ClientBuilder.newClient();
-        flightClient = ClientBuilder.newClient();
-        hotelTarget = hotelClient.target(new URL("http://" + System.getProperty("hotel.service.http.host", "localhost") + ":" + Integer.getInteger("hotel.service.http.port", 8082)).toExternalForm());
-        flightTarget = flightClient.target(new URL("http://" + System.getProperty("flight.service.http.host", "localhost") + ":" + Integer.getInteger("flight.service.http.port", 8083)).toExternalForm());
+    private void initController() {
+        try {
+            hotelClient = ClientBuilder.newClient();
+            flightClient = ClientBuilder.newClient();
+            hotelTarget = hotelClient.target(new URL("http://" + System.getProperty("hotel.service.http.host", "localhost") + ":" + Integer.getInteger("hotel.service.http.port", 8082)).toExternalForm());
+            flightTarget = flightClient.target(new URL("http://" + System.getProperty("flight.service.http.host", "localhost") + ":" + Integer.getInteger("flight.service.http.port", 8083)).toExternalForm());
+        } catch (MalformedURLException murle) {
+            throw new IllegalStateException("Cannot intialize " + TripController.class.getName(), murle);
+        }
     }
 
     @PreDestroy
