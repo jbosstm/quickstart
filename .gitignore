@@ -21,3 +21,5 @@ wildfly-10.x.zip
 wildfly-10.*/
 wildfly-10.*.jar
 narayana-full-*-bin.zip
+jboss*/
+bin/
