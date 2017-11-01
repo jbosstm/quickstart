@@ -132,7 +132,8 @@ public class TripClient {
                 String res = responseScanner.hasNext() ? responseScanner.next() : null;
 
                 if (res != null && responseCode >= 400) {
-                    System.out.println(res);
+                    System.err.printf("Error to contact (%s) '%s', error:%n%s%n",
+                        method, resource, res);
 
                     return null;
                 }
