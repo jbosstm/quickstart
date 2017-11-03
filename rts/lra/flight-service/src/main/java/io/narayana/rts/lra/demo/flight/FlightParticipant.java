@@ -46,7 +46,7 @@ import javax.ws.rs.core.Response;
 
 import java.util.Collection;
 
-import static io.narayana.lra.client.LRAClient.LRA_HTTP_HEADER;
+import static io.narayana.lra.client.NarayanaLRAClient.LRA_HTTP_HEADER;
 
 @RequestScoped
 @Path("/")

@@ -22,7 +22,7 @@
 package io.narayana.rts.lra.demo.tripcontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.narayana.lra.client.LRAClientAPI;
+import io.narayana.lra.client.LRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import javax.ws.rs.client.WebTarget;
@@ -47,7 +47,7 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 @ApplicationScoped
 public class TripService {
     @Inject
-    private LRAClientAPI lraClient;
+    private LRAClient lraClient;
 
     private Map<String, Booking> bookings = new HashMap<>();
 
