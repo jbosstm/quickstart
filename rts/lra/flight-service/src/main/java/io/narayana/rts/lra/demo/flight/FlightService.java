@@ -21,8 +21,8 @@
  */
 package io.narayana.rts.lra.demo.flight;
 
+import io.narayana.lra.client.NarayanaLRAClient;
 import io.narayana.lra.client.LRAClient;
-import io.narayana.lra.client.LRAClientAPI;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -38,7 +38,7 @@ import java.util.Map;
 public class FlightService {
 
     @Inject
-    private LRAClientAPI lraClient;
+    private LRAClient lraClient;
 
     private Map<String, Booking> bookings = new HashMap<>();
 
@@ -58,7 +58,7 @@ public class FlightService {
     public Booking cancel(String bookingId) {
         Booking booking = get(bookingId);
         booking.setStatus(Booking.BookingStatus.CANCEL_REQUESTED);
-        lraClient.cancelLRA(LRAClient.lraToURL(bookingId));
+        lraClient.cancelLRA(NarayanaLRAClient.lraToURL(bookingId));
         return booking;
     }
 

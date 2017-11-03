@@ -23,8 +23,8 @@ package io.narayana.rts.lra.demo.tripcontroller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.narayana.lra.annotation.LRA;
+import io.narayana.lra.client.NarayanaLRAClient;
 import io.narayana.lra.client.LRAClient;
-import io.narayana.lra.client.LRAClientAPI;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import javax.annotation.PostConstruct;
@@ -83,7 +83,7 @@ public class TripController {
     private WebTarget flightTarget;
 
     @Inject
-    private LRAClientAPI lraClient;
+    private LRAClient lraClient;
 
     @Inject
     private TripService service;
@@ -189,7 +189,7 @@ public class TripController {
     private Booking bookHotel(String name, String bookingId) throws BookingException {
         WebTarget webTarget = hotelTarget.path("/")
                 .queryParam("hotelName", name);
-        Response response = webTarget.request().header(LRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
+        Response response = webTarget.request().header(NarayanaLRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
         if (response.getStatus() != Response.Status.OK.getStatusCode())
             throw new BookingException(response.getStatus(), "hotel booking problem");
         return response.readEntity(Booking.class);
@@ -198,7 +198,7 @@ public class TripController {
     private Booking bookFlight(String flightNumber, String bookingId) throws BookingException {
         WebTarget webTarget = flightTarget.path("/")
                 .queryParam("flightNumber", flightNumber);
-        Response response = webTarget.request().header(LRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
+        Response response = webTarget.request().header(NarayanaLRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
         if (response.getStatus() != Response.Status.OK.getStatusCode())
             throw new BookingException(response.getStatus(), "flight booking problem");
         return response.readEntity(Booking.class);
