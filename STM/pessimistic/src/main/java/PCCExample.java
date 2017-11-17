@@ -52,7 +52,6 @@ public class PCCExample {
         } finally {
             b.abort();
         }
-        b.commit();
 
         AtomicAction.resume(a);
         if (a.commit() != ActionStatus.COMMITTED) {
@@ -61,7 +60,7 @@ public class PCCExample {
 
         AtomicAction c = new AtomicAction();
         c.begin();
-        if (obj1.get() != 1234 || obj1.get() != 1234) {
+        if (obj1.get() != 1234 || obj2.get() != 1234) {
             throw new RuntimeException("Object had unexpected state");
         }
         c.commit();
