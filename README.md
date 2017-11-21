@@ -5,7 +5,11 @@
 We are always happy to talk transactions and how-to use Narayana in exotic and not so exotic environments. If you have ideas for what we can add to the quickstarts to make them more useful please do reach out to us over on our forum:
 https://developer.jboss.org/en/jbosstm/
 
-## Running a quickstart
+## Running a single quickstart
+
+Change directory into the required quickstart and follow the instructions in the README.md file.
+
+## Running all quickstarts in a single command
 
 To run the quickstarts:
 
