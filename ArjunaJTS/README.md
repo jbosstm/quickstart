@@ -10,11 +10,6 @@ JTS
 
 JEE example showing how to make transactional EJB calls between multiple containers. This quickstart builds on the jta quickstart in the same folder.
 
-JTA
------------------
-
-Introduces the JTA concepts used in the previous JTS quickstart for the purpose of clarifying what additional steps the application developer needs to apply to make remote EJBs calls transactional.
-
 Recovery
 -----------------
 
