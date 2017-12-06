@@ -36,7 +36,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
+        <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
         <version.narayana>5.7.2.Final-SNAPSHOT</version.narayana>
         <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
         <osgi.version>6.0.0</osgi.version>

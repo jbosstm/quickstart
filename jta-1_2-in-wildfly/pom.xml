@@ -37,12 +37,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
-        <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
+        <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
         <version.org.jboss.spec.javax.ejb>1.0.0.Final</version.org.jboss.spec.javax.ejb>
         <version.org.jboss.spec.javax.jms>1.0.0.Final</version.org.jboss.spec.javax.jms>
-        <version.org.hibernate.javax.persistence>1.0.0.Final</version.org.hibernate.javax.persistence>
+        <version.hibernate.javax.persistence>1.0.0.Final</version.hibernate.javax.persistence>
         <version.javax.enterprise>1.1</version.javax.enterprise>
-        <version.junit>4.11</version.junit>
+        <version.junit>4.12</version.junit>
         <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <version.org.jboss.arquillian>1.1.8.Final</version.org.jboss.arquillian>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
@@ -90,7 +90,7 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>${version.org.hibernate.javax.persistence}</version>
+            <version>${version.hibernate.javax.persistence}</version>
             <scope>provided</scope>
         </dependency>
 

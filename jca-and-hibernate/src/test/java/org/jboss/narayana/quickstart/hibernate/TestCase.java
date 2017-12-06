@@ -16,7 +16,6 @@
  */
 package org.jboss.narayana.quickstart.hibernate;
 
-import junit.framework.Assert;
 import org.jboss.jca.embedded.Embedded;
 import org.jboss.jca.embedded.EmbeddedFactory;
 import org.junit.*;

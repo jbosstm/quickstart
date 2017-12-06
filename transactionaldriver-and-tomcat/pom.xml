@@ -9,8 +9,8 @@
 
     <properties>
         <version.narayana>5.7.2.Final-SNAPSHOT</version.narayana>
-        <version.resteasy>3.0.19.Final</version.resteasy>
-        <version.h2>1.4.182</version.h2>
+        <version.resteasy>3.0.23.Final</version.resteasy>
+        <version.h2>1.4.195</version.h2>
         <version.tomcat.plugin>2.2</version.tomcat.plugin>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

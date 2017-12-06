@@ -42,7 +42,8 @@
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <version.jboss.bom>1.0.7.Final</version.jboss.bom>
         <version.org.codehaus.jettison>1.3.2</version.org.codehaus.jettison>
-        <version.org.jboss.resteasy>3.0.5.Final</version.org.jboss.resteasy>
+        <version.resteasy>3.0.23.Final</version.resteasy>
+        <version.resteasy.api>3.0.5.Final</version.resteasy.api>
         <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
         <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>

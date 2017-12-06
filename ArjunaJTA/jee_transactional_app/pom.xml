@@ -25,8 +25,6 @@
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
             resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- JBoss dependency versions -->
-        <version.org.jboss.as.plugins.maven.plugin>7.3.Final</version.org.jboss.as.plugins.maven.plugin>
         <!-- Define the version of the JBoss BOMs we want to import. The 
             JBoss BOMs specify tested stacks. -->
         <version.org.jboss.bom>1.0.0.Final</version.org.jboss.bom>
@@ -37,9 +35,9 @@
         <!-- <version.org.jboss.bom>1.0.0.Final-redhat-1</version.org.jboss.bom>> -->
         <version.narayana>5.7.2.Final-SNAPSHOT</version.narayana>
         <!-- other plugin versions -->
-        <version.compiler.plugin>2.3.1</version.compiler.plugin>
+        <version.compiler.plugin>3.5.1</version.compiler.plugin>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
-        <version.war.plugin>2.1.1</version.war.plugin>
+        <version.war.plugin>2.6</version.war.plugin>
         <!-- maven-compiler-plugin -->
         <maven.compiler.target>1.6</maven.compiler.target>
         <maven.compiler.source>1.6</maven.compiler.source>

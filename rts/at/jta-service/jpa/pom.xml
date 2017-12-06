@@ -59,14 +59,14 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>jaxrs-api</artifactId>
-            <version>${version.org.jboss.resteasy}</version>
+            <version>${version.resteasy.api}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
            <groupId>org.jboss.resteasy</groupId>
            <artifactId>resteasy-client</artifactId>
-           <version>${version.org.jboss.resteasy}</version>
+           <version>${version.resteasy}</version>
            <scope>test</scope>
         </dependency>
 
