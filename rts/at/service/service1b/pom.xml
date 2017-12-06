@@ -54,8 +54,8 @@
         <version.narayana>5.7.2.Final-SNAPSHOT</version.narayana>
 
         <!-- other plugin versions -->
-        <version.compiler.plugin>3.1</version.compiler.plugin>
-        <version.war.plugin>2.1.1</version.war.plugin>
+        <version.compiler.plugin>3.5.1</version.compiler.plugin>
+        <version.war.plugin>2.6</version.war.plugin>
 
         <!-- maven-compiler-plugin -->
         <maven.compiler.target>1.6</maven.compiler.target>

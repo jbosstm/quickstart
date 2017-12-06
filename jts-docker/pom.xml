@@ -36,9 +36,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
-        <version.org.jboss.logging>3.2.1.Final</version.org.jboss.logging>
+        <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <version.jacorb>2.3.1jboss.patch01-brew</version.jacorb>
-        <version.org.slf4j>1.7.2.jbossorg-1</version.org.slf4j>
+        <version.org.slf4j>1.7.2</version.org.slf4j>
         <version.junit>4.12</version.junit>
         <version.narayana>5.7.2.Final-SNAPSHOT</version.narayana>
     </properties>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>${version.org.jboss.logging}</version>
+            <version>${version.jboss.logging}</version>
             <scope>test</scope>
         </dependency>
 
