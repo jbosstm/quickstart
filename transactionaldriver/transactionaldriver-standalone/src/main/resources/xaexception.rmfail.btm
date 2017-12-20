@@ -1,0 +1,20 @@
+
+RULE Fail on first commit call to XAResource
+INTERFACE ^javax.transaction.xa.XAResource
+METHOD commit
+AT ENTRY
+IF NOT flagged("is_failed")
+DO
+  System.out.println("Failing by Byteman rule");
+  flag("is_failed");
+  throw new XAException(XAException.XAER_RMFAIL);
+ENDRULE
+
+RULE Reset flag for commit call to XAResource
+INTERFACE ^javax.transaction.xa.XAResource
+METHOD prepare
+AT ENTRY
+IF clear("is_failed")
+DO
+  System.out.println("The flag 'is_failed' was reset");
+ENDRULE

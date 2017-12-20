@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.narayana</groupId>
+    <artifactId>transactionaldriver-standalone</artifactId>
+    <version>5.7.2.Final-SNAPSHOT</version>
+
+    <properties>
+        <version.byteman>3.0.10</version.byteman>
+        <version.h2>1.4.191</version.h2>
+        <version.jboss.logging>3.1.4.GA</version.jboss.logging>
+        <version.junit>4.12</version.junit>
+        <version.narayana>5.7.2.Final-SNAPSHOT</version.narayana>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+          <groupId>org.jboss.spec.javax.transaction</groupId>
+          <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+          <version>1.0.0.Final</version>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.narayana.jta</groupId>
+          <artifactId>narayana-jta</artifactId>
+          <version>${version.narayana}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${version.jboss.logging}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>${version.narayana}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${version.h2}</version>
+        </dependency>
+        <dependency> <!-- for XA testing purposes -->
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>42.1.4.jre7</version>
+		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.byteman</groupId>
+            <artifactId>byteman-bmunit</artifactId>
+            <version>${version.byteman}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <!--
+      Narayana properties can be redefined as java arg line where you can for example change the recovery period (normally it's 120 seconds).
+      Be aware that the same properties could be redefined in file 'jbossts-properties.xml' which takes precedence to this settings.
+
+      If you want to see activity of periodic recovery you need to enable DEBUG (FINE) logging level. You can do so by using
+      java util properties prepared under this project:
+
+         mvn test -Dtest=TransactionalDriverTest#recovery -Djava.util.logging.config.file=src/main/resources/logging.properties
+    -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- <argLine>-Dcom.arjuna.ats.arjuna.recovery.periodicRecoveryPeriod=15 -Dcom.arjuna.ats.arjuna.recovery.recoveryBackoffPeriod=5</argLine> -->
+                    <argLine>-Dorg.jboss.byteman.verbose -Dorg.jboss.byteman.debug=true</argLine>
+               </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
