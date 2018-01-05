@@ -43,7 +43,7 @@ import io.narayana.util.TestInitialContextFactory;
 /**
  * <p>
  * Utility class which gathers the approaches for recovery setup
- * for jdbc transactional driver. 
+ * for jdbc transactional driver.
  * <p>
  * All the settings of recovery (recovery modules, filters, timeouts ) are taken
  * from <code>jbossts-properties.xml</code> descriptor.
@@ -62,6 +62,28 @@ public final class RecoverySetupUtil {
      * and that where info for new connection is taken from.
      */
     public static RecoveryManager simpleRecoveryIntialize() {
+        RecoveryManager manager = RecoveryManager.manager(RecoveryManager.DIRECT_MANAGEMENT);
+        manager.initialize();
+
+        return manager;
+    }
+
+    /**
+     * <p>
+     * Starting recovery manager to be run manually (not periodically)
+     * <p>
+     * Setting up the programatically property <code>com.arjuna.ats.jta.recovery.XAResourceRecovery</code>
+     * (can be done in <code>jbossts-properties.xml</code> or via JVM parameter).<br>
+     * <p>
+     * Here we intialize XAResourceRecovery which we created for particular database.
+     * It creates connection to the specific database and returns {@link XAResource}
+     * to check indoubt transactions in database.
+     */
+    public static RecoveryManager ds1XARecoveryIntialize() {
+        jtaPropertyManager.getJTAEnvironmentBean().setXaResourceRecoveryClassNames(Arrays.asList(
+                Ds1XAResourceRecovery.class.getName()));
+
+        // direct management means it's not run periodically but we has to manually run recovery scan
         RecoveryManager manager = RecoveryManager.manager(RecoveryManager.DIRECT_MANAGEMENT);
         manager.initialize();
 
@@ -131,6 +153,6 @@ public final class RecoverySetupUtil {
      */
     public static void runRecovery(RecoveryManager manager) {
         manager.scan();
-        manager.terminate(false);
+        manager.terminate();
     }
 }

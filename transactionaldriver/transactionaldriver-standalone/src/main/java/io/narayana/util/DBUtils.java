@@ -139,7 +139,7 @@ public class DBUtils {
         ds.setPassword(DB_H2_PASSWORD);
         return ds;
     }
-    
+
     private static XADataSource getPgXADatasource(String dbName) {
         PGXADataSource ds = new PGXADataSource();
         ds.setServerName(DB_PG_HOST);
