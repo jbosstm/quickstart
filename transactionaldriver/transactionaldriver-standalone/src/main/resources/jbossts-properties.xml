@@ -34,8 +34,8 @@
     <entry key="CoordinatorEnvironmentBean.commitOnePhase">YES</entry>
 
     <!-- default is under user.home - must be writeable!) -->
+    <!-- for the test purposes we want  the temporary data being placed in target directory -->
     <entry key="ObjectStoreEnvironmentBean.objectStoreDir">target</entry>
-    <entry key="com.arjuna.ats.arjuna.objectstore.objectStoreDir">target</entry>
 
     <!-- (default is ON) -->
     <entry key="ObjectStoreEnvironmentBean.transactionSync">ON</entry>
@@ -45,11 +45,6 @@
 
     <!-- Which Xid types to recover -->
     <entry key="JTAEnvironmentBean.xaRecoveryNodes">1</entry>
-
-    <entry key="JTAEnvironmentBean.xaResourceOrphanFilterClassNames">
-        com.arjuna.ats.internal.jta.recovery.arjunacore.JTATransactionLogXAResourceOrphanFilter
-        com.arjuna.ats.internal.jta.recovery.arjunacore.JTANodeNameXAResourceOrphanFilter
-    </entry>
 
     <!--
       Base port number for determining a unique number to associate with an instance of the transaction service
@@ -68,28 +63,59 @@
          Check http://www.jboss.org/community/docs/DOC-10788 for more information
          on recovery modules and their configuration when running in various
          deployments.
+         ===
+         NOTE: for testing purposes reset at TransactionalDriverTest#tearDown
     -->
     <entry key="RecoveryEnvironmentBean.recoveryModuleClassNames">
         com.arjuna.ats.internal.arjuna.recovery.AtomicActionRecoveryModule
         com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule
     </entry>
+        <!-- if transaction manager could be used in subordinate role (which is not likely on jdbc driver usage)
+        use the following order of recovery modules
+        com.arjuna.ats.internal.arjuna.recovery.AtomicActionRecoveryModule
+        com.arjuna.ats.internal.txoj.recovery.TORecoveryModule
+        com.arjuna.ats.internal.jta.recovery.arjunacore.SubordinateAtomicActionRecoveryModule
+        com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule
+    -->
 
     <!-- Expiry scanners to use (order of invocation is random). -->
     <entry key="RecoveryEnvironmentBean.expiryScannerClassNames">
         com.arjuna.ats.internal.arjuna.recovery.ExpiredTransactionStatusManagerScanner
     </entry>
-
-    <!-- Registering XAResourceRecovery to get registered handler capable to recover jdbc XAResources -->
-        <!--com.arjuna.ats.internal.jdbc.recovery.JDBCXARecovery;target/classes/recovery-jdbcxa-test2.xml-->
-    <!--<entry key="com.arjuna.ats.jta.recovery.XAResourceRecovery">
-        com.arjuna.ats.internal.jdbc.recovery.BasicXARecovery;target/classes/recovery-basicxa-test1.xml;1
-    </entry> -->
-
     <!--
         Add the following to the set of expiryScannerClassNames above to move logs that cannot be completed by failure recovery.
             But be sure you know what you are doing and why!
              com.arjuna.ats.internal.arjuna.recovery.AtomicActionExpiryScanner
     -->
+
+    <entry key="JTAEnvironmentBean.xaResourceOrphanFilterClassNames">
+        com.arjuna.ats.internal.jta.recovery.arjunacore.JTATransactionLogXAResourceOrphanFilter
+        com.arjuna.ats.internal.jta.recovery.arjunacore.JTANodeNameXAResourceOrphanFilter
+    </entry>
+    <!-- if transaction manager could be used in subordinate role (which is not likely on jdbc driver usage add the
+        com.arjuna.ats.internal.jta.recovery.arjunacore.SubordinationManagerXAResourceOrphanFilter
+    -->
+
+
+    <!-- Registering XAResourceRecovery to get registered handler capable to recover jdbc XAResources.
+         The responsible bean for this configuration is: com.arjuna.ats.jta.common.JTAEnvironmentBean
+     -->
+    <!--
+        <entry key="com.arjuna.ats.jta.recovery.XAResourceRecovery">
+            com.arjuna.ats.internal.jdbc.recovery.JDBCXARecovery;target/classes/recovery-jdbcxa-test2.xml
+        </entry>
+    -->
+    <!--
+        <entry key="com.arjuna.ats.jta.recovery.XAResourceRecovery">
+            com.arjuna.ats.internal.jdbc.recovery.BasicXARecovery;target/classes/recovery-basicxa-test1.xml;1
+        </entry>
+    -->
+    <!--
+        <entry key="com.arjuna.ats.jta.recovery.XAResourceRecovery">
+            io.narayana.recovery.Ds1XAResourceRecovery
+        </entry>
+    -->
+
 
     <!--
       For cases where the recovery manager is in process with the transaction manager and nothing else uses
@@ -98,8 +124,33 @@
       if you are not careful. That in turn can lead to incorrect transaction processing. Use with care.
     -->
     <entry key="RecoveryEnvironmentBean.recoveryListener">NO</entry>
+   <!--
+      The address and port number on which the recovery manager listens,
+      if the prior settings is YES
+    -->
+    <entry key="RecoveryEnvironmentBean.recoveryPort">4712</entry>
+    <entry key="RecoveryEnvironmentBean.recoveryAddress"></entry>
 
-    <entry key="RecoveryEnvironmentBean.periodicRecoveryPeriod">5</entry>
-    <entry key="RecoveryEnvironmentBean.recoveryBackoffPeriod">3</entry>
+    <!-- Should be transaction status manager started and available at some port? (default YES) -->
+    <entry key="CoordinatorEnvironmentBean.transactionStatusManagerEnable">YES</entry>
+    <!--
+      Use this to fix the port on which the TransactionStatusManager listens,
+      The default behaviour is to use any free port.
+    -->
+    <entry key="RecoveryEnvironmentBean.transactionStatusManagerPort">0</entry>
+
+    <!--
+      Use this to fix the address on which the TransactionStatusManager binds,
+      The default behaviour is to use the loopback address (ie localhost).
+      If running within an AS then the address the AS is bound to (jboss.bind.address) takes precedence
+    -->
+    <entry key="RecoveryEnvironmentBean.transactionStatusManagerAddress"></entry>
+
+
+    <!-- Example for the testing purposes, expected to be left commented and the default values will be used -->
+    <!--
+        <entry key="RecoveryEnvironmentBean.periodicRecoveryPeriod">5</entry>
+        <entry key="RecoveryEnvironmentBean.recoveryBackoffPeriod">3</entry>
+    -->
 
 </properties>

@@ -25,6 +25,7 @@ package io.narayana;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.Arrays;
 
 import javax.transaction.TransactionManager;
 
@@ -36,6 +37,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.internal.jdbc.TransactionalDriverXAConnection;
 import com.arjuna.ats.jta.common.jtaPropertyManager;
@@ -75,6 +77,13 @@ public class TransactionalDriverTest {
         }
         // cleaning recovery settings
         jtaPropertyManager.getJTAEnvironmentBean().setXaResourceRecoveryClassNames(null);
+        // recovery modules needs to be reset for the XARecoveryModule would be instantiated again
+        // and only then the value XAResourceRecovery is loaded for the next test uses new value
+        recoveryPropertyManager.getRecoveryEnvironmentBean().setRecoveryModules(null);
+        recoveryPropertyManager.getRecoveryEnvironmentBean().setRecoveryModuleClassNames(Arrays.asList(
+            com.arjuna.ats.internal.arjuna.recovery.AtomicActionRecoveryModule.class.getName(),
+            com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule.class.getName()
+        ));
         // cleaning database
         if(DBUtils.h2LockConnection != null) { // H2 workaround - force to clean
             CodeUtils.swallowException(() -> DBUtils.h2LockConnection.rollback());
@@ -211,6 +220,26 @@ public class TransactionalDriverTest {
         ResultSet rs2 = DBUtils.select(conn2);
         Assert.assertFalse("First database contains data which is not expected as rolled-back", rs1.next());
         Assert.assertFalse("Second database contains data which is not expected as rolled-back", rs2.next());
+    }
+
+
+    /* ---------------------------------------------------------------------- */
+    /* -------------------------- Recovery involed -------------------------- */
+
+    @BMScript("xaexception.rmfail")
+    @Test
+    public void transactionDriverProvidedRecovery() throws Exception {
+        RecoveryManager recoveryManager = RecoverySetupUtil.ds1XARecoveryIntialize();
+
+        new DriverProvidedXADataSource().process(() -> {});
+
+        ResultSet rs1 = DBUtils.select(conn1);
+        Assert.assertFalse("First database " + conn1 + " is committed even commit was expected to fail", rs1.next());
+
+        RecoverySetupUtil.runRecovery(recoveryManager);
+
+        rs1 = DBUtils.select(conn1);
+        Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
     }
 
     @BMScript("xaexception.rmfail")

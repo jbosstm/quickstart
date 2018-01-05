@@ -45,10 +45,10 @@
             <version>${version.h2}</version>
         </dependency>
         <dependency> <!-- for XA testing purposes -->
-		    <groupId>org.postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
-		    <version>42.1.4.jre7</version>
-		</dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.4.jre7</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -79,8 +79,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <!-- <argLine>-Dcom.arjuna.ats.arjuna.recovery.periodicRecoveryPeriod=15 -Dcom.arjuna.ats.arjuna.recovery.recoveryBackoffPeriod=5</argLine> -->
-                    <argLine>-Dorg.jboss.byteman.verbose -Dorg.jboss.byteman.debug=true</argLine>
+                    <argLine>-Dcom.arjuna.ats.arjuna.recovery.periodicRecoveryPeriod=5 -Dcom.arjuna.ats.arjuna.recovery.recoveryBackoffPeriod=3</argLine>
+                    <!-- <argLine>-Dorg.jboss.byteman.verbose -Dorg.jboss.byteman.debug=true</argLine>  -->
                </configuration>
             </plugin>
         </plugins>
