@@ -27,7 +27,7 @@
 
     <groupId>org.jboss.narayana.quickstarts.spring</groupId>
     <artifactId>narayana-spring-boot</artifactId>
-    <version>5.5.31.Final</version>
+    <version>5.5.32.Final-SNAPSHOT</version>
 
     <name>Narayana and Spring Boot Quickstart</name>
     <description>Narayana Spring Boot example</description>
