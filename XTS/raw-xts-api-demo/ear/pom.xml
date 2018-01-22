@@ -27,7 +27,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
         <artifactId>xts-demo-all</artifactId>
-        <version>5.7.2.Final</version>
+        <version>5.7.3.Final-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>xts-demo-ear</artifactId>

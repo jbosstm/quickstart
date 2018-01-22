@@ -26,12 +26,12 @@ function getDebugArgs {
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 case "$(uname)" in
-   CYGWIN*) export NARAYANA_INSTALL_LOCATION=`cygpath -w $(pwd)/narayana-full-5.7.2.Final/` ;;
-   *)       export NARAYANA_INSTALL_LOCATION=$(pwd)/narayana-full-5.7.2.Final/ ;;
+   CYGWIN*) export NARAYANA_INSTALL_LOCATION=`cygpath -w $(pwd)/narayana-full-5.7.3.Final-SNAPSHOT/` ;;
+   *)       export NARAYANA_INSTALL_LOCATION=$(pwd)/narayana-full-5.7.3.Final-SNAPSHOT/ ;;
 esac
 
 rm -rf $NARAYANA_INSTALL_LOCATION
-unzip $WORKSPACE/narayana-full-5.7.2.Final-bin.zip
+unzip $WORKSPACE/narayana-full-5.7.3.Final-SNAPSHOT-bin.zip
 
 java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
