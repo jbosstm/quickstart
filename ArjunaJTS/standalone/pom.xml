@@ -21,7 +21,7 @@
 
     <groupId>org.jboss.narayana.quickstart.jts</groupId>
     <artifactId>standalone</artifactId>
-    <version>5.7.2.Final-SNAPSHOT</version>
+    <version>5.7.2.Final</version>
     <packaging>jar</packaging>
     <name>Standalone JTS Transaction Example</name>
     <description>Standalone JTS Transaction Example</description>
@@ -35,7 +35,7 @@
     </licenses>
 
     <properties>
-      <version.narayana>5.7.2.Final-SNAPSHOT</version.narayana>
+      <version.narayana>5.7.2.Final</version.narayana>
     </properties>
 
     <repositories>
