@@ -118,6 +118,7 @@
             <list elementClass="java.lang.String">
                 <value>com.arjuna.ats.internal.jta.recovery.arjunacore.JTATransactionLogXAResourceOrphanFilter</value>
                 <value>com.arjuna.ats.internal.jta.recovery.arjunacore.JTANodeNameXAResourceOrphanFilter</value>
+                <value>com.arjuna.ats.internal.jta.recovery.arjunacore.JTAActionStatusServiceXAResourceOrphanFilter</value>
             </list>
         </property>
     </bean>
