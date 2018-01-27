@@ -91,6 +91,7 @@
     <entry key="JTAEnvironmentBean.xaResourceOrphanFilterClassNames">
         com.arjuna.ats.internal.jta.recovery.arjunacore.JTATransactionLogXAResourceOrphanFilter
         com.arjuna.ats.internal.jta.recovery.arjunacore.JTANodeNameXAResourceOrphanFilter
+        com.arjuna.ats.internal.jta.recovery.arjunacore.JTAActionStatusServiceXAResourceOrphanFilter
     </entry>
     <!-- if transaction manager could be used in subordinate role (which is not likely on jdbc driver usage add the
         com.arjuna.ats.internal.jta.recovery.arjunacore.SubordinationManagerXAResourceOrphanFilter
