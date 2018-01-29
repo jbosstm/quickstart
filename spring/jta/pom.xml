@@ -45,6 +45,8 @@
         <version.org.springframwork>4.2.0.RELEASE</version.org.springframwork>
         <version.narayana>5.7.3.Final-SNAPSHOT</version.narayana>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
+	<version.commons-dbcp2>2.1.1</version.commons-dbcp2>
+	<version.commons-pool2>2.4.3</version.commons-pool2>
         <version.log4j>1.2.17</version.log4j>
         <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
         <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
@@ -96,11 +98,6 @@
             <version>${version.narayana}</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.narayana.jta</groupId>
-            <artifactId>jdbc</artifactId>
-            <version>${version.narayana}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-integration</artifactId>
             <version>${version.narayana}</version>
@@ -127,6 +124,22 @@
             <version>${version.org.jboss.spec.javax.transaction}</version>
         </dependency>
         <!-- Other dependencies -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+	    <version>${version.commons-dbcp2}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+	    <version>${version.commons-pool2}</version>
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
