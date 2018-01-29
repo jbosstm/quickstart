@@ -18,7 +18,9 @@ package org.jboss.narayana.quickstart.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.jta.narayana.DbcpXADataSourceWrapper;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 
 import java.io.Closeable;
 
@@ -28,6 +30,7 @@ import java.io.Closeable;
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
 @SpringBootApplication
+@Import(DbcpXADataSourceWrapper.class)
 public class QuickstartApplication {
 
     public static final Object TO_WAIT = new Object();
