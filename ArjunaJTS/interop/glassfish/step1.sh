@@ -16,7 +16,8 @@ function build_wf {
 
   ./build.sh clean install -B -DskipTests -Drelease=true -Dlicense.skipDownloadLicenses=true -Dversion.org.jboss.narayana=$NARAYANA_CURRENT_VERSION
   
-  WILDFLY_MASTER_VERSION=`awk "/wildfly-parent/ {getline;print;}" pom.xml | cut -d \< -f 2|cut -d \> -f 2`
+
+  WILDFLY_MASTER_VERSION=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' pom.xml | cut -d \< -f 2|cut -d \> -f 2`
   cp -rp build/target/wildfly-$WILDFLY_MASTER_VERSION/ ${QS_DIR}/
   
   cd ${QS_DIR}
