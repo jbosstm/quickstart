@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstart.txbridge.wsat-jta-multi_hop</groupId>
     <artifactId>wsat-jta-multi_hop-all</artifactId>
-    <version>5.8.0.Final</version>
+    <version>5.8.1.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers where one service invokes another</name>
     <description>Boss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers
