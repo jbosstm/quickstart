@@ -40,7 +40,7 @@ set ORACLE_HOME=C:\hudson\workspace\%JOB_NAME%\instantclient_11_2
 set TNS_ADMIN=C:\hudson\workspace\%JOB_NAME%\instantclient_11_2\network\admin
 
 
-git clone https://github.com/jbosstm/narayana.git
+git clone git://github.com/jbosstm/narayana.git
 cd narayana
 set OLDWORKSPACE=%WORKSPACE%
 set WORKSPACE=%WORKSPACE%\narayana\
