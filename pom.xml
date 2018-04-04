@@ -127,6 +127,7 @@
     <module>ArjunaJTS</module>
     <module>transactionaldriver</module>
     <module>jca-and-tomcat</module>
+    <module>dbcp2-and-tomcat</module>
     <module>jca-and-hibernate</module>
     <module>jta-1_2-standalone</module>
     <module>jta-1_2-in-wildfly</module>
