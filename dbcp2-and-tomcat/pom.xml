@@ -11,14 +11,19 @@
         <version.narayana>5.8.2.Final-SNAPSHOT</version.narayana>
         <version.resteasy>3.0.23.Final</version.resteasy>
         <version.h2>1.4.195</version.h2>
+        <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
         <version.tomcat.plugin>2.2</version.tomcat.plugin>
-	<version.commons-dbcp2>2.1.1</version.commons-dbcp2>
-	<version.commons-pool2>2.4.3</version.commons-pool2>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+            <version>${version.org.jboss.spec.javax.transaction}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.jboss.narayana.tomcat</groupId>
             <artifactId>tomcat-jta</artifactId>
@@ -33,22 +38,6 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson-provider</artifactId>
             <version>${version.resteasy}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-	    <version>${version.commons-dbcp2}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-	    <version>${version.commons-pool2}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
