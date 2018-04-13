@@ -13,5 +13,5 @@
               factory="org.h2.jdbcx.JdbcDataSourceFactory"/>
     <Resource name="transactionalDataSource" uniqueName="transactionalDataSource" auth="Container" type="javax.sql.DataSource"
               transactionManager="TransactionManager" xaDataSource="h2DataSource"
-              factory="io.narayana.TransactionalDataSourceFactory"/>
+              factory="org.jboss.narayana.tomcat.jta.TransactionalDataSourceFactory"/>
 </Context>
