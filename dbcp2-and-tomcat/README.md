@@ -13,7 +13,7 @@ Start Tomcat in the usual manner, for example:
 
 ### Deploy the app
 
-`cp target/*.war apache-tomcat-7.0.78/webapps/`
+`cp target/*.war apache-tomcat-9.0.7/webapps/`
 
 ### Get strings from the database
 
