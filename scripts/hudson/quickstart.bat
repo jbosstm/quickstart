@@ -48,6 +48,7 @@ set CACHED_COMMENT=%COMMENT_ON_PULL%
 set COMMENT_ON_PULL=0
 set NOTBT=1
 set NOTMAIN=1
+call build_mp
 call scripts\hudson\narayana.bat -DskipTests
 if %ERRORLEVEL% NEQ 0 (set COMMENT_ON_PULL=%CACHED_COMMENT% & call:comment_on_pull "Narayana build failed %BUILD_URL%" & exit -1)
 cd ..
@@ -90,6 +91,18 @@ rem -------------------------------------------------------
 rem -                 Functions bellow                    -
 rem -------------------------------------------------------
 
+goto:eof
+
+:build_mp
+   echo "Cloning MicroProfile LRA"
+   rmdir /S /Q microprofile-lra
+   git clone https://github.com/jbosstm/microprofile-lra.git || (call:           comment_on_pull "MP LRA clone Failed %BUILD_URL%" & exit -1)
+   if %ERRORLEVEL% NEQ 0 exit -1
+   cd microprofile-lra
+   git checkout microprofile-lra
+   if %ERRORLEVEL% NEQ 0 exit -1
+   cd ..
+   call build.bat clean install "-f" "microprofile-lra\pom.xml" || (call:        comment_on_pull "MP LRA build Failed %BUILD_URL%" & exit -1)
 goto:eof
 
 :comment_on_pull
