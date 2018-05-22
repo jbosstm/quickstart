@@ -25,14 +25,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.narayana</groupId>
 	<artifactId>setCheckedActionFactoryExample</artifactId>
-	<version>5.8.2.Final-SNAPSHOT</version>
+	<version>5.8.2.Final</version>
 	<packaging>war</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
-                <version.narayana>5.8.2.Final-SNAPSHOT</version.narayana>
+                <version.narayana>5.8.2.Final</version.narayana>
 	</properties>
   <repositories>
     <repository>
