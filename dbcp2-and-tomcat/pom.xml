@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.narayana</groupId>
     <artifactId>dbcp2-and-tomcat</artifactId>
-    <version>5.8.2.Final</version>
+    <version>5.8.3.Final-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
-        <version.narayana>5.8.2.Final</version.narayana>
+        <version.narayana>5.8.3.Final-SNAPSHOT</version.narayana>
         <version.resteasy>3.0.23.Final</version.resteasy>
         <version.h2>1.4.195</version.h2>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
