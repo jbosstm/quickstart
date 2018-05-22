@@ -25,7 +25,7 @@ function fatal {
 NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
 NARAYANA_BRANCH="${NARAYANA_BRANCH:-master}"
 QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-5.8.3.Final-SNAPSHOT}
-MICROPROFILE_LRA_BRANCH=${MICROPROFILE_LRA_BRANCH:-microprofile-lra}
+MICROPROFILE_LRA_BRANCH=${MICROPROFILE_LRA_BRANCH:-microprofile-lra-v2}
 
 function comment_on_pull
 {
@@ -125,9 +125,9 @@ function build_narayana {
   fi
   cd narayana
   build_microprofile_lra
-  ./build.sh clean install -DskipTests -Pcommunity
-  ./build.sh -f blacktie/wildfly-blacktie/pom.xml clean install
-  ./build.sh -f blacktie/pom.xml clean install -DskipTests
+  ./build.sh clean install -B -DskipTests -Pcommunity
+  ./build.sh -f blacktie/wildfly-blacktie/pom.xml clean install -B
+  ./build.sh -f blacktie/pom.xml clean install -B -DskipTests
   
   if [ $? != 0 ]; then
     comment_on_pull "Narayana build failed: $BUILD_URL";
@@ -141,11 +141,11 @@ function build_narayana {
 
 function configure_wildfly {
   cd $WORKSPACE
-  WILDFLY_MASTER_VERSION=10.1.0.Final
-  rm -rf wildfly-$WILDFLY_MASTER_VERSION
-  wget -N http://download.jboss.org/wildfly/$WILDFLY_MASTER_VERSION/wildfly-$WILDFLY_MASTER_VERSION.zip
-  unzip wildfly-$WILDFLY_MASTER_VERSION.zip
-  export JBOSS_HOME=$PWD/wildfly-$WILDFLY_MASTER_VERSION
+  wget --user=guest --password=guest -nv https://ci.wildfly.org/httpAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
+  unzip -q artifacts.zip
+  export WILDFLY_DIST_ZIP=$(ls wildfly-*-SNAPSHOT.zip)
+  unzip -q $WILDFLY_DIST_ZIP
+  export JBOSS_HOME=`pwd`/${WILDFLY_DIST_ZIP%.zip}
   cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
   cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
 }
@@ -157,7 +157,7 @@ function build_apache-karaf {
     comment_on_pull "Karaf clone failed: $BUILD_URL";
     exit -1
   fi
-  ./build.sh -f apache-karaf/pom.xml -Pfastinstall
+  ./build.sh -f apache-karaf/pom.xml -B -Pfastinstall
   if [ $? != 0 ]; then
     comment_on_pull "Karaf build failed: $BUILD_URL";
     exit -1
