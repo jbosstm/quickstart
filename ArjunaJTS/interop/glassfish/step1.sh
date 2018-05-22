@@ -14,7 +14,7 @@ function build_wf {
 
   git apply $QS_DIR/interop.wildfly.diff
 
-  ./build.sh clean install -B -DskipTests -Drelease=true -Dlicense.skipDownloadLicenses=true -Dversion.org.jboss.narayana=$NARAYANA_CURRENT_VERSION
+  ./build.sh clean install -B -DskipTests -Dversion.org.jboss.narayana=$NARAYANA_CURRENT_VERSION
   
 
   WILDFLY_MASTER_VERSION=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' pom.xml | cut -d \< -f 2|cut -d \> -f 2`
