@@ -31,7 +31,10 @@ case "$(uname)" in
 esac
 
 rm -rf $NARAYANA_INSTALL_LOCATION
-unzip $WORKSPACE/narayana-full-5.8.3.Final-SNAPSHOT-bin.zip
+NARAYANA_ZIP="narayana-full-5.8.3.Final-SNAPSHOT-bin.zip"
+[ ! -f "$WORKSPACE/$NARAYANA_ZIP" ] &&\
+   echo "There is no Narayana zip at \$WORKSPACE directory at '$WORKSPACE/$NARAYANA_ZIP" && exit 1
+unzip "$WORKSPACE/$NARAYANA_ZIP"
 
 java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!

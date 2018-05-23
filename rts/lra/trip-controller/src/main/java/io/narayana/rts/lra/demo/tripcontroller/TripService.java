@@ -22,7 +22,6 @@
 package io.narayana.rts.lra.demo.tripcontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.narayana.lra.client.LRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import javax.ws.rs.client.WebTarget;
@@ -30,6 +29,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+
+import org.eclipse.microprofile.lra.client.LRAClient;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;

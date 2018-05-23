@@ -25,7 +25,6 @@ function fatal {
 NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
 NARAYANA_BRANCH="${NARAYANA_BRANCH:-master}"
 QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-5.8.3.Final-SNAPSHOT}
-MICROPROFILE_LRA_BRANCH=${MICROPROFILE_LRA_BRANCH:-microprofile-lra-v2}
 
 function comment_on_pull
 {
@@ -83,22 +82,6 @@ function get_bt_dependencies {
   fi
 }
 
-# ensure the microprofile-lra artifact is in the local maven repository
-function build_microprofile_lra {
-  if [ -d microprofile-lra ]; then
-    rm -rf microprofile-lra
-  fi
-
-  git clone https://github.com/jbosstm/microprofile-lra
-  [ $? = 0 ] || fatal "git clone https://github.com/jbosstm/microprofile-lra  failed"
-  cd microprofile-lra/
-  git checkout $MICROPROFILE_LRA_BRANCH
-  [ $? = 0 ] || fatal "git checkout $MICROPROFILE_LRA_BRANCH failed"
-  cd ..
-  ./build.sh -f microprofile-lra/pom.xml -B clean install
-  [ $? = 0 ] || fatal "Build of microprofile-lra failed"
-}
-
 function build_narayana {
   cd $WORKSPACE
   # INITIALIZE ENV
@@ -124,7 +107,6 @@ function build_narayana {
     exit -1
   fi
   cd narayana
-  build_microprofile_lra
   ./build.sh clean install -B -DskipTests -Pcommunity
   ./build.sh -f blacktie/wildfly-blacktie/pom.xml clean install -B
   ./build.sh -f blacktie/pom.xml clean install -B -DskipTests
