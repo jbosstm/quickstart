@@ -29,6 +29,7 @@
       <jta-data-source>java:jboss/datasources/RestTXBridgeJPAQuickstartDS</jta-data-source>
       <properties>
          <!-- Properties for Hibernate -->
+         <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
          <property name="hibernate.show_sql" value="false" />
       </properties>

@@ -24,7 +24,7 @@
     <xa-datasource jndi-name="java:jboss/datasources/RestTXBridgeJPAQuickstartDS"
                    pool-name="RestTXBridgeJPAQuickstartDS">
         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
-        <xa-datasource-property name="URL">jdbc:h2:file:db/rest-tx-bridge-jpa-quickstart;DB_CLOSE_ON_EXIT=FALSE
+        <xa-datasource-property name="URL">jdbc:h2:file:./db/rest-tx-bridge-jpa-quickstart;DB_CLOSE_ON_EXIT=FALSE
         </xa-datasource-property>
         <driver>h2</driver>
         <security>
