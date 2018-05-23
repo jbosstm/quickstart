@@ -22,10 +22,6 @@
 package io.narayana.rts.lra.demo.flight;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.narayana.lra.annotation.Compensate;
-import io.narayana.lra.annotation.Complete;
-import io.narayana.lra.annotation.LRA;
-import io.narayana.lra.annotation.NestedLRA;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import javax.enterprise.context.RequestScoped;
@@ -43,6 +39,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.eclipse.microprofile.lra.annotation.Compensate;
+import org.eclipse.microprofile.lra.annotation.Complete;
+import org.eclipse.microprofile.lra.annotation.LRA;
+import org.eclipse.microprofile.lra.annotation.NestedLRA;
 
 import java.util.Collection;
 

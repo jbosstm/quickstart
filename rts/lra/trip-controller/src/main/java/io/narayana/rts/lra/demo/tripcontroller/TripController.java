@@ -22,9 +22,8 @@
 package io.narayana.rts.lra.demo.tripcontroller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.narayana.lra.annotation.LRA;
+
 import io.narayana.lra.client.NarayanaLRAClient;
-import io.narayana.lra.client.LRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import javax.annotation.PostConstruct;
@@ -51,6 +50,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+
+import org.eclipse.microprofile.lra.annotation.LRA;
+import org.eclipse.microprofile.lra.client.LRAClient;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
