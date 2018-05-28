@@ -58,13 +58,17 @@ set WORKSPACE=%OLDWORKSPACE%
 rem git checkout 4.17
 rem call build.bat clean install -DskipTests
 
+rem Downloading the WildFly nightly build
+rmdir "wildfly-*" /s /q
+wget --user=guest --password=guest --no-check-certificate -nv https://ci.wildfly.org/httpAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
+unzip -q artifacts.zip
+unzip -q "wildfly-*-SNAPSHOT.zip"
+del "wildfly-*-SNAPSHOT*.zip"
+dir /b wildfly-*-SNAPSHOT > filename.tmp
+set /p JBOSS_DIST_DIR=<filename.tmp
+set JBOSS_HOME=%CD%\%JBOSS_DIST_DIR%
+echo "Downloaded WildFly nightly build and placed under JBOSS_HOME directory at '%JBOSS_HOME%'"
 
-set WILDFLY_MASTER_VERSION=10.1.0.Final
-
-rmdir wildfly-%WILDFLY_MASTER_VERSION% /s /q
-wget -N http://download.jboss.org/wildfly/%WILDFLY_MASTER_VERSION%/wildfly-%WILDFLY_MASTER_VERSION%.zip
-unzip wildfly-%WILDFLY_MASTER_VERSION%.zip
-set JBOSS_HOME=C:\hudson\workspace\%JOB_NAME%\wildfly-%WILDFLY_MASTER_VERSION%
 copy narayana\blacktie\blacktie\target\blacktie-*-vc9x32-bin.zip .
 set BLACKTIE_DIST_HOME=C:\hudson\workspace\%JOB_NAME%\
 wget -N http://%JENKINS_HOST%/userContent/blacktie/instantclient-basiclite-win32-11.2.0.1.0.zip
@@ -81,7 +85,7 @@ rem git clone https://github.com/apache/karaf apache-karaf || (call:comment_on_p
 rem call build.bat -f apache-karaf/pom.xml -Pfastinstall || (call:comment_on_pull "Karaf build failed %BUILD_URL%" & exit -1)
 
 echo Running quickstarts
-call build.bat clean install || (call:comment_on_pull "Pull failed %BUILD_URL%" && exit -1)
+call build.bat clean install -B || (call:comment_on_pull "Pull failed %BUILD_URL%" && exit -1)
 
 
 call:comment_on_pull "Pull passed %BUILD_URL%"

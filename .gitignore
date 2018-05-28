@@ -1,6 +1,7 @@
 .classpath
 .settings/
 .project
+.metadata/
 
 *.iml
 .idea
@@ -22,7 +23,8 @@ wildfly-10.x.zip
 wildfly-10.*/
 wildfly-10.*.jar
 apache-tomcat-*
-narayana-full-*
-jboss*/
+narayana-full-*-bin.zip
+jboss1/
+jboss2/
 bin/
 db/
