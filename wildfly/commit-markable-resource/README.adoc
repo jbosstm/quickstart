@@ -1,0 +1,87 @@
+= Commit markable resource
+Author: Ondra Chaloupka
+Level: Intermediate
+Technologies: JTA, JPA, JMS
+
+== What is it CMR?
+
+This examples demostrates how to setup and use Commit Markable Resource (CMR)
+in the http://wildfly.org[WildFly application server].
+
+The CMR is the Narayana LRCO optimization which is designed to solve the LRCO issue
+of data inconsistency in case of failure in particular point of time during
+two phase commit processing.
+
+CMR is availale only for JDBC datasources. It's *not* for available for an _arbitrary_ resource.
+
+=== LRCO data inconsisency window
+
+The problem when the LRCO fails to guarantee the data consistency is case
+if transaction manager processing fails (ie. JVM crash or connection error)
+just after LRCO commit is processed. At that time the resource is committed
+but transaction manager hasn't managed to save information about processing.
+When transaction manager is restarted again then there is no information.
+Base on that transaction manager decides to rollback all prepared XA resources.
+We ended up in situation where LRCO resource was committed but other transaction
+participants were rolled-back.
+
+== What this quickstart presents
+
+The quickstart shows configuration of the WildFly needed for the CMR could be used.
+It presents a simple application which _simulates_ a book repository.
+The datastorage for the books is a database configured as the CMR datasource.
+When a book is stored then a JMS message is sent to the WildFly Artemis ActiveMQ broker.
+This two actions (saving book to database, sending message to the broker) is expected
+to be processed in one transaction.
+
+The quickstart contains a simple test where CMR and LRCO is configured
+and the difference between the two is demonstrated.
+
+== Build and Deploy
+
+* http://wildfly.org/downloads[download WildFly application server] and unzip it
+** `export WILDFLY_HOME=wildfly-*`
+* go to the folder `wildfly/commit-markable-resource/`
+* run `mvn package -DskipTests`
+* copy the compiled war file to the WildFly deployment directory `cp target/cmr-quickstart.war $WILDFLY_HOME/standalone/deployments`
+** the `war` file contains:
+*** the `jdbc-ds.xml` file which defines the CMR resource
+*** the `test-jms.xml` file which defines the JMS queue
+*** the configuration of `persistence.xml` with schema generation `sql` commans which ensures the CMR `xids` table
+    to be created at the application deployment time (see `META-INF/cmr-create-script.sql`).
+* run the WildFly app server in `standalone-full` profile (quickstart needs the JMS subsystem) `./bin/standalone.sh -c standalone-full.xml`
+* you need manually add commit markable resource identification under transaction subsystem for Narayana knowing it can use it
+** run `$WILDFLY_HOME/bin/jboss-cli.sh -c --commands='/subsystem=transactions/commit-markable-resource="java:jboss/datasources/jdbc-cmr":add(),:reload'`
+* go to http://localhost:8080/cmr-quickstart/ in your web browser
+* you can add a new book to the repository
+** when the new book is _added_ the new record in the database is created
+   and the jms message is sent to the broker
+
+== Running Arquillian tests
+
+The tests do no need any special configuration as all the setup work described in the text above
+is done automatically before the tests start. The required step is to set up the `JBOSS_HOME` variable
+with the location of the WildFly application server.
+
+* set up `JBOSS_HOME=path/to/wildfly`
+** _if you already setup WILDFLY_HOME variable you can just set up `export JBOSS_HOME="$WILDFLY_HOME"`_
+* run tests with `mvn test`
+** there are run few tests in the `CmrLrcoTestCase` demonstrating LRCO and CMR commit, rollback and failure
+
+NOTE: The tests are not capable to run in the remote container
+(the WildFly app server is started before the test starts and test
+then only deploy testing application to the running server).
+They need to be started in the managed container
+(the lifecycle of the WildFly app server is managed by the test
+that means the test starts and stops the container on its own).
+
+
+== CMR setup in WildFly
+
+These are steps needed for commit markable resource being https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.1/html/development_guide/java_transaction_api_jta#about_the_lrco_optimization_for_single_phase_commit_1pc[correctly configured in the WildFly application server].
+Then it could be used in your application.
+
+. mark jdbc datasource as `connectable`: `/subsystem=datasources/data-source=ExampleDS:write-attribute(name=connectable, value=true)`
+. create `xids` database table under the jdbc datasource (H2 example): `CREATE TABLE xids (xid bytea, transactionManagerID varchar(64), actionuid bytea); CREATE UNIQUE INDEX index_xid ON xids (xid);`
+. identify the jdbc datasource as CMR in transaction subsystem: `/subsystem=transactions/commit-markable-resource="java:jboss/datasources/ExampleDS":add()`
+

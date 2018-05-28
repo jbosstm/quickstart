@@ -140,6 +140,7 @@
     <!-- see JBTM-2878 -->
     <!-- module>blacktie</module> -->
     <module>wildfly/setCheckedActionFactoryExample</module>
+    <module>wildfly/commit-markable-resource</module>
     <module>STM</module>
     <module>jts-docker</module>
     <!-- JBTM-2820 disable the osgi quickstart until the karaf release the 4.1.0-->
