@@ -14,6 +14,8 @@ two phase commit processing.
 
 CMR is availale only for JDBC datasources. It's *not* for available for an _arbitrary_ resource.
 
+Complementary blog post with all the details is at http://jbossts.blogspot.com/2018/06/narayana-commit-markable-resource.html.
+
 === LRCO data inconsisency window
 
 The problem when the LRCO fails to guarantee the data consistency is case
