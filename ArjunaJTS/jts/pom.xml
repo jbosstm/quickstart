@@ -14,7 +14,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstarts</groupId>
   <artifactId>jboss-as-jts-parent</artifactId>
-  <version>5.5.32.Final-SNAPSHOT</version>
+  <version>5.5.32.Final</version>
   <name>JBoss AS Quickstarts: Java Transaction Service</name>
   <description>Using CMT with JTS</description>
   <packaging>pom</packaging>
