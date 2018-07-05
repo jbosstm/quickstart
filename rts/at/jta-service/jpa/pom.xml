@@ -26,7 +26,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts</groupId>
         <artifactId>restat-bridge</artifactId>
-        <version>5.9.0.Final</version>
+        <version>5.9.1.Final-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -38,7 +38,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <version.narayana>5.9.0.Final</version.narayana>
+        <version.narayana>5.9.1.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <repositories>
