@@ -5,6 +5,10 @@
 We are always happy to talk transactions and how-to use Narayana in exotic and not so exotic environments. If you have ideas for what we can add to the quickstarts to make them more useful please do reach out to us over on our forum:
 https://developer.jboss.org/en/jbosstm/
 
+## Quick tip
+
+If you want to see how we run the quickstarts in our continuous integration environment, take a look at scripts/hudson/quickstart.sh
+
 ## Running a single quickstart
 
 Change directory into the required quickstart and follow the instructions in the README.md file.
