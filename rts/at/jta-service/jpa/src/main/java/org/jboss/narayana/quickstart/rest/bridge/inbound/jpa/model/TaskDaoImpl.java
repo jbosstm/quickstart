@@ -64,7 +64,7 @@ public class TaskDaoImpl implements TaskDao {
     @Override
     public List<Task> getForTitle(User user, String title) {
         String lowerCaseTitle = "%" + title.toLowerCase() + "%";
-        return em.createQuery("SELECT t FROM Task t WHERE t.owner = ? AND LOWER(t.title) LIKE ?", Task.class)
+        return em.createQuery("SELECT t FROM Task t WHERE t.owner = ?1 AND LOWER(t.title) LIKE ?2", Task.class)
                 .setParameter(1, user).setParameter(2, lowerCaseTitle).getResultList();
     }
 
@@ -82,6 +82,6 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     private TypedQuery<Task> querySelectAllTasksFromUser(User user) {
-        return em.createQuery("SELECT t FROM Task t WHERE t.owner = ?", Task.class).setParameter(1, user);
+        return em.createQuery("SELECT t FROM Task t WHERE t.owner = ?1", Task.class).setParameter(1, user);
     }
 }
