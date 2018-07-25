@@ -8,7 +8,6 @@
     <packaging>war</packaging>
 
     <properties>
-        <version.narayana>5.9.1.Final-SNAPSHOT</version.narayana>
         <version.resteasy>3.0.23.Final</version.resteasy>
         <version.h2>1.4.195</version.h2>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
@@ -27,7 +26,7 @@
         <dependency>
             <groupId>org.jboss.narayana.tomcat</groupId>
             <artifactId>tomcat-jta</artifactId>
-            <version>${version.narayana}</version>
+            <version>5.9.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
