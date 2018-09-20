@@ -1,48 +1,60 @@
-```
-JBoss, Home of Professional Open Source Copyright 2008, Red Hat Middleware 
-LLC, and others contributors as indicated by the @authors tag. All rights 
-reserved. See the copyright.txt in the distribution for a full listing of 
-individual contributors. This copyrighted material is made available to anyone 
-wishing to use, modify, copy, or redistribute it subject to the terms and 
-conditions of the GNU Lesser General Public License, v. 2.1. This program 
-is distributed in the hope that it will be useful, but WITHOUT A WARRANTY; 
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-PURPOSE. See the GNU Lesser General Public License for more details. You 
-should have received a copy of the GNU Lesser General Public License, v.2.1 
-along with this distribution; if not, write to the Free Software Foundation, 
-Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
-```
+<!--
+JBoss, Home of Professional Open Source Copyright 2008, Red Hat Middleware
+LLC, and others contributors as indicated by the @authors tag. All rights
+reserved. See the copyright.txt in the distribution for a full listing of
+individual contributors. This copyrighted material is made available to anyone
+wishing to use, modify, copy, or redistribute it subject to the terms and
+conditions of the GNU Lesser General Public License, v. 2.1. This program
+is distributed in the hope that it will be useful, but WITHOUT A WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU Lesser General Public License for more details. You
+should have received a copy of the GNU Lesser General Public License, v.2.1
+along with this distribution; if not, write to the Free Software Foundation,
+Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+-->
 
-OVERVIEW
---------
+# Java EE transactional application quickstart
+
+## Overview
+
 This shows how to develop an EJB with transactional attributes and a JPA entity
-bean and then test it using TS deployed in JBossAS using Arquillian
+bean and then test it using testsuite deployed in WildFly using Arquillian
 
+# Usage
 
-USAGE
------
+This command will build and test the application using Arquillian
 
 ```
 export JBOSS_HOME=<PATH_TO_JBOSS_HOME>
-mvn install -Parq-jbossas-managed (This command will build and test the application using Arquillian)
-NOTE: If you get the following you have not exported JBOSS_HOME:
-Tests in error: 
+mvn install -Parq
+```
+
+_NOTE:_ If you get the following error you have not exported `JBOSS_HOME`
+
+```
+Tests in error:
   TestBusinessLogic: jbossHome 'null' must exist
 
 ```
 
+## Deploying the quickstart
 
-DEPLOYING THE QUICKSTART
-------------------------
-mvn compile jboss-as:deploy (This command will deploy the application without running the tests)
+This command will deploy the application without running the tests.
+First start the WildFly application server and then run the command
+to get the war being deployed.
+
+```
+mvn compile wildfly:deploy -DnoArq
+```
 
 Once the application is deployed, you can access it from a browser by:
-http://localhost:8080/jee_transactional_app/ 
+http://localhost:8080/jee_transactional_app/
 
 
-EXPECTED OUTPUT
----------------
+## Expected output
+
 As well as the normal output you would expect to see from maven, you should also see:
+
 1. A JBossAS instance starting up under mavens control
 ```
 	15:57:59,754 INFO  [ContainerRegistryCreator] Could not read active container configuration: null
@@ -52,8 +64,9 @@ As well as the normal output you would expect to see from maven, you should also
 ```
 2. Output from the maven test showing that all the tests ran OK
 
+Some of the tests test that you can't do incorrect things with the bean, hence you may see stack traces in the output.
+This is normal and may be safely ignored by the user. Here is one example:
 
-Some of the tests test that you can't do incorrect things with the bean, hence you may see stack traces in the output. This is normal and may be safely ignored by the user. Here is one example:
 ```
 10:48:11,228 WARN  [com.arjuna.ats.arjuna] (RMI TCP Connection(2)-127.0.0.1) ARJUNA12125: TwoPhaseCoordinator.beforeCompletion - failed for SynchronizationImple< 0:ffff7f000001:-797207b2:4e673dd2:67, org.hibernate.engine.transaction.synchronization.internal.RegisteredSynchronization@2515272a >: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: Unique index or primary key violation: "CONSTRAINT_INDEX_5 ON PUBLIC.CUSTOMER(NAME)"; SQL statement:
 insert into Customer (name, id) values (?, ?) [23001-145]

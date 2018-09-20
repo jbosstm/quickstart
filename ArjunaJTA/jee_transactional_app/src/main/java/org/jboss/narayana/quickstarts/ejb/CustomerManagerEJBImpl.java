@@ -53,8 +53,7 @@ public class CustomerManagerEJBImpl implements CustomerManagerEJB {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public int createCustomer(String name) throws Exception {
 		logger.debug("createCustomer transaction is identified as: "
-				+ new InitialContext().lookup("java:comp/UserTransaction")
-						.toString());
+				+ new InitialContext().lookup("java:/TransactionManager").toString());
 
 		// Can do this first because if there is a duplicate it will be rolled
 		// back for us
@@ -74,8 +73,7 @@ public class CustomerManagerEJBImpl implements CustomerManagerEJB {
 			IllegalStateException, RollbackException, HeuristicMixedException,
 			HeuristicRollbackException {
 		logger.debug("listCustomers transaction is identified as: "
-				+ new InitialContext().lookup("java:comp/UserTransaction")
-						.toString());
+				+ new InitialContext().lookup("java:/TransactionManager").toString());
 		return entityManager.createQuery("select c from Customer c")
 				.getResultList();
 	}
@@ -83,8 +81,7 @@ public class CustomerManagerEJBImpl implements CustomerManagerEJB {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public int getCustomerCount() throws Exception {
 		logger.debug("getCustomerCount transaction is identified as: "
-				+ new InitialContext().lookup("java:comp/UserTransaction")
-						.toString());
+				+ new InitialContext().lookup("java:/TransactionManager").toString());
 		return customerCreationCounter.get();
 	}
 }
