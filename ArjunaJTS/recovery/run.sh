@@ -1,3 +1,4 @@
+#!/bin/sh
 
 # JBoss, Home of Professional Open Source
 # Copyright 2016, Red Hat, Inc., and others contributors as indicated
@@ -15,8 +16,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA  02110-1301, USA.
 
-#!/bin/sh
-
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
@@ -25,15 +24,23 @@ echo "Running recovery quickstart"
 # if you want to test using the sun orb you 
 # SUN_CONIG="-Dcom.sun.CORBA.POA.ORBServerId=1 -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567"
 
+[ "x$QUICKSTART_NARAYANA_VERSION" != 'x' ] &&\
+  NARAYANA_VERSION_PARAM="-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}"
+
 echo "Generating a recovery record ..."
-mvn -e clean compile exec:java -Dexec.mainClass=Test -Dexec.args="-crash"
+mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-crash" $NARAYANA_VERSION_PARAM
 
 echo "Recovering failed service - this could take up to a minute or so ..."
-mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-recover -auto"
+mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-recover -auto" $NARAYANA_VERSION_PARAM
 
 XID1="target/ExampleXAResource1.xid_"
 XID2="target/ExampleXAResource2.xid_"
 
 echo "Testing that the XID data files were removed"
 
-[ -f $XID1 -a -f $XID2 ] && (echo "JTS example failed"; exit -1) || (echo "JTS example passed"; exit 0)
+if [ -f $XID1 -a -f $XID2 ]; then
+  echo "JTS example failed"
+  exit -1
+else
+  echo "JTS example passed"
+fi

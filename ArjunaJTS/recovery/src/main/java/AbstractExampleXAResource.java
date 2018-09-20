@@ -42,7 +42,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
     private int timeout = 10;
 
     public AbstractExampleXAResource(boolean recovered) {
- //       System.out.println(this.getClass().getName() + ": " + " (Constructor) recovered = " + recovered);
+        // System.out.println(this.getClass().getName() + ": " + " (Constructor) recovered = " + recovered);
         this.recovered = recovered;
     }
 
@@ -147,7 +147,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
      */
     public void forget(Xid xid) throws XAException {
         System.out.println(this.getClass().getName() + ": " + "forget");
-        // an actual resource would ned to look up the relevant file and remove it
+        // an actual resource would need to look up the relevant file and remove it
         File file = new File(DATA_DIR + this.getClass().getName() + ".xid_");
     }
 
@@ -158,7 +158,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
      * @exception javax.transaction.xa.XAException <description>
      */
     public synchronized Xid[] recover(int flag) throws XAException {
-//        System.out.println(this.getClass().getName() + ": " + "recover");
+        // System.out.println(this.getClass().getName() + ": " + "recover");
 
         List<Xid> xids = new ArrayList<Xid>();
         File file = new File(DATA_DIR + this.getClass().getName() + ".xid_");
@@ -240,7 +240,7 @@ public abstract class AbstractExampleXAResource implements XAResource {
      * @exception javax.transaction.xa.XAException <description>
      */
     public boolean isSameRM(XAResource other) throws XAException {
-//        System.out.println(this.getClass().getName() + ": " + "isSameRM");
+        // System.out.println(this.getClass().getName() + ": " + "isSameRM");
         return (false);
     }
 
