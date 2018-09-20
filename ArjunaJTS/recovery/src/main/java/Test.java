@@ -85,8 +85,8 @@ public class Test {
             ORBManager.setORB(myORB);
             ORBManager.setPOA(myOA);
 
-            com.arjuna.ats.internal.arjuna.recovery.RecoveryManagerImple rm = new com.arjuna.ats.internal.arjuna.recovery.RecoveryManagerImple(
-                    true);
+            com.arjuna.ats.internal.arjuna.recovery.RecoveryManagerImple rm
+                = new com.arjuna.ats.internal.arjuna.recovery.RecoveryManagerImple(true);
 
             if (!recover) {
                 UserTransaction ut = com.arjuna.ats.jta.UserTransaction.userTransaction();

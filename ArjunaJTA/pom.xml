@@ -23,7 +23,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.jta</groupId>
-  <artifactId>quickstarts</artifactId>
+  <artifactId>narayana-quickstarts-jta</artifactId>
   <version>5.9.1.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBoss JTA Examples</name>
@@ -44,6 +44,8 @@
   <properties>
     <version.surefire.plugin>2.19.1</version.surefire.plugin>
     <version.narayana>5.9.1.Final-SNAPSHOT</version.narayana>
+    <version.junit>4.12</version.junit>
+    <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
   </properties>
   <build>
     <pluginManagement>
@@ -128,9 +130,14 @@
       <version>${version.narayana}</version>
     </dependency>
     <dependency>
+       <groupId>org.wildfly.core</groupId>
+       <artifactId>wildfly-logging</artifactId>
+       <version>${version.wildfly.logging}</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.6</version>
+      <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

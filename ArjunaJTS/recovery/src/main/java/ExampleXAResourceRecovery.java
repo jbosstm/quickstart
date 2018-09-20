@@ -61,7 +61,6 @@ public class ExampleXAResourceRecovery implements XAResourceRecovery {
             toReturn = true;
         else {
             // reset for next recovery scan
-
             count = 0;
         }
 

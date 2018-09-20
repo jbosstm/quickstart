@@ -116,17 +116,46 @@
       <version>1.0.0.Final</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.narayana.jts</groupId>
-      <artifactId>narayana-jts-jacorb</artifactId>
-      <version>${version.narayana}</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.6</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>jacorb</id>
+      <activation>
+        <property>
+          <name>!useJdkOrb</name> 
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.narayana.jts</groupId>
+          <artifactId>narayana-jts-jacorb</artifactId>
+          <version>${version.narayana}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>idlj</id>
+      <activation>
+        <property>
+          <name>useJdkOrb</name> 
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.narayana.jts</groupId>
+          <artifactId>narayana-jts-idlj</artifactId>
+          <version>${version.narayana}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
   <modules>
     <module>interop</module>
     <module>trailmap</module>

@@ -18,11 +18,13 @@ rem MA  02110-1301, USA.
 
 echo "Running object_store quickstart"
 
-mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.VolatileStoreExample
+IF NOT %QUICKSTART_NARAYANA_VERSION%x == x SET NARAYANA_VERSION_PARAM="-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}"
+
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.VolatileStoreExample %NARAYANA_VERSION_PARAM%
 IF %ERRORLEVEL% NEQ 0 exit -1
 
-mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.HornetqStoreExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.HornetqStoreExample %NARAYANA_VERSION_PARAM%
 IF %ERRORLEVEL% NEQ 0 exit -1
 
-mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.FileStoreExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.FileStoreExample %NARAYANA_VERSION_PARAM%
 IF %ERRORLEVEL% NEQ 0 exit -1

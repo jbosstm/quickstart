@@ -20,12 +20,14 @@ echo "Running JTS recovery quickstart"
 
 rem SUN_CONIG="-Dcom.sun.CORBA.POA.ORBServerId=1 -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567"
 
+IF NOT %QUICKSTART_NARAYANA_VERSION%x == x SET NARAYANA_VERSION_PARAM="-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}"
+
 echo "Generating a recovery record ..."
-mvn -e clean compile exec:java -Dexec.mainClass=Test -Dexec.args="-crash"
+mvn -e compile exec:java -Dexec.mainClass=Test -Dexec.args="-crash" %NARAYANA_VERSION_PARAM%
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 echo "Recovering failed service - this could take up to a minute or so ..."
-mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-recover -auto"
+mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-recover -auto" %NARAYANA_VERSION_PARAM%
 IF %ERRORLEVEL% NEQ 0 exit -1
 
 echo "Testing that the XID data files were removed"
