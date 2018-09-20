@@ -13,7 +13,7 @@
 	Fifth Floor, Boston, MA 02110-1301, USA. (C) 2009 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jboss.narayana.quickstart.rts</groupId>
+    <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jee_transactional_app</artifactId>
     <version>5.9.1.Final-SNAPSHOT</version>
     <name>basic integration example</name>
@@ -34,6 +34,10 @@
             maven repository. -->
         <!-- <version.org.jboss.bom>1.0.0.Final-redhat-1</version.org.jboss.bom>> -->
         <version.narayana>5.9.1.Final-SNAPSHOT</version.narayana>
+        <!-- wildfly dependencies -->
+        <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
+        <version.junit>4.8.1</version.junit>
+        <version.org.wildfly.arquillian>1.0.1.Final</version.org.wildfly.arquillian>
         <!-- other plugin versions -->
         <version.compiler.plugin>3.5.1</version.compiler.plugin>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
@@ -96,11 +100,11 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!-- JBoss AS plugin to deploy war as a convenience -->
+            <!-- WildFly plugin to deploy war as a convenience -->
             <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>7.0.0.CR1</version>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.2.2.Final</version>
             </plugin>
             <!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation 
 				processors -->
@@ -193,15 +197,16 @@
         </dependency>
         <!-- For logging -->
         <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.1.0.GA</version>
+           <groupId>org.wildfly.core</groupId>
+           <artifactId>wildfly-logging</artifactId>
+           <version>${version.wildfly.logging}</version>
+           <scope>provided</scope>
         </dependency>
         <!-- We will provide some tests to check the quickstart deploys ok -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.1</version>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
         <!-- Arquillian allows you to test the example inside a container -->
@@ -215,7 +220,9 @@
         <profile>
             <id>default</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>noArq</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -229,20 +236,76 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
-            <id>arq-jbossas-managed</id>
+            <id>arq</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!noArq</name>
+                </property>
+            </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.wildfly</groupId>
+                    <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.arquillian.protocol</groupId>
-                    <artifactId>arquillian-protocol-servlet</artifactId>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
+                        <configuration>
+                            <skip>false</skip>
+                            <systemPropertyVariables combine.children="append">
+                                <!--
+                                    Used in arquillian.xml
+                                -->
+                                <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
+                                <node.address>127.0.0.1</node.address>
+                            </systemPropertyVariables>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>arqIPv6</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly.arquillian</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <version>${version.org.wildfly.arquillian}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
+                        <configuration>
+                            <skip>false</skip>
+                            <argLine>${ipv6.server.jvm.args}</argLine>
+                            <systemPropertyVariables combine.children="append">
+                                <!--
+                                    Used in arquillian.xml
+                                -->
+                                <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
+                                <node.address>[::1]</node.address>
+                            </systemPropertyVariables>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
