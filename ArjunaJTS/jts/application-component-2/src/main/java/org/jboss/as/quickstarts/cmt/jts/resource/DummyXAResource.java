@@ -21,7 +21,10 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
+import org.jboss.logging.Logger;
+
 public class DummyXAResource implements XAResource {
+    private static final Logger log = Logger.getLogger(DummyXAResource.class);
 
 	private String name;
 
@@ -31,63 +34,56 @@ public class DummyXAResource implements XAResource {
 
 	@Override
 	public void commit(Xid arg0, boolean arg1) throws XAException {
-//		System.out.println(name + "commited");
-//		Thread.dumpStack();
-		// try {
-		// Thread.currentThread().sleep(60000);
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+        log.debugf("commited: ", name);
 	}
 
 	@Override
 	public void end(Xid arg0, int arg1) throws XAException {
-		// System.out.println(name + "end");
+		log.debugf("end: ", name);
 	}
 
 	@Override
 	public void forget(Xid arg0) throws XAException {
-		// System.out.println(name + "forget");
+		log.debugf("forget: ", name);
 	}
 
 	@Override
 	public int getTransactionTimeout() throws XAException {
-		// System.out.println(name + "getTransactionTimeout");
+		log.debugf("getTransactionTimeout: ", name);
 		return 0;
 	}
 
 	@Override
 	public boolean isSameRM(XAResource arg0) throws XAException {
-		// System.out.println(name + "isSameRM");
+		log.debugf("isSameRM: ", name);
 		return this == arg0;
 	}
 
 	@Override
 	public int prepare(Xid arg0) throws XAException {
-//		System.out.println(name + "prepare");
+        log.debugf(name + "prepare");
 		return 0;
 	}
 
 	@Override
 	public Xid[] recover(int arg0) throws XAException {
-		// System.out.println(name + "recover");
+		log.debugf("recover: ", name);
 		return null;
 	}
 
 	@Override
 	public void rollback(Xid arg0) throws XAException {
-//		System.out.println(name + "rollback");
+        log.debugf("rollback: ", name);
 	}
 
 	@Override
 	public boolean setTransactionTimeout(int arg0) throws XAException {
-		// System.out.println(name + "setTransactionTimeout");
+		log.debugf("setTransactionTimeout: ", name);
 		return false;
 	}
 
 	@Override
 	public void start(Xid arg0, int arg1) throws XAException {
-		// System.out.println(name + "start");
+		log.debugf("start: ", name);
 	}
 }
