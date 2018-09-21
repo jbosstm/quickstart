@@ -12,7 +12,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.narayana.quickstarts</groupId>
+  <groupId>org.jboss.narayana.quickstarts.jts</groupId>
   <artifactId>jboss-as-jts-parent</artifactId>
   <version>5.9.1.Final-SNAPSHOT</version>
   <name>JBoss AS Quickstarts: Java Transaction Service</name>
@@ -51,13 +51,22 @@
       </dependency>
       <!-- Client stub for the application-component-2 -->
       <dependency>
-        <groupId>org.jboss.narayana.quickstarts</groupId>
+        <groupId>org.jboss.narayana.quickstarts.jts</groupId>
         <artifactId>jboss-as-jts-application-component-2</artifactId>
         <version>${project.version}</version>
         <classifier>client</classifier>
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.wildfly.core</groupId>
+      <artifactId>wildfly-logging</artifactId>
+      <version>5.0.0.Beta5</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <pluginManagement>
@@ -83,22 +92,14 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            <!-- The JBoss AS plugin deploys your war to a local JBoss AS 
-                container -->
-            <!-- To use, set the JBOSS_HOME environment variable and run: 
-                mvn package jboss-as:deploy -->
+            <!-- The WildFly plugin deploys your war to a local WildFly container -->
+            <!-- To use, set the JBOSS_HOME environment variable and run: mvn 
+              package jboss-as:deploy -->
             <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.2.2.Final</version>
             </plugin>
-        <!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
-        <!-- To use, set the JBOSS_HOME environment variable and run: mvn 
-          package jboss-as:deploy -->
-        <plugin>
-          <groupId>org.jboss.as.plugins</groupId>
-          <artifactId>jboss-as-maven-plugin</artifactId>
-          <version>7.1.1.Final</version>
-        </plugin>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -130,8 +131,8 @@
     <plugins>
       <!-- Disable the JBoss AS Plugin for this POM artifact -->
       <plugin>
-        <groupId>org.jboss.as.plugins</groupId>
-        <artifactId>jboss-as-maven-plugin</artifactId>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
         <inherited>false</inherited>
         <configuration>
           <skip>true</skip>

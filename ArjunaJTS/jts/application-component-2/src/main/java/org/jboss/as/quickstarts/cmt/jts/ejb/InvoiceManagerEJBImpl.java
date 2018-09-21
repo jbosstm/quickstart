@@ -23,28 +23,25 @@ import javax.ejb.RemoteHome;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.inject.Inject;
 import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 
 import org.jboss.as.quickstarts.cmt.jts.resource.DummyXAResource;
+import org.jboss.logging.Logger;
 
 @RemoteHome(InvoiceManagerEJBHome.class)
 @Stateless
 public class InvoiceManagerEJBImpl {
+    private static final Logger log = Logger.getLogger(InvoiceManagerEJBImpl.class);
 
-	@Resource(lookup = "java:jboss/TransactionManager")
+	@Resource(lookup = "java:/TransactionManager")
 	private TransactionManager transactionManager;
-
-	@Inject
-	private TransactionManager tm;
 
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void createInvoice(String name) throws RemoteException {
+	    log.infof("Invoice manager was invoked with name: %s", name);
 		try {
 			Transaction transaction = transactionManager.getTransaction();
-			// System.out.println("InvoiceManagerEJBImpl"
-			// + transaction.getStatus());
 			transaction.enlistResource(new DummyXAResource("subordinate"));
 		} catch (Throwable t) {
 			throw new RuntimeException(t);

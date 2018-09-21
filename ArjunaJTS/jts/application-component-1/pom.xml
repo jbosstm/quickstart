@@ -18,7 +18,7 @@
     <packaging>war</packaging>
 
     <parent>
-        <groupId>org.jboss.narayana.quickstarts</groupId>
+        <groupId>org.jboss.narayana.quickstarts.jts</groupId>
         <artifactId>jboss-as-jts-parent</artifactId>
         <version>5.9.1.Final-SNAPSHOT</version>
     </parent>
@@ -43,7 +43,7 @@
     <dependencies>
         <!-- Import the client stub for the application-component-2 -->
         <dependency>
-            <groupId>org.jboss.narayana.quickstarts</groupId>
+            <groupId>org.jboss.narayana.quickstarts.jts</groupId>
             <artifactId>jboss-as-jts-application-component-2</artifactId>
             <classifier>client</classifier>
         </dependency>
@@ -122,13 +122,11 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            <!-- The JBoss AS plugin deploys your war to a local JBoss AS 
-                container -->
             <!-- To use, set the JBOSS_HOME environment variable and run: 
-                mvn package jboss-as:deploy -->
+                mvn package wildfly:deploy -->
             <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

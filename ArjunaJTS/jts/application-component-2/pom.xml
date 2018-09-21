@@ -19,7 +19,7 @@
 
 
     <parent>
-        <groupId>org.jboss.narayana.quickstarts</groupId>
+        <groupId>org.jboss.narayana.quickstarts.jts</groupId>
         <artifactId>jboss-as-jts-parent</artifactId>
         <version>5.9.1.Final-SNAPSHOT</version>
     </parent>
@@ -88,16 +88,13 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-            <!-- The JBoss AS plugin deploys your war to a local JBoss AS 
-                container -->
             <!-- To use, set the JBOSS_HOME environment variable and run: 
-                mvn package jboss-as:deploy -->
+                mvn package wildfly:deploy -->
             <plugin>
-                <groupId>org.jboss.as.plugins</groupId>
-                <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>7.1.1.Final</version>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
-                    <port>10099</port>
+                    <port>10090</port>
                 </configuration>
             </plugin>
             <!-- The other application-component will depend on this -->

@@ -36,7 +36,7 @@ import org.jboss.as.quickstarts.cmt.jts.resource.DummyXAResource;
 @Stateless
 public class CustomerManagerEJBImpl {
 
-	@Resource(lookup = "java:jboss/TransactionManager")
+	@Resource(lookup = "java:/TransactionManager")
 	private TransactionManager transactionManager;
 
 	@EJB(lookup = "corbaname:iiop:localhost:3628#jts-quickstart/InvoiceManagerEJBImpl")
@@ -48,15 +48,10 @@ public class CustomerManagerEJBImpl {
 			NamingException {
 
 		try {
-			// ((TransactionManager) new InitialContext()
-			// .lookup("java:jboss/TransactionManager"))
 			Transaction transaction = transactionManager.getTransaction();
-			// System.out.println("CustomerManagerEJBImpl"
-			// + transaction.getStatus());
 			transaction.enlistResource(new DummyXAResource("local"));
 
-			final InvoiceManagerEJB invoiceManager = invoiceManagerHome
-					.create();
+			final InvoiceManagerEJB invoiceManager = invoiceManagerHome.create();
 			invoiceManager.createInvoice(name);
 		} catch (Throwable t) {
 			throw new RuntimeException(t);
