@@ -39,5 +39,6 @@
   <modules>
     <module>at</module>
     <module>lra</module>
+    <module>lra-examples</module>
   </modules>
 </project>
