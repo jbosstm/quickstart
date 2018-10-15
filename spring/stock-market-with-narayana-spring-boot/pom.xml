@@ -24,6 +24,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.3.RELEASE</version>
+    </parent>
+
     <groupId>org.jboss.narayana.quickstart.spring</groupId>
     <artifactId>stock-market-with-narayana-spring-boot</artifactId>
     <version>5.9.1.Final-SNAPSHOT</version>
@@ -32,14 +38,8 @@
     <name>stock-market-with-narayana-spring-boot</name>
     <description>Demo project for Spring Boot</description>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.3.RELEASE</version>
-    </parent>
-
     <properties>
-        <narayana.version>${project.version}</narayana.version>
+        <version.narayana>5.9.1.Final-SNAPSHOT</version.narayana>
         <jboss-transaction-spi.version>7.5.2.Final</jboss-transaction-spi.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

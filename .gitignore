@@ -12,6 +12,7 @@ target/
 
 .DS_Store
 ObjectStore/
+PutObjectStoreDirHere/
 
 instantclient_11_2/
 jboss-as
@@ -28,3 +29,4 @@ jboss1/
 jboss2/
 bin/
 db/
+distributedjta-examples/

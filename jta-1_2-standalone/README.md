@@ -9,6 +9,10 @@ What is it?
 
 This example demonstrates how to use JTA 1.2 annotations and CDI beans in standalone application.
 
+JTA 1.2 introduces annotations for controlling the transactional behaviour of CDI beans.
+This quickstart indicate how to take advantage of these annotations in a standalone application
+(ie in environments where a JEE container is either not available or is undesirable).
+
 
 System requirements
 -------------------
