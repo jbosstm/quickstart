@@ -59,7 +59,6 @@
           <version>2.3.1</version>
         </plugin>
       </plugins>
-      <!-- TODO Replace usages of jboss-as-maven-plugin with wildfly-maven-plugin in jts modules -->
     </pluginManagement>
     <plugins>
       <plugin>

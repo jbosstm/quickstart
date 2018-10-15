@@ -38,7 +38,8 @@
     <property name="jbosstshome" value=".."/>
 
     <!-- This source code directory for the trailmap -->
-    <property name="src" value="src"/>
+    <property name="src-code" value="src/main/java"/>
+    <property name="src-idl" value="src/main/idl"/>
 
     <!-- Where the trailmap source code should be built to -->
     <property name="build" value="build"/>
@@ -70,7 +71,7 @@
         can take place the target requires a dependency target idl to have completed.
     -->
     <target name="compile" depends="idl">
-        <javac srcdir="${src}" destdir="${build}">
+        <javac srcdir="${src-code}" destdir="${build}">
             <classpath>
                 <fileset dir="${jbosstshome}/lib" includes="*.jar"/>
                 <fileset dir="${jbosstshome}/lib/ext" includes="*.jar,*.zip"/>
@@ -93,8 +94,8 @@
             </classpath>
             <arg value="-I${jbossts-include}"/>
             <arg value="-I${jacorb-include}"/>
-            <arg line="-d ${src}/generated"/>
-            <arg value="${src}/com/arjuna/demo/simple/Hello.idl"/>
+            <arg line="-d ${src-code}/generated"/>
+            <arg value="${src-idl}/com/arjuna/demo/simple/Hello.idl"/>
         </java>
 
         <!-- Create the stub classes for the implicit propogation Bank sample -->
@@ -104,8 +105,8 @@
             </classpath>
             <arg value="-I${jbossts-include}"/>
             <arg value="-I${jacorb-include}"/>
-            <arg line="-d ${src}/generated"/>
-            <arg value="${src}/com/arjuna/demo/jts/remotebank/Bank.idl"/>
+            <arg line="-d ${src-code}/generated"/>
+            <arg value="${src-idl}/com/arjuna/demo/jts/remotebank/Bank.idl"/>
         </java>
 
         <!-- Create the stub classes for the explicit propogation Bank sample -->
@@ -115,8 +116,8 @@
             </classpath>
             <arg value="-I${jbossts-include}"/>
             <arg value="-I${jacorb-include}"/>
-            <arg line="-d ${src}/generated"/>
-            <arg value="${src}/com/arjuna/demo/jts/explicitremotebank/Bank.idl"/>
+            <arg line="-d ${src-code}/generated"/>
+            <arg value="${src-idl}/com/arjuna/demo/jts/explicitremotebank/Bank.idl"/>
         </java>
 
         <!-- Create the stub classes for the JBoss Transactional-Objects for Java extension Bank sample -->
@@ -126,8 +127,8 @@
             </classpath>
             <arg value="-I${jbossts-include}"/>
             <arg value="-I${jacorb-include}"/>
-            <arg line="-d ${src}/generated"/>
-            <arg value="${src}/com/arjuna/demo/jts/txojbank/Bank.idl"/>
+            <arg line="-d ${src-code}/generated"/>
+            <arg value="${src-idl}/com/arjuna/demo/jts/txojbank/Bank.idl"/>
         </java>
     </target>
 
