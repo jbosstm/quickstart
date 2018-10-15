@@ -1,3 +1,4 @@
+#!/bin/sh
 
 # JBoss, Home of Professional Open Source
 # Copyright 2016, Red Hat, Inc., and others contributors as indicated
@@ -15,8 +16,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA  02110-1301, USA.
 
-#!/bin/sh
-
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
@@ -24,7 +23,11 @@ JDKORBPROPS="-DOrbPortabilityEnvironmentBean.orbDataClassName=com.arjuna.orbport
 
 echo "Running jts standalone quickstart using JacOrb"
 
-mvn clean compile exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.TransactionExample
+[ "x$QUICKSTART_NARAYANA_VERSION" != 'x' ] &&\
+  NARAYANA_VERSION_PARAM="-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}"
+
+
+mvn -e exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.TransactionExample $NARAYANA_VERSION_PARAM
 
 if [ "$?" != "0" ]; then
     echo jts standalone using JacOrb quickstart failed
@@ -32,7 +35,7 @@ if [ "$?" != "0" ]; then
 fi
 
 echo "Running jts standalone quickstart using JdkOrb"
-mvn exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.TransactionExample $JDKORBPROPS
+mvn -e exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.TransactionExample $JDKORBPROPS $NARAYANA_VERSION_PARAM
 
 if [ "$?" != "0" ]; then
     echo jts standalone using JdkOrb quickstart failed
@@ -40,4 +43,3 @@ if [ "$?" != "0" ]; then
 fi
 
 echo "JTS standalone example succeeded"
-
