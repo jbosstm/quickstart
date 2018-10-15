@@ -54,7 +54,7 @@ import com.arjuna.ats.internal.jta.transaction.arjunacore.jca.SubordinationManag
 import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
 import com.arjuna.ats.jbossatx.jta.TransactionManagerService;
 import com.arjuna.ats.jta.common.JTAEnvironmentBean;
-import com.arjuna.jta.distributed.example.TestResourceRecovery;
+import com.arjuna.jta.distributed.example.resources.TestResourceRecovery;
 import com.arjuna.jta.distributed.example.server.LocalServer;
 import com.arjuna.jta.distributed.example.server.LookupProvider;
 import com.arjuna.jta.distributed.example.server.RemoteServer;

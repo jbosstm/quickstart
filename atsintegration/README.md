@@ -1,6 +1,16 @@
+# Integration of Narayana transaction manager to an application server
 
-OVERVIEW
---------
+This example shows usage of Narayana inside a JEE application server.
+It presents how the integration layer could be programmed.
 
-Using Narayana inside a JEE application server requires an integration layer. The code in this directory tree includes some example code we have used to test new features of distributed transactions inside the wildfly application server. It is provided here for information.
+## How to run
 
+When running with maven `mvn install` the code will be compiled
+and tests will be run.
+
+You can then inspect the source code to understand
+the integration features.
+
+## Expected output
+
+You should be informed that one test was run and passed.

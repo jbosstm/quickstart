@@ -42,6 +42,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.arjuna.ats.arjuna.common.CoreEnvironmentBeanException;
+import com.arjuna.jta.distributed.example.resources.TestResource;
+import com.arjuna.jta.distributed.example.resources.TestSynchronization;
 import com.arjuna.jta.distributed.example.server.IsolatableServersClassLoader;
 import com.arjuna.jta.distributed.example.server.LocalServer;
 import com.arjuna.jta.distributed.example.server.LookupProvider;
