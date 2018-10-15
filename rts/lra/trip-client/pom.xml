@@ -24,6 +24,7 @@
         <service.http.port>${swarm.http.port}</service.http.port>
 
         <version.resteasy-client>3.1.3.Final</version.resteasy-client>
+        <version.narayana>5.9.1.Final-SNAPSHOT</version.narayana>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -51,7 +52,7 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>lra-filters</artifactId>
-            <version>${project.version}</version>
+            <version>${version.narayana}</version>
         </dependency>
 
         <!-- JAXRS 2 Client API implementation -->

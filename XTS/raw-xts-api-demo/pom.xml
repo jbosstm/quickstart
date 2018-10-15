@@ -21,12 +21,12 @@
     <artifactId>xts-demo-all</artifactId>
     <packaging>pom</packaging>
     <version>5.9.1.Final-SNAPSHOT</version>
-    <name>${project.artifactId}</name>
-    <description>${project.artifactId}</description>
+    <name>XTS demo All (parent)</name>
+    <description>Parent artifact of all XTS demos of Narayna quickstarts</description>
     <url>http://narayana.io</url>
 
     <properties>
-        <version.narayana>${project.version}</version.narayana>
+        <version.narayana>5.9.1.Final-SNAPSHOT</version.narayana>
         <version.javaee>7.0</version.javaee>
         <version.arquillian>1.1.11.Final</version.arquillian>
         <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
