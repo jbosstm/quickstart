@@ -1,3 +1,4 @@
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2011, Red Hat Middleware LLC, and individual contributors
 as indicated by the @author tags.
@@ -16,29 +17,39 @@ MA  02110-1301, USA.
 
 (C) 2011
 @author JBoss Inc.
+-->
 
-OVERVIEW
---------
-This example shows how to obtain a JEE conforming transaction and how to invoke various methods
-of the javax.transaction.Transaction interface such as starting and ending transactions, examining
+## Javax transaction quickstart
+
+## Overview
+
+This example shows how to obtain a Java EE conforming transaction and how to invoke various methods
+of the `javax.transaction.Transaction` interface such as starting and ending transactions, examining
 transacton status, timeouts etc.
 
-USAGE
------
-mvn compile exec:exec
-OR
-./run.[sh|bat]
+## Usage
 
-EXPECTED OUTPUT
----------------
+```
+mvn compile exec:exec
+```
+
+or
+
+```
+./run.[sh|bat]
+```
+
+## Expected output
+
+```
 [INFO] BUILD SUCCESS
 
 otherwise you can examine what went wrong by enabling stack traces with the -e flat:
 	mvn compile exec:exec -e
+```
 
-WHAT JUST HAPPENED?
--------------------
-The example looks up an instance of the JEE UserTransaction using and calls its various methods. If anything
-goes wrong an exception is generated. The example also shows how to lookup and instance of the JEE 
-TransactionManager interface.
+## What just happened
 
+The example looks up an instance of the Java EE `UserTransaction` using and calls its various methods.
+If anything goes wrong an exception is generated. The example shows how to get
+the instance of the `TransactionManager` interface.
