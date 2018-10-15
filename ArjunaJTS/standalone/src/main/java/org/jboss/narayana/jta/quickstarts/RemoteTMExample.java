@@ -23,7 +23,6 @@ import com.arjuna.orbportability.OA;
 import com.arjuna.orbportability.ORB;
 import com.arjuna.orbportability.Services;
 import com.arjuna.orbportability.common.OrbPortabilityEnvironmentBean;
-import com.arjuna.orbportability.common.OrbPortabilityEnvironmentBeanMBean;
 import org.omg.CosTransactions.Control;
 import org.omg.CosTransactions.Resource;
 import org.omg.CosTransactions.TransactionFactory;

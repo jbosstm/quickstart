@@ -56,7 +56,7 @@ function startClient {
   fi
 }
 
-HOST_ADDRESS=`ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'`
+HOST_ADDRESS=${HOST_ADDRESS:-`ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'`}
 
 if test "x$JAVA_HOME" = "x"; then
   echo Please ensure the JAVA_HOME environment variable is set
