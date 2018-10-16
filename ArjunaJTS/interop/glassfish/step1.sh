@@ -9,7 +9,7 @@ function build_wf {
 
   WORKSPACE="$QS_DIR/wildfly/"
 
-  git clone https://github.com/wildfly/wildfly.git
+  git clone --depth=1 https://github.com/wildfly/wildfly.git
   cd $WORKSPACE  
 
   git apply $QS_DIR/interop.wildfly.diff

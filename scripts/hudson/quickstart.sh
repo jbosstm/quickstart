@@ -134,7 +134,7 @@ function configure_wildfly {
 
 function build_apache-karaf {
   cd $WORKSPACE
-  git clone https://github.com/apache/karaf.git apache-karaf
+  git clone --depth=1 https://github.com/apache/karaf.git apache-karaf
   if [ $? != 0 ]; then
     comment_on_pull "Karaf clone failed: $BUILD_URL";
     exit -1

@@ -52,7 +52,7 @@ cd "$WORKSPACE"
 
 if [ ! -d "$JBOSS_BIN" ]; then
   echo "Variable \$JBOSS_BIN not defined going to clone 'wildfly' from github"
-  git clone https://github.com/wildfly/wildfly.git
+  git clone --depth=1 https://github.com/wildfly/wildfly.git
   mvn clean install -DskipTests -f wildfly/pom.xml
   JBOSS_BIN=`find wildfly/dist/target -maxdepth 1 -type d -name 'wildfly-*'`
 fi
@@ -64,7 +64,7 @@ cp -r "$JBOSS_BIN" "$JBOSS_SERVER"
 
 if [ ! -d "$QUICKSTART_HOME" ]; then
   echo "Variable \$QUICKSTART_HOME not defined going to clone 'wfly quickstart' from github"
-  git clone https://github.com/wildfly/quickstart.git
+  git clone --depth=1 https://github.com/wildfly/quickstart.git
 fi
 
 if [ ! -d "$WSAT_QUICKSTART_PATH" ]; then
