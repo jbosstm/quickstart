@@ -184,6 +184,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -195,12 +196,14 @@
         </plugins>
     </build>
 
-
     <profiles>
         <profile>
             <id>arq</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!no.arq</name>
+                </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -233,9 +236,6 @@
         </profile>
         <profile>
             <id>arqIPv6</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
             <dependencies>
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
@@ -317,6 +317,45 @@
                                             <directory>${env.JBOSS_HOME}</directory>
                                         </resource>
                                     </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>remove.jboss.home.directories</id>
+            <activation>
+                <property>
+                    <name>!no.remove.jboss.home</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>remove-jboss-home-directories</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                                <configuration>
+                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <filesets>
+                                        <fileset>
+                                            <directory>target/jboss1</directory>
+                                            <followSymlinks>false</followSymlinks>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>target/jboss2</directory>
+                                            <followSymlinks>false</followSymlinks>
+                                        </fileset>
+                                    </filesets>
                                 </configuration>
                             </execution>
                         </executions>

@@ -45,19 +45,19 @@ fi
 cd ..
 
 #rem "Build Converted XATMI service"
-(cd ejb && mvn install)
+(cd ejb && mvn install -B)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd ejb/ear/ && mvn install wildfly:deploy)
+(cd ejb/ear/ && mvn install wildfly:deploy -B)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd xatmi_adapter/ && mvn install)
+(cd xatmi_adapter/ && mvn install -B)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd xatmi_adapter/ear/ && mvn install wildfly:deploy)
+(cd xatmi_adapter/ear/ && mvn install wildfly:deploy -B)
 if [ "$?" != "0" ]; then
 	exit -1
 fi
