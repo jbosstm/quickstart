@@ -21,11 +21,11 @@ set -m
 echo "Running MDB quickstart"
 
 # RUN THE MDB EXAMPLE
-mvn clean install -DskipTests
+mvn clean install -DskipTests -B
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-(cd ear && mvn clean install wildfly:deploy)
+(cd ear && mvn clean install wildfly:deploy -B)
 if [ "$?" != "0" ]; then
 	exit -1
 fi

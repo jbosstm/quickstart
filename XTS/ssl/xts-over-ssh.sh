@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x
 
 # Script for quickstart execution of XTS over HTTPS, see
 # https://github.com/jbosstm/quickstart/tree/master/XTS/ssl
@@ -35,7 +36,7 @@ function waitServerStarted() {
   local TIMESTAMP_START=`date +%s`
   local NOT_TIMEOUTED=true
   while [ $RETURN_CODE -ne 0 ] && $NOT_TIMEOUTED; do
-    $JBOSS_CLIENT/bin/jboss-cli.sh -c --controller=localhost:$PORT --command=":read-attribute(name=server-state)" | grep -s running
+    "$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$PORT --command=":read-attribute(name=server-state)" | grep -s running
     RETURN_CODE=$?
     [ $((`date +%s`-TIMESTAMP_START)) -gt ${TIMEOUT} ] && NOT_TIMEOUTED=false
   done
@@ -44,6 +45,23 @@ function waitServerStarted() {
   else
     echo "Timeout ${TIMEOUT}s exceeded when waiting for container at port $PORT"
   fi
+}
+
+function prepareServerWorkingDirectories() {
+  local JBOSS_HOME_BASE_DIR="${1}"
+  local JBOSS_TARGET_DIR="${2}"
+  mkdir -p "${JBOSS_TARGET_DIR}/standalone/configuration"
+  mkdir -p "${JBOSS_TARGET_DIR}/standalone/data"
+  mkdir -p "${JBOSS_TARGET_DIR}/standalone/tmp"
+  mkdir -p "${JBOSS_TARGET_DIR}/standalone/log"
+  mkdir -p "${JBOSS_TARGET_DIR}/standalone/content"
+  cp "$JBOSS_HOME_BASE_DIR"/standalone/configuration/*.properties "${JBOSS_TARGET_DIR}/standalone/configuration"
+}
+
+function getWflyStartupParameters() {
+  local PORT_OFFSET=$1
+  local JBOSS_CONF_DIR="$2"
+  echo "-c standalone-xts.xml -Djboss.socket.binding.port-offset=$PORT_OFFSET -Djboss.server.data.dir=${JBOSS_CONF_DIR}/standalone/data -Djboss.server.log.dir=${JBOSS_CONF_DIR}/standalone/log -Djboss.server.temp.dir=${JBOSS_CONF_DIR}/standalone/tmp -Djboss.server.deploy.dir=${JBOSS_CONF_DIR}/standalone/content -Djboss.server.config.dir=${JBOSS_CONF_DIR}/standalone/configuration"
 }
 
 
@@ -59,8 +77,8 @@ fi
 echo "Creating jboss distro directories '$JBOSS_CLIENT' and '$JBOSS_SERVER'"
 rm -rf "$JBOSS_CLIENT"
 rm -rf "$JBOSS_SERVER"
-cp -r "$JBOSS_BIN" "$JBOSS_CLIENT"
-cp -r "$JBOSS_BIN" "$JBOSS_SERVER"
+prepareServerWorkingDirectories "$JBOSS_BIN" "$JBOSS_CLIENT"
+prepareServerWorkingDirectories "$JBOSS_BIN" "$JBOSS_SERVER"
 
 if [ ! -d "$QUICKSTART_HOME" ]; then
   echo "Variable \$QUICKSTART_HOME not defined going to clone 'wfly quickstart' from github"
@@ -111,28 +129,31 @@ index 97c5693..5fea194 100644
 EOF
 
 # -s ../settings.xml
-mvn clean install
-
+mvn clean install -B -Dversion.server.bom=14.0.1.Final
+DEPLOYMENT_NAME=wsat-simple.war
 
 # Settings for client
 echo "Going to configure jboss client '$JBOSS_CLIENT' to use SSL"
 cd "$JBOSS_CLIENT"
 
-cp docs/examples/configs/standalone-xts.xml standalone/configuration/
+cp "$JBOSS_BIN/docs/examples/configs/standalone-xts.xml" standalone/configuration/
 keytool -genkey -alias client -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass client -storepass client -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
 keytool -export -keystore ./standalone/configuration/server.keystore -alias client -file client.cer -keypass client -storepass client
 
-./bin/standalone.sh -c standalone-xts.xml -Djboss.socket.binding.port-offset=$CLIENT_OFFSET &
+JBOSS_CLIENT_STARTUP_PARAMS=`getWflyStartupParameters $CLIENT_OFFSET "$JBOSS_CLIENT"`
+"$JBOSS_BIN"/bin/standalone.sh $JBOSS_CLIENT_STARTUP_PARAMS &
 CLIENT_PID=$!
 waitServerStarted $CLIENT_CLI_PORT
-./bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --commands='
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --commands='
 /core-service=management/security-realm=SSLRealm:add(),
 /core-service=management/security-realm=SSLRealm/server-identity=ssl:add(keystore-path=${jboss.server.config.dir}/server.keystore, keystore-password=client, alias=client),
 /subsystem=undertow/server=default-server/https-listener=https:remove()'
-./bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --commands=':reload()'
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --commands=':reload()'
 waitServerStarted $CLIENT_CLI_PORT
-./bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --commands='
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --commands='
 /subsystem=undertow/server=default-server/https-listener=https:add(socket-binding="https", security-realm="SSLRealm")'
+echo "Deploying quickstart '${WSAT_QUICKSTART_PATH}/target/wsat-simple.war' at $JBOSS_CLIENT"
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --command="deploy ${WSAT_QUICKSTART_PATH}/target/$DEPLOYMENT_NAME"
 pkill -9 -P $CLIENT_PID
 sleep $SLEEP_TIME
 
@@ -146,21 +167,24 @@ sed "s#http:#https:#"\
 echo "Going to configure jboss server '$JBOSS_SERVER' to use SSL"
 cd "$JBOSS_SERVER"
 
-cp docs/examples/configs/standalone-xts.xml standalone/configuration/
+cp "$JBOSS_BIN/docs/examples/configs/standalone-xts.xml" standalone/configuration/
 keytool -genkey -alias server -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass server -storepass server -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
 keytool -export -keystore ./standalone/configuration/server.keystore -alias server -file server.cer -keypass server -storepass server
 
-./bin/standalone.sh -c standalone-xts.xml -Djboss.socket.binding.port-offset=$SERVER_OFFSET &
+JBOSS_SERVER_STARTUP_PARAMS=`getWflyStartupParameters $SERVER_OFFSET "$JBOSS_SERVER"`
+"$JBOSS_BIN"/bin/standalone.sh $JBOSS_SERVER_STARTUP_PARAMS &
 SERVER_PID=$!
 waitServerStarted $SERVER_CLI_PORT
-./bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --commands='
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --commands='
 /core-service=management/security-realm=SSLRealm:add(),
 /core-service=management/security-realm=SSLRealm/server-identity=ssl:add(keystore-path=${jboss.server.config.dir}/server.keystore, keystore-password=server, alias=server),
 /subsystem=undertow/server=default-server/https-listener=https:remove()'
-./bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --commands=':reload()'
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --commands=':reload()'
 waitServerStarted $SERVER_CLI_PORT
-./bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --commands='
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --commands='
 /subsystem=undertow/server=default-server/https-listener=https:add(socket-binding="https", security-realm="SSLRealm")'
+echo "Deploying quickstart '${WSAT_QUICKSTART_PATH}/target/wsat-simple.war' at $JBOSS_SERVER"
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --command="deploy ${WSAT_QUICKSTART_PATH}/target/$DEPLOYMENT_NAME"
 pkill -9 -P $SERVER_PID
 sleep $SLEEP_TIME
 
@@ -178,28 +202,27 @@ keytool -import -noprompt -v -trustcacerts -alias client -file "$JBOSS_CLIENT/cl
 
 #--------------------- DEPLOY AND RUN ------------------
 cd "$WORKSPACE"
-echo "Deploying quickstart '${WSAT_QUICKSTART_PATH}/target/wsat-simple.war' and run..."
-# Do deploy
-DEPLOYMENT_NAME=wsat-simple.war
-cp "${WSAT_QUICKSTART_PATH}/target/$DEPLOYMENT_NAME" "${JBOSS_SERVER}/standalone/deployments/"
-cp "${WSAT_QUICKSTART_PATH}/target/$DEPLOYMENT_NAME" "${JBOSS_CLIENT}/standalone/deployments/"
 echo "Starting servers: server at ${JBOSS_SERVER}"
-${JBOSS_SERVER}/bin/standalone.sh -c standalone-xts.xml -Djavax.net.ssl.trustStore="${JBOSS_SERVER}/standalone/configuration/server.keystore" -Djavax.net.ssl.trustStorePassword=server -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore="${JBOSS_SERVER}/standalone/configuration/server.keystore" -Djavax.net.ssl.keyStorePassword=server -Dcxf.tls-client.disableCNCheck=true -Djboss.socket.binding.port-offset=$SERVER_OFFSET &
+${JBOSS_BIN}/bin/standalone.sh $JBOSS_SERVER_STARTUP_PARAMS -Djavax.net.ssl.trustStore="${JBOSS_SERVER}/standalone/configuration/server.keystore" -Djavax.net.ssl.trustStorePassword=server -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore="${JBOSS_SERVER}/standalone/configuration/server.keystore" -Djavax.net.ssl.keyStorePassword=server -Dcxf.tls-client.disableCNCheck=true &
 SERVER_PID=$!
 waitServerStarted $SERVER_CLI_PORT
 echo "Starting servers: client at ${JBOSS_CLIENT}"
-${JBOSS_CLIENT}/bin/standalone.sh -c standalone-xts.xml -Djavax.net.ssl.trustStore="${JBOSS_CLIENT}/standalone/configuration/server.keystore" -Djavax.net.ssl.trustStorePassword=client -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore="${JBOSS_CLIENT}/standalone/configuration/server.keystore" -Djavax.net.ssl.keyStorePassword=client -Dcxf.tls-client.disableCNCheck=true -Djboss.socket.binding.port-offset=$CLIENT_OFFSET &
+${JBOSS_BIN}/bin/standalone.sh  $JBOSS_CLIENT_STARTUP_PARAMS -Djavax.net.ssl.trustStore="${JBOSS_CLIENT}/standalone/configuration/server.keystore" -Djavax.net.ssl.trustStorePassword=client -Dorg.jboss.security.ignoreHttpsHost=true -Djavax.net.ssl.keyStore="${JBOSS_CLIENT}/standalone/configuration/server.keystore" -Djavax.net.ssl.keyStorePassword=client -Dcxf.tls-client.disableCNCheck=true &
 CLIENT_PID=$!
 waitServerStarted $CLIENT_CLI_PORT
 
 # Do the test
-CLIENT_HTTP=$((CLIENT_OFFSET + 8080))
-curl -X GET "http://localhost:${CLIENT_HTTP}/WSATSimpleServletClient" | grep 'Transaction succeeded!'
+CLIENT_HTTP_PORT=$((CLIENT_OFFSET + 8080))
+echo "Doing the test by requesting 'http://localhost:${CLIENT_HTTP_PORT}/WSATSimpleServletClient'"
+curl -X GET "http://localhost:${CLIENT_HTTP_PORT}/WSATSimpleServletClient" | grep 'Transaction succeeded!'
 SUCCESS=$?
 
 pkill -9 -P $CLIENT_PID
 pkill -9 -P $SERVER_PID
 sleep $SLEEP_TIME
+
+rm -rf "$JBOSS_CLIENT"
+rm -rf "$JBOSS_SERVER"
 
 # if not successed (grep returns 0 on sucess) then fail the script
 [ $SUCCESS -eq 0 ] && exit 0 || exit 1

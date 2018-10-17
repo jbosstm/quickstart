@@ -130,6 +130,9 @@ function configure_wildfly {
   export JBOSS_HOME=`pwd`/${WILDFLY_DIST_ZIP%.zip}
   cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
   cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
+  # cleaning
+  rm -f artifacts.zip
+  rm -rf "${WILDFLY_DIST_ZIP}"
 }
 
 function build_apache-karaf {
