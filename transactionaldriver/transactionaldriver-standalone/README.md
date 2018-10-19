@@ -67,11 +67,7 @@ Or in case you can find inspiration of settings needed for PostgreSQL here.
 
 The steps to run with PostgreSQL are:
 
-1. go to class `DBUtils.java` and change
-    * variable `DB_USER` to value of `DB_PG_USER`
-    * variable `DB_PASSWORD` to value of `DB_PG_PASSWORD`
-    * method `getConnection` will call `getPgConnection`
-    * method `getXADatasource` will call `getPgXADatasource`
+1. go to class `DBUtils.java` and change variable 'isH2' to false
 2. go to class `DriverDirectRecoverable.java` and change
     * variable `jdbcUrl1` to use value of properties file string `ds1.pg.properties`
     * variable `jdbcUrl2` to use value of properties file string `ds2.pg.properties`

@@ -22,7 +22,6 @@
 
 package io.narayana;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Arrays;
@@ -39,7 +38,6 @@ import org.junit.runner.RunWith;
 
 import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
-import com.arjuna.ats.internal.jdbc.TransactionalDriverXAConnection;
 import com.arjuna.ats.jta.common.jtaPropertyManager;
 
 import io.narayana.recovery.RecoverySetupUtil;
@@ -61,6 +59,7 @@ public class TransactionalDriverTest {
 
         CodeUtils.swallowException(() -> DBUtils.dropTable(conn1));
         CodeUtils.swallowException(() -> DBUtils.dropTable(conn2));
+
         DBUtils.createTable(conn1);
         DBUtils.createTable(conn2);
     }
@@ -84,22 +83,8 @@ public class TransactionalDriverTest {
             com.arjuna.ats.internal.arjuna.recovery.AtomicActionRecoveryModule.class.getName(),
             com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule.class.getName()
         ));
-        // cleaning database
-        if(DBUtils.h2LockConnection != null) { // H2 workaround - force to clean
-            CodeUtils.swallowException(() -> DBUtils.h2LockConnection.rollback());
-            CodeUtils.swallowClose(DBUtils.h2LockConnection);
-
-            Field f = DBUtils.h2LockConnection.getClass().getDeclaredField("_transactionalDriverXAConnectionConnection");
-            f.setAccessible(true);
-            TransactionalDriverXAConnection conn1Hack = (TransactionalDriverXAConnection) f.get(DBUtils.h2LockConnection);
-            conn1Hack.closeCloseCurrentConnection();
-
-            DBUtils.h2LockConnection = null;
-        }
         // closing connections
         CodeUtils.closeMultiple(conn1, conn2);
-        conn1 = null;
-        conn2 = null;
     }
 
     @Test
@@ -152,18 +137,22 @@ public class TransactionalDriverTest {
 
     @Test
     public void transactionDriverProvidedCommit() throws Exception {
-        new DriverProvidedXADataSource().process(() -> {});
+        DriverProvidedXADataSource testDs = new DriverProvidedXADataSource();
+        testDs.process(() -> {});
 
         ResultSet rs1 = DBUtils.select(conn1);
         ResultSet rs2 = DBUtils.select(conn2);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
         Assert.assertTrue("Second database does not contain data as expected to be commited", rs2.next());
+
+        testDs.closeConnections();
     }
 
     @Test
     public void transactionDriverProvidedRollback() throws Exception {
+        DriverProvidedXADataSource testDs = new DriverProvidedXADataSource();
         try {
-            new DriverProvidedXADataSource().process(() -> {throw new RuntimeException("expected");});
+            testDs.process(() -> {throw new RuntimeException("expected");});
         } catch (Exception e) {
             checkcException(e);
         }
@@ -172,22 +161,29 @@ public class TransactionalDriverTest {
         ResultSet rs2 = DBUtils.select(conn2);
         Assert.assertFalse("First database contains data which is not expected as rolled-back", rs1.next());
         Assert.assertFalse("Second database contains data which is not expected as rolled-back", rs2.next());
+
+        testDs.closeConnections();
     }
 
     @Test
     public void transactionDriverIndirectCommit() throws Exception {
-        new DriverIndirectRecoverable().process(() -> {});
+        DriverIndirectRecoverable testDs = new DriverIndirectRecoverable();
+        testDs.process(() -> {});
 
         ResultSet rs1 = DBUtils.select(conn1);
         ResultSet rs2 = DBUtils.select(conn2);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
         Assert.assertTrue("Second database does not contain data as expected to be commited", rs2.next());
+
+        testDs.closeConnections();
     }
 
     @Test
     public void transactionDriverIndirectRollback() throws Exception {
+        DriverIndirectRecoverable testDs = new DriverIndirectRecoverable();
+
         try {
-            new DriverIndirectRecoverable().process(() -> {throw new RuntimeException("expected");});
+            testDs.process(() -> {throw new RuntimeException("expected");});
         } catch (Exception e) {
             checkcException(e);
         }
@@ -196,22 +192,28 @@ public class TransactionalDriverTest {
         ResultSet rs2 = DBUtils.select(conn2);
         Assert.assertFalse("First database contains data which is not expected as rolled-back", rs1.next());
         Assert.assertFalse("Second database contains data which is not expected as rolled-back", rs2.next());
+
+        testDs.closeConnections();
     }
 
     @Test
     public void transactionDriverDirectRecoverableCommit() throws Exception {
-        new DriverDirectRecoverable().process(() -> {});
+        DriverDirectRecoverable testDs = new DriverDirectRecoverable(); 
+        testDs.process(() -> {});
 
         ResultSet rs1 = DBUtils.select(conn1);
         ResultSet rs2 = DBUtils.select(conn2);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
         Assert.assertTrue("Second database does not contain data as expected to be commited", rs2.next());
+
+        testDs.closeConnections();
     }
 
     @Test
     public void transactionDriverDirectRecoverableRollback() throws Exception {
+        DriverDirectRecoverable testDs = new DriverDirectRecoverable();
         try {
-            new DriverDirectRecoverable().process(() -> {throw new RuntimeException("expected");});
+            testDs.process(() -> {throw new RuntimeException("expected");});
         } catch (Exception e) {
             checkcException(e);
         }
@@ -220,8 +222,10 @@ public class TransactionalDriverTest {
         ResultSet rs2 = DBUtils.select(conn2);
         Assert.assertFalse("First database contains data which is not expected as rolled-back", rs1.next());
         Assert.assertFalse("Second database contains data which is not expected as rolled-back", rs2.next());
-    }
 
+        testDs.closeConnections();
+    }
+    
 
     /* ---------------------------------------------------------------------- */
     /* -------------------------- Recovery involed -------------------------- */
@@ -231,7 +235,8 @@ public class TransactionalDriverTest {
     public void transactionDriverProvidedRecovery() throws Exception {
         RecoveryManager recoveryManager = RecoverySetupUtil.ds1XARecoveryIntialize();
 
-        new DriverProvidedXADataSource().process(() -> {});
+        DriverProvidedXADataSource testDs = new DriverProvidedXADataSource();
+        testDs.process(() -> {});
 
         ResultSet rs1 = DBUtils.select(conn1);
         Assert.assertFalse("First database " + conn1 + " is committed even commit was expected to fail", rs1.next());
@@ -240,6 +245,8 @@ public class TransactionalDriverTest {
 
         rs1 = DBUtils.select(conn1);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
+
+        testDs.closeConnections();
     }
 
     @BMScript("xaexception.rmfail")
@@ -247,7 +254,8 @@ public class TransactionalDriverTest {
     public void transactionDriverDirectRecoverableRecovery() throws Exception {
         RecoveryManager recoveryManager = RecoverySetupUtil.simpleRecoveryIntialize();
 
-        new DriverDirectRecoverable().process(() -> {});
+        DriverDirectRecoverable testDs = new DriverDirectRecoverable();
+        testDs.process(() -> {});
 
         ResultSet rs1 = DBUtils.select(conn1);
         Assert.assertFalse("First database " + conn1 + " is committed even commit was expected to fail", rs1.next());
@@ -256,6 +264,8 @@ public class TransactionalDriverTest {
 
         rs1 = DBUtils.select(conn1);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
+
+        testDs.closeConnections();
     }
 
     @BMScript("xaexception.rmfail")
@@ -263,7 +273,8 @@ public class TransactionalDriverTest {
     public void transactionDriverIndirectRecoverableRecovery() throws Exception {
         RecoveryManager recoveryManager = RecoverySetupUtil.jdbcXARecoveryIntialize();
 
-        new DriverIndirectRecoverable().process(() -> {});
+        DriverIndirectRecoverable testDs = new DriverIndirectRecoverable();
+        testDs.process(() -> {});
 
         ResultSet rs1 = DBUtils.select(conn1);
         Assert.assertFalse("First database " + conn1 + " is committed even commit was expected to fail", rs1.next());
@@ -272,6 +283,8 @@ public class TransactionalDriverTest {
 
         rs1 = DBUtils.select(conn1);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
+
+        testDs.closeConnections();
     }
 
     @BMScript("xaexception.rmfail")
@@ -279,17 +292,21 @@ public class TransactionalDriverTest {
     public void transactionDriverIndirectRecoverableRecovery2() throws Exception {
         RecoveryManager recoveryManager = RecoverySetupUtil.basicXARecoveryIntialize();
 
-        new DriverIndirectRecoverable().process(() -> {});
+        DriverIndirectRecoverable testDs = new DriverIndirectRecoverable();
+        testDs.process(() -> {});
 
         ResultSet rs1 = DBUtils.select(conn1);
-        Assert.assertFalse("First database " + conn1 + " is committed even commit was expected to fail", rs1.next());
+        ResultSet rs2 = DBUtils.select(conn2);
+        Assert.assertFalse("Both databases [" + conn1 + ", " + conn2 + "] are committed even one was expected to fail with XAException",
+            rs1.next() && rs2.next());
 
         RecoverySetupUtil.runRecovery(recoveryManager);
 
         rs1 = DBUtils.select(conn1);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
-    }
 
+        testDs.closeConnections();
+    }
 
     private void checkcException(Exception e) {
         if (!e.getMessage().toLowerCase().contains("expected"))

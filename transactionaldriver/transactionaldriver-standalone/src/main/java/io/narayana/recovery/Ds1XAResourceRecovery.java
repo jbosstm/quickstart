@@ -34,8 +34,8 @@ import io.narayana.util.DBUtils;
  * Simple {@link XAResourceRecovery} class which provides {@link XAResource}
  * for specific log in data. In this case it's just for particular database.
  * <br>
- * Still this helps {@link XARecoveryModule} tocheck indoubt transaction at database side
- * and try to match them to transaction in the transaction log store.
+ * Still this helps {@link XARecoveryModule} to check in-doubt transaction at the database side
+ * and try to match them to transaction in the Narayana transaction log store.
  */
 public class Ds1XAResourceRecovery implements XAResourceRecovery {
 
