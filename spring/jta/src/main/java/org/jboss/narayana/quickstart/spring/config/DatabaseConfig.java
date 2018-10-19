@@ -39,7 +39,7 @@ public class DatabaseConfig {
     @Bean
     public XADataSource h2DataSource() {
         JdbcDataSource ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:file:target/test.db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+        ds.setURL("jdbc:h2:file:./target/test.db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
         ds.setUser("sa");
         ds.setPassword("");
         return ds;

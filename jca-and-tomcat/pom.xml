@@ -75,7 +75,7 @@
         <version.com.sun.faces.jsf-impl>2.2.0-m13</version.com.sun.faces.jsf-impl>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.commons-logging>1.1.0.jboss</version.commons-logging>
-        <version.h2>1.3.171</version.h2>
+        <version.h2>1.4.195</version.h2>
         <version.junit>4.12</version.junit>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
     </properties>
