@@ -34,6 +34,7 @@ import javax.transaction.TransactionManager;
 
 import com.arjuna.ats.jdbc.TransactionalDriver;
 
+import io.narayana.util.CodeUtils;
 import io.narayana.util.DBUtils;
 import io.narayana.util.TestInitialContextFactory;
 
@@ -52,12 +53,14 @@ import io.narayana.util.TestInitialContextFactory;
  * which is managed by transaction manager.
  */
 public class DriverIndirectRecoverable {
+    private Connection conn1, conn2;
+    private InitialContext ctx;
 
     public void process(Runnable middleAction) throws Exception {
         DriverManager.registerDriver(DBUtils.TXN_DRIVER_INSTANCE);
 
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY, TestInitialContextFactory.class.getName());
-        InitialContext ctx = new InitialContext();
+        ctx = new InitialContext();
 
         //jdbc:arjuna: <jndi name of XADataSource>
         String ds1Jndi = TransactionalDriver.arjunaDriver + "ds1";
@@ -66,9 +69,9 @@ public class DriverIndirectRecoverable {
         Properties props1 = new Properties();
         props1.put(TransactionalDriver.userName, DBUtils.DB_USER);
         props1.put(TransactionalDriver.password, DBUtils.DB_PASSWORD);
-        props1.put(TransactionalDriver.poolConnections, "true"); // default
+        props1.put(TransactionalDriver.poolConnections, "false");
         props1.put(TransactionalDriver.maxConnections, "50"); // JBTM-2976
-        Connection conn1 = DriverManager.getConnection(ds1Jndi, props1);
+        conn1 = DriverManager.getConnection(ds1Jndi, props1);
 
         String ds2Jndi = TransactionalDriver.arjunaDriver + "ds2";
         XADataSource dsXA2 = DBUtils.getXADatasource(DBUtils.DB_2);
@@ -76,7 +79,8 @@ public class DriverIndirectRecoverable {
         Properties props2 = new Properties();
         props2.put(TransactionalDriver.userName, DBUtils.DB_USER);
         props2.put(TransactionalDriver.password, DBUtils.DB_PASSWORD);
-        Connection conn2 = DriverManager.getConnection(ds2Jndi, props2);
+        props2.put(TransactionalDriver.poolConnections, "false");
+        conn2 = DriverManager.getConnection(ds2Jndi, props2);
 
         TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
         tm.begin();
@@ -97,11 +101,13 @@ public class DriverIndirectRecoverable {
         } catch (Exception e) {
             tm.rollback();
             throw e;
-        } finally {
-            conn2.close();
-            // conn1.close();  // not closing the conn intentionally as H2 XA fails otherwise
-            DBUtils.h2LockConnection = conn1; // hack for cleaning db locks in tests
         }
+    }
+
+    public void closeConnections() {
+        CodeUtils.swallowException(() -> conn1.rollback());
+        CodeUtils.swallowException(() -> conn2.rollback());
+        CodeUtils.closeMultiple(conn1, conn2);
     }
 
 }

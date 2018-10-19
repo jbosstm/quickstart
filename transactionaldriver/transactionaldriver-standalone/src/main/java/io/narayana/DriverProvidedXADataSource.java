@@ -32,6 +32,7 @@ import javax.transaction.TransactionManager;
 
 import com.arjuna.ats.jdbc.TransactionalDriver;
 
+import io.narayana.util.CodeUtils;
 import io.narayana.util.DBUtils;
 
 /**
@@ -60,6 +61,7 @@ import io.narayana.util.DBUtils;
  * </code>
  */
 public class DriverProvidedXADataSource {
+    private Connection conn1, conn2;
 
     public void process(Runnable middleAction) throws Exception {
          //jdbc:arjuna: <nothing, XADataSource is provided directly,
@@ -73,14 +75,14 @@ public class DriverProvidedXADataSource {
         props1.put(TransactionalDriver.password, DBUtils.DB_PASSWORD);
         props1.put(TransactionalDriver.poolConnections, "true"); // default
         props1.put(TransactionalDriver.maxConnections, "50"); // JBTM-2976
-        Connection conn1 = DriverManager.getConnection(transactionDriverDefinitionUrl, props1);
+        conn1 = DriverManager.getConnection(transactionDriverDefinitionUrl, props1);
 
         XADataSource dsXA2 = DBUtils.getXADatasource(DBUtils.DB_2);
         Properties props2 = new Properties();
         props2.put(TransactionalDriver.XADataSource, dsXA2);
         props2.put(TransactionalDriver.userName, DBUtils.DB_USER);
         props2.put(TransactionalDriver.password, DBUtils.DB_PASSWORD);
-        Connection conn2 = DriverManager.getConnection(transactionDriverDefinitionUrl, props2);
+        conn2 = DriverManager.getConnection(transactionDriverDefinitionUrl, props2);
 
         TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
         tm.begin();
@@ -101,11 +103,12 @@ public class DriverProvidedXADataSource {
         } catch (Exception e) {
             tm.rollback();
             throw e;
-        } finally {
-            conn2.close();
-            // conn1.close();  // not closing the conn intentionally as H2 XA fails otherwise
-            DBUtils.h2LockConnection = conn1; // hack for cleaning db locks in tests
         }
     }
 
+    public void closeConnections() {
+        CodeUtils.swallowException(() -> conn1.rollback());
+        CodeUtils.swallowException(() -> conn2.rollback());
+        CodeUtils.closeMultiple(conn1, conn2);
+    }
 }
