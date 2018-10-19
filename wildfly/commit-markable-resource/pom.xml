@@ -55,7 +55,7 @@
         <version.arquillian.wildfly>2.1.0.Final</version.arquillian.wildfly>
         <version.arquillian.byteman>1.0.0.Final-SNAPSHOT</version.arquillian.byteman>
         <version.byteman>3.0.8</version.byteman>
-        <version.h2>1.3.171</version.h2>
+        <version.h2>1.4.195</version.h2>
         <version.creaper>1.6.1</version.creaper>
         <version.wildfly.core>4.0.0.Final</version.wildfly.core>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
