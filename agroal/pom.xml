@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jboss.narayana.quickstart.jta</groupId>
+    <artifactId>agoral</artifactId>
+    <version>5.9.1.Final-SNAPSHOT</version>
+
+    <properties>
+        <version.agroal>1.3</version.agroal>
+        <version.byteman>4.0.4</version.byteman>
+        <version.h2>1.4.195</version.h2>
+        <version.jboss.logging>3.1.4.GA</version.jboss.logging>
+        <version.junit>4.12</version.junit>
+        <version.jta.api>1.0.0.Final</version.jta.api>
+        <version.narayana>5.9.0.Final</version.narayana>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+          <groupId>org.jboss.spec.javax.transaction</groupId>
+          <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+          <version>${version.jta.api}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.narayana.jta</groupId>
+          <artifactId>narayana-jta</artifactId>
+          <version>${version.narayana}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.narayana.jts</groupId>
+          <artifactId>narayana-jts-integration</artifactId>
+          <version>${version.narayana}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${version.jboss.logging}</version>
+        </dependency>
+
+        <!-- Agroal database pooling -->
+        <dependency>
+            <groupId>io.agroal</groupId>
+            <artifactId>agroal-pool</artifactId>
+            <version>${version.agroal}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.agroal</groupId>
+            <artifactId>agroal-narayana</artifactId>
+            <version>${version.agroal}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${version.h2}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.byteman</groupId>
+            <artifactId>byteman-bmunit</artifactId>
+            <version>${version.byteman}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
