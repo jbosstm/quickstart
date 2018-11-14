@@ -52,7 +52,7 @@
         <version.junit>4.12</version.junit>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <version.arquillian>1.1.11.Final</version.arquillian>
-        <version.arquillian.wildfly>2.1.0.Final</version.arquillian.wildfly>
+        <version.arquillian.wildfly>2.1.1.Final</version.arquillian.wildfly>
         <version.arquillian.byteman>1.0.0.Final-SNAPSHOT</version.arquillian.byteman>
         <version.byteman>3.0.8</version.byteman>
         <version.h2>1.4.195</version.h2>
