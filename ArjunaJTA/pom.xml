@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.jta</groupId>
   <artifactId>quickstarts</artifactId>
-  <version>5.5.34.Final</version>
+  <version>5.5.35.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBoss JTA Examples</name>
   <description>All quickstarts of JBoss JTA</description>
@@ -43,7 +43,7 @@
   </repositories>
   <properties>
     <version.surefire.plugin>2.19.1</version.surefire.plugin>
-    <version.narayana>5.5.34.Final</version.narayana>
+    <version.narayana>5.5.35.Final-SNAPSHOT</version.narayana>
   </properties>
   <build>
     <pluginManagement>
