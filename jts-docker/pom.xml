@@ -27,7 +27,7 @@
 
     <groupId>org.jboss.narayana.quickstart.docker</groupId>
     <artifactId>jts-docker</artifactId>
-    <version>5.9.2.Final</version>
+    <version>5.9.3.Final-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +36,7 @@
         <version.jacorb>2.3.1jboss.patch01-brew</version.jacorb>
         <version.org.slf4j>1.7.2</version.org.slf4j>
         <version.junit>4.12</version.junit>
-        <version.narayana>5.9.2.Final</version.narayana>
+        <version.narayana>5.9.3.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <repositories>
