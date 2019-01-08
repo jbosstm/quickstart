@@ -19,7 +19,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.wildfly-swarm>2018.5.0</version.wildfly-swarm>
-        <version.microprofile.lra>1.0-SNAPSHOT</version.microprofile.lra>
+        <version.microprofile.lra>1.0-20181217.132756-202</version.microprofile.lra>
     </properties>
 
     <repositories>

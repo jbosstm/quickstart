@@ -56,7 +56,7 @@ public class HotelParticipant {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @LRA(LRA.Type.REQUIRED)
+    @LRA(value = LRA.Type.REQUIRED, terminal = false)
     public Booking bookRoom(@HeaderParam(LRA_HTTP_HEADER) String lraId,
                             @QueryParam("hotelName") @DefaultValue("Default") String hotelName) {
         return service.book(lraId, hotelName);

@@ -18,7 +18,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.wildfly-swarm>2017.8.1</version.wildfly-swarm>
-        <version.microprofile.lra>1.0-SNAPSHOT</version.microprofile.lra>
+        <version.microprofile.lra>1.0-20181217.132756-202</version.microprofile.lra>
     </properties>
 
     <repositories>
@@ -29,6 +29,14 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repo.eclipse.org-snapshots</id>
+            <name>Eclipse MicroProfile Repository - Snapshots</name>
+            <url>https://repo.eclipse.org/content/repositories/microprofile-snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -91,7 +99,7 @@
              of LRAs and for controlling participation in an LRA
              -->
         <dependency>
-            <groupId>io.narayana.microprofile.lra</groupId>
+            <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
             <version>${version.microprofile.lra}</version>
         </dependency>

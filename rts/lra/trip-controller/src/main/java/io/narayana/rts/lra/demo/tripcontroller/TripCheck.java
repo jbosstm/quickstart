@@ -32,24 +32,45 @@ import java.util.Arrays;
  * interrogating each sra.demo.service involved in the booking
  */
 class TripCheck {
-    static boolean validateBooking(Booking booking, WebTarget hotelTarget, WebTarget flightTarget) throws BookingException {
+    private TripCheck() { // utility classes should not have an externally accessable constructors
+    }
+
+    static boolean validateBooking(Booking booking, boolean isConfirm, WebTarget hotelTarget, WebTarget flightTarget) throws BookingException {
         final BookingException[] bookingException = {null};
         Booking bookingCopy = new Booking(booking);
+        final int[] confirmCount = {0};
+        final int[] cancelCount = {0};
 
         // NB parallel() results in IllegalStateException: WFLYWELD0039 because
         // ... trying to access a weld deployment with a Thread Context ClassLoader that is not associated with the deployment
-        Arrays.stream(bookingCopy.getDetails()).forEach(b -> {
+        Arrays.stream(booking.getDetails()).forEach(b -> {
             try {
                 checkDependentBooking(b, hotelTarget, flightTarget);
+
+                if (b.getStatus().equals(Booking.BookingStatus.CANCELLED)) {
+                    cancelCount[0] += 1;
+                } else if (b.getStatus().equals(Booking.BookingStatus.CONFIRMED)) {
+                    confirmCount[0] += 1;
+                }
             } catch (BookingException e) {
                 bookingException[0] = e;
             }
         });
 
-        if (bookingException[0] != null)
-            throw bookingException[0];
+        if (isConfirm) {
+            // the hotel and only one of the flight bookings should be confirmed
+            if (confirmCount[0] != 2 || cancelCount[0] != 1) {
+                System.out.printf("TripCheck: validateBooking: the hotel and only one of the flight bookings should have been confirmed%n");
+                return false;
+            }
+        } else {
+            if (cancelCount[0] != 3) {
+                System.out.printf("TripCheck: validateBooking: the hotel and both flight bookings should have be cancelled%n");
+                return false;
+            }
+        }
 
-        return bookingCopy.equals(booking);
+        return bookingCopy.equals(booking); // Note that this is a shallow comparison
     }
 
     private static void checkDependentBooking(Booking booking, WebTarget hotelTarget, WebTarget flightTarget) throws BookingException {
@@ -72,12 +93,18 @@ class TripCheck {
             System.out.printf("TripCheck: checkDependentBooking: %s: %s%n",
                     target.path("info").path(booking.getEncodedId()).getUri().toString(),
                     e.getMessage());
-            if (response != null)
-               System.out.printf("TripCheck: checkDependentBooking: JAX-RS response was %d%n",
-                       response.getStatus());
+
+            if (response != null) {
+                System.out.printf("TripCheck: checkDependentBooking: JAX-RS response was %d%n",
+                        response.getStatus());
+            }
 
 
             e.printStackTrace();
+        } finally {
+            if (response != null) {
+                response.close();
+            }
         }
     }
 
