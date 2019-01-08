@@ -23,8 +23,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 @Path("/")
 @ApplicationScoped
@@ -62,10 +62,10 @@ public class ProxyBasedResource implements LRAParticipant, Serializable {
     @PUT
     public String doInTransaction(@QueryParam("fault") String fault) throws JoinLRAException {
         getStateHolder().setFault(fault);
-        URL lraId = lraClient.startLRA("No CDI based client", 0L, TimeUnit.MILLISECONDS);
+        URL lraId = lraClient.startLRA("No CDI based client", 0L, ChronoUnit.MILLIS);
 
         getStateHolder().injectFault(StateHolder.FaultTarget.API, StateHolder.FaultWhen.BEFORE);
-        lraManagement.joinLRA(this, lraId, 0L, TimeUnit.SECONDS);
+        lraManagement.joinLRA(this, lraId, 0L, ChronoUnit.SECONDS);
 
         // do something interesting
         lraClient.closeLRA(lraId);

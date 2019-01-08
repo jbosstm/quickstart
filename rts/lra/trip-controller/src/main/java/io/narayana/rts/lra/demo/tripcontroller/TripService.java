@@ -59,7 +59,9 @@ public class TripService {
 
         String response = lraClient.closeLRA(new URL(booking.getId()));
 
-        if (!TripCheck.validateBooking(booking, hotelTarget, flightTarget))
+        // Note that earlier version of the quicksart returned the new booking status in the response to the closeLRA call,
+        // whereas the new version does not.
+        if (!TripCheck.validateBooking(booking, true, hotelTarget, flightTarget))
             throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
 
 //        mergeBookingResponse(booking, response);
@@ -72,7 +74,7 @@ public class TripService {
 
         String response = lraClient.cancelLRA(new URL(booking.getId()));
 
-        if (!TripCheck.validateBooking(booking, hotelTarget, flightTarget))
+        if (!TripCheck.validateBooking(booking, false, hotelTarget, flightTarget))
             throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
 
 //        mergeBookingResponse(booking, response);

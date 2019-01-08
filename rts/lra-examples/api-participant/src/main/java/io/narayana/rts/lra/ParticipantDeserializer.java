@@ -7,7 +7,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
-import java.util.Base64;
 
 public class ParticipantDeserializer implements LRAParticipantDeserializer {
     @Override

@@ -5,9 +5,9 @@ enables loosely coupled services to coordinate long running activities in such a
 guarantee a globally consistent outcome without the need to take long duration locks on data.
 
 
-These examples take a normal WAR and wraps it into a -swarm runnable jar.
+These examples take a normal WAR and wraps them into -swarm runnable jars.
 
-Each project uses maven war packagin in the `pom.xml`
+Each project uses maven war packaging in the `pom.xml`
 
     <packaging>war</packaging>
 

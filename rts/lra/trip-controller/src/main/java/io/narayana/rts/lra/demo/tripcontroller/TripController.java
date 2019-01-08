@@ -41,7 +41,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -57,8 +56,8 @@ import org.eclipse.microprofile.lra.client.LRAClient;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Collection;
@@ -79,11 +78,8 @@ import java.util.Optional;
 @RequestScoped
 @Path("/")
 public class TripController {
-    private Client hotelClient;
-    private Client flightClient;
-
-    private WebTarget hotelTarget;
-    private WebTarget flightTarget;
+    private URI hotelUri;
+    private URI flightUri;
 
     @Inject
     private LRAClient lraClient;
@@ -94,25 +90,29 @@ public class TripController {
     @PostConstruct
     private void initController() {
         try {
-            hotelClient = ClientBuilder.newClient();
-            flightClient = ClientBuilder.newClient();
-            hotelTarget = hotelClient.target(new URL("http://" + System.getProperty("hotel.service.http.host", "localhost") + ":" + Integer.getInteger("hotel.service.http.port", 8082)).toExternalForm());
-            flightTarget = flightClient.target(new URL("http://" + System.getProperty("flight.service.http.host", "localhost") + ":" + Integer.getInteger("flight.service.http.port", 8083)).toExternalForm());
-        } catch (MalformedURLException murle) {
+            hotelUri = new URI("http://" + System.getProperty("hotel.service.http.host", "localhost") + ":" + Integer.getInteger("hotel.service.http.port", 8082));
+            flightUri = new URI("http://" + System.getProperty("flight.service.http.host", "localhost") + ":" + Integer.getInteger("flight.service.http.port", 8083));
+        } catch (URISyntaxException murle) {
             throw new IllegalStateException("Cannot intialize " + TripController.class.getName(), murle);
         }
     }
 
     @PreDestroy
     private void finiController() {
-        hotelClient.close();
-        flightClient.close();
+    }
+
+    private WebTarget getHotelTarget() {
+        return ClientBuilder.newClient().target(hotelUri);
+    }
+
+    private WebTarget getFlightTarget() {
+        return ClientBuilder.newClient().target(flightUri);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    // delayClose because we want the LRA to be associated with a booking until the user confirms the booking
-    @LRA(delayClose = true, join = false)
+    // terminal is false because we want the LRA to be associated with a booking until the user confirms the booking
+    @LRA(terminal = false)
     public Response bookTrip(@QueryParam("hotelName") @DefaultValue("TheGrand") String hotelName,
                              @QueryParam("flightNumber1") @DefaultValue("firstClass") String flightNumber,
                              @QueryParam("flightNumber2") @DefaultValue("secondClass") String altFlightNumber,
@@ -145,21 +145,25 @@ public class TripController {
         Optional<Booking> firstFlight = Arrays.stream(tripBooking.getDetails()).filter(b -> "Flight".equals(b.getType())).findFirst();
         firstFlight.ifPresent(Booking::requestCancel);
         Arrays.stream(tripBooking.getDetails()).filter(Booking::isCancelPending).forEach(b -> {
-            WebTarget webTarget = null;
+            WebTarget webTarget;
+
             try {
-                webTarget = flightTarget.path(URLEncoder.encode(b.getId().toString(), "UTF-8"));
+                webTarget = getFlightTarget().path(URLEncoder.encode(b.getId().toString(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 throw new BookingException(-1, "flight cancel problem: UnsupportedEncodingException" + e);
             }
 
             Response response = webTarget.request().delete();
-            if (response.getStatus() != Response.Status.OK.getStatusCode())
+
+            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+                response.close();
                 throw new BookingException(response.getStatus(), "flight cancel problem: " + b.getId());
+            }
 
             b.setStatus(Booking.BookingStatus.CANCELLED);
         });
 
-        service.confirmBooking(tripBooking, hotelTarget, flightTarget);
+        service.confirmBooking(tripBooking, getHotelTarget(), getFlightTarget());
         return Response.ok(tripBooking.toJson()).build();
     }
 
@@ -170,7 +174,8 @@ public class TripController {
         Booking tripBooking = service.get(bookingId);
         if (tripBooking.getStatus() != Booking.BookingStatus.CANCEL_REQUESTED && tripBooking.getStatus() != Booking.BookingStatus.PROVISIONAL)
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity("Too late to requestCancel booking").build());
-        service.cancelBooking(tripBooking, hotelTarget, flightTarget);
+
+        service.cancelBooking(tripBooking, getHotelTarget(), getFlightTarget());
         return Response.ok(tripBooking.toJson()).build();
     }
 
@@ -190,20 +195,28 @@ public class TripController {
     }
 
     private Booking bookHotel(String name, String bookingId) throws BookingException {
-        WebTarget webTarget = hotelTarget.path("/")
+        WebTarget webTarget = getHotelTarget().path("/")
                 .queryParam("hotelName", name);
         Response response = webTarget.request().header(NarayanaLRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
-        if (response.getStatus() != Response.Status.OK.getStatusCode())
+
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            response.close();
             throw new BookingException(response.getStatus(), "hotel booking problem");
+        }
+
         return response.readEntity(Booking.class);
     }
 
     private Booking bookFlight(String flightNumber, String bookingId) throws BookingException {
-        WebTarget webTarget = flightTarget.path("/")
+        WebTarget webTarget = getFlightTarget().path("/")
                 .queryParam("flightNumber", flightNumber);
         Response response = webTarget.request().header(NarayanaLRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
-        if (response.getStatus() != Response.Status.OK.getStatusCode())
+
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            response.close();
             throw new BookingException(response.getStatus(), "flight booking problem");
+        }
+
         return response.readEntity(Booking.class);
     }
 }

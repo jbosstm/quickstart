@@ -58,7 +58,7 @@ public class FlightParticipant {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @LRA(LRA.Type.MANDATORY)
+    @LRA(value = LRA.Type.MANDATORY, terminal = false)
     @NestedLRA
     public Booking bookFlight(@HeaderParam(LRA_HTTP_HEADER) String lraId,
                               @QueryParam("flightNumber") @DefaultValue("") String flightNumber) {
