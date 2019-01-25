@@ -107,6 +107,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
+                                    <skip>true</skip>
                                     <executable>bash</executable>
                                     <commandlineArgs>${basedir}/../run.sh</commandlineArgs>
                                 </configuration>
