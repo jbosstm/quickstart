@@ -112,7 +112,7 @@ public class TripController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     // terminal is false because we want the LRA to be associated with a booking until the user confirms the booking
-    @LRA(terminal = false)
+    @LRA(end = false)
     public Response bookTrip(@QueryParam("hotelName") @DefaultValue("TheGrand") String hotelName,
                              @QueryParam("flightNumber1") @DefaultValue("firstClass") String flightNumber,
                              @QueryParam("flightNumber2") @DefaultValue("secondClass") String altFlightNumber,

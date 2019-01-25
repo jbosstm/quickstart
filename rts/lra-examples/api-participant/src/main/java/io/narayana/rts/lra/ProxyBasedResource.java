@@ -39,18 +39,18 @@ public class ProxyBasedResource implements LRAParticipant, Serializable {
     @Inject
     private LRAManagement lraManagement;
 
-    @Inject
-    private ParticipantDeserializer participantDeserializer;
+//    @Inject
+//    private ParticipantDeserializer participantDeserializer;
 
-    @PostConstruct
-    private void postConstruct() {
-        lraManagement.registerDeserializer(participantDeserializer);
-    }
-
-    @PreDestroy
-    private void preDestroy() {
-        lraManagement.unregisterDeserializer(participantDeserializer);
-    }
+//    @PostConstruct
+//    private void postConstruct() {
+//        lraManagement.registerDeserializer(participantDeserializer);
+//    }
+//
+//    @PreDestroy
+//    private void preDestroy() {
+//        lraManagement.unregisterDeserializer(participantDeserializer);
+//    }
 
     private void writeObject(ObjectOutputStream out) throws IOException {
     }
