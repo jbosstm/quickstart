@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>narayana-quickstarts-jta</artifactId>
-    <version>5.9.3.Final</version>
+    <version>5.9.4.Final-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <description>Recovery example
