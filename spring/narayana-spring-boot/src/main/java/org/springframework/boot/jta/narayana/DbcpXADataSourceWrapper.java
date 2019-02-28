@@ -30,7 +30,7 @@ import javax.sql.XADataSource;
 import javax.transaction.TransactionManager;
 
 /**
- * @author <a href="mailto:zfeng@redhat.com>Zheng Feng</a>
+ * @author <a href="mailto:zfeng@redhat.com">Zheng Feng</a>
  */
 @Configuration
 public class DbcpXADataSourceWrapper implements XADataSourceWrapper {
