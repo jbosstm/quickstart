@@ -20,7 +20,7 @@
 
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>service1b</artifactId>
-    <version>5.9.4.Final-SNAPSHOT</version>
+    <version>5.9.4.Final</version>
     <packaging>war</packaging>
     <name>RESTAT Quickstart: Participant Service</name>
     <description>REST-AT service running in wildfly</description>
@@ -51,7 +51,7 @@
             maven repository. -->
         <!-- <version.jboss.spec.javaee.6.0>3.0.2.Final-redhat-2</version.jboss.spec.javaee.6.0> -->
 
-        <version.narayana>5.9.4.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.9.4.Final</version.narayana>
 
         <!-- other plugin versions -->
         <version.compiler.plugin>3.5.1</version.compiler.plugin>
@@ -176,7 +176,7 @@
                 <dependency>
                     <groupId>org.jboss.narayana.rts</groupId>
                     <artifactId>restat-util</artifactId>
-                    <version>5.9.4.Final-SNAPSHOT</version>
+                    <version>5.9.4.Final</version>
                 </dependency>
             </dependencies>
             <build>
@@ -197,7 +197,7 @@
                             <dependency>
                                 <groupId>org.jboss.narayana.rts</groupId>
                                 <artifactId>restat-util</artifactId>
-                                <version>5.9.4.Final-SNAPSHOT</version>
+                                <version>5.9.4.Final</version>
                             </dependency>
                         </dependencies>
                         <configuration>

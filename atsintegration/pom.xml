@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart</groupId>
   <artifactId>application-server-integration</artifactId>
-  <version>5.9.4.Final-SNAPSHOT</version>
+  <version>5.9.4.Final</version>
   <packaging>jar</packaging>
   <name>narayana application server intergration</name>
   <description>Example of possible integration of Narayana to an arbitrary application server</description>
@@ -32,7 +32,7 @@
   <properties>
     <version.jboss.logging>3.1.0.GA</version.jboss.logging>
     <version.junit>4.8.2</version.junit>
-    <version.narayana>5.9.4.Final-SNAPSHOT</version.narayana>
+    <version.narayana>5.9.4.Final</version.narayana>
     <version.transaction.api>1.0.1.Final</version.transaction.api>
   </properties>
 
