@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
     <artifactId>blacktie-quickstarts-integration1-ejb</artifactId>
-    <version>5.9.5.Final-SNAPSHOT</version>
+    <version>5.9.5.Final</version>
     <packaging>ejb</packaging>
     <name>Integration 1 - Quickstart EJB</name>
     <description>A BlackTie component</description>

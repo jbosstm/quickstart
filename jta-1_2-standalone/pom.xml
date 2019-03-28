@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstarts</groupId>
     <artifactId>jta-1_2-standalone</artifactId>
-    <version>5.9.5.Final-SNAPSHOT</version>
+    <version>5.9.5.Final</version>
 
     <name>Narayana Quickstart: Standalone JTA 1.2 Quickstart</name>
     <description>Example shows how to use JTA 1.2 annotations in standalone application</description>
@@ -38,7 +38,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.narayana>5.9.5.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.9.5.Final</version.narayana>
         <version.jnpserver>5.0.3.GA</version.jnpserver>
         <version.junit>4.12</version.junit>
         <version.weld>2.3.4.Final</version.weld>
