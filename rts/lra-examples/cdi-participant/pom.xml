@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.9.5.Final</version>
+    <version>5.9.6.Final-SNAPSHOT</version>
     <artifactId>examples-microprofile-lra-cdi-participant</artifactId>
 
     <name>WildFly Thorntail Examples: Microprofile LRA CDI Participant</name>
