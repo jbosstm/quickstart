@@ -21,5 +21,15 @@
 -->
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_2_0.xsd">
+
+    <!--
+      Activate the alternative if JNDI binding of the TransactionSynchronizationRegistryProducer is not available.
+      Then the registry is taken from the bean defined by the producer (see test CDIBindingTestCase).
+    --> 
+    <!--
+    <alternatives>
+        <class>org.jboss.narayana.quickstarts.jta.cdibinding.TransactionSynchronizationRegistryProducer</class>
+    </alternatives>
+     -->
 </beans>

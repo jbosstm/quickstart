@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<!--
+  WARN: These arte the properties used for this particular testcase.
+
+  Do not consider this file as a full Narayana setup which is about to be used
+  in some real application. Consult the documentation
+  at http://narayana.io for such case.
+-->
+<properties>
+
+    <!-- for the test purposes we want the transaction data being placed in the temporary target directory -->
+    <entry key="ObjectStoreEnvironmentBean.objectStoreDir">target/tx-object-store</entry>
+    <entry key="ObjectStoreEnvironmentBean.communicationStore.objectStoreDir">target/tx-object-store</entry>
+    <entry key="ObjectStoreEnvironmentBean.stateStore.objectStoreDir">target/tx-object-store</entry>
+
+</properties>

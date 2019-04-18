@@ -16,10 +16,15 @@
  */
 package org.jboss.narayana.quickstarts.jta;
 
-import com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean;
-import com.arjuna.ats.arjuna.common.arjPropertyManager;
-import com.arjuna.ats.jta.utils.JNDIManager;
-import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
+import javax.naming.Context;
+import javax.transaction.Status;
+import javax.transaction.SystemException;
+import javax.transaction.Transaction;
+import javax.transaction.TransactionManager;
+import javax.transaction.TransactionSynchronizationRegistry;
+import javax.transaction.TransactionalException;
+import javax.transaction.UserTransaction;
+
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jnp.server.NamingBeanImpl;
@@ -30,65 +35,86 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.naming.InitialContext;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionalException;
+import com.arjuna.ats.jta.utils.JNDIManager;
 
 /**
+ * <p>
+ * This test case shows how to initiate the Narayana transaction manager
+ * when used with the CDI standalone container.
+ * </p>
+ * <p>
+ * Narayana configuration can be provided by the <code>jbossts-properties.xml</code>
+ * and/or (re)defined programatically setting up properties to particular
+ * configuration bean. You can see this in {@link #beforeClass()}.
+ * </p>
+ * <p>
+ * The standalone CDI container is <a href="http://weld.cdi-spec.org">Weld</a>
+ * is started in {@link #before()}. The JTA CDI extension needs
+ * to find out the implementation of the {@link TransactionManager},
+ * {@link TransactionSynchronizationRegistry} and {@link UserTransaction}
+ * which is in this case bound to JNDI {@link JNDIManager#bindJTAImplementation()}.
+ * The JTA CDI extension finds out the configured instances with JNDI lookup.
+ * </p>
+ *
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
-public class TestCase {
+public class JNDIBindingTestCase {
 
     private static final NamingBeanImpl NAMING_BEAN = new NamingBeanImpl();
 
+    private Weld weld;
     private TransactionManager transactionManager;
 
     private RequiredCounterManager requiredCounterManager;
-
     private MandatoryCounterManager mandatoryCounterManager;
+    private EventsCounter lifeCycleCounter;
 
-    private Weld weld;
 
     @BeforeClass
     public static void beforeClass() throws Exception {
+        System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+        System.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
+
         // Start JNDI server
         NAMING_BEAN.start();
 
         // Bind JTA implementation with default names
         JNDIManager.bindJTAImplementation();
-
-        // Set object store location
-        BeanPopulator.getDefaultInstance(ObjectStoreEnvironmentBean.class).setObjectStoreDir("target/tx-object-store");
-        BeanPopulator.getNamedInstance(ObjectStoreEnvironmentBean.class, "communicationStore")
-                .setObjectStoreDir("target/tx-object-store");
-        BeanPopulator.getNamedInstance(ObjectStoreEnvironmentBean.class, "stateStore")
-                .setObjectStoreDir("target/tx-object-store");
     }
 
     @AfterClass
     public static void afterClass() {
         NAMING_BEAN.stop();
+
+        System.clearProperty(Context.INITIAL_CONTEXT_FACTORY);
+        System.clearProperty(Context.URL_PKG_PREFIXES);
     }
 
     @Before
     public void before() throws Exception {
-        transactionManager = (TransactionManager) new InitialContext().lookup("java:/TransactionManager");
-
         // Initialize Weld container
         weld = new Weld();
         final WeldContainer weldContainer = weld.initialize();
 
         // Bootstrap the beans
-        requiredCounterManager = weldContainer.instance().select(RequiredCounterManager.class).get();
-        mandatoryCounterManager = weldContainer.instance().select(MandatoryCounterManager.class).get();
+        requiredCounterManager = weldContainer.select(RequiredCounterManager.class).get();
+        mandatoryCounterManager = weldContainer.select(MandatoryCounterManager.class).get();
+
+        lifeCycleCounter = weldContainer.select(EventsCounter.class).get();
+        lifeCycleCounter.clear();
+
+        transactionManager = weldContainer.select(TransactionManager.class).get();
     }
 
     @After
-    public void after() {
-        try {
-            transactionManager.rollback();
-        } catch (final Throwable t) {
+    public void after() throws SystemException {
+        // cleaning the transaction state in case of an error
+        if(transactionManager.getTransaction()!=null
+                && transactionManager.getTransaction().getStatus() == Status.STATUS_ACTIVE) {
+            try {
+                transactionManager.rollback();
+            } catch (final Throwable ignored) {
+            }
         }
 
         weld.shutdown();
@@ -104,6 +130,9 @@ public class TestCase {
     @Test
     public void testRequiredTransactionWithoutExistingTransaction() {
         Assert.assertTrue(requiredCounterManager.isTransactionAvailable());
+
+        Assert.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"));
+        Assert.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"));
     }
 
     @Test
@@ -127,6 +156,9 @@ public class TestCase {
         Assert.assertEquals(1, requiredCounterManager.getCounter());
         Assert.assertEquals(1, mandatoryCounterManager.getCounter());
 
+        Assert.assertTrue("Expected the @Initialized scope event to be thrown",
+                lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"));
+
         final Transaction suspendedTransaction = transactionManager.suspend();
 
         transactionManager.begin();
@@ -139,6 +171,9 @@ public class TestCase {
         transactionManager.rollback();
         transactionManager.resume(suspendedTransaction);
         transactionManager.rollback();
+
+        Assert.assertTrue("Expected the @Destroy scope event to be thrown",
+                lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"));
     }
 
 }
