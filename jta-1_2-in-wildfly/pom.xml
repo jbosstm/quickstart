@@ -24,7 +24,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jboss.narayana.quickstarts</groupId>
+    <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jta-1_2-in-wildfly</artifactId>
     <version>5.9.6.Final-SNAPSHOT</version>
 
