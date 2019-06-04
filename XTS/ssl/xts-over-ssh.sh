@@ -32,7 +32,7 @@ unset JBOSS_HOME
 function waitServerStarted() {
   local PORT=${1:-$CLI_PORT_BASE}
   local RETURN_CODE=-1
-  local TIMEOUT=20
+  local TIMEOUT=20 # timeout is 20 seconds
   local TIMESTAMP_START=`date +%s`
   local NOT_TIMEOUTED=true
   while [ $RETURN_CODE -ne 0 ] && $NOT_TIMEOUTED; do
@@ -44,6 +44,7 @@ function waitServerStarted() {
     sleep $SLEEP_TIME
   else
     echo "Timeout ${TIMEOUT}s exceeded when waiting for container at port $PORT"
+    exit 2
   fi
 }
 
@@ -73,6 +74,11 @@ if [ ! -d "$JBOSS_BIN" ]; then
   git clone --depth=1 https://github.com/wildfly/wildfly.git
   mvn clean install -DskipTests -f wildfly/pom.xml
   JBOSS_BIN=`find wildfly/dist/target -maxdepth 1 -type d -name 'wildfly-*'`
+
+  command -v realpath
+  [ $? -eq 0 ] && JBOSS_BIN=`realpath "$JBOSS_BIN"`
+
+  [ ! -d "$JBOSS_BIN" ] && echo "Directory $JBOSS_BIN does not exist." && exit 3
 fi
 echo "Creating jboss distro directories '$JBOSS_CLIENT' and '$JBOSS_SERVER'"
 rm -rf "$JBOSS_CLIENT"
@@ -82,7 +88,30 @@ prepareServerWorkingDirectories "$JBOSS_BIN" "$JBOSS_SERVER"
 
 if [ ! -d "$QUICKSTART_HOME" ]; then
   echo "Variable \$QUICKSTART_HOME not defined going to clone 'wfly quickstart' from github"
-  git clone --depth=1 https://github.com/wildfly/quickstart.git
+  git clone --depth=1 https://github.com/wildfly/quickstart.git $QUICKSTART_HOME
+
+  # workaroud for CI failure because of https://github.com/jboss/jboss-parent-pom/issues/65
+  patch -p0 --ignore-whitespace "$WSAT_QUICKSTART_PATH/pom.xml" << 'EOF'
+@@ -119,6 +119,16 @@
+                     </archive>
+                 </configuration>
+             </plugin>
++            <plugin>
++              <groupId>org.apache.maven.plugins</groupId>
++              <artifactId>maven-enforcer-plugin</artifactId>
++              <executions>
++                <execution>
++                  <id>enforce-java-version</id>
++                  <phase>none</phase>
++                </execution>
++              </executions>
++            </plugin>
+         </plugins>
+     </build>
+ </project>
+EOF
+
+
 fi
 
 if [ ! -d "$WSAT_QUICKSTART_PATH" ]; then
@@ -101,36 +130,10 @@ sed "s#http://localhost:8080/jboss-as-wsat-simple/RestaurantServiceAT#https://lo
 sed "s#http://localhost:8080/wsat-simple/RestaurantServiceAT?wsdl#https://localhost:${SERVER_HTTPS_PORT}/wsat-simple/RestaurantServiceAT?wsdl#"\
  -i ./src/test/java/org/jboss/as/quickstarts/wsat/simple/Client.java
 
-patch -p0 <<EOF
-diff --git pom.xml pom.xml
-index 97c5693..5fea194 100644
---- pom.xml
-+++ pom.xml
-@@ -92,5 +92,19 @@
-     <build>
-         <\!-- Set the name of the WAR, used as the context root when the app is deployed. -->
-         <finalName>\${project.artifactId}</finalName>
-+        <plugins>
-+            <plugin>
-+                <groupId>org.apache.maven.plugins</groupId>
-+                <artifactId>maven-war-plugin</artifactId>
-+                <configuration>
-+                    <archive>
-+                        <manifest/>
-+                        <manifestEntries>
-+                          <Dependencies>org.jboss.xts</Dependencies>
-+                        </manifestEntries>
-+                    </archive>
-+                </configuration>
-+            </plugin>
-+        </plugins>
-     </build>
- </project>
-EOF
-
 # -s ../settings.xml
-mvn clean install -B -Dversion.server.bom=14.0.1.Final
 DEPLOYMENT_NAME=wsat-simple.war
+mvn clean install -B -e -Dversion.server.bom=17.0.0.Beta1 -DskipTests -Dinsecure.repositories=WARN
+[ $? -ne 0 ] && echo "Failure to build deployment '$DEPLOYMENT_NAME' from quickstart '$WSAT_QUICKSTART_PATH'"
 
 # Settings for client
 echo "Going to configure jboss client '$JBOSS_CLIENT' to use SSL"
@@ -154,8 +157,10 @@ waitServerStarted $CLIENT_CLI_PORT
 /subsystem=undertow/server=default-server/https-listener=https:add(socket-binding="https", security-realm="SSLRealm")'
 echo "Deploying quickstart '${WSAT_QUICKSTART_PATH}/target/wsat-simple.war' at $JBOSS_CLIENT"
 "$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --command="deploy ${WSAT_QUICKSTART_PATH}/target/$DEPLOYMENT_NAME"
+WAS_CLIENT_DEPLOYED=$?
 pkill -9 -P $CLIENT_PID
 sleep $SLEEP_TIME
+[ $WAS_CLIENT_DEPLOYED -ne 0 ] && echo "Failed to deploy $DEPLOYMENT_NAME to 'localhost:$CLIENT_CLI_PORT'" && exit 1
 
 sed "s#\(xts-environment.*:\)8080/#\1${CLIENT_HTTPS_PORT}/#"\
  -i standalone/configuration/standalone-xts.xml
@@ -184,9 +189,11 @@ waitServerStarted $SERVER_CLI_PORT
 "$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --commands='
 /subsystem=undertow/server=default-server/https-listener=https:add(socket-binding="https", security-realm="SSLRealm")'
 echo "Deploying quickstart '${WSAT_QUICKSTART_PATH}/target/wsat-simple.war' at $JBOSS_SERVER"
-"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$CLIENT_CLI_PORT --command="deploy ${WSAT_QUICKSTART_PATH}/target/$DEPLOYMENT_NAME"
+"$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$SERVER_CLI_PORT --command="deploy ${WSAT_QUICKSTART_PATH}/target/$DEPLOYMENT_NAME"
+WAS_SERVER_DEPLOYED=$?
 pkill -9 -P $SERVER_PID
 sleep $SLEEP_TIME
+[ $WAS_SERVER_DEPLOYED -ne 0 ] && echo "Failed to deploy $DEPLOYMENT_NAME to 'localhost:$SERVER_CLI_PORT'" && exit 1
 
 sed "s#\(xts-environment.*:\)8080/#\1${SERVER_HTTPS_PORT}/#"\
  -i standalone/configuration/standalone-xts.xml
