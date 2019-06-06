@@ -130,6 +130,9 @@ sed "s#http://localhost:8080/jboss-as-wsat-simple/RestaurantServiceAT#https://lo
 sed "s#http://localhost:8080/wsat-simple/RestaurantServiceAT?wsdl#https://localhost:${SERVER_HTTPS_PORT}/wsat-simple/RestaurantServiceAT?wsdl#"\
  -i ./src/test/java/org/jboss/as/quickstarts/wsat/simple/Client.java
 
+java -version
+mvn -version
+exit 0
 # -s ../settings.xml
 DEPLOYMENT_NAME=wsat-simple.war
 mvn clean install -B -e -Dversion.server.bom=17.0.0.Beta1 -DskipTests -Dinsecure.repositories=WARN
