@@ -31,8 +31,8 @@ simulates how different trust domains can interoperate.
 Start the coordinators:
 
 ```bash
-java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080
-java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8081
+java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-thorntail.jar -Dswarm.http.port=8080
+java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-thorntail.jar -Dswarm.http.port=8081
 ```
 
 Start the trip, hotel and flight services:

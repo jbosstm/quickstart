@@ -29,8 +29,8 @@ import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
-import org.eclipse.microprofile.lra.client.LRAClient;
-
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ import java.util.Map;
 public class FlightService {
 
     @Inject
-    private LRAClient lraClient;
+    private NarayanaLRAClient lraClient;
 
     private Map<String, Booking> bookings = new HashMap<>();
 
@@ -56,10 +56,10 @@ public class FlightService {
         return bookings.get(bookingId);
     }
 
-    public Booking cancel(String bookingId) {
+    public Booking cancel(String bookingId) throws URISyntaxException {
         Booking booking = get(bookingId);
         booking.setStatus(Booking.BookingStatus.CANCEL_REQUESTED);
-        lraClient.cancelLRA(NarayanaLRAClient.lraToURL(bookingId));
+        lraClient.cancelLRA(new URI(bookingId));
         return booking;
     }
 
