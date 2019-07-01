@@ -42,12 +42,13 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.lra.annotation.Compensate;
 import org.eclipse.microprofile.lra.annotation.Complete;
-import org.eclipse.microprofile.lra.annotation.LRA;
-import org.eclipse.microprofile.lra.annotation.NestedLRA;
+import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 
+import java.net.URISyntaxException;
 import java.util.Collection;
 
-import static io.narayana.lra.client.NarayanaLRAClient.LRA_HTTP_HEADER;
+import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT_HEADER;
+
 
 @RequestScoped
 @Path("/")
@@ -58,9 +59,8 @@ public class FlightParticipant {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @LRA(value = LRA.Type.MANDATORY, end = false)
-    @NestedLRA
-    public Booking bookFlight(@HeaderParam(LRA_HTTP_HEADER) String lraId,
+    @LRA(value = LRA.Type.NESTED, end = false)
+    public Booking bookFlight(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) String lraId,
                               @QueryParam("flightNumber") @DefaultValue("") String flightNumber) {
         return service.book(lraId, flightNumber);
     }
@@ -69,7 +69,7 @@ public class FlightParticipant {
     @Path("/complete")
     @Produces(MediaType.APPLICATION_JSON)
     @Complete
-    public Response completeWork(@HeaderParam(LRA_HTTP_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
+    public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
         service.get(lraId).setStatus(Booking.BookingStatus.CONFIRMED);
         return Response.ok(service.get(lraId).toJson()).build();
     }
@@ -78,7 +78,7 @@ public class FlightParticipant {
     @Path("/compensate")
     @Produces(MediaType.APPLICATION_JSON)
     @Compensate
-    public Response compensateWork(@HeaderParam(LRA_HTTP_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
+    public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
         service.get(lraId).setStatus(Booking.BookingStatus.CANCELLED);
         return Response.ok(service.get(lraId).toJson()).build();
     }
@@ -87,7 +87,7 @@ public class FlightParticipant {
     @Path("/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
     @LRA(LRA.Type.NOT_SUPPORTED)
-    public Booking cancelFlight(@PathParam("bookingId") String bookingId) {
+    public Booking cancelFlight(@PathParam("bookingId") String bookingId) throws URISyntaxException {
         return service.cancel(bookingId);
     }
 
@@ -95,7 +95,7 @@ public class FlightParticipant {
     @Path("/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
     @LRA(LRA.Type.NOT_SUPPORTED)
-    public Booking getBooking(@PathParam("bookingId") String bookingId) throws JsonProcessingException {
+    public Booking getBooking(@PathParam("bookingId") String bookingId) {
         return service.get(bookingId);
     }
 
