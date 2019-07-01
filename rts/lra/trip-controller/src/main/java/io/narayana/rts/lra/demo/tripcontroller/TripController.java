@@ -50,8 +50,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import org.eclipse.microprofile.lra.annotation.LRA;
-import org.eclipse.microprofile.lra.client.LRAClient;
+import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -62,6 +61,8 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+
+import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT_HEADER;
 
 
 /**
@@ -82,7 +83,7 @@ public class TripController {
     private URI flightUri;
 
     @Inject
-    private LRAClient lraClient;
+    private NarayanaLRAClient lraClient;
 
     @Inject
     private TripService service;
@@ -183,7 +184,7 @@ public class TripController {
     @Path("/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
     @LRA(LRA.Type.NOT_SUPPORTED)
-    public Booking getBooking(@PathParam("bookingId") String bookingId) throws JsonProcessingException {
+    public Booking getBooking(@PathParam("bookingId") String bookingId) {
         return service.get(bookingId);
     }
 
@@ -197,7 +198,7 @@ public class TripController {
     private Booking bookHotel(String name, String bookingId) throws BookingException {
         WebTarget webTarget = getHotelTarget().path("/")
                 .queryParam("hotelName", name);
-        Response response = webTarget.request().header(NarayanaLRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
+        Response response = webTarget.request().header(LRA_HTTP_CONTEXT_HEADER, bookingId).post(Entity.text(""));
 
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
             response.close();
@@ -210,7 +211,7 @@ public class TripController {
     private Booking bookFlight(String flightNumber, String bookingId) throws BookingException {
         WebTarget webTarget = getFlightTarget().path("/")
                 .queryParam("flightNumber", flightNumber);
-        Response response = webTarget.request().header(NarayanaLRAClient.LRA_HTTP_HEADER, bookingId).post(Entity.text(""));
+        Response response = webTarget.request().header(LRA_HTTP_CONTEXT_HEADER, bookingId).post(Entity.text(""));
 
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
             response.close();

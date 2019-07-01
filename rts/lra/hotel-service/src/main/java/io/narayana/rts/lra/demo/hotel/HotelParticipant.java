@@ -41,11 +41,11 @@ import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.lra.annotation.Compensate;
 import org.eclipse.microprofile.lra.annotation.Complete;
-import org.eclipse.microprofile.lra.annotation.LRA;
+import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 
 import java.util.Collection;
 
-import static io.narayana.lra.client.NarayanaLRAClient.LRA_HTTP_HEADER;
+import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT_HEADER;
 
 @RequestScoped
 @Path("/")
@@ -57,7 +57,7 @@ public class HotelParticipant {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @LRA(value = LRA.Type.REQUIRED, end = false)
-    public Booking bookRoom(@HeaderParam(LRA_HTTP_HEADER) String lraId,
+    public Booking bookRoom(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) String lraId,
                             @QueryParam("hotelName") @DefaultValue("Default") String hotelName) {
         return service.book(lraId, hotelName);
     }
@@ -66,7 +66,7 @@ public class HotelParticipant {
     @Path("/complete")
     @Produces(MediaType.APPLICATION_JSON)
     @Complete
-    public Response completeWork(@HeaderParam(LRA_HTTP_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
+    public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
         service.get(lraId).setStatus(Booking.BookingStatus.CONFIRMED);
         return Response.ok(service.get(lraId).toJson()).build();
     }
@@ -75,7 +75,7 @@ public class HotelParticipant {
     @Path("/compensate")
     @Produces(MediaType.APPLICATION_JSON)
     @Compensate
-    public Response compensateWork(@HeaderParam(LRA_HTTP_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
+    public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) String lraId) throws NotFoundException, JsonProcessingException {
         service.get(lraId).setStatus(Booking.BookingStatus.CANCELLED);
         return Response.ok(service.get(lraId).toJson()).build();
     }

@@ -22,6 +22,7 @@
 package io.narayana.rts.lra.demo.tripcontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.narayana.lra.client.NarayanaLRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import javax.ws.rs.client.WebTarget;
@@ -30,12 +31,10 @@ import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
-import org.eclipse.microprofile.lra.client.LRAClient;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -49,7 +48,7 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 @ApplicationScoped
 public class TripService {
     @Inject
-    private LRAClient lraClient;
+    private NarayanaLRAClient lraClient;
 
     private Map<String, Booking> bookings = new HashMap<>();
 
@@ -57,7 +56,7 @@ public class TripService {
         System.out.printf("Confirming tripBooking id %s (%s) status: %s%n",
                 booking.getId(), booking.getName(), booking.getStatus());
 
-        String response = lraClient.closeLRA(new URL(booking.getId()));
+        lraClient.closeLRA(new URI(booking.getId()));
 
         // Note that earlier version of the quicksart returned the new booking status in the response to the closeLRA call,
         // whereas the new version does not.
@@ -72,7 +71,7 @@ public class TripService {
         System.out.printf("Canceling booking id %s (%s) status: %s%n",
                 booking.getId(), booking.getName(), booking.getStatus());
 
-        String response = lraClient.cancelLRA(new URL(booking.getId()));
+        lraClient.cancelLRA(new URI(booking.getId()));
 
         if (!TripCheck.validateBooking(booking, false, hotelTarget, flightTarget))
             throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
