@@ -16,10 +16,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.narayana.quickstart.stm</groupId>
 	<artifactId>optimistic</artifactId>
-	<version>5.9.6.Final</version>
+	<version>5.9.7.Final-SNAPSHOT</version>
 	<packaging>jar</packaging>
         <properties>
-                <version.narayana>5.9.6.Final</version.narayana>
+                <version.narayana>5.9.7.Final-SNAPSHOT</version.narayana>
         </properties>
 	<repositories>
 		<repository>
