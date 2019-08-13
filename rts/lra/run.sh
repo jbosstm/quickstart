@@ -1,3 +1,11 @@
+#!/usr/bin/env bash
+function finish {
+    kill -9 $ID1 $ID2 $ID3 $ID4 $ID5
+
+    rm -rf $NARAYANA_INSTALL_LOCATION
+}
+trap finish EXIT
+
 urlencode() {
     # urlencode <string>
     old_lc_collate=$LC_COLLATE
@@ -36,19 +44,19 @@ NARAYANA_ZIP="narayana-full-5.9.7.Final-SNAPSHOT-bin.zip"
    echo "There is no Narayana zip at \$WORKSPACE directory at '$WORKSPACE/$NARAYANA_ZIP" && exit 1
 unzip "$WORKSPACE/$NARAYANA_ZIP"
 
-java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
+java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-thorntail.jar -Dthorntail.http.port=8080 -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 ((PORT++))
-java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8081 -Dswarm.transactions.object-store-path=../flight-lra-coordinator-logs &
+java $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-thorntail.jar -Dthorntail.http.port=8081 -Dthorntail.transactions.object-store-path=../flight-lra-coordinator-logs &
 ID2=$!
 ((PORT++))
-java $(getDebugArgs $PORT) -jar hotel-service/target/lra-test-swarm.jar -Dswarm.http.port=8082 &
+java $(getDebugArgs $PORT) -jar hotel-service/target/lra-test-thorntail.jar -Dthorntail.http.port=8082 &
 ID3=$!
 ((PORT++))
-java $(getDebugArgs $PORT) -jar flight-service/target/lra-test-swarm.jar -Dswarm.http.port=8083 -Dlra.http.port=8081 &
+java $(getDebugArgs $PORT) -jar flight-service/target/lra-test-thorntail.jar -Dthorntail.http.port=8083 -Dlra.http.port=8081 &
 ID4=$!
 ((PORT++))
-java $(getDebugArgs $PORT) -jar trip-controller/target/lra-test-swarm.jar -Dswarm.http.port=8084 -Dlra.http.port=8080 &
+java $(getDebugArgs $PORT) -jar trip-controller/target/lra-test-thorntail.jar -Dthorntail.http.port=8084 -Dlra.http.port=8080 &
 ID5=$!
 ((PORT++))
 
@@ -62,7 +70,7 @@ echo -e "\n\n\n"
 BOOKINGID=$(curl -X POST "http://localhost:8084/?hotelName=TheGrand&flightNumber1=BA123&flightNumber2=RH456" -sS | jq -r ".id")
 echo "Booking ID was: $BOOKINGID"
 kill -9 $ID1
-java $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-swarm.jar -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../lra-coordinator-logs &
+java $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-thorntail.jar -Dthorntail.http.port=8080 -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 echo "Waiting for all the coordinator to recover"
 sleep 40
@@ -73,6 +81,4 @@ curl -X PUT http://localhost:8084/`urlencode $BOOKINGID`
 echo ""
 
 [ $DEBUG ] && echo "Processes are still running ($ID1 $ID2 $ID3 $ID4 $ID5) press any key to end them" && read
-kill -9 $ID1 $ID2 $ID3 $ID4 $ID5
-
-rm -rf $NARAYANA_INSTALL_LOCATION
+finish

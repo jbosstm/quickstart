@@ -18,10 +18,10 @@
 
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <swarm.http.port>8081</swarm.http.port>
+        <thorntail.http.port>8081</thorntail.http.port>
         <lra.http.host>localhost</lra.http.host>
         <lra.http.port>8080</lra.http.port>
-        <service.http.port>${swarm.http.port}</service.http.port>
+        <service.http.port>${thorntail.http.port}</service.http.port>
 
         <version.wildfly-swarm>2017.8.1</version.wildfly-swarm>
         <version.resteasy-client>3.1.3.Final</version.resteasy-client>
@@ -50,9 +50,8 @@
         <finalName>lra-test</finalName>
         <plugins>
             <plugin>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
-                <version>${version.wildfly-swarm}</version>
+                <groupId>io.thorntail</groupId>
+                <artifactId>thorntail-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
@@ -62,43 +61,25 @@
                 </executions>
                 <configuration>
                     <environment>
-                        <swarm.http.port>${swarm.http.port}</swarm.http.port>
+                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
                     </environment>
                     <properties>
                         <lra.http.host>${lra.http.host}</lra.http.host>
                         <lra.http.port>${lra.http.port}</lra.http.port>
                         <service.http.port>${service.http.port}</service.http.port>
+                        <thorntail.transactions.node-identifier>2</thorntail.transactions.node-identifier>
                     </properties>
                 </configuration>
             </plugin>
-            <!--
-                  <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <configuration>
-                      <artifactItems>
-                        <artifactItem>
-                          <groupId>org.jboss.narayana.rts</groupId>
-                          <artifactId>lra-coordinator</artifactId>
-                          <version>${project.version}</version>
-                        </artifactItem>
-                      </artifactItems>
-                    </configuration>
-                  </plugin>
-            -->
         </plugins>
     </build>
 
     <dependencies>
-        <!-- WildFly Swarm Fractions -->
+        <!-- LRA annotations -->
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>microprofile</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>transactions</artifactId>
+            <groupId>org.eclipse.microprofile.lra</groupId>
+            <artifactId>microprofile-lra-api</artifactId>
+            <version>${version.microprofile.lra}</version>
         </dependency>
 
         <!-- LRA JAXRS filters -->
@@ -108,12 +89,34 @@
             <version>${version.narayana}</version>
         </dependency>
 
+        <!-- JAX-RS -->
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- JAXRS 2 Client API implementation -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
             <version>${version.resteasy-client}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.5</version>
         </dependency>
     </dependencies>
 </project>

@@ -16,10 +16,11 @@
         <maven.test.skip>true</maven.test.skip>
         <swarm.debug.port>5006</swarm.debug.port>
         <swarm.http.port>8080</swarm.http.port>
+        <thorntail.http.port>8080</thorntail.http.port>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.wildfly-swarm>2018.5.0</version.wildfly-swarm>
-        <version.microprofile.lra>1.0-20190122.071206-242</version.microprofile.lra>
+        <version.microprofile.lra>1.0-20190812.092710-499</version.microprofile.lra>
+        <version.thorntail>2.4.0.Final</version.thorntail>
     </properties>
 
     <repositories>
@@ -36,9 +37,41 @@
         </repository>
     </repositories>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.thorntail</groupId>
+          <artifactId>bom-all</artifactId>
+          <version>${version.thorntail}</version>
+          <scope>import</scope>
+          <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
     <build>
         <finalName>lra-coordinator</finalName>
         <plugins>
+            <plugin>
+                <groupId>io.thorntail</groupId>
+                <artifactId>thorntail-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <environment>
+                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
+                    </environment>
+                    <properties>
+                        <lra.http.port>${thorntail.http.port}</lra.http.port>
+                    </properties>
+                </configuration>
+            </plugin>
+<!--
             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
@@ -59,6 +92,7 @@
                     </execution>
                 </executions>
             </plugin>
+-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -78,14 +112,12 @@
             <type>war</type>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>jaxrs</artifactId>
-            <version>${version.wildfly-swarm}</version>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>cdi</artifactId>
-            <version>${version.wildfly-swarm}</version>
         </dependency>
     </dependencies>
 </project>
