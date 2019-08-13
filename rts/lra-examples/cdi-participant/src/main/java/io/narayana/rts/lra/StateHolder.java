@@ -1,6 +1,6 @@
 package io.narayana.rts.lra;
 
-import org.eclipse.microprofile.lra.annotation.CompensatorStatus;
+import org.eclipse.microprofile.lra.annotation.ParticipantStatus;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.Serializable;
@@ -23,8 +23,8 @@ public class StateHolder implements Serializable {
     private FaultType type = FaultType.NONE;
     private FaultWhen when = FaultWhen.DURING;
 
-    enum FaultTarget {CDI, API, MIXED, NONE};
-    enum FaultType {HALT, NONE};
+    enum FaultTarget { CDI, API, MIXED, NONE }
+    enum FaultType { HALT, NONE }
     enum FaultWhen { // when to inject a fault
         NOW, // immediately
         BEFORE, // before the end phase
@@ -45,15 +45,15 @@ public class StateHolder implements Serializable {
         return String.format("%d completed and %d compensated", getCompletedCount(), getCompensatedCount());
     }
 
-    public void update(FaultTarget target, CompensatorStatus status) {
+    public void update(FaultTarget target, ParticipantStatus status) {
         if (status == null) {
             injectFault(target, BEFORE);
         }
 
-        if (status == CompensatorStatus.Completed) {
+        if (status == ParticipantStatus.Completed) {
             completedCount.incrementAndGet();
             System.out.printf("%d completions%n", completedCount.get());
-        } else if (status == CompensatorStatus.Compensated) {
+        } else if (status == ParticipantStatus.Compensated) {
             System.out.printf("%d compensations%n", compensatedCount.get());
             compensatedCount.incrementAndGet();
         }

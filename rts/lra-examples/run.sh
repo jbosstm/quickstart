@@ -2,9 +2,9 @@
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
-swarmjar="lra-participant-example-swarm.jar"
+thorntailjar="lra-participant-example-thorntail.jar"
 txlogdir="../txlogs"
-txlogprop="swarm.transactions.object-store-path"
+txlogprop="thorntail.transactions.object-store-path"
 qsdir="$PWD"
 service_port=8082
 coord_port=8080
@@ -31,7 +31,7 @@ arr=(${qsname//-/ })
 svctype=${arr[0]}
 last=${arr[${#arr[@]} - 1]}
 
-[[ "$svctype" =~ ^(cdi|api|mixed)$ ]] || usage "quickstart directory must start with {cdi|api|mixed}"
+[[ "$svctype" =~ ^(cdi)$ ]] || usage "quickstart directory must start with {cdi}"
 
 [ "$svctype" = "mixed" ] && completions=2 || completions=1
 
@@ -42,14 +42,14 @@ function killpid {
 
 function start_coordinator {
   echo "===== starting external coordinator on port ${coord_port}"
-  java -D${txlogprop}=${txlogdir} -Dswarm.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-swarm.jar &
+  java -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep 10
 }
 
 function start_service {
   echo "===== starting service on port ${service_port}"
-  java -Dswarm.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${swarmjar} &
+  java -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
   service_pid=$!
   sleep 10
 }
@@ -81,7 +81,7 @@ function start_and_test_service {
       echo "===== recovery was successful"
       res=0
     else
-      echo "===== recovery failed sleeping for 1 minute to allow debugging"
+      echo "===== recovery failed ($svcstatus versus ${completions}) sleeping for 1 minute to allow debugging"
       sleep 60
       res=1
     fi
@@ -112,7 +112,7 @@ echo "===== Running qickstart $qsname in directory $PWD"
 if [[ "$last" != "coordinator" ]]; then
 #  start_coordinator
   echo "===== starting external coordinator on port ${coord_port}"
-  java -D${txlogprop}=${txlogdir} -Dswarm.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-swarm.jar &
+  java -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep 10
 else

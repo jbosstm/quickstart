@@ -7,18 +7,19 @@
     <version>5.9.7.Final-SNAPSHOT</version>
     <artifactId>examples-microprofile-lra-cdi-participant</artifactId>
 
-    <name>WildFly Thorntail Examples: Microprofile LRA CDI Participant</name>
-    <description>WildFly Thorntail Examples: Microprofile LRA CDI participant using annotations</description>
+    <name>MicroProfile Examples: LRA CDI Participant</name>
+    <description>MicroProfile Examples: LRA CDI participant using annotations</description>
 
     <packaging>war</packaging>
 
     <properties>
         <maven.test.skip>true</maven.test.skip>
-        <swarm.debug.port>5005</swarm.debug.port>
+        <thorntail.debug.port>5005</thorntail.debug.port>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.wildfly-swarm>2017.8.1</version.wildfly-swarm>
-        <version.microprofile.lra>1.0-20190122.071206-242</version.microprofile.lra>
+        <version.microprofile.lra>1.0-RC1</version.microprofile.lra>
+        <thorntail.http.port>8080</thorntail.http.port>
+        <narayana.nodename.property>CoreEnvironmentBean.nodeIdentifier</narayana.nodename.property>
     </properties>
 
     <repositories>
@@ -47,17 +48,8 @@
         <finalName>lra-participant-example</finalName>
         <plugins>
             <plugin>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
-                <version>${version.wildfly-swarm}</version>
-                <configuration>
-                    <debugPort>${swarm.debug.port}</debugPort>
-                    <properties>
-                        <swarm.http.port>8082</swarm.http.port>
-                        <swarm.debug.port>${swarm.debug.port}</swarm.debug.port>
-                        <swarm.transactions.node-identifier>2</swarm.transactions.node-identifier>
-                    </properties>
-                </configuration>
+                <groupId>io.thorntail</groupId>
+                <artifactId>thorntail-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
@@ -65,6 +57,17 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <debugPort>${thorntail.debug.port}</debugPort>
+                    <environment>
+                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
+                    </environment>
+                    <properties>
+                        <lra.http.port>${thorntail.http.port}</lra.http.port>
+                        <thorntail.debug.port>${thorntail.debug.port}</thorntail.debug.port>
+                        <thorntail.transactions.node-identifier>2</thorntail.transactions.node-identifier>
+                    </properties>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -102,6 +105,13 @@
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
             <version>${version.microprofile.lra}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.narayana.rts</groupId>
+            <artifactId>lra-service-base</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
         </dependency>
 
         <!-- JAX-RS -->

@@ -4,21 +4,19 @@
 enables loosely coupled services to coordinate long running activities in such a way as to
 guarantee a globally consistent outcome without the need to take long duration locks on data.
 
-
-These examples take a normal WAR and wraps them into -swarm runnable jars.
+These examples take a normal WAR and wraps them into -thorntail runnable jars.
 
 Each project uses maven war packaging in the `pom.xml`
 
     <packaging>war</packaging>
 
-amd adds a `<plugin>` to configure `wildfly-swarm-plugin` to
+amd adds a `<plugin>` to configure `thorntail-maven-plugin` to
 create the runnable `.jar`:
 
 ```
     <plugin>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>wildfly-swarm-plugin</artifactId>
-      <version>${version.wildfly-swarm}</version>
+      <groupId>io.thorntail</groupId>
+      <artifactId>thorntail-maven-plugin</artifactId>
       <executions>
         <execution>
           <goals>
@@ -29,7 +27,7 @@ create the runnable `.jar`:
     </plugin>
 ```
 
-Five quickstarts are included:
+Two quickstarts are included:
 
 ## cdi-participant-with-coordinator
 
@@ -39,32 +37,20 @@ Five quickstarts are included:
 
 [Shows a service which registers with an external LRA coordinator using CDI annotations](#cdi-participant/README.md)
 
-## api-participant-with-coordinator
-
-[Shows a service which registers with an embedded LRA coordinator using the Java LRA API (instead of annotations) to start and end an LRA and for joining the LRA](#api-participant-with-coordinator/README.md)
-
-## api-participant
-
-[Shows a service which registers with an external LRA coordinator using the Java LRA API (instead of annotations) to start and end an LRA and for joining the LRA](#api-participant/README.md)
-
-## mixed-participant-with-coordinator
-
-[Shows a service which starts an LRA and then invokes the CDI and API based examples using JAX-RS calls.](#mixed-participant-with-coordinator/README.md)
-
 ## Running an external LRA coordinator
 
-The maven module `lra-coordinator` contains a project for building a swarm jar that runs a
+The maven module `lra-coordinator` contains a project for building a thorntail jar that runs a
 standalone LRA coordinator. The port on which the coordinator listens for requests is defined
-by the system property `swarm.http.port`. The coordinator relies on persistent storage for
-creating logs in order to be able to recover from failures. Normally swarm uses a temporary
+by the system property `thorntail.http.port`. The coordinator relies on persistent storage for
+creating logs in order to be able to recover from failures. Normally thorntail uses a temporary
 directory for its logs which is not useful in recovery situations since the storage
 so you need to overide this default using the following system property:
 
-> -Dswarm.transactions.object-store-path=../txlogs
+> -Dthorntail.transactions.object-store-path=../txlogs
 
 So, assuming you are in the lra-examples directory, to start a coordinator type:
 
-> java -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs -jar lra-coordinator/target/lra-coordinator-swarm.jar
+> java -Dthorntail.http.port=8080 -Dthorntail.transactions.object-store-path=../txlogs -jar lra-coordinator/target/lra-coordinator-thorntail.jar
 
 ## Running the cdi-participant-with-coordinator example
 
@@ -97,12 +83,12 @@ Including the artefact will result in a coordinator being co-located with the se
 ### The successful path
 
 Start the service on port 8080. Since the example uses an embedded coordinator, make sure you use
-non temporary storage for the logs using the `swarm.transactions.object-store-path` system property.
-Also set the system property, `swarm.http.port`,  which defines the port the coordinator on which
+non temporary storage for the logs using the `thorntail.transactions.object-store-path` system property.
+Also set the system property, `thorntail.http.port`,  which defines the port the coordinator on which
 it will accept requests (since the coordinator and service are co-located you must ensure that port
 for the service and the coordinator are the same).
 
-> java -Dswarm.http.port=8080 -Dlra.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs -jar cdi-participant-with-coordinator/target/lra-participant-example-swarm.jar
+> java -Dthorntail.http.port=8080 -Dlra.http.port=8080 -Dthorntail.transactions.object-store-path=../txlogs -jar cdi-participant-with-coordinator/target/lra-participant-example-thorntail.jar
 
 In another terminal send a request to the service using curl:
 
@@ -155,7 +141,7 @@ following directory:
 
 Now restart the service and wait for recovery to complete the LRA and call the service completion callback:
 
-> java -Dswarm.http.port=8080 -Dlra.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs -jar target/lra-participant-example-swarm.jar
+> java -Dthorntail.http.port=8080 -Dlra.http.port=8080 -Dthorntail.transactions.object-store-path=../txlogs -jar target/lra-participant-example-thorntail.jar
 
 The recovery system can take a few minutes to recover the state or you can trigger an immediate
 recovery scan using a curl request:
@@ -212,12 +198,12 @@ are activated by including the following dependency:
 
 Start the coordinator as [explained previously](#running-an-external-lra-coordinator) on port 8080:
 
-> java -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs -jar lra-coordinator/target/lra-coordinator-swarm.jar
+> java -Dthorntail.http.port=8080 -Dthorntail.transactions.object-store-path=../txlogs -jar lra-coordinator/target/lra-coordinator-thorntail.jar
 
-Start the service on port 8082 (using the swarm.http.port system property) and tell the service which
+Start the service on port 8082 (using the thorntail.http.port system property) and tell the service which
 port to use for the coordinator (using the lra.http.port system property):
 
-> java -Dswarm.http.port=8082 -Dlra.http.port=8080 -jar cdi-participant/target/lra-participant-example-swarm.jar
+> java -Dthorntail.http.port=8082 -Dlra.http.port=8080 -jar cdi-participant/target/lra-participant-example-thorntail.jar
 
 Notice this time you did not need to specify the coordinator log directory because the coordinator
 is now running separately from the service.
@@ -237,7 +223,7 @@ Recovery can be tested in the same way as before:
 
 Restart the service:
 
-> java -Dswarm.http.port=8082 -Dlra.http.port=8080 -jar cdi-participant/target/lra-participant-example-swarm.jar
+> java -Dthorntail.http.port=8082 -Dlra.http.port=8080 -jar cdi-participant/target/lra-participant-example-thorntail.jar
 
 When it is ready either wait for recovery or manually trigger a recovery scan (via the
 coordinator running on port 8080):
@@ -250,94 +236,7 @@ the query:
 > curl  http://localhost:8082/cdi
 
 Kill the service in preparation for the next quickstart.
-Either manually terminate the coordinator or leave it running ready for the
-[api-participant quickstart](#running-the-api-participant-example).
+Manually terminate the coordinator.
 
 Remark: if the coordinator fails before the end phase begins then they will be reported by
 a recovery scan but must be completed manually.
-
-## Running the api-participant example
-
-This example is similar to the cdi-participant but instead of using CDI annotations to control
-LRA's and to control participation in the LRA it uses the Java LRA API's. If you replace
-occurences of `cdi` with `api`then the commands for this example should be the same.
-
-Start the coordinator as [explained previously](#running-an-external-lra-coordinator) on port 8080:
-
-> java -Dswarm.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs -jar lra-coordinator/target/lra-coordinator-swarm.jar
-
-Start the service on port 8082 (using the swarm.http.port system property) and tell the service which
-port to use for the coordinator (using the lra.http.port system property):
-
-> java -Dswarm.http.port=8082 -Dlra.http.port=8080 -jar api-participant/target/lra-participant-example-swarm.jar
-
-Notice this time you did not need to specify the coordinator log directory because the coordinator
-is now running separately from the service.
-
-Test the service (running on port 8082):
-
-> curl -X PUT -I http://localhost:8082/api
-
-Verify that service was part of the LRA by either looking at the service console or by asking
-the service if it was notified when the LRA was completing:
-
-> curl http://localhost:8082/api
-
-Recovery can be tested in the same way as before:
-
-> curl -X PUT -I http://localhost:8082/api?fault=haltapiduring
-
-Restart the service:
-
-> java -Dswarm.http.port=8082 -Dlra.http.port=8080 -jar api-participant/target/lra-participant-example-swarm.jar
-
-When it is ready either wait for recovery or manually trigger a recovery scan (via the
-coordinator running on port 8080):
-
-> curl http://localhost:8080/lra-recovery-coordinator/recovery
-
-Validate the service was asked to complete by either looking at the service console or by running
-the query:
-
-> curl  http://localhost:8082/api
-
-Kill both the service and the coordinator in preparation for the next quickstart.
-
-## Running the api-participant-with-coordinator example
-
-Start the service with an embedded coordinator on port 8080:
-
-> java -Dswarm.http.port=8080 -Dlra.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs -jar api-participant-with-coordinator/target/lra-participant-example-swarm.jar
-
-Issue a request that performs an action in the context of an LRA:
-
-> curl -X PUT -I http://localhost:8080/api
-
-Check that the service was asked to complete:
-
-> curl http://localhost:8080/api
-
-Now test recovery by telling the service to halt:
-
-> curl -X PUT -I http://localhost:8080/api?fault=haltapiduring
-
-Restart the service
-
-> java -Dswarm.http.port=8080 -Dlra.http.port=8080 -Dswarm.transactions.object-store-path=../txlogs -jar api-participant-with-coordinator/target/lra-participant-example-swarm.jar
-
-and either wait for recovery or trigger an immediate recovery scan:
-
-> curl http://localhost:8080/lra-recovery-coordinator/recovery
-
-When recovery is complete the service should have been asked to complete. You can verify that
-by either looking at the console or by asking the service if it was asked to complete:
-
-> curl  http://localhost:8080/api
-
-## Running the mixed-participant-with-coordinator example
-
-This quickstart is similar to the
-[api-participant-with-coordinator](#running-the-api-participant-with-coordinator-example).
-Simply replace occurences of `api` with `mixed`. The example shows a service which starts an
-LRA and then invokes the CDI and API based examples using JAX-RS calls in the context of the same
-LRA.

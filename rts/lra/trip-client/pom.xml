@@ -47,6 +47,12 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- LRA annotations -->
+        <dependency>
+            <groupId>org.eclipse.microprofile.lra</groupId>
+            <artifactId>microprofile-lra-api</artifactId>
+            <version>${version.microprofile.lra}</version>
+        </dependency>
 
         <!-- LRA JAXRS filters -->
         <dependency>

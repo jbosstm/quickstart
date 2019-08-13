@@ -1,9 +1,9 @@
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
-swarmjar="lra-participant-example-swarm.jar"
+thorntailjar="lra-participant-example-thorntail.jar"
 txlogdir="../txlogs"
-txlogprop="swarm.transactions.object-store-path"
+txlogprop="thorntail.transactions.object-store-path"
 qsdir="$PWD"
 service_port=8082
 coord_port=8082
@@ -51,7 +51,7 @@ echo "===== Running qickstart $qsname in directory $PWD"
 
 if [[ "$last" != "coordinator" ]]; then
   echo "===== starting external coordinator on port ${coord_port}"
-  java -D${txlogprop}=${txlogdir} -Dswarm.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-swarm.jar &
+  java -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep 10
 else
@@ -59,7 +59,7 @@ else
 fi
 
 echo "===== starting service on port ${service_port}"
-java -Dswarm.http.port=${service_port} -Dlra.http.port=${coord_port} -jar target/${swarmjar} &
+java -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -jar target/${thorntailjar} &
 echo "===== Running qickstart $qsname in directory $PWD"
 service_pid=$!
 sleep 10
