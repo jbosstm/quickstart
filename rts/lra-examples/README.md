@@ -191,7 +191,7 @@ are activated by including the following dependency:
 ```
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
-            <artifactId>lra-filters</artifactId>
+            <artifactId>narayana-lra</artifactId>
             <version>${project.version}</version>
         </dependency>
 ```

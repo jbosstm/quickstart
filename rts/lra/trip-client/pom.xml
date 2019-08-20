@@ -57,7 +57,7 @@
         <!-- LRA JAXRS filters -->
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
-            <artifactId>lra-filters</artifactId>
+            <artifactId>narayana-lra</artifactId>
             <version>${version.narayana}</version>
         </dependency>
 
