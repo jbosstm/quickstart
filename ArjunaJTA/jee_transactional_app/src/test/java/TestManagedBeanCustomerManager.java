@@ -59,10 +59,8 @@ public class TestManagedBeanCustomerManager {
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 		archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
 
-		// Need to make sure we add the arquillian-service and msc as a
-		// dependency
 		final String ManifestMF = "Manifest-Version: 1.0\n"
-				+ "Dependencies: org.jboss.modules,org.jboss.msc,org.jboss.jts\n";
+				+ "Dependencies: org.jboss.jts\n";
 		archive.setManifest(new StringAsset(ManifestMF));
 
 		return archive;
