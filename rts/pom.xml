@@ -38,10 +38,7 @@
   </repositories>
   <modules>
     <module>at</module>
-<!-- these modules have been temporarily disabled
-     and will be re-enabled when the MP LRA spec is more stable
     <module>lra</module>
     <module>lra-examples</module>
--->
   </modules>
 </project>
