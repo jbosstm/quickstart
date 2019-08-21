@@ -18,6 +18,8 @@
  * (C) 2011,
  * @author JBoss, by Red Hat.
  */
+package org.jboss.narayana.quickstarts;
+
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
