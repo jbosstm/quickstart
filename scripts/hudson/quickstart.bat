@@ -49,7 +49,7 @@ set COMMENT_ON_PULL=0
 set NOTBT=1
 set NOTMAIN=1
 call build_mp
-call scripts\hudson\narayana.bat -DskipTests
+call scripts\hudson\narayana.bat -DskipTests -Pcommunity
 if %ERRORLEVEL% NEQ 0 (set COMMENT_ON_PULL=%CACHED_COMMENT% & call:comment_on_pull "Narayana build failed %BUILD_URL%" & exit -1)
 cd ..
 
