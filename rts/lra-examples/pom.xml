@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
   <artifactId>lra-examples</artifactId>
-  <version>5.9.8.Final</version>
+  <version>5.9.9.Final-SNAPSHOT</version>
   <name>LRA Quickstart Examples</name>
   <description>Provides examples of how to use transactions with microservices</description>
   <packaging>pom</packaging>

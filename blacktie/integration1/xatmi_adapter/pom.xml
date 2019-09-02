@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
     <artifactId>blacktie-quickstarts-integration1-xatmi_adapter</artifactId>
-    <version>5.9.8.Final</version>
+    <version>5.9.9.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Integration 1 - Quickstart XATMI Adapter</name>
     <description>A BlackTie component</description>
@@ -65,7 +65,7 @@
         </license>
     </licenses>
     <properties>
-        <version.narayana>5.9.8.Final</version.narayana>
+        <version.narayana>5.9.9.Final-SNAPSHOT</version.narayana>
     </properties>
     <repositories>
         <repository>
