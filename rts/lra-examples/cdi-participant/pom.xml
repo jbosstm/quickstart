@@ -18,7 +18,8 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.microprofile.lra>1.0-RC1</version.microprofile.lra>
-        <thorntail.http.port>8080</thorntail.http.port>
+        <thorntail.http.port>8081</thorntail.http.port>
+        <lra.http.port>8080</lra.http.port>
         <narayana.nodename.property>CoreEnvironmentBean.nodeIdentifier</narayana.nodename.property>
     </properties>
 
@@ -63,7 +64,8 @@
                         <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
                     </environment>
                     <properties>
-                        <lra.http.port>${thorntail.http.port}</lra.http.port>
+                        <lra.http.port>${lra.http.port}</lra.http.port>
+                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
                         <thorntail.debug.port>${thorntail.debug.port}</thorntail.debug.port>
                         <thorntail.transactions.node-identifier>2</thorntail.transactions.node-identifier>
                     </properties>
@@ -81,14 +83,6 @@
     </build>
 
     <dependencies>
-        <!-- the microprofile-lra thorntail fraction isn't ready yet
-                <dependency>
-                    <groupId>org.wildfly.swarm</groupId>
-                    <artifactId>microprofile-lra</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-        -->
-
         <!-- MP LRA CDI support relies on JAX-RS filters for
              starting LRAs and for enlisting resources in LRAs
         -->
@@ -105,13 +99,6 @@
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
             <version>${version.microprofile.lra}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.narayana.rts</groupId>
-            <artifactId>lra-service-base</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
         </dependency>
 
         <!-- JAX-RS -->

@@ -14,8 +14,6 @@
 
     <properties>
         <maven.test.skip>true</maven.test.skip>
-        <swarm.debug.port>5006</swarm.debug.port>
-        <swarm.http.port>8080</swarm.http.port>
         <thorntail.http.port>8080</thorntail.http.port>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,28 +69,6 @@
                     </properties>
                 </configuration>
             </plugin>
-<!--
-            <plugin>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
-                <version>${version.wildfly-swarm}</version>
-                <configuration>
-                    <debugPort>${swarm.debug.port}</debugPort>
-                    <properties>
-                        <swarm.http.port>8080</swarm.http.port>
-                        <swarm.debug.port>${swarm.debug.port}</swarm.debug.port>
-                        <swarm.transactions.node-identifier>2</swarm.transactions.node-identifier>
-                    </properties>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
--->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -107,17 +83,8 @@
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
-            <artifactId>lra-coordinator</artifactId>
+            <artifactId>lra-coordinator-thorntail</artifactId>
             <version>${project.version}</version>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>io.thorntail</groupId>
-            <artifactId>jaxrs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.thorntail</groupId>
-            <artifactId>cdi</artifactId>
         </dependency>
     </dependencies>
 </project>
