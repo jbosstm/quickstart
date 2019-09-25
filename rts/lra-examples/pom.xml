@@ -44,6 +44,5 @@
   <modules>
     <module>lra-coordinator</module>
     <module>cdi-participant</module>
-    <module>cdi-participant-with-coordinator</module>
   </modules>
 </project>
