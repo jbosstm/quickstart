@@ -44,6 +44,6 @@
     <module>raw-xts-api-demo</module>
     <module>wsat-jta-multi_service</module>
     <module>wsat-jta-multi_hop</module>
-    <module>ssl</module>
+    <!--<module>ssl</module> temporarily disabled, see JBTM-3203 -->
   </modules>
 </project>
