@@ -132,7 +132,7 @@ sed "s#http://localhost:8080/wsat-simple/RestaurantServiceAT?wsdl#https://localh
 
 # -s ../settings.xml
 DEPLOYMENT_NAME=wsat-simple.war
-mvn clean install -B -e -Dversion.server.bom=17.0.0.Beta1 -DskipTests -Dinsecure.repositories=WARN
+mvn clean install -B -e -Dversion.server.bom=18.0.0.Final -DskipTests -Dinsecure.repositories=WARN
 [ $? -ne 0 ] && echo "Failure to build deployment '$DEPLOYMENT_NAME' from quickstart '$WSAT_QUICKSTART_PATH'"
 
 # Settings for client
