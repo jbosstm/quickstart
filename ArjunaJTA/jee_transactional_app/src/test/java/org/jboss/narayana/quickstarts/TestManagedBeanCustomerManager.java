@@ -42,6 +42,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.fail;
+
 @RunWith(Arquillian.class)
 public class TestManagedBeanCustomerManager {
 	@Inject
@@ -90,8 +92,9 @@ public class TestManagedBeanCustomerManager {
 		int size = managedBeanCustomerManager.getCustomerCount();
 
 		// Create a new customer
+		long time = System.currentTimeMillis();
 		managedBeanCustomerManager.addCustomer("Test"
-				+ System.currentTimeMillis());
+				+ time);
 
 		// Get the initial number of customers
 		response = managedBeanCustomerManager.getCustomerCount();
@@ -99,8 +102,17 @@ public class TestManagedBeanCustomerManager {
 		size = response;
 
 		// Create a new customer
+		long time2 = System.currentTimeMillis();
+		if (time2 == time) {
+			Thread.currentThread().sleep(1000);
+			time2 = System.currentTimeMillis();
+			if (time2 == time) {
+				fail("time was the same");
+			}
+		}
+		
 		managedBeanCustomerManager.addCustomer("Test"
-				+ System.currentTimeMillis());
+				+ time2);
 
 		// Check that one extra customer was created
 		response = managedBeanCustomerManager.getCustomerCount();
