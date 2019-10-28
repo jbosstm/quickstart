@@ -16,7 +16,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.stm</groupId>
   <artifactId>stm-all</artifactId>
-  <version>5.10.0.Final-SNAPSHOT</version>
+  <version>5.10.0.Final</version>
   <packaging>pom</packaging>
   <name>JBoss Core Examples</name>
   <description>All quickstarts of JBoss Core</description>
