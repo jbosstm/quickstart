@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.10.1.Final-SNAPSHOT</version>
+    <version>5.10.1.Final</version>
     <artifactId>examples-microprofile-lra-coordinator</artifactId>
 
     <name>WildFly Thorntail Examples: LRA Coordinator</name>
