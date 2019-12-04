@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
+set -x
 
 thorntailjar="lra-participant-example-thorntail.jar"
 txlogdir="../txlogs"
@@ -35,6 +36,13 @@ last=${arr[${#arr[@]} - 1]}
 
 [ "$svctype" = "mixed" ] && completions=2 || completions=1
 
+CURL_IP_OPTS=""
+IP_OPTS="${IPV6_OPTS}" # use setup of IPv6 if it's defined, otherwise go with IPv4
+if [ -z "$IP_OPTS" ]; then
+  IP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses"
+  CURL_IP_OPTS="-4"
+fi
+
 function killpid {
   kill $2
   test $? || echo "===== could not kill $1"
@@ -42,22 +50,22 @@ function killpid {
 
 function start_coordinator {
   echo "===== starting external coordinator on port ${coord_port}"
-  java -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
+  java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep 10
 }
 
 function start_service {
   echo "===== starting service on port ${service_port}"
-  java -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
+  java ${IP_OPTS} -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
   service_pid=$!
   sleep 10
 }
 
 function test_service {
-  curl -X PUT -I http://localhost:${service_port}/${svctype} || echo ===== failed
+  curl ${CURL_IP_OPTS} -X PUT -I http://localhost:${service_port}/${svctype} || echo ===== failed
   sleep 1
-  if [ "$(curl http://localhost:${service_port}/${svctype})" = "$1" ]; then
+  if [ "$(curl ${CURL_IP_OPTS} http://localhost:${service_port}/${svctype})" = "$1" ]; then
     return 0
   else
     return 1
@@ -69,12 +77,12 @@ function start_and_test_service {
 
   if [ "$1" = "true" ]; then
     echo " ===== waiting for recovery ......."
-    curl http://localhost:${coord_port}/lra-recovery-coordinator/recovery 
+    curl ${CURL_IP_OPTS} http://localhost:${coord_port}/lra-recovery-coordinator/recovery
     # sometimes it can take two scans to complete recovery
-    curl http://localhost:${coord_port}/lra-recovery-coordinator/recovery 
+    curl ${CURL_IP_OPTS} http://localhost:${coord_port}/lra-recovery-coordinator/recovery
     echo " ===== recovery should have happened"
-    xcmd="curl http://localhost:${service_port}/${svctype}"
-    svcstatus="$(curl http://localhost:${service_port}/${svctype})"
+    xcmd="curl ${CURL_IP_OPTS} http://localhost:${service_port}/${svctype}"
+    svcstatus="$(curl ${CURL_IP_OPTS} http://localhost:${service_port}/${svctype})"
     echo "===== after recovery cmd $xcmd returned $svcstatus"
 
     if [ "$svcstatus" = "${completions} completed and 0 compensated" ]; then
@@ -94,8 +102,8 @@ function start_and_test_service {
 
 function test_recovery {
   # now test recovery
-  echo "===== injecting a fault which should halt the service on pid $service_pid"
-  curl -X PUT -I "http://localhost:8082/${svctype}?fault=halt${svctype}during"
+  echo "===== CdiBasedResource halt the service on pid $service_pid"
+  curl ${CURL_IP_OPTS} -X PUT -I "http://localhost:8082/${svctype}?fault=halt${svctype}during"
   sleep 1
   # verify that the service is not running
   kill -0 $service_pid > /dev/null 2>&1
@@ -112,7 +120,7 @@ echo "===== Running qickstart $qsname in directory $PWD"
 if [[ "$last" != "coordinator" ]]; then
 #  start_coordinator
   echo "===== starting external coordinator on port ${coord_port}"
-  java -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
+  java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep 10
 else

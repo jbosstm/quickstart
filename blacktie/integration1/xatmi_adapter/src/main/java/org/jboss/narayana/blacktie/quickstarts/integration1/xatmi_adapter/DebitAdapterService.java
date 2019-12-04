@@ -23,8 +23,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jboss.narayana.blacktie.jatmibroker.core.conf.ConfigurationException;
 import org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection;
 import org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionException;
@@ -56,7 +56,7 @@ public class DebitAdapterService extends MDBBlacktieService implements javax.jms
         try {
             Context ctx = new InitialContext();
             DebitRemote bean = (DebitRemote) ctx
-                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.10.1.Final/blacktie-quickstarts-integration1-ejb-5.10.1.Final/DebitBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.DebitRemote");
+                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.10.5.Final-SNAPSHOT/blacktie-quickstarts-integration1-ejb-5.10.5.Final-SNAPSHOT/DebitBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.DebitRemote");
             log.debug("resolved DebitBean");
             resp = bean.debit(acct_no, amount);
         } catch (NamingException e) {

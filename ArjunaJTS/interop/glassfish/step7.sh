@@ -10,5 +10,4 @@ asadmin stop-domain domain1
 
 # undeploy ejbs and stop WildFly
 [ -d "$JBOSS_HOME"  ] || fatal "file not found: $JBOSS_HOME"
-rm -f $JBOSS_HOME/standalone/deployments/ejbtest.war
-$JBOSS_HOME/bin/jboss-cli.sh --connect shutdown
+$JBOSS_HOME/bin/jboss-cli.sh --connect ':shutdown'

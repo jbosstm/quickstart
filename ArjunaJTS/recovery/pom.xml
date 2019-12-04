@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.jts</groupId>
     <artifactId>narayana-quickstarts-jts</artifactId>
-    <version>5.10.1.Final</version>
+    <version>5.10.5.Final-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <description>
@@ -70,7 +70,7 @@
           <family>unix</family>
         </os>
         <property>
-          <name>!skipTests</name> 
+          <name>!skipTests</name>
         </property>
       </activation>
       <build>
@@ -105,7 +105,7 @@
           <family>windows</family>
         </os>
         <property>
-          <name>!skipTests</name> 
+          <name>!skipTests</name>
         </property>
       </activation>
       <build>

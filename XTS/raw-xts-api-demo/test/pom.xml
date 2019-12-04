@@ -27,7 +27,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
         <artifactId>xts-demo-all</artifactId>
-        <version>5.10.1.Final</version>
+        <version>5.10.5.Final-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>xts-demo-test</artifactId>
@@ -131,6 +131,7 @@
                             -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}
                             -Djava.awt.headless=false
                         </server.jvm.args>
+                        <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                         <!-- For arquillian -->
                         <jbossHome>${env.JBOSS_HOME}</jbossHome>
                     </systemPropertyVariables>

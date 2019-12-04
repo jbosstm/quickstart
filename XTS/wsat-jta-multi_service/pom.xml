@@ -23,10 +23,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.xts</groupId>
+        <artifactId>narayana-quickstarts-xts</artifactId>
+        <version>5.10.5.Final-SNAPSHOT</version>
+    </parent>
 
     <groupId>org.jboss.narayana.quickstart.txbridge.wsat-jta-multi_service</groupId>
     <artifactId>wsat-jta-multi_service-all</artifactId>
-    <version>5.10.1.Final</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers</name>
     <description>Boss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers
@@ -38,15 +42,18 @@
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
   resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.narayana>5.10.1.Final</version.narayana>
+        <version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
         <version.org.wildfly.arquillian>2.1.1.Final</version.org.wildfly.arquillian>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
         <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>
         <jvm.args.debug></jvm.args.debug>
         <jvm.args.other>-server</jvm.args.other>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
-        <jboss1.home>${env.JBOSS_HOME_1}</jboss1.home>
-        <jboss2.home>${env.JBOSS_HOME_2}</jboss2.home>
+        <jboss1.env.home>${env.JBOSS_HOME_1}</jboss1.env.home>
+        <jboss2.env.home>${env.JBOSS_HOME_2}</jboss2.env.home>
+        <jboss1.home>${$jboss1.env.home}</jboss1.home>
+        <jboss2.home>${jboss2.env.home}</jboss2.home>
+        <skip.resource.plugin>false</skip.resource.plugin>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -105,6 +112,19 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.jws</groupId>
+            <artifactId>jsr181-api</artifactId>
+            <version>1.0-MR1</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
@@ -225,6 +245,7 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
+                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>127.0.0.1</node.address>
                                 <jboss1.home>${jboss1.home}</jboss1.home>
                                 <jboss2.home>${jboss2.home}</jboss2.home>
@@ -257,6 +278,7 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
+                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>[::1]</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -268,12 +290,25 @@
             </build>
         </profile>
 
+        <!-- Forcing to skip profile 'make.jboss1.home.directory' to be activated when skipping test execution -->
+        <profile>
+            <id>skip.jboss.home.creation.on.skiptest.property.defined</id>
+            <activation>
+                <property>
+                    <name>skipTests</name>
+                </property>
+            </activation>
+            <properties>
+                <skip.resource.plugin>true</skip.resource.plugin>
+            </properties>
+        </profile>
+
         <!-- To get two instances of JBOSS_HOME directory for tests -->
         <profile>
             <id>make.jboss1.home.directory</id>
             <activation>
                 <property>
-                    <name>!env.JBOSS_HOME_1</name>
+                    <name>!jboss1.env.home</name>
                 </property>
                 <file>
                     <missing>${basedir}/target/jboss1</missing>
@@ -287,11 +322,14 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.6</version>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <skip>${skip.resource.plugin}</skip>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>copy-resources-jboss1</id>
-                                <phase>test-compile</phase>
+                                <phase>process-test-resources</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
@@ -306,7 +344,7 @@
                             </execution>
                             <execution>
                                 <id>copy-resources-jboss2</id>
-                                <phase>test-compile</phase>
+                                <phase>process-test-resources</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
@@ -315,6 +353,63 @@
                                     <resources>
                                         <resource>
                                             <directory>${env.JBOSS_HOME}</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>verify.existence.standalone-xts.xml.configuration</id>
+            <activation>
+                <file>
+                    <missing>${jboss1.home}/standalone/configuration/standalone-xts.xml</missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <skip>${skip.resource.plugin}</skip>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>copy-standalone-xts-jboss1</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss1.home}/standalone/configuration/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${jboss1.home}/docs/examples/configs/</directory>
+                                            <includes>
+                                                <include>standalone-xts.xml</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-standalone-xts-jboss2</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss2.home}/standalone/configuration/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${jboss2.home}/docs/examples/configs/</directory>
+                                            <includes>
+                                                <include>standalone-xts.xml</include>
+                                            </includes>
                                         </resource>
                                     </resources>
                                 </configuration>

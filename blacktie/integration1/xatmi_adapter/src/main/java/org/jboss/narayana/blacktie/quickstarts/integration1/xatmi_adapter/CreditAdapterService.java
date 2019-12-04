@@ -23,8 +23,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jboss.narayana.blacktie.jatmibroker.core.conf.ConfigurationException;
 import org.jboss.narayana.blacktie.jatmibroker.xatmi.Connection;
 import org.jboss.narayana.blacktie.jatmibroker.xatmi.ConnectionException;
@@ -55,7 +55,7 @@ public class CreditAdapterService extends MDBBlacktieService implements javax.jm
         try {
             Context ctx = new InitialContext();
             CreditRemote bean = (CreditRemote) ctx
-                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.10.1.Final/blacktie-quickstarts-integration1-ejb-5.10.1.Final/CreditBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.CreditRemote");
+                    .lookup("java:global/blacktie-quickstarts-integration1-ejb-ear-5.10.5.Final-SNAPSHOT/blacktie-quickstarts-integration1-ejb-5.10.5.Final-SNAPSHOT/CreditBean!org.jboss.narayana.blacktie.quickstarts.integration1.ejb.CreditRemote");
             log.debug("resolved CreditBean");
             resp = bean.credit(acct_no, amount);
         } catch (NamingException e) {

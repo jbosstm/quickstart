@@ -15,7 +15,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart</groupId>
   <artifactId>narayana-quickstarts-all</artifactId>
-  <version>5.10.1.Final</version>
+  <version>5.10.5.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <url>http://www.jboss.org/jbosstm/</url>
   <name>${project.artifactId}</name>
@@ -148,4 +148,23 @@
     <module>karaf/osgi-jta</module>
     <module>jta-and-hibernate-standalone</module>
   </modules>
+
+  <properties>
+    <modular.jdk.args></modular.jdk.args>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>jdk9</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <properties>
+        <modular.jdk.args>--add-exports=java.base/sun.nio.ch=ALL-UNNAMED
+          --add-exports=jdk.unsupported/sun.reflect=ALL-UNNAMED
+          --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED
+          --add-modules=java.se</modular.jdk.args>
+      </properties>
+    </profile>
+  </profiles>
 </project>

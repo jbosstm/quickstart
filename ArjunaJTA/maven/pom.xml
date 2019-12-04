@@ -15,12 +15,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>maven</artifactId>
-    <version>5.10.1.Final</version>
+    <version>5.10.5.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>basic maven example</name>
     <description>basic maven example</description>
     <properties>
-      <version.narayana>5.10.1.Final</version.narayana>
+      <version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
     <repositories>
         <repository>

@@ -17,10 +17,13 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.rts</groupId>
+        <artifactId>service-quickstarts</artifactId>
+        <version>5.10.5.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>service2b</artifactId>
-    <version>5.10.1.Final</version>
     <packaging>war</packaging>
     <name>RESTAT Quickstart: Participant Service</name>
     <description>Example shows how a web service deployed to wildfly can participate in a transaction</description>
@@ -73,7 +76,7 @@
             maven repository. -->
         <!-- <version.jboss.spec.javaee.6.0>3.0.2.Final-redhat-2</version.jboss.spec.javaee.6.0> -->
 
-        <version.narayana>5.10.1.Final</version.narayana>
+        <version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
 
         <!-- other plugin versions -->
         <version.compiler.plugin>3.5.1</version.compiler.plugin>

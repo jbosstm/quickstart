@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
         <artifactId>lra-quickstarts</artifactId>
-        <version>5.10.1.Final</version>
+        <version>5.10.5.Final-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -42,6 +42,7 @@
             <plugin>
                 <groupId>io.thorntail</groupId>
                 <artifactId>thorntail-maven-plugin</artifactId>
+                <version>${version.thorntail}</version>
                 <executions>
                     <execution>
                         <goals>

@@ -21,29 +21,32 @@ SERVER_HTTPS_PORT=$((SERVER_OFFSET+HTTPS_PORT_BASE))
 SLEEP_TIME=3
 
 WORKSPACE=${WORKSPACE:-$PWD}
-QUICKSTART_HOME=${QUICKSTART_HOME:-$WORKSPACE/quickstart}
-WSAT_QUICKSTART_PATH="${QUICKSTART_HOME}/wsat-simple"
+WILDFLY_QUICKSTART_HOME=${WILDFLY_QUICKSTART_HOME:-$QUICKSTART_HOME}
 JBOSS_BIN=${JBOSS_BIN:-$JBOSS_HOME} # jboss_bin is unpacked jboss distribution
 JBOSS_CLIENT="${WORKSPACE}/client"
 JBOSS_SERVER="${WORKSPACE}/server"
 # we don't want jboss home settings confusing startup scripts
 unset JBOSS_HOME
 
+CURRENT_SCRIPT_ABSPATH=`readlink -f "$0"`
+CURRENT_SCRIPT_DIR=`dirname "$ABSPATH"`
+
 function waitServerStarted() {
   local PORT=${1:-$CLI_PORT_BASE}
   local RETURN_CODE=-1
-  local TIMEOUT=20 # timeout is 20 seconds
+  local TIMEOUT=40 # timeout is 40 seconds
   local TIMESTAMP_START=`date +%s`
   local NOT_TIMEOUTED=true
   while [ $RETURN_CODE -ne 0 ] && $NOT_TIMEOUTED; do
     "$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$PORT --command=":read-attribute(name=server-state)" | grep -s running
     RETURN_CODE=$?
-    [ $((`date +%s`-TIMESTAMP_START)) -gt ${TIMEOUT} ] && NOT_TIMEOUTED=false
+    [ $RETURN_CODE -ne 0 ] && [ $((`date +%s`-TIMESTAMP_START)) -gt ${TIMEOUT} ] && NOT_TIMEOUTED=false
   done
   if $NOT_TIMEOUTED; then
     sleep $SLEEP_TIME
   else
     echo "Timeout ${TIMEOUT}s exceeded when waiting for container at port $PORT"
+    "$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$PORT --command=":shutdown"
     exit 2
   fi
 }
@@ -70,28 +73,42 @@ function getWflyStartupParameters() {
 cd "$WORKSPACE"
 
 if [ ! -d "$JBOSS_BIN" ]; then
+  [ -d "$CURRENT_SCRIPT_DIR/target" ] && cd "$CURRENT_SCRIPT_DIR/target"
   echo "Variable \$JBOSS_BIN not defined going to clone 'wildfly' from github"
   git clone --depth=1 https://github.com/wildfly/wildfly.git
   mvn clean install -DskipTests -f wildfly/pom.xml
-  JBOSS_BIN=`find wildfly/dist/target -maxdepth 1 -type d -name 'wildfly-*'`
 
+  JBOSS_BIN=`find wildfly/dist/target -maxdepth 1 -type d -name 'wildfly-*'`
   command -v realpath
   [ $? -eq 0 ] && JBOSS_BIN=`realpath "$JBOSS_BIN"`
 
-  [ ! -d "$JBOSS_BIN" ] && echo "Directory $JBOSS_BIN does not exist." && exit 3
+  [ ! -d "$JBOSS_BIN" ] && echo "WildFly cloned and build at '$CURRENT_SCRIPT_DIR/target/wildfly but the absolute path to directory '$JBOSS_BIN' with the built sources does not exist." && exit 3
+  [ -d "$CURRENT_SCRIPT_DIR/target" ] && cd -
 fi
+
 echo "Creating jboss distro directories '$JBOSS_CLIENT' and '$JBOSS_SERVER'"
 rm -rf "$JBOSS_CLIENT"
 rm -rf "$JBOSS_SERVER"
 prepareServerWorkingDirectories "$JBOSS_BIN" "$JBOSS_CLIENT"
 prepareServerWorkingDirectories "$JBOSS_BIN" "$JBOSS_SERVER"
 
-if [ ! -d "$QUICKSTART_HOME" ]; then
-  echo "Variable \$QUICKSTART_HOME not defined going to clone 'wfly quickstart' from github"
-  git clone --depth=1 https://github.com/wildfly/quickstart.git $QUICKSTART_HOME
+if [ ! -d "$WILDFLY_QUICKSTART_HOME" ]; then
+  [ -d "$CURRENT_SCRIPT_DIR/target" ] && cd "$CURRENT_SCRIPT_DIR/target"
+  echo "Variable \$WILDFLY_QUICKSTART_HOME not defined going to clone 'wildfly quickstarts' from github.com/wildfly/quickstart"
+  git clone --depth=1 https://github.com/wildfly/quickstart.git wildfly-quickstart
 
-  # workaroud for CI failure because of https://github.com/jboss/jboss-parent-pom/issues/65
-  patch -p0 --ignore-whitespace "$WSAT_QUICKSTART_PATH/pom.xml" << 'EOF'
+  WILDFLY_QUICKSTART_HOME="${PWD}/wildfly-quickstart"
+  [ -d "$CURRENT_SCRIPT_DIR/target" ] && cd -
+fi
+
+WSAT_QUICKSTART_PATH="${WILDFLY_QUICKSTART_HOME}/wsat-simple"
+if [ ! -d "$WSAT_QUICKSTART_PATH" ]; then
+  echo "Quickstart WSAT directory "$WSAT_QUICKSTART_PATH" does not exist"
+  exit 1
+fi
+
+# workaroud for CI failure because of https://github.com/jboss/jboss-parent-pom/issues/65
+patch -p0 --ignore-whitespace "$WSAT_QUICKSTART_PATH/pom.xml" << 'EOF'
 @@ -119,6 +119,16 @@
                      </archive>
                  </configuration>
@@ -112,14 +129,6 @@ if [ ! -d "$QUICKSTART_HOME" ]; then
 EOF
 
 
-fi
-
-if [ ! -d "$WSAT_QUICKSTART_PATH" ]; then
-  echo "Quickstart WSAT directory "$WSAT_QUICKSTART_PATH" does not exist"
-  exit 1
-fi
-
-
 #--------------------- CONTAINERS CONFIGURATION ------------------
 echo "Going to configure quickstart '$WSAT_QUICKSTART_PATH' to use SSL"
 cd $WSAT_QUICKSTART_PATH
@@ -132,7 +141,7 @@ sed "s#http://localhost:8080/wsat-simple/RestaurantServiceAT?wsdl#https://localh
 
 # -s ../settings.xml
 DEPLOYMENT_NAME=wsat-simple.war
-mvn clean install -B -e -Dversion.server.bom=18.0.0.Final -DskipTests -Dinsecure.repositories=WARN
+mvn clean install -B -e -Dversion.server.bom=19.0.0.Final -DskipTests -Dinsecure.repositories=WARN
 [ $? -ne 0 ] && echo "Failure to build deployment '$DEPLOYMENT_NAME' from quickstart '$WSAT_QUICKSTART_PATH'"
 
 # Settings for client

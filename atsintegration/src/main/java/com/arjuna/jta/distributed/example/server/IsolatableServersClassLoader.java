@@ -24,11 +24,9 @@ package com.arjuna.jta.distributed.example.server;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
-
-import sun.misc.Resource;
-import sun.misc.URLClassPath;
 
 /**
  * This classloader will reload copies of classes (except a package that is
@@ -37,7 +35,7 @@ import sun.misc.URLClassPath;
  */
 public class IsolatableServersClassLoader extends ClassLoader {
 	private Map<String, Class<?>> clazzMap = new HashMap<String, Class<?>>();
-	private URLClassPath ucp;
+	private URLClassLoader urlClassLoader;
 	private String ignoredPackage;
 	private String includedPackage;
 	private String otherIgnoredPackage;
@@ -51,11 +49,10 @@ public class IsolatableServersClassLoader extends ClassLoader {
 	 *            interfaces of its test.
 	 * @param parent
 	 * @throws SecurityException
-	 * @throws NoSuchMethodException
 	 * @throws MalformedURLException
 	 */
 
-	public IsolatableServersClassLoader(String includedPackage, String ignoredPackage, ClassLoader parent) throws SecurityException, NoSuchMethodException,
+	public IsolatableServersClassLoader(String includedPackage, String ignoredPackage, ClassLoader parent) throws SecurityException,
 			MalformedURLException {
 		super(parent);
 		this.includedPackage = includedPackage;
@@ -72,7 +69,7 @@ public class IsolatableServersClassLoader extends ClassLoader {
 				urls[i] = new URL("file:" + url + "/");
 			}
 		}
-		this.ucp = new URLClassPath(urls);
+		urlClassLoader = URLClassLoader.newInstance(urls);
 	}
 
 	@Override
@@ -99,19 +96,8 @@ public class IsolatableServersClassLoader extends ClassLoader {
 					|| (includedPackage != null && !name.startsWith(includedPackage))) {
 				clazz = getParent().loadClass(name);
 			} else {
-
-				String path = name.replace('.', '/').concat(".class");
-				Resource res = ucp.getResource(path, false);
-				if (res == null) {
-					throw new ClassNotFoundException(name);
-				}
-				try {
-					byte[] classData = res.getBytes();
-					clazz = defineClass(name, classData, 0, classData.length);
-					clazzMap.put(name, clazz);
-				} catch (IOException e) {
-					throw new ClassNotFoundException(name, e);
-				}
+				clazz = urlClassLoader.loadClass(name);
+				clazzMap.put(name, clazz);
 			}
 
 		}
