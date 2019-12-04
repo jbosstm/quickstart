@@ -20,13 +20,13 @@
     <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
     <artifactId>xts-demo-all</artifactId>
     <packaging>pom</packaging>
-    <version>5.10.1.Final</version>
+    <version>5.10.2.Final-SNAPSHOT</version>
     <name>XTS demo All (parent)</name>
     <description>Parent artifact of all XTS demos of Narayna quickstarts</description>
     <url>http://narayana.io</url>
 
     <properties>
-        <version.narayana>5.10.1.Final</version.narayana>
+        <version.narayana>5.10.2.Final-SNAPSHOT</version.narayana>
         <version.javaee>7.0</version.javaee>
         <version.arquillian>1.1.11.Final</version.arquillian>
         <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
