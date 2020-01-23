@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstarts</groupId>
     <artifactId>commit-markable-resource</artifactId>
-    <version>5.10.2.Final-SNAPSHOT</version>
+    <version>5.10.2.Final</version>
     <packaging>war</packaging>
 
     <name>Narayana Quickstarts: Commit Markable Resource in Wildfly</name>
