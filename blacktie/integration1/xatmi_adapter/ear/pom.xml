@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.blacktie.quickstarts</groupId>
     <artifactId>blacktie-quickstarts-integration1-xatmi_adapter-ear</artifactId>
-    <version>5.10.2.Final-SNAPSHOT</version>
+    <version>5.10.2.Final</version>
     <name>XATMI Adapter EAR</name>
     <packaging>ear</packaging>
     <description>A BlackTie component</description>
