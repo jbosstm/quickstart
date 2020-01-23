@@ -24,6 +24,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.examples</groupId>
   <artifactId>uiwar</artifactId>
-  <version>5.10.2.Final</version>
+  <version>5.10.3.Final-SNAPSHOT</version>
   <packaging>war</packaging>
 </project>
