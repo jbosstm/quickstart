@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.narayana</groupId>
     <artifactId>transactionaldriver-standalone</artifactId>
-    <version>5.10.3.Final-SNAPSHOT</version>
+    <version>5.10.3.Final</version>
 
     <properties>
         <version.byteman>4.0.4</version.byteman>
         <version.h2>1.4.195</version.h2>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <version.junit>4.12</version.junit>
-        <version.narayana>5.10.3.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.10.3.Final</version.narayana>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
