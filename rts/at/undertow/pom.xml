@@ -19,14 +19,14 @@
 
     <groupId>org.jboss.narayana</groupId>
     <artifactId>rts-undertow-qs</artifactId>
-    <version>5.10.4.Final-SNAPSHOT-SNAPSHOT</version>
+    <version>5.10.4.Final-SNAPSHOT</version>
 
     <name>Narayana Quickstarts: REST-AT with undertow</name>
     <description>Narayana: rest-at with undertow quickstart</description>
     <packaging>jar</packaging>
 
     <properties>
-        <version.narayana>5.10.4.Final-SNAPSHOT-SNAPSHOT</version.narayana>
+        <version.narayana>5.10.4.Final-SNAPSHOT</version.narayana>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <undertow.io.version>2.0.22.Final</undertow.io.version>
         <version.resteasy>3.0.23.Final</version.resteasy>
