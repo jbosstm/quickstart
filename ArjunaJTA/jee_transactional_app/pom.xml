@@ -15,7 +15,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jee_transactional_app</artifactId>
-    <version>5.10.4.Final-SNAPSHOT</version>
+    <version>5.10.4.Final</version>
     <name>basic integration example</name>
     <description>basic integration example</description>
     <packaging>war</packaging>
@@ -33,7 +33,7 @@
             to work with JBoss EAP 6. It requires you have access to the JBoss EAP 6 
             maven repository. -->
         <!-- <version.org.jboss.bom>1.0.0.Final-redhat-1</version.org.jboss.bom>> -->
-        <version.narayana>5.10.4.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.10.4.Final</version.narayana>
         <!-- wildfly dependencies -->
         <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
         <version.junit>4.8.1</version.junit>
