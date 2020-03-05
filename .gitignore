@@ -14,6 +14,8 @@ target/
 ObjectStore/
 PutObjectStoreDirHere/
 
+ArjunaJTS/interop/glassfish/tmp/
+
 instantclient_11_2/
 jboss-as
 jbossesb-4.9.zip
