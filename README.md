@@ -100,7 +100,7 @@ Change directory into the required quickstart and follow the instructions in the
 
 To run the quickstarts:
 
-1. set `WORKSPACE` (to the root of the quickstart checkout)
+1. set `WORKSPACE` (to the root directory where the quickstart repository was cloned)
 2. set `JBOSSAS_IP_ADDR` (default is `localhost`)
 3. set `JBOSS_HOME` (to the path of WildFly server, you can download the server at http://wildfly.org/downloads)
 4. `mvn clean install`

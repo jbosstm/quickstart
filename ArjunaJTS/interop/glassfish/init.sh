@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -x
 
 function fatal {
   echo "$1"; exit 1
@@ -10,10 +10,10 @@ function fatal {
 
 QS_DIR=${WORKSPACE}/ArjunaJTS/interop/glassfish
 
-if ls ${QS_DIR}/wildfly-*/ 1> /dev/null 2>&1; then
-  cd ${QS_DIR}/wildfly-*/
+if ls ${QS_DIR}/tmp/wildfly-*/ 1> /dev/null 2>&1; then
+  cd ${QS_DIR}/tmp/wildfly-*/
   export JBOSS_HOME=$(pwd)
-  cd ..
+  cd -
 fi
 
 if [ -d "/home/jenkins/glassfish4" ]; then
