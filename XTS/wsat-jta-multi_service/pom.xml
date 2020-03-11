@@ -45,8 +45,11 @@
         <jvm.args.debug></jvm.args.debug>
         <jvm.args.other>-server</jvm.args.other>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
-        <jboss1.home>${env.JBOSS_HOME_1}</jboss1.home>
-        <jboss2.home>${env.JBOSS_HOME_2}</jboss2.home>
+        <jboss1.env.home>${env.JBOSS_HOME_1}</jboss1.env.home>
+        <jboss2.env.home>${env.JBOSS_HOME_2}</jboss2.env.home>
+        <jboss1.home>${$jboss1.env.home}</jboss1.home>
+        <jboss2.home>${jboss2.env.home}</jboss2.home>
+        <skip.resource.plugin>false</skip.resource.plugin>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -268,12 +271,25 @@
             </build>
         </profile>
 
+        <!-- Forcing to skip profile 'make.jboss1.home.directory' to be activated when skipping test execution -->
+        <profile>
+            <id>skip.jboss.home.creation.on.skiptest.property.defined</id>
+            <activation>
+                <property>
+                    <name>skipTests</name>
+                </property>
+            </activation>
+            <properties>
+                <skip.resource.plugin>true</skip.resource.plugin>
+            </properties>
+        </profile>
+
         <!-- To get two instances of JBOSS_HOME directory for tests -->
         <profile>
             <id>make.jboss1.home.directory</id>
             <activation>
                 <property>
-                    <name>!env.JBOSS_HOME_1</name>
+                    <name>!jboss1.env.home</name>
                 </property>
                 <file>
                     <missing>${basedir}/target/jboss1</missing>
@@ -287,11 +303,14 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.6</version>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <skip>${skip.resource.plugin}</skip>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>copy-resources-jboss1</id>
-                                <phase>test-compile</phase>
+                                <phase>process-test-resources</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
@@ -306,7 +325,7 @@
                             </execution>
                             <execution>
                                 <id>copy-resources-jboss2</id>
-                                <phase>test-compile</phase>
+                                <phase>process-test-resources</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
@@ -315,6 +334,63 @@
                                     <resources>
                                         <resource>
                                             <directory>${env.JBOSS_HOME}</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>verify.existence.standalone-xts.xml.configuration</id>
+            <activation>
+                <file>
+                    <missing>${jboss1.home}/standalone/configuration/standalone-xts.xml</missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <skip>${skip.resource.plugin}</skip>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>copy-standalone-xts-jboss1</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss1.home}/standalone/configuration/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${jboss1.home}/docs/examples/configs/</directory>
+                                            <includes>
+                                                <include>standalone-xts.xml</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-standalone-xts-jboss2</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss2.home}/standalone/configuration/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${jboss2.home}/docs/examples/configs/</directory>
+                                            <includes>
+                                                <include>standalone-xts.xml</include>
+                                            </includes>
                                         </resource>
                                     </resources>
                                 </configuration>
