@@ -35,6 +35,9 @@ last=${arr[${#arr[@]} - 1]}
 
 [ "$svctype" = "mixed" ] && completions=2 || completions=1
 
+IP_OPTS="${IPV6_OPTS}" # use setup of IPv6 if it's defined, otherwise go with IPv4
+[ -z "$IP_OPTS" ] && IP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses"
+
 function killpid {
   kill $2
   test $? || echo "===== could not kill $1"
@@ -42,14 +45,14 @@ function killpid {
 
 function start_coordinator {
   echo "===== starting external coordinator on port ${coord_port}"
-  java -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
+  java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep 10
 }
 
 function start_service {
   echo "===== starting service on port ${service_port}"
-  java -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
+  java ${IP_OPTS} -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
   service_pid=$!
   sleep 10
 }
@@ -112,7 +115,7 @@ echo "===== Running qickstart $qsname in directory $PWD"
 if [[ "$last" != "coordinator" ]]; then
 #  start_coordinator
   echo "===== starting external coordinator on port ${coord_port}"
-  java -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
+  java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep 10
 else

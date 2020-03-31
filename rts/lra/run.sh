@@ -44,19 +44,22 @@ NARAYANA_ZIP="narayana-full-5.10.5.Final-SNAPSHOT-bin.zip"
    echo "There is no Narayana zip at \$WORKSPACE directory at '$WORKSPACE/$NARAYANA_ZIP" && exit 1
 unzip "$WORKSPACE/$NARAYANA_ZIP"
 
-java -Dquarkus.http.port=8080 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
+IP_OPTS="${IPV6_OPTS}" # use setup of IPv6 if it's defined, otherwise go with IPv4
+[ -z "$IP_OPTS" ] && IP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses"
+
+java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 ((PORT++))
-java -Dquarkus.http.port=8081 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../flight-lra-coordinator-logs &
+java ${IP_OPTS} -Dquarkus.http.port=8081 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../flight-lra-coordinator-logs &
 ID2=$!
 ((PORT++))
-java -Dthorntail.http.port=8082 $(getDebugArgs $PORT) -jar hotel-service/target/lra-test-thorntail.jar &
+java ${IP_OPTS} -Dthorntail.http.port=8082 $(getDebugArgs $PORT) -jar hotel-service/target/lra-test-thorntail.jar &
 ID3=$!
 ((PORT++))
-java -Dthorntail.http.port=8083 -Dlra.http.port=8081 $(getDebugArgs $PORT) -jar flight-service/target/lra-test-thorntail.jar &
+java ${IP_OPTS} -Dthorntail.http.port=8083 -Dlra.http.port=8081 $(getDebugArgs $PORT) -jar flight-service/target/lra-test-thorntail.jar &
 ID4=$!
 ((PORT++))
-java -Dthorntail.http.port=8084 -Dlra.http.port=8080 $(getDebugArgs $PORT) -jar trip-controller/target/lra-test-thorntail.jar &
+java ${IP_OPTS} -Dthorntail.http.port=8084 -Dlra.http.port=8080 $(getDebugArgs $PORT) -jar trip-controller/target/lra-test-thorntail.jar &
 ID5=$!
 ((PORT++))
 
@@ -70,7 +73,7 @@ echo -e "\n\n\n"
 BOOKINGID=$(curl -X POST "http://localhost:8084/?hotelName=TheGrand&flightNumber1=BA123&flightNumber2=RH456" -sS | jq -r ".id")
 echo "Booking ID was: $BOOKINGID"
 kill -9 $ID1
-java -Dquarkus.http.port=8080 $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
+java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 echo "Waiting for all the coordinator to recover"
 sleep 40
