@@ -28,7 +28,7 @@
 
     <artifactId>lra-test</artifactId>
     <packaging>jar</packaging>
-    <name>Run the example locally</name>
+    <name>LRA Quickstart lra-test locally</name>
 
     <profiles>
         <profile>
