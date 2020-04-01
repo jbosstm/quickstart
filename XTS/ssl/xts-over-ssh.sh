@@ -34,18 +34,19 @@ CURRENT_SCRIPT_DIR=`dirname "$ABSPATH"`
 function waitServerStarted() {
   local PORT=${1:-$CLI_PORT_BASE}
   local RETURN_CODE=-1
-  local TIMEOUT=20 # timeout is 20 seconds
+  local TIMEOUT=40 # timeout is 40 seconds
   local TIMESTAMP_START=`date +%s`
   local NOT_TIMEOUTED=true
   while [ $RETURN_CODE -ne 0 ] && $NOT_TIMEOUTED; do
     "$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$PORT --command=":read-attribute(name=server-state)" | grep -s running
     RETURN_CODE=$?
-    [ $((`date +%s`-TIMESTAMP_START)) -gt ${TIMEOUT} ] && NOT_TIMEOUTED=false
+    [ $RETURN_CODE -ne 0 ] && [ $((`date +%s`-TIMESTAMP_START)) -gt ${TIMEOUT} ] && NOT_TIMEOUTED=false
   done
   if $NOT_TIMEOUTED; then
     sleep $SLEEP_TIME
   else
     echo "Timeout ${TIMEOUT}s exceeded when waiting for container at port $PORT"
+    "$JBOSS_BIN"/bin/jboss-cli.sh -c --controller=localhost:$PORT --command=":shutdown"
     exit 2
   fi
 }
