@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
+set -v
 
 thorntailjar="lra-participant-example-thorntail.jar"
 txlogdir="../txlogs"
@@ -58,7 +59,7 @@ function start_service {
 }
 
 function test_service {
-  curl -X PUT -I http://localhost:${service_port}/${svctype} || echo ===== failed
+  curl -v -X PUT -I http://localhost:${service_port}/${svctype} || echo ===== failed
   sleep 1
   if [ "$(curl http://localhost:${service_port}/${svctype})" = "$1" ]; then
     return 0
@@ -72,9 +73,9 @@ function start_and_test_service {
 
   if [ "$1" = "true" ]; then
     echo " ===== waiting for recovery ......."
-    curl http://localhost:${coord_port}/lra-recovery-coordinator/recovery 
+    curl -v http://localhost:${coord_port}/lra-recovery-coordinator/recovery 
     # sometimes it can take two scans to complete recovery
-    curl http://localhost:${coord_port}/lra-recovery-coordinator/recovery 
+    curl -v http://localhost:${coord_port}/lra-recovery-coordinator/recovery 
     echo " ===== recovery should have happened"
     xcmd="curl http://localhost:${service_port}/${svctype}"
     svcstatus="$(curl http://localhost:${service_port}/${svctype})"
@@ -98,7 +99,7 @@ function start_and_test_service {
 function test_recovery {
   # now test recovery
   echo "===== injecting a fault which should halt the service on pid $service_pid"
-  curl -X PUT -I "http://localhost:8082/${svctype}?fault=halt${svctype}during"
+  curl -v -X PUT -I "http://localhost:8082/${svctype}?fault=halt${svctype}during"
   sleep 1
   # verify that the service is not running
   kill -0 $service_pid > /dev/null 2>&1
