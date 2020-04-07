@@ -10,15 +10,12 @@
     <name>WildFly Thorntail Examples: LRA Coordinator</name>
     <description>WildFly Thorntail Examples: LRA Coordinator</description>
 
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <maven.test.skip>true</maven.test.skip>
-        <thorntail.http.port>8080</thorntail.http.port>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.microprofile.lra>1.0-20190812.092710-499</version.microprofile.lra>
-        <version.thorntail>2.4.0.Final</version.thorntail>
+        <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
     </properties>
 
     <repositories>
@@ -35,57 +32,36 @@
         </repository>
     </repositories>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.thorntail</groupId>
-          <artifactId>bom-all</artifactId>
-          <version>${version.thorntail}</version>
-          <scope>import</scope>
-          <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
     <build>
-        <finalName>lra-coordinator</finalName>
         <plugins>
             <plugin>
-                <groupId>io.thorntail</groupId>
-                <artifactId>thorntail-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${version.plugin.maven.dependency}</version>
                 <executions>
                     <execution>
+                        <id>get-thorntail-lra-coordinator</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>package</goal>
+                          <goal>copy</goal>
                         </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.jboss.narayana.rts</groupId>
+                                    <artifactId>lra-coordinator-thorntail</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>thorntail</classifier>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/</outputDirectory>
+                                    <destFileName>lra-coordinator-thorntail.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <environment>
-                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
-                    </environment>
-                    <properties>
-                        <lra.http.port>${thorntail.http.port}</lra.http.port>
-                    </properties>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jboss.narayana.rts</groupId>
-            <artifactId>lra-coordinator-thorntail</artifactId>
-            <version>${project.version}</version>
-            <classifier>thorntail</classifier>
-        </dependency>
-    </dependencies>
 </project>
