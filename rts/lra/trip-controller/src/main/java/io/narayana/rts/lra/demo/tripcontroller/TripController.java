@@ -41,6 +41,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -50,6 +51,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.eclipse.microprofile.lra.annotation.AfterLRA;
+import org.eclipse.microprofile.lra.annotation.LRAStatus;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 
 import java.io.IOException;
@@ -63,6 +66,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT_HEADER;
+import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_ENDED_CONTEXT_HEADER;
 
 
 /**
@@ -220,5 +224,22 @@ public class TripController {
 
         return response.readEntity(Booking.class);
     }
-}
 
+    @PUT
+    @Path("/after")
+    @AfterLRA
+    public Response afterEnd(@HeaderParam(LRA_HTTP_ENDED_CONTEXT_HEADER) URI lraId, LRAStatus status) {
+        switch (status) {
+            case Closed:
+                // FALLTHRU
+            case Cancelled:
+                // FALLTHRU
+            case FailedToCancel:
+                // FALLTHRU
+            case FailedToClose:
+                return Response.ok().build();
+            default:
+                return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+}
