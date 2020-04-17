@@ -33,6 +33,7 @@ import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -50,6 +51,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.eclipse.microprofile.lra.annotation.AfterLRA;
+import org.eclipse.microprofile.lra.annotation.LRAStatus;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 
 import java.io.IOException;
@@ -186,6 +189,14 @@ public class TripController {
     @LRA(LRA.Type.NOT_SUPPORTED)
     public Booking getBooking(@PathParam("bookingId") String bookingId) {
         return service.get(bookingId);
+    }
+
+    @PUT
+    @Path("/after")
+    @AfterLRA
+    public Response notifyLRAFinished(@HeaderParam(LRA.LRA_HTTP_ENDED_CONTEXT_HEADER) URI lraId, LRAStatus status) {
+        System.out.printf("The overall status of the LRA ID %s has been %s", lraId, status);
+        return Response.ok().build();
     }
 
 
