@@ -131,6 +131,7 @@
                             -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}
                             -Djava.awt.headless=false
                         </server.jvm.args>
+                        <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                         <!-- For arquillian -->
                         <jbossHome>${env.JBOSS_HOME}</jbossHome>
                     </systemPropertyVariables>

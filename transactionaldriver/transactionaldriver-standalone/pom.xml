@@ -79,7 +79,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>-Dcom.arjuna.ats.arjuna.recovery.periodicRecoveryPeriod=5 -Dcom.arjuna.ats.arjuna.recovery.recoveryBackoffPeriod=1</argLine>
+                    <argLine>-Djdk.attach.allowAttachSelf=true -Dcom.arjuna.ats.arjuna.recovery.periodicRecoveryPeriod=5 -Dcom.arjuna.ats.arjuna.recovery.recoveryBackoffPeriod=1</argLine>
                     <!-- <argLine>-Dorg.jboss.byteman.verbose -Dorg.jboss.byteman.debug=true</argLine>  -->
                </configuration>
             </plugin>

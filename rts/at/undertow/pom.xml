@@ -30,6 +30,8 @@
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <undertow.io.version>2.0.22.Final</undertow.io.version>
         <version.resteasy>3.0.23.Final</version.resteasy>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
 
     <repositories>

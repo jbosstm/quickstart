@@ -110,7 +110,7 @@
             <plugin>
                 <groupId>org.apache.karaf.tooling</groupId>
                 <artifactId>karaf-services-maven-plugin</artifactId>
-                <version>${karaf.version}</version>
+                <version>4.2.1</version>
                 <executions>
                     <execution>
                         <id>service-metadata-generate</id>

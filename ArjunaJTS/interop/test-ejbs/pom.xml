@@ -94,6 +94,12 @@
          <scope>provided</scope>
       </dependency>
 
+       <dependency>
+           <groupId>org.glassfish.corba</groupId>
+           <artifactId>glassfish-corba-omgapi</artifactId>
+           <version>4.2.1</version>
+       </dependency>
+
    </dependencies>
 
    <build>

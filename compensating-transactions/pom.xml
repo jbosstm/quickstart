@@ -22,9 +22,13 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>narayana-quickstarts-all</artifactId>
+    <groupId>org.jboss.narayana.quickstart</groupId>
+    <version>5.10.5.Final-SNAPSHOT</version>
+  </parent>
   <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
   <artifactId>narayana-quickstarts-compensations</artifactId>
-  <version>5.10.5.Final-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Compensating Transactions Examples</name>
   <description>All quickstarts of for usage of Compensations API</description>
