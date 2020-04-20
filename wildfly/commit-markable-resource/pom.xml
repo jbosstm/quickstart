@@ -251,6 +251,9 @@
               <os>
                   <family>windows</family>
               </os>
+              <file>
+                  <exists>${java.home}/../lib/tools.jar</exists>
+              </file>
           </activation>
           <properties>
               <xboot.classpath>"-Xbootclasspath/a:${java.home}\..\lib\tools.jar"</xboot.classpath>
