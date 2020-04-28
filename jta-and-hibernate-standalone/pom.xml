@@ -49,7 +49,6 @@
         <version.weld>2.3.4.Final</version.weld>
         <version.jboss-transaction-api>1.0.1.Final</version.jboss-transaction-api>
         <version.byteman>3.0.3</version.byteman>
-        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
     </properties>
 
     <repositories>
@@ -187,11 +186,6 @@
             <artifactId>byteman-bmunit</artifactId>
             <scope>test</scope>
             <version>${version.byteman}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${version.jakarta.xml.bind}</version>
         </dependency>
     </dependencies>
 

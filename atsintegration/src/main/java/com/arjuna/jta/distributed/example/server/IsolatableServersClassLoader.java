@@ -24,9 +24,11 @@ package com.arjuna.jta.distributed.example.server;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
+
+import sun.misc.Resource;
+import sun.misc.URLClassPath;
 
 /**
  * This classloader will reload copies of classes (except a package that is
@@ -35,7 +37,7 @@ import java.util.Map;
  */
 public class IsolatableServersClassLoader extends ClassLoader {
 	private Map<String, Class<?>> clazzMap = new HashMap<String, Class<?>>();
-	private URLClassLoader urlClassLoader;
+	private URLClassPath ucp;
 	private String ignoredPackage;
 	private String includedPackage;
 	private String otherIgnoredPackage;
@@ -53,7 +55,7 @@ public class IsolatableServersClassLoader extends ClassLoader {
 	 * @throws MalformedURLException
 	 */
 
-	public IsolatableServersClassLoader(String includedPackage, String ignoredPackage, ClassLoader parent) throws SecurityException,
+	public IsolatableServersClassLoader(String includedPackage, String ignoredPackage, ClassLoader parent) throws SecurityException, NoSuchMethodException,
 			MalformedURLException {
 		super(parent);
 		this.includedPackage = includedPackage;
@@ -70,7 +72,7 @@ public class IsolatableServersClassLoader extends ClassLoader {
 				urls[i] = new URL("file:" + url + "/");
 			}
 		}
-		urlClassLoader = URLClassLoader.newInstance(urls);
+		this.ucp = new URLClassPath(urls);
 	}
 
 	@Override
@@ -97,8 +99,19 @@ public class IsolatableServersClassLoader extends ClassLoader {
 					|| (includedPackage != null && !name.startsWith(includedPackage))) {
 				clazz = getParent().loadClass(name);
 			} else {
-				clazz = urlClassLoader.loadClass(name);
-				clazzMap.put(name, clazz);
+
+				String path = name.replace('.', '/').concat(".class");
+				Resource res = ucp.getResource(path, false);
+				if (res == null) {
+					throw new ClassNotFoundException(name);
+				}
+				try {
+					byte[] classData = res.getBytes();
+					clazz = defineClass(name, classData, 0, classData.length);
+					clazzMap.put(name, clazz);
+				} catch (IOException e) {
+					throw new ClassNotFoundException(name, e);
+				}
 			}
 
 		}

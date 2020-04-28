@@ -11,7 +11,6 @@
         <version.resteasy>3.0.23.Final</version.resteasy>
         <version.h2>1.4.195</version.h2>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
-        <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
         <version.tomcat.plugin>2.2</version.tomcat.plugin>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -25,9 +24,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.integration</groupId>
-            <artifactId>narayana-tomcat</artifactId>
-            <version>${version.narayana.tomcat.integration}</version>
+            <groupId>org.jboss.narayana.tomcat</groupId>
+            <artifactId>tomcat-jta</artifactId>
+            <version>5.9.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>

@@ -27,7 +27,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-    <version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
   </properties>
 
   <licenses>
@@ -51,43 +50,6 @@
       </snapshots>
     </repository>
   </repositories>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.jboss.spec</groupId>
-      <artifactId>jboss-javaee-7.0</artifactId>
-      <version>1.1.1.Final</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.spec</groupId>
-      <artifactId>jboss-javaee-8.0</artifactId>
-      <version>1.0.4.Final</version>
-      <type>pom</type>
-    </dependency>
-  </dependencies>
-  <profiles>
-    <profile>
-      <id>include-for-JDK11-above-versions</id>
-      <activation>
-        <jdk>[11,)</jdk>
-      </activation>
-      <modules>
-        <module>glassfish</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>skip-for-JDK9-all-versions</id>
-      <activation>
-        <jdk>(,9)</jdk>
-      </activation>
-      <modules>
-        <module>glassfish</module>
-      </modules>
-    </profile>
-  </profiles>
-
 
   <modules>
     <module>resource</module>

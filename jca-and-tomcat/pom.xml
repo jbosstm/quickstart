@@ -77,7 +77,6 @@
         <version.h2>1.4.195</version.h2>
         <version.junit>4.12</version.junit>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
-        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
     </properties>
 
     <repositories>
@@ -468,11 +467,6 @@
             <artifactId>junit</artifactId>
             <version>${version.junit}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${version.jakarta.xml.bind}</version>
         </dependency>
     </dependencies>
 

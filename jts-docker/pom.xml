@@ -37,8 +37,6 @@
         <version.org.slf4j>1.7.2</version.org.slf4j>
         <version.junit>4.12</version.junit>
         <version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
 
     <repositories>

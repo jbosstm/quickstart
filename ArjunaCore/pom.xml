@@ -28,10 +28,6 @@
   <packaging>pom</packaging>
   <name>JBoss Core Examples</name>
   <description>All quickstarts of JBoss Core</description>
-  <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
-  </properties>
   <repositories>
     <repository>
       <id>jboss-public-repository-group</id>

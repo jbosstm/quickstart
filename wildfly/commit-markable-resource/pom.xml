@@ -23,14 +23,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>narayana-quickstarts-all</artifactId>
-        <groupId>org.jboss.narayana.quickstart</groupId>
-        <version>5.10.5.Final-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
+
     <groupId>org.jboss.narayana.quickstarts</groupId>
     <artifactId>commit-markable-resource</artifactId>
+    <version>5.10.5.Final-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Narayana Quickstarts: Commit Markable Resource in Wildfly</name>
@@ -223,16 +219,6 @@
             <artifactId>wildfly-cli</artifactId>
             <version>${version.wildfly.core}</version>
         </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.ws</groupId>
-            <artifactId>jaxws-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
     </dependencies>
 
     <profiles>
@@ -265,9 +251,6 @@
               <os>
                   <family>windows</family>
               </os>
-              <file>
-                  <exists>${java.home}/../lib/tools.jar</exists>
-              </file>
           </activation>
           <properties>
               <xboot.classpath>"-Xbootclasspath/a:${java.home}\..\lib\tools.jar"</xboot.classpath>

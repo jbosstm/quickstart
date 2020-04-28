@@ -23,13 +23,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>narayana-quickstarts-all</artifactId>
-        <groupId>org.jboss.narayana.quickstart</groupId>
-        <version>5.10.5.Final-SNAPSHOT</version>
-    </parent>
+
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jta-1_2-in-wildfly</artifactId>
+    <version>5.10.5.Final-SNAPSHOT</version>
 
     <name>Narayana Quickstarts: JTA 1.2 in Wildfly</name>
     <description>Example demonstrates new JTA 1.2 features inside the Wildfly application server</description>
@@ -167,7 +164,6 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
-                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>127.0.0.1</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -202,7 +198,6 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
-                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>[::1]</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>

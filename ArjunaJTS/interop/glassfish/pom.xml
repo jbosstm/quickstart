@@ -40,7 +40,6 @@
         <property>
           <name>!skipTests</name>
         </property>
-        <jdk>[1.5,10]</jdk>
       </activation>
       <build>
         <plugins>

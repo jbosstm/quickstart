@@ -19,9 +19,7 @@
 	<version>5.10.5.Final-SNAPSHOT</version>
 	<packaging>jar</packaging>
         <properties>
-			<version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
-			<maven.compiler.source>1.6</maven.compiler.source>
-			<maven.compiler.target>1.6</maven.compiler.target>
+                <version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
         </properties>
 	<repositories>
 		<repository>

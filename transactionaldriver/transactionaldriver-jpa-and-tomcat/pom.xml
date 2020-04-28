@@ -12,7 +12,6 @@
         <version.hibernate>5.1.7.Final</version.hibernate>
         <version.h2>1.4.195</version.h2>
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
-        <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
         <version.tomcat.plugin>2.2</version.tomcat.plugin>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -26,9 +25,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.integration</groupId>
-            <artifactId>narayana-tomcat</artifactId>
-            <version>${version.narayana.tomcat.integration}</version>
+            <groupId>org.jboss.narayana.tomcat</groupId>
+            <artifactId>tomcat-jta</artifactId>
+            <version>5.9.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -93,25 +92,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-        <profile>
-          <!-- JAX-B dependencies are not part of the JDK9+, explicit addition -->
-          <id>jdk11-additional-maven-dependencies</id>
-          <activation>
-            <jdk>[9,</jdk>
-          </activation>
-          <dependencies>
-            <dependency>
-              <groupId>javax.xml.bind</groupId>
-              <artifactId>jaxb-api</artifactId>
-              <version>2.3.1</version>
-            </dependency>
-            <dependency>
-              <groupId>org.glassfish.jaxb</groupId>
-              <artifactId>jaxb-runtime</artifactId>
-              <version>2.3.1</version>
-            </dependency>
-          </dependencies>
         </profile>
     </profiles>
 </project>

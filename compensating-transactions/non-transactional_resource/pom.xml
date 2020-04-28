@@ -23,13 +23,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
-        <artifactId>narayana-quickstarts-compensations</artifactId>
-        <version>5.10.5.Final-SNAPSHOT</version>
-    </parent>
+
     <groupId>org.jboss.narayana.quickstart.xts.non-transactional-resource</groupId>
     <artifactId>non-transactional-resource-all</artifactId>
+    <version>5.10.5.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with a non-transactional resource</name>
     <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with a non-transactional resource</description>
@@ -198,7 +195,6 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
-                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>127.0.0.1</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -233,7 +229,6 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
-                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>[::1]</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
