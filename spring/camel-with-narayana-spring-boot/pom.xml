@@ -44,6 +44,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <camel.version>2.19.0</camel.version>
+        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
     </properties>
 
     <dependencies>
@@ -113,6 +114,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${version.jakarta.xml.bind}</version>
         </dependency>
     </dependencies>
     <build>

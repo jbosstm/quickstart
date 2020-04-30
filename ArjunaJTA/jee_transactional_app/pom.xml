@@ -13,9 +13,13 @@
 	Fifth Floor, Boston, MA 02110-1301, USA. (C) 2009 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.jta</groupId>
+        <artifactId>narayana-quickstarts-jta</artifactId>
+        <version>5.10.5.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jee_transactional_app</artifactId>
-    <version>5.10.5.Final-SNAPSHOT</version>
     <name>basic integration example</name>
     <description>basic integration example</description>
     <packaging>war</packaging>
@@ -265,6 +269,7 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
+                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>127.0.0.1</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -299,6 +304,7 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
+                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>[::1]</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
