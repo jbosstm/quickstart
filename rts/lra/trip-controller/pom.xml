@@ -32,6 +32,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <test.logs.to.file>false</test.logs.to.file>
+        <version.javax.annotation.api>1.3.2</version.javax.annotation.api>
     </properties>
 
     <build>
@@ -64,6 +65,12 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>${version.javax.annotation.api}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>

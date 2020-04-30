@@ -23,6 +23,10 @@
   <name>RESTAT Service Quickstarts</name>
   <description>Provides examples of how to create REST based transactional services</description>
   <packaging>pom</packaging>
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
   <modules>
     <module>service1</module>
     <module>service1b</module>
