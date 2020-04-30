@@ -42,6 +42,7 @@
         <osgi.version>6.0.0</osgi.version>
         <karaf.version>4.1.2</karaf.version>
         <felix.plugin.version>3.0.1</felix.plugin.version>
+        <version.karaf.services>4.2.1</version.karaf.services>
     </properties>
 
     <repositories>
@@ -110,7 +111,7 @@
             <plugin>
                 <groupId>org.apache.karaf.tooling</groupId>
                 <artifactId>karaf-services-maven-plugin</artifactId>
-                <version>${karaf.version}</version>
+                <version>${version.karaf.services}</version>
                 <executions>
                     <execution>
                         <id>service-metadata-generate</id>

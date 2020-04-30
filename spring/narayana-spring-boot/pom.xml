@@ -37,6 +37,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <version.narayana>5.10.5.Final-SNAPSHOT</version.narayana>
+        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
     </properties>
 
     <dependencyManagement>
@@ -110,6 +111,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${version.jakarta.xml.bind}</version>
         </dependency>
     </dependencies>
 

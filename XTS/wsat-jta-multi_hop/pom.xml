@@ -23,10 +23,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.xts</groupId>
+        <artifactId>narayana-quickstarts-xts</artifactId>
+        <version>5.10.5.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.txbridge.wsat-jta-multi_hop</groupId>
     <artifactId>wsat-jta-multi_hop-all</artifactId>
-    <version>5.10.5.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JBoss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers where one service invokes another</name>
     <description>Boss Narayana Quickstarts: Simple WS-AT Web service, bridged to and from JTA. Bridges three servers
@@ -45,6 +48,8 @@
         <jvm.args.debug></jvm.args.debug>
         <jvm.args.other>-server</jvm.args.other>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
+        <version.javax.xml.ws>2.3.1</version.javax.xml.ws>
+        <version.javax.jw.jsr181>1.0-MR1</version.javax.jw.jsr181>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -103,6 +108,18 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>${version.javax.xml.ws}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.jws</groupId>
+            <artifactId>jsr181-api</artifactId>
+            <version>${version.javax.jw.jsr181}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
@@ -219,6 +236,7 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
+                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>127.0.0.1</node.address>
                             </systemPropertyVariables>
                         </configuration>
