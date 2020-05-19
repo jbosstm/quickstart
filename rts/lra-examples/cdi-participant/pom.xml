@@ -17,7 +17,7 @@
         <thorntail.debug.port>5005</thorntail.debug.port>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.microprofile.lra>1.0-RC1</version.microprofile.lra>
+        <version.microprofile.lra>1.0-M1</version.microprofile.lra>
         <thorntail.http.port>8081</thorntail.http.port>
         <lra.http.port>8080</lra.http.port>
         <narayana.nodename.property>CoreEnvironmentBean.nodeIdentifier</narayana.nodename.property>
