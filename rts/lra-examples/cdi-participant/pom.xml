@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.10.5.Final-SNAPSHOT</version>
+    <version>5.10.5.Final</version>
     <artifactId>examples-microprofile-lra-cdi-participant</artifactId>
 
     <name>MicroProfile Examples: LRA CDI Participant</name>
