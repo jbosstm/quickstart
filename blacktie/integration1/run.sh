@@ -68,7 +68,7 @@ generate_client -Dclient.includes=client.c
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-sleep 5
+sleep `timeout_adjust 5 2>/dev/null || echo 5`
 ./client 
 if [ "$?" != "0" ]; then
 	exit -1

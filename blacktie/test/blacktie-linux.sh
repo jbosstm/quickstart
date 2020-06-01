@@ -84,7 +84,7 @@ chmod u+x $WORKSPACE/jboss-as/bin/standalone.sh
 
 # START JBOSS
 $WORKSPACE/jboss-as/bin/standalone.sh -c standalone-blacktie.xml -Djboss.bind.address=$JBOSSAS_IP_ADDR -Djboss.bind.address.unsecure=$JBOSSAS_IP_ADDR&
-sleep 20
+sleep `timeout_adjust 20 2>/dev/null || echo 20`
 
 # TWEAK txfooapp FOR THIS NODE
 ant -f $WORKSPACE/blacktie/test/initializeBlackTie.xml tweak-txfooapp-for-environment

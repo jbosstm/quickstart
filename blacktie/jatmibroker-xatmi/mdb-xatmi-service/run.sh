@@ -29,7 +29,7 @@ fi
 if [ "$?" != "0" ]; then
 	exit -1
 fi
-sleep 10
+sleep `timeout_adjust 10 2>/dev/null || echo 10`
 mvn surefire:test
 if [ "$?" != "0" ]; then
 	exit -1
