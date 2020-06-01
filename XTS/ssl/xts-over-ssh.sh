@@ -34,7 +34,7 @@ CURRENT_SCRIPT_DIR=`dirname "$ABSPATH"`
 function waitServerStarted() {
   local PORT=${1:-$CLI_PORT_BASE}
   local RETURN_CODE=-1
-  local TIMEOUT=40 # timeout is 40 seconds
+  local TIMEOUT=`timeout_adjust 40 2>/dev/null || echo 40` # default timeout is 40 seconds
   local TIMESTAMP_START=`date +%s`
   local NOT_TIMEOUTED=true
   while [ $RETURN_CODE -ne 0 ] && $NOT_TIMEOUTED; do

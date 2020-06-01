@@ -40,11 +40,25 @@ function comment_on_pull
     fi
 }
 
+# Expects one argument as an integer number and adjust it
+# with multiplication by MFACTOR value, if it's defined
+function timeout_adjust {
+  local re='^[0-9]+$'
+  [[ "$1" =~ $re ]] || return 1 # is parameter defined and is it an int number?
+  # is MFACTOR defined and is it an int number or is equal-or-less-or-equal than 1
+  if ! [[ "$MFACTOR" =~ $re ]] || [ "$MFACTOR" -le 1 ]; then
+    echo $1
+    return 0
+  fi
+  echo $(($MFACTOR * $1))
+}
+
 function int_env {
   cd $WORKSPACE
   export GIT_ACCOUNT=jbosstm
   export GIT_REPO=quickstart
-  export MFACTOR=2 # double wait timeout period for crash recovery QA tests
+  export MFACTOR=${MFACTOR:-1}
+  export -f timeout_adjust || echo "Function timeout_adjust won't be used in the subshells as it can't be exported"
 
   [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="5.10.6.Final-SNAPSHOT" 
 

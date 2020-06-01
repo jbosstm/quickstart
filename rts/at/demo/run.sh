@@ -28,7 +28,7 @@ fi
 
 mvn compile exec:java -Dexec.mainClass=quickstart.TransactionAwareResource -Dexec.args="-a 127.0.0.1:8081" &
 
-sleep 5
+sleep `timeout_adjust 5 2>/dev/null || echo 5`
 
 ./test.sh demo
 
@@ -48,7 +48,7 @@ while true; do
 		break
     fi
 
-    sleep 6
+    sleep `timeout_adjust 6 2>/dev/null || echo 6`
     count=`expr $count + 1`
 
     if [ $count == 20 ]; then
