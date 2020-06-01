@@ -8,7 +8,7 @@ function check_application_alive() {
         if [ ! -z "$STATUS" ]; then
             break;
         fi
-        sleep 2
+        sleep `timeout_adjust 2 2>/dev/null || echo 2`
     done
 }
 
@@ -30,7 +30,7 @@ if [ ! -z "$STATUS" ]; then
     # Recover Test
     echo "Running Recovery Test"
     curl -s -X POST http://localhost:8080/user -d "name=halt"
-    sleep 1
+    sleep `timeout_adjust 2 2>/dev/null || echo 2`
 
     # Restart application
     echo -n "Application Restarting ... "

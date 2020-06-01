@@ -52,19 +52,19 @@ function start_coordinator {
   echo "===== starting external coordinator on port ${coord_port}"
   java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
-  sleep 10
+  sleep `timeout_adjust 10 2>/dev/null || echo 10`
 }
 
 function start_service {
   echo "===== starting service on port ${service_port}"
   java ${IP_OPTS} -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
   service_pid=$!
-  sleep 10
+  sleep `timeout_adjust 10 2>/dev/null || echo 10`
 }
 
 function test_service {
   curl ${CURL_IP_OPTS} -X PUT -I http://localhost:${service_port}/${svctype} || echo ===== failed
-  sleep 1
+  sleep `timeout_adjust 1 2>/dev/null || echo 1`
   if [ "$(curl ${CURL_IP_OPTS} http://localhost:${service_port}/${svctype})" = "$1" ]; then
     return 0
   else
@@ -104,7 +104,7 @@ function test_recovery {
   # now test recovery
   echo "===== CdiBasedResource halt the service on pid $service_pid"
   curl ${CURL_IP_OPTS} -X PUT -I "http://localhost:8082/${svctype}?fault=halt${svctype}during"
-  sleep 1
+  sleep `timeout_adjust 1 2>/dev/null || echo 1`
   # verify that the service is not running
   kill -0 $service_pid > /dev/null 2>&1
   if [ "$?" != 1 ]; then
@@ -122,7 +122,7 @@ if [[ "$last" != "coordinator" ]]; then
   echo "===== starting external coordinator on port ${coord_port}"
   java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
-  sleep 10
+  sleep `timeout_adjust 10 2>/dev/null || echo 10`
 else
   coord_port=${service_port} # the coordinator is running in-VM with the service
 fi

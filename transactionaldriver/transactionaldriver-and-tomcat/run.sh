@@ -23,7 +23,7 @@ mvn package
 rm -rf "${TOMCAT_HOME}/webapps/${QUICKSTART_NAME}/"
 cp target/${QUICKSTART_NAME}.war "$TOMCAT_HOME/webapps/"
 JPDA_SUSPEND=n "${TOMCAT_HOME}/bin/catalina.sh" jpda run &
-sleep 10
+sleep `timeout_adjust 10 2>/dev/null || echo 10`
 
 for i in {1..10}
 do

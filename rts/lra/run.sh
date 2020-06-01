@@ -69,7 +69,7 @@ fi
 ((PORT++))
 
 echo "Waiting for all the servers to start"
-sleep 30
+sleep `timeout_adjust 30 2>/dev/null || echo 30`
 
 mvn -f trip-client/pom.xml exec:java -Dexec.args="${IP_OPTS} confirm"
 mvn -f trip-client/pom.xml exec:java -Dexec.args="${IP_OPTS} cancel"
@@ -82,7 +82,7 @@ kill -9 $ID1
 java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
 ID1=$!
 echo "Waiting for all the coordinator to recover"
-sleep 40
+sleep `timeout_adjust 40 2>/dev/null || echo 40`
 echo -e "\n\n\n"
 
 set +x

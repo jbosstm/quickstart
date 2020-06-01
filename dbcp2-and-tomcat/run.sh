@@ -26,7 +26,7 @@ export JPDA_SUSPEND=n
 if [ "$JPDA_SUSPEND" != "n" ]; then
   read -p "Press enter to continue" CONTINUE
 else
-  sleep 10
+  sleep `timeout_adjust 10 2>/dev/null || echo 10`
 fi
 
 for i in {1..10}
@@ -49,7 +49,7 @@ JPDA_SUSPEND=n "${TOMCAT_HOME}/bin/catalina.sh" jpda run &
 if [ "$JPDA_SUSPEND" != "n" ]; then
   read -p "Press enter to continue" CONTINUE
 else
-  sleep 5
+  sleep `timeout_adjust 5 2>/dev/null || echo 5`
 fi
 recovery_response=`curl ${CURL_IP_OPTS} -s http://localhost:8080/${QUICKSTART_NAME}/recovery`
 
