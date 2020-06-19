@@ -39,9 +39,9 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.org.jboss.ironjacamar>1.1.0.Beta5</version.org.jboss.ironjacamar>
+        <version.org.jboss.ironjacamar>1.4.22.Final</version.org.jboss.ironjacamar>
         <version.com.github.fungal>0.11.0.RC1</version.com.github.fungal>
-        <version.hibernate.validator>5.0.1.Final</version.hibernate.validator>
+        <version.hibernate.hibernate-validator>6.0.20.Final</version.hibernate.hibernate-validator>
         <version.org.javassist>3.16.1-GA</version.org.javassist>
         <version.org.jboss.jboss-common-core>2.2.17.GA</version.org.jboss.jboss-common-core>
         <version.narayana>5.10.6.Final-SNAPSHOT</version.narayana>
@@ -63,7 +63,7 @@
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
         <version.org.jboss.spec.javax.security.auth.message>1.0.1.Final</version.org.jboss.spec.javax.security.auth.message>
         <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
-        <version.javax.validation>1.1.0.Final</version.javax.validation>
+        <version.javax.validation>2.0.1.Final</version.javax.validation>
         <version.javax.servlet.jstl>1.2</version.javax.servlet.jstl>
         <version.javax.servlet.javax.servlet-api>3.0.1</version.javax.servlet.javax.servlet-api>
         <version.javax.servlet.jsp>2.1</version.javax.servlet.jsp>
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>${version.hibernate.validator}</version>
+            <version>${version.hibernate.hibernate-validator}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>

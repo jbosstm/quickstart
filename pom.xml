@@ -126,7 +126,10 @@
   <modules>
     <module>ArjunaJTS</module>
     <module>transactionaldriver</module>
+<!-- temporarily disabled since the quickstart requires com.github.fungal:fungal:jar:0.11.0.Final
+     which is not available yet
     <module>jca-and-tomcat</module>
+-->
     <module>dbcp2-and-tomcat</module>
     <module>jca-and-hibernate</module>
     <module>jta-1_2-standalone</module>

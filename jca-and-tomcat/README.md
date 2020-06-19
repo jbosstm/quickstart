@@ -4,6 +4,11 @@ Author: Gytis Trikleris;
 Level: Intermediate;
 Technologies: JTA, JCA, Tomcat
 
+Warning
+-------
+
+This quickstart is currently disabled because it depends on com.github.fungal:fungal:jar:0.11.0.Final which is not currently available. We will follow up shortly with a working quickstart.
+
 What is it?
 -----------
 

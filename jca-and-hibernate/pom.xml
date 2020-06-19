@@ -41,7 +41,7 @@
         <version.org.jboss.ironjacamar>1.1.0.Beta5</version.org.jboss.ironjacamar>
         <version.com.github.fungal>0.11.0.RC1</version.com.github.fungal>
         <version.hibernate>4.2.7.SP1</version.hibernate>
-        <version.hibernate.hibernate-validator>5.0.1.Final</version.hibernate.hibernate-validator>
+        <version.hibernate.hibernate-validator>6.0.20.Final</version.hibernate.hibernate-validator>
         <version.org.jboss.jboss-common-core>2.2.17.GA</version.org.jboss.jboss-common-core>
         <version.narayana>5.10.6.Final-SNAPSHOT</version.narayana>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
@@ -61,7 +61,7 @@
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
         <version.org.jboss.spec.javax.security.auth.message>1.0.1.Final</version.org.jboss.spec.javax.security.auth.message>
         <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
-        <version.javax.validation>1.1.0.Final</version.javax.validation>
+        <version.javax.validation>2.0.1.Final</version.javax.validation>
         <version.com.fasterxml>0.8.0</version.com.fasterxml>
         <version.de.odysseus.juel>2.2.6</version.de.odysseus.juel>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
@@ -123,6 +123,16 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${version.hibernate.hibernate-validator}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${version.javax.validation}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.1-b11</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
@@ -340,11 +350,6 @@
             <groupId>org.jboss.slf4j</groupId>
             <artifactId>slf4j-jboss-logmanager</artifactId>
             <version>${version.org.jboss.slf4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${version.javax.validation}</version>
         </dependency>
 
         <!-- IronJacamar Embedded Dependencies -->
