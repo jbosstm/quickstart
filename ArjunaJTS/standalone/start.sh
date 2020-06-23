@@ -20,7 +20,10 @@
 function startNS {
   if [ $ORBTYPE = "jacorb" ]; then
 #NSFCONFIG="-Djacorb.naming.ior_filename=$NS_FILE"
-    java -cp "${JACORB_LIB_DIR}/*" org.jacorb.naming.NameServer -Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB -Djacorb.net.server_socket_factory=org.jacorb.orb.factory.PortRangeServerSocketFactory -Djacorb.net.server_socket_factory.port.min=9999 -Djacorb.net.server_socket_factory.port.max=9999 -Djacorb.log.default.verbosity=4 -DOAIAddr=$HOST_ADDRESS
+     export MAVEN_OPTS="-Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB -Djacorb.net.server_socket_factory=org.jacorb.orb.factory.PortRangeServerSocketFactory \
+-Djacorb.net.server_socket_factory.port.min=9999 -Djacorb.net.server_socket_factory.port.max=9999 -Djacorb.log.default.verbosity=4 -DOAIAddr=$HOST_ADDRESS"
+     mvn clean compile exec:java -Pnameserver -Dexec.mainClass=org.jacorb.naming.NameServer -Dexec.cleanupDaemonThreads=false
+     unset MAVEN_OPTS
   elif [ $ORBTYPE = "jdkorb" ]; then
     /usr/bin/orbd $PROG_ARGS
   fi
