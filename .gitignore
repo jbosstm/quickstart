@@ -32,3 +32,6 @@ jboss2/
 bin/
 db/
 distributedjta-examples/
+
+_nsdb_root
+orb.db/
