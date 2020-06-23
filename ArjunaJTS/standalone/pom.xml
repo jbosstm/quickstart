@@ -103,6 +103,41 @@
 
   <profiles>
     <profile>
+      <id>nameserver</id>
+      <activation>
+        <os>
+          <family>unix</family>
+        </os>
+        <property>
+          <name>!skipTests</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>Run a CORBA name server</id>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+                <configuration>
+                  <systemProperties>
+                    <systemProperty>
+                      <key>QUICKSTART_NARAYANA_VERSION</key>
+                      <value>${version.narayana}</value>
+                    </systemProperty>
+                  </systemProperties>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>unix</id>
       <activation>
         <os>
