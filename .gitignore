@@ -35,3 +35,4 @@ distributedjta-examples/
 
 _nsdb_root
 orb.db/
+**/*.db
