@@ -4,5 +4,5 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.fungal</groupId>
   <artifactId>fungal</artifactId>
-  <version>0.11.0.RC1</version>
+  <version>0.11.0.Final</version>
 </project>
