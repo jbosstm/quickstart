@@ -3,6 +3,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.fungal</groupId>
-  <artifactId>fungal</artifactId>
-  <version>0.11.0.RC1</version>
+  <artifactId>fungal-cli</artifactId>
+  <version>0.11.0.Final</version>
 </project>
