@@ -38,11 +38,11 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.org.jboss.ironjacamar>1.1.0.Beta5</version.org.jboss.ironjacamar>
-        <version.com.github.fungal>0.11.0.RC1</version.com.github.fungal>
+        <version.org.jboss.ironjacamar>1.4.22.Final</version.org.jboss.ironjacamar>
+        <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
         <version.hibernate>4.2.7.SP1</version.hibernate>
-        <version.hibernate.hibernate-validator>6.0.20.Final</version.hibernate.hibernate-validator>
-        <version.org.jboss.jboss-common-core>2.2.17.GA</version.org.jboss.jboss-common-core>
+        <version.hibernate.hibernate-validator>6.1.5.Final</version.hibernate.hibernate-validator>
+        <version.javax.el>3.0.1-b11</version.javax.el>
         <version.narayana>5.10.6.Final-SNAPSHOT</version.narayana>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <version.jboss.logging.spi>2.2.0.CR1</version.jboss.logging.spi>
@@ -51,24 +51,15 @@
         <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
         <version.org.jboss.threads>2.0.0.GA</version.org.jboss.threads>
         <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
-        <version.org.slf4j>1.7.2</version.org.slf4j>
-        <version.org.jboss.slf4j>1.0.0.GA</version.org.jboss.slf4j>
         <version.org.jboss.naming>5.0.3.GA</version.org.jboss.naming>
-        <version.org.jboss.jandex>1.0.3.Final</version.org.jboss.jandex>
-        <version.org.picketbox>4.0.18.Final</version.org.picketbox>
-        <version.org.jgroups>3.2.7.Final</version.org.jgroups>
         <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
-        <version.org.jboss.spec.javax.security.auth.message>1.0.1.Final</version.org.jboss.spec.javax.security.auth.message>
         <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
         <version.javax.validation>2.0.1.Final</version.javax.validation>
-        <version.com.fasterxml>0.8.0</version.com.fasterxml>
-        <version.de.odysseus.juel>2.2.6</version.de.odysseus.juel>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.commons-logging>1.1.0.jboss</version.commons-logging>
         <version.h2>1.4.195</version.h2>
         <version.junit>4.12</version.junit>
-        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
     </properties>
 
     <repositories>
@@ -105,16 +96,6 @@
 
         <!-- IronJacamar Core Dependencies -->
         <dependency>
-            <groupId>com.fasterxml</groupId>
-            <artifactId>classmate</artifactId>
-            <version>${version.com.fasterxml}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${version.commons-logging}</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.fungal</groupId>
             <artifactId>fungal-cli</artifactId>
             <version>${version.com.github.fungal}</version>
@@ -132,7 +113,7 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>
-            <version>3.0.1-b11</version>
+            <version>${version.javax.el}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
@@ -175,56 +156,6 @@
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-spec-api</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-validator</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-validator-ant</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-validator-cli</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-validator-maven</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-web</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jandex</artifactId>
-            <version>${version.org.jboss.jandex}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jboss-common-core</artifactId>
-            <version>${version.org.jboss.jboss-common-core}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.security.auth.message</groupId>
-            <artifactId>jboss-jaspi-api_1.0_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.security.auth.message}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>${version.jboss.logging}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging-spi</artifactId>
             <version>${version.jboss.logging.spi}</version>
@@ -245,44 +176,14 @@
             <version>${version.org.jboss.threads}</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.transaction}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jboss-transaction-spi</artifactId>
             <version>${version.org.jboss.jboss-transaction-spi}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${version.org.slf4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jgroups</groupId>
-            <artifactId>jgroups</artifactId>
-            <version>${version.org.jgroups}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.naming</groupId>
             <artifactId>jnpserver</artifactId>
             <version>${version.org.jboss.naming}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.odysseus.juel</groupId>
-            <artifactId>juel-api</artifactId>
-            <version>${version.de.odysseus.juel}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.odysseus.juel</groupId>
-            <artifactId>juel-impl</artifactId>
-            <version>${version.de.odysseus.juel}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.odysseus.juel</groupId>
-            <artifactId>juel-spi</artifactId>
-            <version>${version.de.odysseus.juel}</version>
         </dependency>
 
         <dependency>
@@ -336,21 +237,6 @@
             <artifactId>log4j-jboss-logmanager</artifactId>
             <version>${version.org.jboss.logmanager-log4j-jboss-logmanager}</version>
         </dependency>
-        <dependency>
-            <groupId>org.picketbox</groupId>
-            <artifactId>picketbox</artifactId>
-            <version>${version.org.picketbox}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${version.org.slf4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.slf4j</groupId>
-            <artifactId>slf4j-jboss-logmanager</artifactId>
-            <version>${version.org.jboss.slf4j}</version>
-        </dependency>
 
         <!-- IronJacamar Embedded Dependencies -->
         <dependency>
@@ -400,8 +286,13 @@
             <artifactId>narayana-jts-integration</artifactId>
             <version>${version.narayana}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+            <version>${version.org.jboss.spec.javax.transaction}</version>
+        </dependency>
 
-        <!-- Other dependencies -->
+        <!-- JDBC -->
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -413,16 +304,13 @@
             <version>${version.h2}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${version.junit}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${version.jakarta.xml.bind}</version>
         </dependency>
     </dependencies>
 

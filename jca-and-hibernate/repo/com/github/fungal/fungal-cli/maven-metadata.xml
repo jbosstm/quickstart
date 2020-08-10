@@ -3,10 +3,10 @@
   <groupId>com.github.fungal</groupId>
   <artifactId>fungal-cli</artifactId>
   <versioning>
-    <release>0.11.0.RC1</release>
+    <release>0.11.0.Final</release>
     <versions>
-      <version>0.11.0.RC1</version>
+      <version>0.11.0.Final</version>
     </versions>
-    <lastUpdated>20130528161446</lastUpdated>
+    <lastUpdated>20140920000000</lastUpdated>
   </versioning>
 </metadata>
