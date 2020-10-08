@@ -21,6 +21,7 @@ function fatal {
   echo "$1"; exit 1
 }
 
+set -x
 [ $WORKSPACE ] || fatal "please set WORKSPACE to the quickstarts directory"
 NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
 NARAYANA_BRANCH="${NARAYANA_BRANCH:-master}"
