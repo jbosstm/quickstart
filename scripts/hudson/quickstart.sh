@@ -140,7 +140,8 @@ function configure_wildfly {
   cd $WORKSPACE
   wget --user=guest --password=guest -nv https://ci.wildfly.org/httpAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
   unzip -q artifacts.zip
-  export WILDFLY_DIST_ZIP=$(ls wildfly-*-SNAPSHOT.zip)
+  export WILDFLY_DIST_ZIP=$(ls wildfly-*Final-SNAPSHOT.zip | head -n 1)
+  [ "x$WILDFLY_DIST_ZIP" = "x" ] && echo "Cannot find WildFly distribution zip file" && return 1
   unzip -q $WILDFLY_DIST_ZIP
   export JBOSS_HOME=`pwd`/${WILDFLY_DIST_ZIP%.zip}
   cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
