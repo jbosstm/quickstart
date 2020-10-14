@@ -23,6 +23,7 @@
       <version.narayana>5.10.7.Final-SNAPSHOT</version.narayana>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
+      <version.junit>4.13.1</version.junit>
     </properties>
     <repositories>
         <repository>
@@ -106,7 +107,7 @@ read this as the JBoss stack of the Java EE 6 Web Profile APIs) -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

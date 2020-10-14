@@ -41,7 +41,7 @@
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
         <version.narayana>5.10.7.Final-SNAPSHOT</version.narayana>
         <version.jnpserver>5.0.3.GA</version.jnpserver>
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.weld>3.1.0.Final</version.weld>
         <version.jboss-transaction-api>1.1.1.Final</version.jboss-transaction-api>
     </properties>

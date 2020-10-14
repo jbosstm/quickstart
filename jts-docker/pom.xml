@@ -35,7 +35,7 @@
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <version.jacorb>2.3.1jboss.patch01-brew</version.jacorb>
         <version.org.slf4j>1.7.2</version.org.slf4j>
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.narayana>5.10.7.Final-SNAPSHOT</version.narayana>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
