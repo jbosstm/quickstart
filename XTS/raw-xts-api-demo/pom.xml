@@ -35,7 +35,7 @@
         <version.arquillian>1.1.11.Final</version.arquillian>
         <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
         <version.arquillian.wildfly>1.1.0.Final</version.arquillian.wildfly>
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.ear.plugin>2.10.1</version.ear.plugin>
         <version.wildfly.plugin>1.0.2.Final</version.wildfly.plugin>
         <version.lifecycle.mapping.plugin>1.0.0</version.lifecycle.mapping.plugin>
