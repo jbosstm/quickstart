@@ -11,7 +11,7 @@
         <version.byteman>4.0.4</version.byteman>
         <version.h2>1.4.195</version.h2>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.jta.api>1.0.0.Final</version.jta.api>
         <version.narayana>5.9.0.Final</version.narayana>
 

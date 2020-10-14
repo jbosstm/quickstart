@@ -52,7 +52,7 @@
         <version.javaee.spec>1.1.1.Final</version.javaee.spec>
         <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
 
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <version.arquillian>1.1.11.Final</version.arquillian>
         <version.arquillian.wildfly>2.2.0.Final</version.arquillian.wildfly>

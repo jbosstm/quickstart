@@ -40,7 +40,7 @@
         <version.narayana>5.10.7.Final-SNAPSHOT</version.narayana>
         <!-- wildfly dependencies -->
         <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
-        <version.junit>4.8.1</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.org.wildfly.arquillian>2.1.1.Final</version.org.wildfly.arquillian>
         <!-- other plugin versions -->
         <version.compiler.plugin>3.5.1</version.compiler.plugin>
