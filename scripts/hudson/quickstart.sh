@@ -140,15 +140,24 @@ function configure_wildfly {
   cd $WORKSPACE
   wget --user=guest --password=guest -nv https://ci.wildfly.org/httpAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
   unzip -q artifacts.zip
-  export WILDFLY_DIST_ZIP=$(ls wildfly-*Final-SNAPSHOT.zip | head -n 1)
-  [ "x$WILDFLY_DIST_ZIP" = "x" ] && echo "Cannot find WildFly distribution zip file" && return 1
-  unzip -q $WILDFLY_DIST_ZIP
-  export JBOSS_HOME=`pwd`/${WILDFLY_DIST_ZIP%.zip}
+  # the artifacts.zip may be wrapping several zip files: artifacts.zip -> wildfly-latest-SNAPSHOT.zip -> wildfly-###-SNAPSHOT.zip
+  local wildflyLatestZipWrapper=$(ls wildfly-latest-*.zip | head -n 1)
+  if [ -f "${wildflyLatestZipWrapper}" ]; then # wrapper zip exists, let's unzip it to proceed further to distro zip
+    unzip -q "${wildflyLatestZipWrapper}"
+    [ $? -ne 0 ] && echo "Cannot unzip WildFly nightly build wrapper zip file '${wildflyLatestZipWrapper}'" && return 2
+    rm -f $wildflyLatestZipWrapper
+  fi
+  local wildflyDistZip=$(ls wildfly-*-SNAPSHOT.zip | head -n 1)
+  [ "x$wildflyDistZip" = "x" ] && echo "Cannot find any zip file of SNAPSHOT WildFly distribution in the nightly build artifacts" && return 1
+  unzip -q "${wildflyDistZip}"
+  [ $? -ne 0 ] && echo "Cannot unzip WildFly nightly build distribution zip file '${wildflyDistZip}'" && return 3
+  export JBOSS_HOME="${PWD}/${wildflyDistZip%.zip}"
+  [ ! -d "${JBOSS_HOME}" ] && echo "After unzipping the file '${wildflyDistZip}' the JBOSS_HOME directory at '${JBOSS_HOME}' does not exist" && return 4
   cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
   cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
   # cleaning
   rm -f artifacts.zip
-  rm -rf "${WILDFLY_DIST_ZIP}"
+  rm -f wildfly-*-SNAPSHOT*.zip
 }
 
 function build_apache-karaf {
@@ -168,7 +177,7 @@ function build_apache-karaf {
 function run_quickstarts {
   cd $WORKSPACE
   echo Running quickstarts
-  BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ ./build.sh -B clean install -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION
+  BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ ./build.sh -B clean install -fae -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION
 
   if [ $? != 0 ]; then
     comment_on_pull "Pull failed: $BUILD_URL";
@@ -183,6 +192,6 @@ comment_on_pull "Started testing this pull request: $BUILD_URL"
 rebase_quickstart_repo
 #get_bt_dependencies # JBTM-2878 missing userContent on JENKINS_HOST
 build_narayana
-configure_wildfly
+configure_wildfly || exit 1
 #build_apache-karaf # JBTM-2820 disable the karaf build
 run_quickstarts
