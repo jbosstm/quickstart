@@ -63,6 +63,8 @@ rmdir "wildfly-*" /s /q
 wget --user=guest --password=guest --no-check-certificate -nv https://ci.wildfly.org/httpAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
 unzip -q artifacts.zip
 unzip -q "wildfly-*-SNAPSHOT.zip"
+rem the WildFly nightly build distro could be wrapped in two level structure
+unzip -n -q "wildfly-*-SNAPSHOT.zip"
 del "wildfly-*-SNAPSHOT*.zip"
 dir /b wildfly-*-SNAPSHOT > filename.tmp
 set /p JBOSS_DIST_DIR=<filename.tmp
