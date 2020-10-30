@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
+        <artifactId>examples-lra-jwt-wildfly</artifactId>
+        <version>5.10.7.Final-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>lra-client</artifactId>
+    <packaging>jar</packaging>
+    <name>WildFly Examples: LRA client with JWT token</name>
+    <description>examples-microprofile-lra - client with JWT token</description>
+
+    <properties>
+        <version.resteasy.client>4.5.8.Final</version.resteasy.client>
+        <version.resteasy.jaxrs>4.0.0.Beta5</version.resteasy.jaxrs>
+        <version.nimbus.jose.jwt>5.4</version.nimbus.jose.jwt>
+        <version.javax.json.api>1.1.4</version.javax.json.api>
+        <version.org.glassfish.javax.json>1.1</version.org.glassfish.javax.json>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${version.resteasy.client}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson2-provider</artifactId>
+            <version>${version.resteasy.client}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${version.resteasy.jaxrs}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${version.nimbus.jose.jwt}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <version>${version.javax.json.api}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>${version.org.glassfish.javax.json}</version>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <plugins>
+            <!-- Runs 'mvn exec:java' -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.jboss.jaxrsjwt.client.JwtRestClient</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
