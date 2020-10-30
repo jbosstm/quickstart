@@ -105,7 +105,9 @@ public abstract class AbstractExampleXAResource implements XAResource {
      * @exception javax.transaction.xa.XAException <description>
      */
     public synchronized void commit(Xid xid, boolean onePhase) throws XAException {
-        System.out.println("******\n" + this.getClass().getName() + ": " + "commit,xid=" + xid + ",onePhase=" + onePhase);
+//        System.out.println("******\n******\n" + this.getClass().getName() + ": " + "commit,xid=" + xid + ",onePhase=" + onePhase);
+        System.out.printf("******\n******\n%s: commit,xid=%s,onePhase=%b%n******\n******\n",
+                this.getClass().getName(), xid, onePhase);
 
         if (!recovered) {
             Runtime.getRuntime().halt(0);

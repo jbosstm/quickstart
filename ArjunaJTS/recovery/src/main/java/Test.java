@@ -40,6 +40,21 @@ import com.arjuna.orbportability.RootOA;
 
 public class Test {
     private static String RECOVERY_STORE = AbstractExampleXAResource.DATA_DIR + "tx-object-store";
+    /*
+     * During a recovery pass we perform bottom up recovery where we ask the resources
+     * for the Xids (transaction branches) they know about. To avoid attempting recovery
+     * on resources that are about to be committed by an active (ie in flight) transaction
+     * we back off for a certain period (controlled via a property called orphanSafetyInterval
+     * ie it controls the amount of time to wait before deciding whether the Xid is orphaned
+     * and needs to be committed). When bottom up recovery has finished we garbage collect
+     * the Xids. Then, after waiting for a certain period (controlled va a property called
+     * periodicRecoveryPeriod), we repeat the whole procedure. Therefore, if the
+     * orphanSafetyInterval is longer than the periodicRecoveryPeriod then the Xid will never
+     * be chosen as a candidate for recovery. In other words ensure that the the
+     * orphanSafetyInterval is shorter than the periodicRecoveryPeriod.
+     */
+    private static final int PERIODIC_RECOVERY_PERIOD = 10; // the time unit is seconds
+    private static final int ORPHAN_SAFETY_INTERVAL = 500 * PERIODIC_RECOVERY_PERIOD; // the time unit is milliseconds
 
     public static void main(String[] args) throws Exception {
 
@@ -64,7 +79,8 @@ public class Test {
                     Arrays.asList(new String[] { "ExampleXAResourceRecovery" }));
             jtaPropertyManager.getJTAEnvironmentBean().setXaRecoveryNodes(Arrays.asList(new String[] { "*" }));
             arjPropertyManager.getCoordinatorEnvironmentBean().setDefaultTimeout(0);
-            recoveryPropertyManager.getRecoveryEnvironmentBean().setPeriodicRecoveryPeriod(10);
+            recoveryPropertyManager.getRecoveryEnvironmentBean().setPeriodicRecoveryPeriod(PERIODIC_RECOVERY_PERIOD);
+            jtaPropertyManager.getJTAEnvironmentBean().setOrphanSafetyInterval(ORPHAN_SAFETY_INTERVAL);
 
             arjPropertyManager.getObjectStoreEnvironmentBean().setObjectStoreDir(RECOVERY_STORE);
 
