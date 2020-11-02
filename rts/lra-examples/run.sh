@@ -77,9 +77,9 @@ function start_and_test_service {
 
   if [ "$1" = "true" ]; then
     echo " ===== waiting for recovery ......."
-    curl ${CURL_IP_OPTS} http://localhost:${coord_port}/lra-recovery-coordinator/recovery
+    curl ${CURL_IP_OPTS} http://localhost:${coord_port}/lra-coordinator/recovery
     # sometimes it can take two scans to complete recovery
-    curl ${CURL_IP_OPTS} http://localhost:${coord_port}/lra-recovery-coordinator/recovery
+    curl ${CURL_IP_OPTS} http://localhost:${coord_port}/lra-coordinator/recovery
     echo " ===== recovery should have happened"
     xcmd="curl ${CURL_IP_OPTS} http://localhost:${service_port}/${svctype}"
     svcstatus="$(curl ${CURL_IP_OPTS} http://localhost:${service_port}/${svctype})"
