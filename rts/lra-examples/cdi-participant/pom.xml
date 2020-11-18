@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.microprofile.lra>1.0-RC1</version.microprofile.lra>
         <thorntail.http.port>8081</thorntail.http.port>
-        <lra.http.port>8080</lra.http.port>
+        <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
         <narayana.nodename.property>CoreEnvironmentBean.nodeIdentifier</narayana.nodename.property>
     </properties>
 
@@ -64,7 +64,7 @@
                         <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
                     </environment>
                     <properties>
-                        <lra.http.port>${lra.http.port}</lra.http.port>
+                        <lra.coordinator.url>${lra.coordinator.url}</lra.coordinator.url>
                         <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
                         <thorntail.debug.port>${thorntail.debug.port}</thorntail.debug.port>
                         <thorntail.transactions.node-identifier>2</thorntail.transactions.node-identifier>
