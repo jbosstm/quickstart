@@ -100,8 +100,8 @@ echo "Waiting for app to deploy"
 sleep 60
 cd trip-client
 mvn clean package
-mvn exec:java -Dservice.http.host="trip-lrademo.`minishift ip`.nip.io" -Dservice.http.port=80 -Dlra.http.host="lra-coordinator-lrademo.`minishift ip`.nip.io" -Dlra.http.port=80 -Dexec.args=cancel
-mvn exec:java -Dservice.http.host="trip-lrademo.`minishift ip`.nip.io" -Dservice.http.port=80 -Dlra.http.host="lra-coordinator-lrademo.`minishift ip`.nip.io" -Dlra.http.port=80 -Dexec.args=confirm
+mvn exec:java -Dservice.http.host="trip-lrademo.`minishift ip`.nip.io" -Dservice.http.port=80 -Dlra.coordinator.url="http://lra-coordinator-lrademo.`minishift ip`.nip.io:80/lra-coordinator" -Dexec.args=cancel
+mvn exec:java -Dservice.http.host="trip-lrademo.`minishift ip`.nip.io" -Dservice.http.port=80 -Dlra.coordinator.url="http://lra-coordinator-lrademo.`minishift ip`.nip.io:80/lra-coordinator" -Dexec.args=confirm
 cd -
 
 echo -e "\n\n\n"

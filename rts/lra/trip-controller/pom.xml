@@ -19,8 +19,7 @@
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <thorntail.http.port>8081</thorntail.http.port>
-        <lra.http.host>localhost</lra.http.host>
-        <lra.http.port>8080</lra.http.port>
+        <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
         <service.http.port>${thorntail.http.port}</service.http.port>
 
         <version.resteasy-client>3.1.3.Final</version.resteasy-client>
@@ -53,8 +52,7 @@
                         <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
                     </environment>
                     <properties>
-                        <lra.http.host>${lra.http.host}</lra.http.host>
-                        <lra.http.port>${lra.http.port}</lra.http.port>
+                        <lra.coordinator.url>${lra.coordinator.url}</lra.coordinator.url>
                         <service.http.port>${service.http.port}</service.http.port>
                         <thorntail.transactions.node-identifier>2</thorntail.transactions.node-identifier>
                     </properties>
