@@ -16,10 +16,6 @@ rem MA  02110-1301, USA.
 
 SETLOCAL EnableDelayedExpansion
 
-set M2_HOME=c:\hudson\tools\apache-maven-3.0.3
-set ANT_HOME=C:\hudson\tools\apache-ant-1.8.2
-set GNUWIN32_PATH=C:\hudson\gnuwin32
-set PATH=%M2_HOME%\bin\;%ANT_HOME%\bin;%GNUWIN32_PATH%\bin;%PATH%
 
 call:comment_on_pull "Starting tests %BUILD_URL%"
 
@@ -36,8 +32,6 @@ rem for /f "delims=" %%a in ('hostname') do @set host=%%a
 rem for /f "tokens=2 delims=[]" %%a in ('ping -n 1 %host%') do set JBOSSAS_IP_ADDR=%%a
 rem INITIALIZE ENV
 
-set ORACLE_HOME=C:\hudson\workspace\%JOB_NAME%\instantclient_11_2
-set TNS_ADMIN=C:\hudson\workspace\%JOB_NAME%\instantclient_11_2\network\admin
 
 
 git clone git://github.com/jbosstm/narayana.git
