@@ -69,4 +69,4 @@ Run Postgres container:
 
 Run transaction service container:
 
-    docker run -p 4711:4711 -it --link jacorb-name-server:jacorb-name-server --link jdbc-object-store:jdbc-object-store -v ${PATH_TO_THE_QUICKSTART}/src/test/resources/docker-narayana-lib:/opt/jboss/lib -v ${PATH_TO_THE_QUICKSTART}/src/test/resources/docker-narayana-config:/home/narayana/etc --name jts-transaction-service jboss/jts-transaction-service
+    docker run -p 4711:4711 -it --link jacorb-name-server:jacorb-name-server --link jdbc-object-store:jdbc-object-store -v ${PATH_TO_THE_QUICKSTART}/src/test/resources/docker-narayana-lib:/opt/jboss/lib -v ${PATH_TO_THE_QUICKSTART}/src/test/resources/docker-narayana-config:/opt/jboss/narayana/etc --name jts-transaction-service jboss/jts-transaction-service
