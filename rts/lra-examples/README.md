@@ -8,8 +8,12 @@ First build the examples:
 
 > mvn clean package
 
-One quickstart is included:
+Two similar quickstarts are included:
 
 ## cdi-participant
 
 [Shows a service which registers with an external LRA coordinator using CDI annotations](#cdi-participant/README.md)
+
+## cdi-embedded
+
+[Shows a service which registers with an embedded LRA coordinator using CDI annotations](#cdi-embedded/README.md)

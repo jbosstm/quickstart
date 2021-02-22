@@ -56,6 +56,15 @@
                                     <outputDirectory>${project.build.directory}/</outputDirectory>
                                     <destFileName>lra-coordinator-thorntail.jar</destFileName>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jboss.narayana.rts</groupId>
+                                    <artifactId>lra-coordinator-quarkus</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>runner</classifier>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/</outputDirectory>
+                                    <destFileName>lra-coordinator-quarkus.jar</destFileName>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>

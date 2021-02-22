@@ -4,6 +4,7 @@ set -m
 set -x
 
 thorntailjar="lra-participant-example-thorntail.jar"
+quarkusjar="lra-embedded-example-runner.jar"
 txlogdir="../txlogs"
 txlogprop="thorntail.transactions.object-store-path"
 qsdir="$PWD"
@@ -50,14 +51,21 @@ function killpid {
 
 function start_coordinator {
   echo "===== starting external coordinator on port ${coord_port}"
-  java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
+  JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+  java ${JAVA_OPTS} ${IP_OPTS} -jar ../lra-coordinator/target/lra-coordinator-quarkus.jar &
+# if a thorntail based coordinator is required use the following instead
+# java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep `timeout_adjust 10 2>/dev/null || echo 10`
 }
 
 function start_service {
   echo "===== starting service on port ${service_port}"
-  java ${IP_OPTS} -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
+  if test -f "target/${thorntailjar}"; then
+    java ${IP_OPTS} -Dthorntail.http.port=${service_port} -Dlra.http.port=${coord_port} -D${txlogprop}=${txlogdir} -jar target/${thorntailjar} &
+  elif test -f "target/${quarkusjar}"; then
+    java ${IP_OPTS} -Dquarkus.http.port=${service_port} -Dlra.http.port=${coord_port} -jar target/${quarkusjar} &
+  fi
   service_pid=$!
   sleep `timeout_adjust 10 2>/dev/null || echo 10`
 }
@@ -120,7 +128,10 @@ echo "===== Running qickstart $qsname in directory $PWD"
 if [[ "$last" != "coordinator" ]]; then
 #  start_coordinator
   echo "===== starting external coordinator on port ${coord_port}"
-  java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
+  JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+  java ${JAVA_OPTS} ${IP_OPTS} -jar ../lra-coordinator/target/lra-coordinator-quarkus.jar &
+# if a thorntail based coordinator is required use the following instead
+# java ${IP_OPTS} -D${txlogprop}=${txlogdir} -Dthorntail.http.port=${coord_port} -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar &
   coord_pid=$!
   sleep `timeout_adjust 10 2>/dev/null || echo 10`
 else
