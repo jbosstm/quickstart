@@ -44,6 +44,7 @@
   <modules>
     <module>lra-coordinator</module>
     <module>cdi-participant</module>
+    <module>cdi-embedded</module>
     <module>lra-jwt</module>
   </modules>
 </project>
