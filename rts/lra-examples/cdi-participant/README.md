@@ -24,17 +24,24 @@ using the `thorntail-maven-plugin`:
 
 The example assumes that an external LRA coordinator is running.
 
+It is also possible to run the example as a quarkus application (see project 
+[`cdi-embedded`](#../cdi-embedded/README.md) which runs
+with a coordinator embedded with the application).
+
 ## Running an external LRA coordinator
 
 This example requires an external LRA coordinator.
 The [`lra-coordinator`](#../lra-coordinator/README.md)  maven module contains
-a project for building a thorntail jar that runs a standalone LRA coordinator.
+a project for building a thorntail or quarkus jar that runs a standalone LRA coordinator.
 
 So, assuming you are in the cdi example directory, to start a coordinator type:
 
 <pre>
-java -Dthorntail.http.port=8080 -Dthorntail.transactions.object-store-path=../txlogs -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar
+  java -Dthorntail.http.port=8080 -Dthorntail.transactions.object-store-path=../txlogs -jar ../lra-coordinator/target/lra-coordinator-thorntail.jar
+or
+  java -jar ../lra-coordinator/target/lra-coordinator-quarkus.jar &
 </pre>
+
 
 ## Start a service that takes part in LRAs
 

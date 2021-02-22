@@ -1,0 +1,10 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <!-- unique id of the embedded transaction manager -->
+    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
+    <!-- location of the LRA logs -->
+    <entry key="ObjectStoreEnvironmentBean.objectStoreDir">target/lra-logs</entry>
+    <!-- location of the communications store -->
+    <entry key="ObjectStoreEnvironmentBean.communicationStore.objectStoreDir">target/lra-logs</entry>
+</properties>
+
