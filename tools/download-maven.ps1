@@ -1,5 +1,5 @@
-$MAVEN_VERSION="3.2.5";
-$MAVEN_URL="http://archive.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip";
+$MAVEN_VERSION="3.6.3";
+$MAVEN_URL="http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.zip";
 
 
 function Expand-ZIPFile($file, $destination){
@@ -15,8 +15,8 @@ function Download-Maven($destination){
 
     Write-Output $destination;
     Write-Output $MAVEN_URL;
-    if (-Not (Test-Path $target)){
-        $webclient.DownloadFile($MAVEN_URL,$target);
+    if (-Not (Test-Path $destination)){
+        $webclient.DownloadFile($MAVEN_URL,$destination);
     }
 }
 
@@ -26,7 +26,7 @@ function Check-Maven-Version($mavenPath){
     }
     [Environment]::SetEnvironmentVariable("M2_HOME",$null); #in case there is M2_HOME set we will get wrong results when running mvn -version
 
-    $result = iex "$mavenPath\bin\mvn.bat -version" | Select-String ("Apache Maven " + $MAVEN_VERSION);    
+    $result = iex "$mavenPath\bin\mvn.cmd -version" | Select-String ("Apache Maven " + $MAVEN_VERSION);    
     return ,-Not([string]::IsNullOrEmpty($result));
 
 
