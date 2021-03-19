@@ -19,7 +19,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>recovery-quickstarts</artifactId>
-  <version>5.10.7.Final-SNAPSHOT</version>
+  <version>5.11.0.Final</version>
   <name>RESTAT Recovery Quickstarts</name>
   <description>Provides examples of how recoverable REST based transactional services</description>
   <packaging>pom</packaging>
