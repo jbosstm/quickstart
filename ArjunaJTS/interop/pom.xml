@@ -19,7 +19,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jboss.narayana.quickstart.jts</groupId>
   <artifactId>jts-interop-quickstart</artifactId>
-  <version>5.11.1.Final</version>
+  <version>5.11.2.Final-SNAPSHOT</version>
   <name>JTS Interoperability Quickstart Parent pom</name>
   <description>Transactional EJB calls between GlassFish and WildFly</description>
   <packaging>pom</packaging>
@@ -27,7 +27,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-    <version.narayana>5.11.1.Final</version.narayana>
+    <version.narayana>5.11.2.Final-SNAPSHOT</version.narayana>
   </properties>
 
   <licenses>

@@ -26,7 +26,7 @@
     <parent>
         <artifactId>narayana-quickstarts-all</artifactId>
         <groupId>org.jboss.narayana.quickstart</groupId>
-        <version>5.11.1.Final</version>
+        <version>5.11.2.Final-SNAPSHOT</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jta-1_2-in-wildfly</artifactId>
