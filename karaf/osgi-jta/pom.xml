@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstarts.osgi</groupId>
     <artifactId>osgi-jta-example</artifactId>
-    <version>5.11.1.Final-SNAPSHOT</version>
+    <version>5.11.1.Final</version>
 
     <name>Narayana Quickstarts: JBTM and OSGI</name>
     <description>Examples show how to use the narayana-osgi-jta in the karaf</description>
@@ -37,7 +37,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
-        <version.narayana>5.11.1.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.11.1.Final</version.narayana>
         <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
         <osgi.version>6.0.0</osgi.version>
         <karaf.version>4.1.2</karaf.version>
