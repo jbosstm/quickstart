@@ -25,7 +25,7 @@ set -x
 [ $WORKSPACE ] || fatal "please set WORKSPACE to the quickstarts directory"
 NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
 NARAYANA_BRANCH="${NARAYANA_BRANCH:-master}"
-QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-5.11.1.Final}
+QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-5.11.2.Final-SNAPSHOT}
 
 function comment_on_pull
 {
@@ -61,7 +61,7 @@ function int_env {
   export MFACTOR=${MFACTOR:-1}
   export -f timeout_adjust || echo "Function timeout_adjust won't be used in the subshells as it can't be exported"
 
-  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="5.11.1.Final" 
+  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="5.11.2.Final-SNAPSHOT" 
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
   PULL_DESCRIPTION=$(curl -H "Authorization: token $GITHUB_TOKEN" -s https://api.github.com/repos/$GIT_ACCOUNT/$GIT_REPO/pulls/$PULL_NUMBER)
@@ -131,7 +131,7 @@ function build_narayana {
     exit -1
   fi
   echo "Deleting check out - assuming all artifacts are in the .m2"
-  cp -rp narayana-full/target/narayana-full-5.11.1.Final-bin.zip $WORKSPACE
+  cp -rp narayana-full/target/narayana-full-5.11.2.Final-SNAPSHOT-bin.zip $WORKSPACE
   cd ..
   rm -rf narayana
 }
