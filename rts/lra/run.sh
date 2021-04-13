@@ -35,12 +35,12 @@ function getDebugArgs {
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 case "$(uname)" in
-   CYGWIN*) export NARAYANA_INSTALL_LOCATION=`cygpath -w $(pwd)/narayana-full-5.11.1.Final-SNAPSHOT/` ;;
-   *)       export NARAYANA_INSTALL_LOCATION=$(pwd)/narayana-full-5.11.1.Final-SNAPSHOT/ ;;
+   CYGWIN*) export NARAYANA_INSTALL_LOCATION=`cygpath -w $(pwd)/narayana-full-5.11.1.Final/` ;;
+   *)       export NARAYANA_INSTALL_LOCATION=$(pwd)/narayana-full-5.11.1.Final/ ;;
 esac
 
 rm -rf $NARAYANA_INSTALL_LOCATION
-NARAYANA_ZIP="narayana-full-5.11.1.Final-SNAPSHOT-bin.zip"
+NARAYANA_ZIP="narayana-full-5.11.1.Final-bin.zip"
 [ ! -f "$WORKSPACE/$NARAYANA_ZIP" ] &&\
    echo "There is no Narayana zip at \$WORKSPACE directory at '$WORKSPACE/$NARAYANA_ZIP" && exit 1
 unzip "$WORKSPACE/$NARAYANA_ZIP"

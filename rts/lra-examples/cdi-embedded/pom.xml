@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.11.1.Final-SNAPSHOT</version>
+    <version>5.11.1.Final</version>
     <artifactId>examples-microprofile-lra-cdi-embedded</artifactId>
 
     <name>LRA Examples: LRA participant with embedded Coordinator</name>
