@@ -25,7 +25,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts</groupId>
         <artifactId>recovery-quickstarts</artifactId>
-        <version>5.11.2.Final</version>
+        <version>5.11.3.Final-SNAPSHOT</version>
     </parent>
     <artifactId>recovery1</artifactId>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
@@ -35,7 +35,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-        <version.narayana>5.11.2.Final</version.narayana>
+        <version.narayana>5.11.3.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <repositories>
