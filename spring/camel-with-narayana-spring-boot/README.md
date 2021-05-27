@@ -66,9 +66,9 @@ Create user with the name of halt to trigger the application crash
 
 The application will crash
 
-Re-run the application with "-Drecover=true"
+Re-run the application with "-Drecover=true" (notice don't use the "clean")
 
-    mvn:sprint-run -Drecover=true
+    mvn spring-boot:run -Drecover=true
 
 Get the Result and you will see the user "halt" will be create
 
