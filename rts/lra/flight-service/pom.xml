@@ -22,7 +22,7 @@
         <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
         <service.http.port>${thorntail.http.port}</service.http.port>
 
-        <version.resteasy-client>3.1.3.Final</version.resteasy-client>
+        <version.resteasy-client>4.5.7.Final</version.resteasy-client>
         <version.narayana>${project.version}</version.narayana>
         <version.json>1.0</version.json>
 
