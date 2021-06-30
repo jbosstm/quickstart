@@ -32,22 +32,13 @@ DIRNAME=`dirname $0`
 GREP="grep"
 ROOT="/"
 
-# Ignore user's MAVEN_HOME if it is set
-M2_HOME=""
-MAVEN_HOME=""
+
+# Ignore user's MAVEN_HOME if it is set (M2_HOME is unsupported since Apache Maven 3.5.0)
+unset M2_HOME
+unset MAVEN_HOME
 
 MAVEN_OPTS="$MAVEN_OPTS -Xmx1024M"
 export MAVEN_OPTS
-
-./tools/download-maven.sh
-
-#  Default search path for maven.
-MAVEN_SEARCH_PATH="\
-    tools
-    tools/maven \
-    tools/apache/maven \
-    maven"
-
 
 
 #  Use the maximum available, or set MAX_FD != -1 to use that
@@ -92,19 +83,6 @@ source_if_exists() {
     done
 }
 
-find_maven() {
-    search="$*"
-    for d in $search; do
-        MAVEN_HOME="${DIRNAME}/$d"
-        MVN="$MAVEN_HOME/bin/mvn"
-        if [ -x "$MVN" ]; then
-            #  Found.
-            echo $MAVEN_HOME
-            break
-        fi
-    done
-}
-
 #
 #  Main function.
 #
@@ -128,35 +106,8 @@ main() {
         fi
     fi
 
-    #  Try the search path.
-    MAVEN_HOME=`find_maven $MAVEN_SEARCH_PATH`
-
-    #  Try looking up to root.
-    if [ "x$MAVEN_HOME" = "x" ]; then
-        target="build"
-        _cwd=`pwd`
-
-        while [ "x$MAVEN_HOME" = "x" ] && [ "$cwd" != "$ROOT" ]; do
-            cd ..
-            cwd=`pwd`
-            MAVEN_HOME=`find_maven $MAVEN_SEARCH_PATH`
-        done
-
-        #  Make sure we get back.
-        cd $_cwd
-
-        if [ "$cwd" != "$ROOT" ]; then
-            found="true"
-        fi
-
-        #  Complain if we did not find anything.
-        if [ "$found" != "true" ]; then
-            die "Could not locate Maven; check \$MVN or \$MAVEN_HOME."
-        fi
-    fi
-
     #  Make sure we have one.
-    MVN=$MAVEN_HOME/bin/mvn
+    MVN="${DIRNAME}/mvnw"
     if [ ! -x "$MVN" ]; then
         die "Maven file is not executable: $MVN"
     fi
@@ -175,7 +126,8 @@ main() {
     cd $DIRNAME
 
     #  Add default settings before calling maven.
-    MVN_SETTINGS_XML_ARGS="-s tools/maven/conf/settings.xml"
+    MVN_SETTINGS_XML_ARGS="-s .mvn/wrapper/settings.xml"
+
     MVN_GOAL="";
     ADDIT_PARAMS="";
     #  For each parameter, check for testsuite directives.
@@ -197,7 +149,7 @@ main() {
     if [ -z "$MVN_GOAL" ]; then MVN_GOAL="install"; fi
 
     #  Export some stuff for maven.
-    export MVN MAVEN_HOME MVN_OPTS MVN_GOAL
+    export MVN MVN_OPTS MVN_GOAL
 
     # The default arguments.  `mvn -s ...` will override this.
     MVN_ARGS=${MVN_ARGS:-"$MVN_SETTINGS_XML_ARGS"};
