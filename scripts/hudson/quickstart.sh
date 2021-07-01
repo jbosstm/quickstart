@@ -82,21 +82,6 @@ function rebase_quickstart_repo {
   fi
 }
 
-function get_bt_dependencies {
-  cd $WORKSPACE
-  # SCP Blacktie thirdparty dependencies centos70x64
-  set +e
-  uname -a | grep el7 >> /dev/null
-  if [ "$?" -ne "1" ]; then
-  DEP=`find  ~/.m2 -name '*centos70x64*.md5'|grep -v blacktie|wc -l`
-      if [ "$DEP" -ne "6" ]; then
-      wget http://${JENKINS_HOST}/userContent/blacktie-thirdparty-centos70x64.tgz
-      tar xzvf blacktie-thirdparty-centos70x64.tgz
-      rm blacktie-thirdparty-centos70x64.tgz
-      fi
-  fi
-}
-
 function build_narayana {
   cd $WORKSPACE
   # INITIALIZE ENV
@@ -123,9 +108,7 @@ function build_narayana {
   fi
   cd narayana
   ./build.sh clean install -B -DskipTests -Pcommunity
-  ./build.sh -f blacktie/wildfly-blacktie/pom.xml clean install -B
-  ./build.sh -f blacktie/pom.xml clean install -B -DskipTests
-  
+
   if [ $? != 0 ]; then
     comment_on_pull "Narayana build failed: $BUILD_URL";
     exit -1
@@ -177,7 +160,7 @@ function build_apache-karaf {
 function run_quickstarts {
   cd $WORKSPACE
   echo Running quickstarts
-  BLACKTIE_DIST_HOME=$PWD/narayana/blacktie/blacktie/target/ ./build.sh -B clean install -fae -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION
+  ./build.sh -B clean install -fae -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION
 
   if [ $? != 0 ]; then
     comment_on_pull "Pull failed: $BUILD_URL";
@@ -190,7 +173,6 @@ function run_quickstarts {
 int_env
 comment_on_pull "Started testing this pull request: $BUILD_URL"
 rebase_quickstart_repo
-#get_bt_dependencies # JBTM-2878 missing userContent on JENKINS_HOST
 build_narayana
 configure_wildfly || exit 1
 #build_apache-karaf # JBTM-2820 disable the karaf build

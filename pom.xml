@@ -138,8 +138,6 @@
     <module>compensating-transactions</module>
     <module>rts</module>
     <module>XTS</module>
-    <!-- see JBTM-2878 -->
-    <!-- module>blacktie</module> -->
     <module>wildfly/setCheckedActionFactoryExample</module>
     <module>wildfly/commit-markable-resource</module>
     <module>STM</module>
