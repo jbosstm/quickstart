@@ -106,12 +106,6 @@ To run the quickstarts:
 4. `mvn clean install`
 
 _NOTE:_
-One of the BlackTie quickstarts requires the Oracle driver to be downloaded and configured,
-see [blacktie/test/initializeBlackTie.xml](blacktie/test/initializeBlackTie.xml) for more details.
-
-It is disabled by default but running `./blacktie/run_all_quickstarts.[sh|bat] tx` will execute it.
-
-_NOTE:_
 As the scope of Narayana quickstart is broad - it shows integration with many platform
 &ndash; you need to expect a big amount of data to be downloaded from Maven repository.
 
