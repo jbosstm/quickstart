@@ -65,11 +65,6 @@ set /p JBOSS_DIST_DIR=<filename.tmp
 set JBOSS_HOME=%CD%\%JBOSS_DIST_DIR%
 echo "Downloaded WildFly nightly build and placed under JBOSS_HOME directory at '%JBOSS_HOME%'"
 
-copy narayana\blacktie\blacktie\target\blacktie-*-vc9x32-bin.zip .
-set BLACKTIE_DIST_HOME=C:\hudson\workspace\%JOB_NAME%\
-wget -N http://%JENKINS_HOST%/userContent/blacktie/instantclient-basiclite-win32-11.2.0.1.0.zip
-wget -N http://%JENKINS_HOST%/userContent/blacktie/instantclient-sdk-win32-11.2.0.1.0.zip
-
 rem XTS config
 copy %JBOSS_HOME%\docs\examples\configs\standalone-xts.xml %JBOSS_HOME%\standalone\configuration\
 
