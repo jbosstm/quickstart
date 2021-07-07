@@ -7,7 +7,7 @@ with the application.
 ## Start a service that takes part in LRAs
 
 <pre>
-java -jar target/lra-embedded-example-runner.jar &
+java -jar target/quarkus-app/quarkus-run.jar &
 </pre>
 
 Then follow the instructions in the [`cdi-participant README.md file`](#../cdi-participant/README.md). For example,

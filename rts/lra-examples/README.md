@@ -1,4 +1,4 @@
-# MicroProfile LRA Examples
+#MicroProfile LRA Examples
 
 [MicroProfile LRA](https://github.com/eclipse/microprofile-lra) is a specification of an annotation based API that
 enables loosely coupled services to coordinate long running activities in such a way as to

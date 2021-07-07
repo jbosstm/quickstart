@@ -18,18 +18,17 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
-        <version.microprofile.lra>1.0-RC1</version.microprofile.lra>
-        <quarkus-plugin.version>1.8.3.Final</quarkus-plugin.version>
-        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-        <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>1.8.3.Final</quarkus.platform.version>
+        <version.microprofile.lra>1.0</version.microprofile.lra>
+        <quarkus.platform.version>1.12.2.Final</quarkus.platform.version>
+        <quarkus-plugin.version>1.12.2.Final</quarkus-plugin.version>
+        <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     </properties>
 
     <dependencyManagement>
       <dependencies>
         <dependency>
-          <groupId>${quarkus.platform.group-id}</groupId>
-          <artifactId>${quarkus.platform.artifact-id}</artifactId>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-bom</artifactId>
           <version>${quarkus.platform.version}</version>
           <type>pom</type>
           <scope>import</scope>
@@ -52,14 +51,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-jsonb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-client</artifactId>
-        </dependency>
         <!-- include an embedded LRA coordinator -->
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
@@ -84,11 +75,42 @@
             <artifactId>microprofile-lra-api</artifactId>
             <version>${version.microprofile.lra}</version>
         </dependency>
+
+       <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
+        </dependency>
+
+        <!-- MP LRA CDI support defines annotations for controlling the lifecycle
+             of LRAs and for controlling participation in an LRA
+             -->
+        <dependency>
+            <groupId>org.eclipse.microprofile.lra</groupId>
+            <artifactId>microprofile-lra-api</artifactId>
+            <version>${version.microprofile.lra}</version>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>lra-embedded-example</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
@@ -103,6 +125,7 @@
             </plugin>
         </plugins>
     </build>
+
     <profiles>
         <profile>
             <id>unix</id>
