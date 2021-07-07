@@ -10,18 +10,25 @@
     <name>MicroProfile Examples: LRA CDI Participant</name>
     <description>MicroProfile Examples: LRA CDI participant using annotations</description>
 
-    <packaging>war</packaging>
-
     <properties>
-        <maven.test.skip>true</maven.test.skip>
-        <thorntail.debug.port>5005</thorntail.debug.port>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.microprofile.lra>1.0-RC1</version.microprofile.lra>
-        <thorntail.http.port>8081</thorntail.http.port>
-        <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
-        <narayana.nodename.property>CoreEnvironmentBean.nodeIdentifier</narayana.nodename.property>
+        <version.microprofile.lra>1.0</version.microprofile.lra>
+		<quarkus.platform.version>1.12.2.Final</quarkus.platform.version>
+		<quarkus-plugin.version>1.12.2.Final</quarkus-plugin.version>
+		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <repositories>
         <repository>
@@ -49,35 +56,34 @@
         <finalName>lra-participant-example</finalName>
         <plugins>
             <plugin>
-                <groupId>io.thorntail</groupId>
-                <artifactId>thorntail-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <debugPort>${thorntail.debug.port}</debugPort>
-                    <environment>
-                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
-                    </environment>
-                    <properties>
-                        <lra.coordinator.url>${lra.coordinator.url}</lra.coordinator.url>
-                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
-                        <thorntail.debug.port>${thorntail.debug.port}</thorntail.debug.port>
-                        <thorntail.transactions.node-identifier>2</thorntail.transactions.node-identifier>
-                    </properties>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -101,18 +107,9 @@
             <version>${version.microprofile.lra}</version>
         </dependency>
 
-        <!-- JAX-RS -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.ws.rs</groupId>
-            <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-            <version>1.0.0.Final</version>
-        </dependency>
-
-        <!-- JBoss logging -->
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.1.0.GA</version>
+       <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
         </dependency>
     </dependencies>
     <profiles>

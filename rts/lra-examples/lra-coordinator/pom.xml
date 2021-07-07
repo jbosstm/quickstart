@@ -7,8 +7,8 @@
     <version>5.12.1.Final-SNAPSHOT</version>
     <artifactId>examples-microprofile-lra-coordinator</artifactId>
 
-    <name>WildFly Thorntail Examples: LRA Coordinator</name>
-    <description>WildFly Thorntail Examples: LRA Coordinator</description>
+    <name>LRA Examples: LRA Coordinator</name>
+    <description>LRA Examples: LRA Coordinator</description>
 
     <packaging>pom</packaging>
 
@@ -40,22 +40,13 @@
                 <version>${version.plugin.maven.dependency}</version>
                 <executions>
                     <execution>
-                        <id>get-thorntail-lra-coordinator</id>
+                        <id>get-lra-coordinator</id>
                         <phase>generate-resources</phase>
                         <goals>
                           <goal>copy</goal>
                         </goals>
                         <configuration>
                             <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.jboss.narayana.rts</groupId>
-                                    <artifactId>lra-coordinator-thorntail</artifactId>
-                                    <version>${project.version}</version>
-                                    <classifier>thorntail</classifier>
-                                    <type>jar</type>
-                                    <outputDirectory>${project.build.directory}/</outputDirectory>
-                                    <destFileName>lra-coordinator-thorntail.jar</destFileName>
-                                </artifactItem>
                                 <artifactItem>
                                     <groupId>org.jboss.narayana.rts</groupId>
                                     <artifactId>lra-coordinator-quarkus</artifactId>
