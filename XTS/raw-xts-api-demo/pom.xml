@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.xts</groupId>
         <artifactId>narayana-quickstarts-xts</artifactId>
-        <version>5.12.1.Final-SNAPSHOT</version>
+        <version>5.12.1.Final</version>
     </parent>
     <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
     <artifactId>xts-demo-all</artifactId>
@@ -30,7 +30,7 @@
     <url>http://narayana.io</url>
 
     <properties>
-        <version.narayana>5.12.1.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.12.1.Final</version.narayana>
         <version.javaee>7.0</version.javaee>
         <version.arquillian>1.1.11.Final</version.arquillian>
         <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
