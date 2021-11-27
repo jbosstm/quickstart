@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstart.spring</groupId>
     <artifactId>camel-with-narayana-spring-boot</artifactId>
-    <version>5.12.3.Final</version>
+    <version>5.12.4.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>camel-with-narayana-spring-boot</name>
