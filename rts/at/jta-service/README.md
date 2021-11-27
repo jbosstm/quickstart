@@ -1,3 +1,6 @@
+Remark: This quickstart requires WildFly 24 and earlier.
+To run with a later version, issue JBTM-3558 needs to be resolved.
+
 REST-AT with JTA: Example of Using REST-AT with JPA and JMS
 ======================================================
 Author: Gytis Trikleris (gytis@redhat.com)
