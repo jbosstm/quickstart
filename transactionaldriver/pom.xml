@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.narayana</groupId>
   <artifactId>transactionaldriver</artifactId>
-  <version>5.12.3.Final-SNAPSHOT</version>
+  <version>5.12.3.Final</version>
   <packaging>pom</packaging>
   <name>Transactional Drivers Examples</name>
   <description>Examples of how transaction drivers could be used</description>
