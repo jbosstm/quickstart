@@ -24,7 +24,7 @@
   <parent>
     <artifactId>restat-quickstarts</artifactId>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
-    <version>5.12.4.Final</version>
+    <version>5.12.5.Final-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <packaging>war</packaging>
@@ -35,7 +35,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-    <version.narayana>5.12.4.Final</version.narayana>
+    <version.narayana>5.12.5.Final-SNAPSHOT</version.narayana>
     <version.wildfly-maven-plugin>1.1.0.Alpha10</version.wildfly-maven-plugin>
   </properties>
 

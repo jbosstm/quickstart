@@ -27,7 +27,7 @@
 
     <groupId>org.jboss.narayana.quickstarts.spring</groupId>
     <artifactId>narayana-spring-boot</artifactId>
-    <version>5.12.4.Final</version>
+    <version>5.12.5.Final-SNAPSHOT</version>
 
     <name>Narayana and Spring Boot Quickstart</name>
     <description>Narayana Spring Boot example</description>
@@ -36,7 +36,7 @@
         <version.org.springframework.boot>1.5.3.RELEASE</version.org.springframework.boot>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <version.narayana>5.12.4.Final</version.narayana>
+        <version.narayana>5.12.5.Final-SNAPSHOT</version.narayana>
         <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
     </properties>
 
