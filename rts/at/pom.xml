@@ -72,9 +72,7 @@
     <module>simple</module>
     <module>service</module>
     <module>recovery</module>
-    <!-- see issue JBTM-3558
     <module>jta-service</module>
-    -->
     <module>undertow</module>
   </modules>
 </project>

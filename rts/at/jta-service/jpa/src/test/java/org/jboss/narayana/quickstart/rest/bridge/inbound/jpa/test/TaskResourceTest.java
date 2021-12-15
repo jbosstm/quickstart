@@ -16,7 +16,6 @@
  */
 package org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.test;
 
-import org.codehaus.jettison.json.JSONArray;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.jbossts.star.util.TxLinkNames;
@@ -37,6 +36,9 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
+import javax.json.Json;
+import javax.json.JsonArray;
+import java.io.StringReader;
 import java.io.File;
 
 /**
@@ -113,11 +115,11 @@ public class TaskResourceTest {
         System.out.println("Commiting REST-AT transaction...");
         txSupport.commitTx();
 
-        final JSONArray jsonArray = getUserTasks(TEST_USERNAME);
+        final JsonArray jsonArray = getUserTasks(TEST_USERNAME);
 
-        Assert.assertEquals(1, jsonArray.length());
-        Assert.assertEquals(TEST_USERNAME, jsonArray.getJSONObject(0).getString("owner"));
-        Assert.assertEquals(TEST_TASK_TITLE1, jsonArray.getJSONObject(0).getString("title"));
+        Assert.assertEquals(1, jsonArray.size());
+        Assert.assertEquals(TEST_USERNAME, jsonArray.getJsonObject(0).getString("owner"));
+        Assert.assertEquals(TEST_TASK_TITLE1, jsonArray.getJsonObject(0).getString("title"));
     }
 
     @Test
@@ -132,9 +134,9 @@ public class TaskResourceTest {
         System.out.println("Rolling back REST-AT transaction...");
         txSupport.rollbackTx();
 
-        final JSONArray jsonArray = getUserTasks(TEST_USERNAME);
+        final JsonArray jsonArray = getUserTasks(TEST_USERNAME);
 
-        Assert.assertEquals(0, jsonArray.length());
+        Assert.assertEquals(0, jsonArray.size());
     }
 
     @Test
@@ -150,13 +152,13 @@ public class TaskResourceTest {
         System.out.println("Commiting REST-AT transaction...");
         txSupport.commitTx();
 
-        final JSONArray jsonArray = getUserTasks(TEST_USERNAME);
+        final JsonArray jsonArray = getUserTasks(TEST_USERNAME);
 
-        Assert.assertEquals(2, jsonArray.length());
-        Assert.assertEquals(TEST_USERNAME, jsonArray.getJSONObject(0).getString("owner"));
-        Assert.assertEquals(TEST_TASK_TITLE1, jsonArray.getJSONObject(0).getString("title"));
-        Assert.assertEquals(TEST_USERNAME, jsonArray.getJSONObject(1).getString("owner"));
-        Assert.assertEquals(TEST_TASK_TITLE2, jsonArray.getJSONObject(1).getString("title"));
+        Assert.assertEquals(2, jsonArray.size());
+        Assert.assertEquals(TEST_USERNAME, jsonArray.getJsonObject(0).getString("owner"));
+        Assert.assertEquals(TEST_TASK_TITLE1, jsonArray.getJsonObject(0).getString("title"));
+        Assert.assertEquals(TEST_USERNAME, jsonArray.getJsonObject(1).getString("owner"));
+        Assert.assertEquals(TEST_TASK_TITLE2, jsonArray.getJsonObject(1).getString("title"));
     }
 
     @Test
@@ -172,9 +174,9 @@ public class TaskResourceTest {
         System.out.println("Rolling back REST-AT transaction...");
         txSupport.rollbackTx();
 
-        final JSONArray jsonArray = getUserTasks(TEST_USERNAME);
+        final JsonArray jsonArray = getUserTasks(TEST_USERNAME);
 
-        Assert.assertEquals(0, jsonArray.length());
+        Assert.assertEquals(0, jsonArray.size());
     }
 
     private Response createTask(final String userName, final String title) throws Exception {
@@ -192,10 +194,10 @@ public class TaskResourceTest {
         return response;
     }
 
-    private JSONArray getUserTasks(final String userName) throws Exception {
+    private JsonArray getUserTasks(final String userName) throws Exception {
         System.out.println("Getting all tasks of " + userName + "...");
         final String response = ClientBuilder.newClient().target(TASKS_URL + "/" + userName).request().get(String.class);
-        final JSONArray jsonArray = new JSONArray(response);
+        final JsonArray jsonArray = Json.createReader(new StringReader(response)).readArray();
 
         System.out.println("Received tasks:");
         System.out.println(jsonArray);

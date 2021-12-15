@@ -25,8 +25,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  * User's task entity which is marked up with JPA annotations and JAXB for serializing XML
@@ -128,19 +128,12 @@ public class Task implements Serializable {
      * 
      * @return
      */
-    public String toJson() {
-        final JSONObject json = new JSONObject();
-
-        try {
-            json.putOpt("id", id);
-            json.putOpt("owner", owner.getUsername());
-            json.putOpt("title", title);
-            return json.toString(4);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return "{}";
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+                .add("id", id)
+                .add("owner", owner.getUsername())
+                .add("title", title)
+                .build();
     }
 
 }

@@ -39,6 +39,8 @@
 
     <properties>
         <version.narayana>5.12.5.Final-SNAPSHOT</version.narayana>
+        <version.jakarta.json-api>2.0.1</version.jakarta.json-api>
+        <version.glassfish.json>1.1.4</version.glassfish.json>
     </properties>
 
     <repositories>
@@ -64,10 +66,10 @@
         </dependency>
 
         <dependency>
-           <groupId>org.jboss.resteasy</groupId>
-           <artifactId>resteasy-client</artifactId>
-           <version>${version.resteasy}</version>
-           <scope>test</scope>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${version.resteasy}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -96,9 +98,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.codehaus.jettison</groupId>
-            <artifactId>jettison</artifactId>
-            <version>${version.org.codehaus.jettison}</version>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>${version.jakarta.json-api}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>${version.glassfish.json}</version>
             <scope>provided</scope>
         </dependency>
 

@@ -35,9 +35,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.Task;
 import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.TaskDao;
 import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.User;
@@ -116,37 +117,35 @@ public class TaskResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String getTaskById(@PathParam("username") String username, @PathParam("id") Long id) {
         User user = getUser(username);
-        return getTask(user, id).toJson();
+        return getTask(user, id).toJson().toString();
     }
 
     @GET
     @Path(TASKS_PATH_SEGMENT + "/{username}/{title}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getTasksByTitle(@PathParam("username") String username, @PathParam("title") String title)
-            throws JSONException {
-
-        JSONArray json = new JSONArray();
+    public String getTasksByTitle(@PathParam("username") String username, @PathParam("title") String title) {
+        final JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         List<Task> tasks = getTasks(getUser(username), title);
 
         for (Task task : tasks) {
-            json.put(new JSONObject(task.toJson()));
+            arrayBuilder.add(task.toJson());
         }
 
-        return json.toString(4);
+        return arrayBuilder.build().toString();
     }
 
     @GET
     @Path(TASKS_PATH_SEGMENT + "/{username}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getTasks(@PathParam("username") String username) throws JSONException {
-        JSONArray json = new JSONArray();
+    public String getTasks(@PathParam("username") String username) {
+        final JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         List<Task> tasks = getTasks(getUser(username));
 
         for (Task task : tasks) {
-            json.put(new JSONObject(task.toJson()));
+            arrayBuilder.add(task.toJson());
         }
 
-        return json.toString(4);
+        return arrayBuilder.build().toString();
     }
 
     // Utility Methods
