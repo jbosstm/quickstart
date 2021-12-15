@@ -4,6 +4,12 @@ Author: Amos Feng;
 Level: Intermediate;
 Technologies: JTA, JTS, OSGI
 
+Warning
+-------
+
+This quickstart is not working and has been disabled.
+The fix will be provided with issue https://issues.redhat.com/browse/JBTM-3564
+
 What is it?
 -----------
 
