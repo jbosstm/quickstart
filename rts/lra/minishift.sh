@@ -30,7 +30,7 @@ spec:
 EOF
 }
 
-NARAYANA_LRA_COORDINATOR_LOCATION="$NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator/target/lra-coordinator-swarm.jar"
+NARAYANA_LRA_COORDINATOR_LOCATION="$NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator/target/lra-coordinator-runner.jar"
 if [ ! -f "$NARAYANA_LRA_COORDINATOR_LOCATION" ]; then
   echo "You need to set NARAYANA_INSTALL_LOCATION correctly, file '$NARAYANA_LRA_COORDINATOR_LOCATION' not found"
   exit

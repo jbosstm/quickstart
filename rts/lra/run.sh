@@ -1,8 +1,33 @@
 #!/usr/bin/env bash
 function finish {
-    kill -9 $ID1 $ID2 $ID3 $ID4 $ID5
+    if ps -p $ID1 > /dev/null
+    then
+       kill -9 $ID1
+    fi
 
-    rm -rf $NARAYANA_INSTALL_LOCATION
+    if ps -p $ID2 > /dev/null
+    then
+       kill -9 $ID2
+    fi
+
+    if ps -p $ID3 > /dev/null
+    then
+       kill -9 $ID3
+    fi
+
+    if ps -p $ID4 > /dev/null
+    then
+       kill -9 $ID4
+    fi
+
+    if ps -p $ID5 > /dev/null
+    then
+       kill -9 $ID5
+    fi
+
+    if [ -d "$NARAYANA_INSTALL_LOCATION" ]; then
+      rm -rf $NARAYANA_INSTALL_LOCATION
+    fi
 }
 trap finish EXIT
 
@@ -35,8 +60,8 @@ function getDebugArgs {
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 case "$(uname)" in
-   CYGWIN*) export NARAYANA_INSTALL_LOCATION=`cygpath -w $(pwd)/narayana-full-5.12.5.Final-SNAPSHOT/` ;;
-   *)       export NARAYANA_INSTALL_LOCATION=$(pwd)/narayana-full-5.12.5.Final-SNAPSHOT/ ;;
+   CYGWIN*) export NARAYANA_INSTALL_LOCATION=`cygpath -w $(pwd)/narayana-full-5.12.5.Final-SNAPSHOT` ;;
+   *)       export NARAYANA_INSTALL_LOCATION=$(pwd)/narayana-full-5.12.5.Final-SNAPSHOT ;;
 esac
 
 rm -rf $NARAYANA_INSTALL_LOCATION
@@ -52,19 +77,20 @@ if [ -z "$IP_OPTS" ]; then
   CURL_IP_OPTS="-4"
 fi
 
-  java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
+echo "Narayana installed location = $NARAYANA_INSTALL_LOCATION"
+  java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar &
   ID1=$!
 ((PORT++))
-  java ${IP_OPTS} -Dquarkus.http.port=8081 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../flight-lra-coordinator-logs &
+  java ${IP_OPTS} -Dquarkus.http.port=8081 $(getDebugArgs $PORT) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar &
   ID2=$!
 ((PORT++))
-  java ${IP_OPTS} -Dthorntail.http.port=8082 $(getDebugArgs $PORT) -jar hotel-service/target/lra-test-thorntail.jar &
+  java ${IP_OPTS} -Dquarkus.http.port=8082 $(getDebugArgs $PORT) -jar hotel-service/target/quarkus-app/quarkus-run.jar &
   ID3=$!
 ((PORT++))
-  java ${IP_OPTS} -Dthorntail.http.port=8083 -Dlra.http.port=8081 $(getDebugArgs $PORT) -jar flight-service/target/lra-test-thorntail.jar &
+  java ${IP_OPTS} -Dquarkus.http.port=8083 -Dlra.http.port=8081 $(getDebugArgs $PORT) -jar flight-service/target/quarkus-app/quarkus-run.jar &
   ID4=$!
 ((PORT++))
-  java ${IP_OPTS} -Dthorntail.http.port=8084 -Dlra.http.port=8080 $(getDebugArgs $PORT) -jar trip-controller/target/lra-test-thorntail.jar &
+  java ${IP_OPTS} -Dquarkus.http.port=8084 -Dlra.http.port=8080 $(getDebugArgs $PORT) -jar trip-controller/target/quarkus-app/quarkus-run.jar &
   ID5=$!
 ((PORT++))
 
@@ -79,7 +105,7 @@ BOOKINGID=$(curl ${CURL_IP_OPTS} -X POST "http://localhost:8084/?hotelName=TheGr
 echo "Booking ID was: $BOOKINGID"
 
 kill -9 $ID1
-java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar -Dthorntail.transactions.object-store-path=../lra-coordinator-logs &
+java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs 8787) -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar &
 ID1=$!
 echo "Waiting for all the coordinator to recover"
 sleep `timeout_adjust 40 2>/dev/null || echo 40`
@@ -92,4 +118,3 @@ echo ""
 set -x
 
 [ $DEBUG ] && echo "Processes are still running ($ID1 $ID2 $ID3 $ID4 $ID5) press any key to end them" && read
-finish
