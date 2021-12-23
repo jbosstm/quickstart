@@ -27,7 +27,6 @@
 
     <properties>
         <version.microprofile.lra>1.0-RC1</version.microprofile.lra>
-        <version.thorntail>2.4.0.Final</version.thorntail>
         <version.jackson>2.13.0</version.jackson>
     </properties>
 
@@ -55,13 +54,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>io.thorntail</groupId>
-                <artifactId>bom-all</artifactId>
-                <version>${version.thorntail}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
             <dependency>
                 <groupId>javax.enterprise</groupId>
                 <artifactId>cdi-api</artifactId>

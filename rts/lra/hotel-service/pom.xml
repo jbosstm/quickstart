@@ -14,15 +14,13 @@
     <artifactId>hotel-service</artifactId>
     <name>LRA Quickstart hotel-service</name>
     <description>LRA Quickstart</description>
-    <packaging>war</packaging>
 
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <thorntail.http.port>8081</thorntail.http.port>
-        <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
-        <service.http.port>${thorntail.http.port}</service.http.port>
+        <quarkus.platform.version>1.12.2.Final</quarkus.platform.version>
+        <quarkus-plugin.version>1.12.2.Final</quarkus-plugin.version>
+        <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 
-        <version.wildfly-swarm>2017.8.1</version.wildfly-swarm>
         <version.resteasy-client>3.9.1.Final</version.resteasy-client>
         <version.narayana>5.12.5.Final-SNAPSHOT</version.narayana>
 
@@ -37,11 +35,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom-all</artifactId>
-                <version>${version.wildfly-swarm}</version>
-                <scope>import</scope>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
                 <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -49,26 +47,26 @@
         <finalName>lra-test</finalName>
         <plugins>
             <plugin>
-                <groupId>io.thorntail</groupId>
-                <artifactId>thorntail-maven-plugin</artifactId>
-                <version>${version.thorntail}</version>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>package</goal>
+                            <goal>build</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <environment>
-                        <thorntail.http.port>${thorntail.http.port}</thorntail.http.port>
-                    </environment>
-                    <properties>
-                        <lra.coordinator.url>${lra.coordinator.url}</lra.coordinator.url>
-                        <service.http.port>${service.http.port}</service.http.port>
-                        <thorntail.transactions.node-identifier>2</thorntail.transactions.node-identifier>
-                    </properties>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -79,6 +77,11 @@
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
             <version>${version.microprofile.lra}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
         </dependency>
 
         <!-- LRA JAXRS filters -->

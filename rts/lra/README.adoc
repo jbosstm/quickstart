@@ -18,7 +18,7 @@ mvn clean package
 
 ### Before you start
 
-Obtain and unzip the Narayana distribution containing the LRA swarm coordinator to $NARAYANA_INSTALL_LOCATION
+Obtain and unzip the Narayana distribution containing the LRA coordinator to $NARAYANA_INSTALL_LOCATION
 	
 ### Make sure the LRA coordinator and various services are running 
 
@@ -31,24 +31,22 @@ simulates how different trust domains can interoperate.
 Start the coordinators:
 
 ```bash
-java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-thorntail.jar -Dswarm.http.port=8080
-java -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-thorntail.jar -Dswarm.http.port=8081
+java -Dquarkus.http.port=8080 -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar
+java -Dquarkus.http.port=8081 -jar $NARAYANA_INSTALL_LOCATION/rts/lra/lra-coordinator-runner.jar
 ```
 
 Start the trip, hotel and flight services:
 
 ```bash
-java -jar hotel-service/target/lra-test-swarm.jar -Dswarm.http.port=8082
-java -jar flight-service/target/lra-test-swarm.jar -Dswarm.http.port=8083 -Dlra.coordinator.url="http://localhost:8081/lra-coordinator"
-java -jar trip-controller/target/lra-test-swarm.jar -Dswarm.http.port=8084 -Dlra.coordinator.url="http://localhost:8080/lra-coordinator"
+java -Dquarkus.http.port=8082 -jar hotel-service/target/quarkus-app/quarkus-run.jar
+java -Dquarkus.http.port=8083 -Dlra.http.port=8081 -jar flight-service/target/quarkus-app/quarkus-run.jar
+java -Dquarkus.http.port=8084 -Dlra.http.port=8080 -jar trip-controller/target/quarkus-app/quarkus-run.jar
 ```
 
-The system property *lra.coordinator.url* specifies the URL on which the LRA coordinator is listening.
+The system property *lra.http.port* specifies the port on which the LRA coordinator is listening.
 
 As you can see the flight service uses it's own coordinator to simulate a different domain
 participating in the same transaction.
-
-(If you want to enable source level debugging use -Dswarm.debug.port=<port>).
 
 ### Update a trip booking
 
@@ -59,8 +57,8 @@ Jackson for parsing Json the client (TripClient) only uses Java SE APIs.
 mvn -f trip-client/pom.xml exec:java -Dservice.http.host="localhost" -Dservice.http.port=8084
 ```
 
-The system properties *lra.coordinator.url* and *service.http.port* specify the ports on which the LRA
-coordinator and example service are is listening, respectively.
+The system properties *lra.http.port* and *service.http.port* specify the ports on which the LRA
+coordinator and example service are listening, respectively.
 
 ## Running the demo on Minishift
 

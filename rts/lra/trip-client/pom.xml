@@ -18,9 +18,7 @@
 
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <swarm.http.port>8081</swarm.http.port>
         <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
-        <service.http.port>${swarm.http.port}</service.http.port>
 
         <version.resteasy-client>3.9.1.Final</version.resteasy-client>
         <version.narayana>5.12.5.Final-SNAPSHOT</version.narayana>
