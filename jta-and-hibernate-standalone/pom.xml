@@ -44,7 +44,7 @@
         <version.narayana>5.12.5.Final-SNAPSHOT</version.narayana>
         <version.jnpserver>5.0.3.GA</version.jnpserver>
         <version.junit>4.13.1</version.junit>
-        <version.h2>2.0.202</version.h2>
+        <version.h2>2.0.206</version.h2>
         <version.hibernate>5.1.7.Final</version.hibernate>
         <version.weld>2.3.4.Final</version.weld>
         <version.jboss-transaction-api>1.0.1.Final</version.jboss-transaction-api>
