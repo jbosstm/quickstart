@@ -62,7 +62,7 @@
         <version.com.sun.faces.jsf-impl>2.2.0-m13</version.com.sun.faces.jsf-impl>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.commons-logging>1.1.0.jboss</version.commons-logging>
-        <version.h2>2.0.202</version.h2>
+        <version.h2>2.0.206</version.h2>
         <version.junit>4.13.1</version.junit>
     </properties>
 
