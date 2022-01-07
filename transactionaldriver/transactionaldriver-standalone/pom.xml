@@ -8,7 +8,7 @@
 
     <properties>
         <version.byteman>4.0.4</version.byteman>
-        <version.h2>1.4.195</version.h2>
+        <version.h2>2.0.206</version.h2>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <version.junit>4.13.1</version.junit>
         <version.narayana>5.12.5.Final-SNAPSHOT</version.narayana>
