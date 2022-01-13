@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Arrays;
 
+import javax.resource.spi.IllegalStateException;
 import javax.transaction.TransactionManager;
 
 import org.jboss.byteman.contrib.bmunit.BMScript;
@@ -53,7 +54,7 @@ public class TransactionalDriverTest {
     Connection conn1, conn2;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IllegalStateException {
         conn1 = DBUtils.getConnection(DBUtils.DB_1);
         conn2 = DBUtils.getConnection(DBUtils.DB_2);
 

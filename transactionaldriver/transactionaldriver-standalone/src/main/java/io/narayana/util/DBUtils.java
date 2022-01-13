@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.resource.spi.IllegalStateException;
 import javax.sql.XADataSource;
 import org.h2.jdbcx.JdbcDataSource;
 import org.jboss.logging.Logger;
@@ -74,7 +75,7 @@ public class DBUtils {
 
     public static String INSERT_STATEMENT = String.format("INSERT INTO %s (id, value2) values (?,?)", TEST_TABLE_NAME);
 
-    public static Connection getConnection(String dbname) {
+    public static Connection getConnection(String dbname) throws IllegalStateException {
         if(isH2) return getH2Connection(dbname);
         else return getPgConnection(dbname);
     }
@@ -110,15 +111,16 @@ public class DBUtils {
     }
 
 
-    private static Connection getH2Connection(String dbname) {
+    private static Connection getH2Connection(String dbname) throws IllegalStateException {
         return getConnection(DB_H2_DRIVER, DB_H2_CONNECTION, dbname, DB_H2_USER, DB_H2_PASSWORD);
     }
 
-    private static Connection getPgConnection(String dbname) {
+    private static Connection getPgConnection(String dbname) throws IllegalStateException {
         return getConnection(DB_PG_DRIVER, DB_PG_CONNECTION, dbname, DB_PG_USER, DB_PG_PASSWORD);
     }
 
-    private static Connection getConnection(String driver, String formatUrl, String dbname, String user, String pass) {
+    private static Connection getConnection(String driver, String formatUrl, String dbname, String user, String pass)
+    throws IllegalStateException {
         Connection dbConnection = null;
         try {
             Class.forName(driver);
