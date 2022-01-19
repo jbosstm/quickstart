@@ -25,7 +25,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts</groupId>
         <artifactId>service-quickstarts</artifactId>
-        <version>5.12.5.Final</version>
+        <version>5.12.6.Final-SNAPSHOT</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>service1</artifactId>
@@ -35,7 +35,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-        <version.narayana>5.12.5.Final</version.narayana>
+        <version.narayana>5.12.6.Final-SNAPSHOT</version.narayana>
     </properties>
 
     <repositories>

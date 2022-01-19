@@ -26,7 +26,7 @@
 
     <groupId>org.jboss.narayana.quickstarts</groupId>
     <artifactId>jca-and-tomcat</artifactId>
-    <version>5.12.5.Final</version>
+    <version>5.12.6.Final-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Narayana Quickstarts: JBTM, IronJacamar, and Tomcat</name>
@@ -43,7 +43,7 @@
         <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
         <version.hibernate.validator>6.1.5.Final</version.hibernate.validator>
         <version.javax.el>3.0.4</version.javax.el>
-        <version.narayana>5.12.5.Final</version.narayana>
+        <version.narayana>5.12.6.Final-SNAPSHOT</version.narayana>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
         <version.jboss.logging.spi>2.2.0.CR1</version.jboss.logging.spi>
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>

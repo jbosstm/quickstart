@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.narayana</groupId>
     <artifactId>transactionaldriver-jpa-and-tomcat</artifactId>
-    <version>5.12.5.Final</version>
+    <version>5.12.6.Final-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
