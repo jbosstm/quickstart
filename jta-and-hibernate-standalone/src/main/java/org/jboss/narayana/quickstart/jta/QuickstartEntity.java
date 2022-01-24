@@ -16,10 +16,12 @@
  */
 package org.jboss.narayana.quickstart.jta;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 
 /**
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
@@ -28,9 +30,10 @@ import javax.persistence.Id;
 public class QuickstartEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(name="value2")
     private String value;
 
     public QuickstartEntity() {
