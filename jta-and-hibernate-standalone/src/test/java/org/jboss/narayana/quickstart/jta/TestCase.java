@@ -183,10 +183,10 @@ public class TestCase {
         Connection connection = dataSource.getConnection(TransactionalConnectionProvider.USERNAME,
                 TransactionalConnectionProvider.PASSWORD);
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT `value` FROM `QuickstartEntity`");
+        ResultSet resultSet = statement.executeQuery("SELECT `value2` FROM `QuickstartEntity`");
         List<QuickstartEntity> entities = new LinkedList<>();
         while (resultSet.next()) {
-            entities.add(new QuickstartEntity(resultSet.getString("value")));
+            entities.add(new QuickstartEntity(resultSet.getString("value2")));
         }
         resultSet.close();
         statement.close();
