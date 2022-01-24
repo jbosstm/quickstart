@@ -61,7 +61,7 @@ public class DBUtils {
     private static final String DB_PG_PASSWORD = "test";
 
     private static String TEST_TABLE_NAME = "TXN_DRIVER_TEST";
-    private static String CREATE_TABLE = String.format("CREATE TABLE %s(id int primary key, value varchar(42))", TEST_TABLE_NAME);
+    private static String CREATE_TABLE = String.format("CREATE TABLE %s(id int primary key, value2 varchar(42))", TEST_TABLE_NAME);
     private static String DROP_TABLE = String.format("DROP TABLE %s", TEST_TABLE_NAME);
     private static String SELECT_QUERY = String.format("SELECT * FROM %s", TEST_TABLE_NAME);
 
@@ -72,7 +72,7 @@ public class DBUtils {
     public static final String DB_USER = isH2 ? DB_H2_USER : DB_PG_USER;
     public static final String DB_PASSWORD = isH2 ? DB_H2_PASSWORD : DB_PG_PASSWORD;
 
-    public static String INSERT_STATEMENT = String.format("INSERT INTO %s (id, value) values (?,?)", TEST_TABLE_NAME);
+    public static String INSERT_STATEMENT = String.format("INSERT INTO %s (id, value2) values (?,?)", TEST_TABLE_NAME);
 
     public static Connection getConnection(String dbname) {
         if(isH2) return getH2Connection(dbname);
