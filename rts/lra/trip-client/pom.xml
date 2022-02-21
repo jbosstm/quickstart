@@ -20,7 +20,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
 
-        <version.resteasy-client>3.9.1.Final</version.resteasy-client>
+        <version.resteasy-client>4.5.7.Final</version.resteasy-client>
         <version.narayana>5.12.6.Final-SNAPSHOT</version.narayana>
 
         <maven.compiler.source>1.8</maven.compiler.source>
