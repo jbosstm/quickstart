@@ -146,11 +146,16 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>include-for-JDK11-above-versions</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <modules>
+                <module>jpa</module>
+                <module>jms</module>
+            </modules>
+        </profile>
     </profiles>
-
-    <modules>
-        <module>jpa</module>
-        <module>jms</module>
-    </modules>
 
 </project>

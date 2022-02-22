@@ -68,7 +68,6 @@
         <jdk>(,9)</jdk>
       </activation>
       <modules>
-        <module>glassfish</module>
       </modules>
     </profile>
   </profiles>
@@ -77,6 +76,5 @@
   <modules>
     <module>resource</module>
     <module>test-ejbs</module>
-    <module>glassfish</module>
   </modules>
 </project>
