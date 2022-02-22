@@ -130,7 +130,6 @@
     <module>dbcp2-and-tomcat</module>
     <module>jca-and-hibernate</module>
     <module>jta-1_2-standalone</module>
-    <module>jta-1_2-in-wildfly</module>
     <module>spring</module>
     <module>ArjunaCore</module>
     <module>ArjunaJTA</module>
@@ -139,7 +138,6 @@
     <module>rts</module>
     <module>XTS</module>
     <module>wildfly/setCheckedActionFactoryExample</module>
-    <module>wildfly/commit-markable-resource</module>
     <module>STM</module>
     <module>jts-docker</module>
     <!-- JBTM-3565 disable the osgi quickstart until it is fixed -->
@@ -163,6 +161,16 @@
           --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED
           --add-modules=java.se</modular.jdk.args>
       </properties>
+    </profile>
+    <profile>
+      <id>include-for-JDK11-above-versions</id>
+      <activation>
+        <jdk>[11,)</jdk>
+      </activation>
+      <modules>
+        <module>jta-1_2-in-wildfly</module>
+        <module>wildfly/commit-markable-resource</module>
+      </modules>
     </profile>
   </profiles>
 </project>
