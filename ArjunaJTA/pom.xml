@@ -141,11 +141,22 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>include-for-JDK11-above-versions</id>
+      <activation>
+        <jdk>[11,)</jdk>
+      </activation>
+      <modules>
+        <module>jee_transactional_app</module>
+      </modules>
+    </profile>
+  </profiles>
+
   <modules>
     <module>javax_transaction</module>
     <module>object_store/</module>
     <module>recovery</module>
     <module>maven</module>
-    <module>jee_transactional_app</module>
   </modules>
 </project>

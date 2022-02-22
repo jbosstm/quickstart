@@ -44,9 +44,20 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>include-for-JDK11-above-versions</id>
+      <activation>
+        <jdk>[11,)</jdk>
+      </activation>
+      <modules>
+        <module>non-transactional_resource</module>
+        <module>travel-agent</module>
+      </modules>
+    </profile>
+  </profiles>
   <modules>
-    <module>non-transactional_resource</module>
-    <module>travel-agent</module>
     <module>mongodb-simple</module>
   </modules>
 </project>
