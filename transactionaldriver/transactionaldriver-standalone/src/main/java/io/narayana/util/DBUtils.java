@@ -151,8 +151,8 @@ public class DBUtils {
         ds.setServerName(DB_PG_HOST);
         ds.setPortNumber(DB_PG_PORT);
         ds.setDatabaseName(dbName);
-        ds.setUser(DB_H2_USER);
-        ds.setPassword(DB_H2_PASSWORD);
+        ds.setUser(DB_PG_USER);
+        ds.setPassword(DB_PG_PASSWORD);
         return ds;
     }
 }
