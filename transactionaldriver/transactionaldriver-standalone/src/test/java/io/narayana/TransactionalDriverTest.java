@@ -33,6 +33,7 @@ import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -251,6 +252,7 @@ public class TransactionalDriverTest {
 
     @BMScript("xaexception.rmfail")
     @Test
+    @Ignore
     public void transactionDriverDirectRecoverableRecovery() throws Exception {
         RecoveryManager recoveryManager = RecoverySetupUtil.simpleRecoveryIntialize();
 
@@ -270,6 +272,7 @@ public class TransactionalDriverTest {
 
     @BMScript("xaexception.rmfail")
     @Test
+    @Ignore
     public void transactionDriverIndirectRecoverableRecovery() throws Exception {
         RecoveryManager recoveryManager = RecoverySetupUtil.jdbcXARecoveryIntialize();
 
@@ -289,6 +292,7 @@ public class TransactionalDriverTest {
 
     @BMScript("xaexception.rmfail")
     @Test
+    @Ignore
     public void transactionDriverIndirectRecoverableRecovery2() throws Exception {
         RecoveryManager recoveryManager = RecoverySetupUtil.basicXARecoveryIntialize();
 
