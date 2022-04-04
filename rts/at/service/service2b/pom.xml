@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts</groupId>
         <artifactId>service-quickstarts</artifactId>
-        <version>5.12.6.Final-SNAPSHOT</version>
+        <version>5.12.6.Final</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>service2b</artifactId>
@@ -76,7 +76,7 @@
             maven repository. -->
         <!-- <version.jboss.spec.javaee.6.0>3.0.2.Final-redhat-2</version.jboss.spec.javaee.6.0> -->
 
-        <version.narayana>5.12.6.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.12.6.Final</version.narayana>
 
         <!-- other plugin versions -->
         <version.compiler.plugin>3.5.1</version.compiler.plugin>

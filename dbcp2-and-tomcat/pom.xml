@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.narayana</groupId>
     <artifactId>dbcp2-and-tomcat</artifactId>
-    <version>5.12.6.Final-SNAPSHOT</version>
+    <version>5.12.6.Final</version>
     <packaging>war</packaging>
 
     <properties>
