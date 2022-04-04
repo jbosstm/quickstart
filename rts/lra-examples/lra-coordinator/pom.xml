@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.12.6.Final</version>
+    <version>5.12.7.Final-SNAPSHOT</version>
     <artifactId>examples-microprofile-lra-coordinator</artifactId>
 
     <name>LRA Examples: LRA Coordinator</name>
