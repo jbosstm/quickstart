@@ -16,10 +16,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.narayana.quickstart.stm</groupId>
 	<artifactId>stm-jta</artifactId>
-	<version>5.12.6.Final-SNAPSHOT</version>
+	<version>5.12.6.Final</version>
 	<packaging>jar</packaging>
 	<properties>
-		<version.narayana>5.12.6.Final-SNAPSHOT</version.narayana>
+		<version.narayana>5.12.6.Final</version.narayana>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>

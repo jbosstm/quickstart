@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
         <artifactId>lra-quickstarts</artifactId>
-        <version>5.12.6.Final-SNAPSHOT</version>
+        <version>5.12.6.Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -21,7 +21,7 @@
         <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
 
         <version.resteasy-client>4.5.7.Final</version.resteasy-client>
-        <version.narayana>5.12.6.Final-SNAPSHOT</version.narayana>
+        <version.narayana>5.12.6.Final</version.narayana>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
