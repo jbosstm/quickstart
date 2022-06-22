@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.12.7.Final</version>
+    <version>5.12.8.Final-SNAPSHOT</version>
     <artifactId>jwt-lra-coordinator</artifactId>
     <name>WildFly Examples: LRA Coordinator with JWT security</name>
     <description>WildFly Examples: LRA Coordinator with JWT security</description>
