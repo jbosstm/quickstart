@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>agoral</artifactId>
-    <version>5.12.7.Final-SNAPSHOT</version>
+    <version>5.12.7.Final</version>
 
     <properties>
         <version.agroal>1.3</version.agroal>
