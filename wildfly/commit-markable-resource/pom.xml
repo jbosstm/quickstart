@@ -26,7 +26,7 @@
     <parent>
         <artifactId>narayana-quickstarts-all</artifactId>
         <groupId>org.jboss.narayana.quickstart</groupId>
-        <version>5.12.7.Final</version>
+        <version>5.12.8.Final-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>org.jboss.narayana.quickstarts</groupId>

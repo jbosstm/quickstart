@@ -32,14 +32,14 @@
 
     <groupId>org.jboss.narayana.quickstart.spring</groupId>
     <artifactId>stock-market-with-narayana-spring-boot</artifactId>
-    <version>5.12.7.Final</version>
+    <version>5.12.8.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>stock-market-with-narayana-spring-boot</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <version.narayana>5.12.7.Final</version.narayana>
+        <version.narayana>5.12.8.Final-SNAPSHOT</version.narayana>
         <jboss-transaction-spi.version>7.5.2.Final</jboss-transaction-spi.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
