@@ -22,7 +22,7 @@
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 
         <version.narayana>${project.version}</version.narayana>
-        <version.resteasy-client>4.5.7.Final</version.resteasy-client>
+        <version.resteasy-client>4.6.0.Final</version.resteasy-client>
         <version.json>1.0</version.json>
 
         <maven.compiler.source>1.8</maven.compiler.source>
