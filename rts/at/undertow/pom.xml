@@ -28,7 +28,7 @@
     <properties>
         <version.narayana>5.12.8.Final-SNAPSHOT</version.narayana>
         <version.jboss.logging>3.1.4.GA</version.jboss.logging>
-        <undertow.io.version>2.2.11.Final</undertow.io.version>
+        <undertow.io.version>2.2.15.Final</undertow.io.version>
         <version.resteasy>3.0.23.Final</version.resteasy>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
