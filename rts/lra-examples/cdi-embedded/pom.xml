@@ -19,8 +19,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
         <version.microprofile.lra>1.0</version.microprofile.lra>
-        <quarkus.platform.version>1.12.2.Final</quarkus.platform.version>
-        <quarkus-plugin.version>1.12.2.Final</quarkus-plugin.version>
+        <quarkus.platform.version>2.10.0.Final</quarkus.platform.version>
+        <quarkus-plugin.version>2.10.0.Final</quarkus-plugin.version>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     </properties>
 
