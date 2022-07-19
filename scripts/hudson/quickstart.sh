@@ -85,7 +85,7 @@ function rebase_quickstart_repo {
 function build_narayana {
   cd $WORKSPACE
   # INITIALIZE ENV
-  export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
+  export MAVEN_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
 
   #rm -rf ~/.m2/repository/
   rm -rf narayana
