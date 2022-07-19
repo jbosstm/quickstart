@@ -121,7 +121,7 @@ function build_narayana {
 
 function configure_wildfly {
   cd $WORKSPACE
-  wget --user=guest --password=guest -nv https://ci.wildfly.org/httpAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
+  wget -nv https://ci.wildfly.org/guestAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
   unzip -q artifacts.zip
   # the artifacts.zip may be wrapping several zip files: artifacts.zip -> wildfly-latest-SNAPSHOT.zip -> wildfly-###-SNAPSHOT.zip
   local wildflyLatestZipWrapper=$(ls wildfly-latest-*.zip | head -n 1)
