@@ -127,7 +127,7 @@
                             Used in arquillian.xml - arguments for all WildFly instances.
                             System properties are duplicated here until ARQ-647 is implemented.
                         -->
-                        <server.jvm.args>-Xmx512m -XX:MaxPermSize=128m ${jvm.args.ip.server}
+                        <server.jvm.args>-Xmx512m -XX:MaxMetaspaceSize=128m ${jvm.args.ip.server}
                             -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}
                             -Djava.awt.headless=false
                         </server.jvm.args>
