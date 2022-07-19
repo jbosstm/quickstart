@@ -13,8 +13,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.microprofile.lra>1.0</version.microprofile.lra>
-		<quarkus.platform.version>1.12.2.Final</quarkus.platform.version>
-		<quarkus-plugin.version>1.12.2.Final</quarkus-plugin.version>
+		<quarkus.platform.version>2.10.0.Final</quarkus.platform.version>
+		<quarkus-plugin.version>2.10.0.Final</quarkus-plugin.version>
 		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     </properties>
 
