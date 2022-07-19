@@ -61,8 +61,8 @@
         <version.war.plugin>2.6</version.war.plugin>
 
         <!-- maven-compiler-plugin -->
-        <maven.compiler.target>1.6</maven.compiler.target>
-        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
         <version.wildfly-maven-plugin>1.1.0.Alpha10</version.wildfly-maven-plugin>
     </properties>
 
