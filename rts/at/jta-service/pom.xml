@@ -46,7 +46,7 @@
         <version.resteasy.api>3.0.5.Final</version.resteasy.api>
         <version.org.wildfly.arquillian>2.1.1.Final</version.org.wildfly.arquillian>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
-        <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxPermSize=512m</jvm.args.memory>
+        <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxMetaspaceSize=512m</jvm.args.memory>
         <jvm.args.debug></jvm.args.debug>
         <jvm.args.other>-server</jvm.args.other>
     </properties>
