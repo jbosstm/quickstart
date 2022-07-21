@@ -31,7 +31,7 @@ The example runs using OpenJDK ORB:
 
 You need to set 2 environment variables to run the example:
 
-`JAVA_HOME`: the location of the JDK
+`JAVA_HOME`: the location of the JDK (JDK8 is needed for orbd)
 
 `NARAYANA_HOME`: the location of the narayana distribution
  (you can download it from the http://narayana.io/downloads/ while choosing the option 'Naryana Binary')
@@ -68,6 +68,12 @@ Running with OpenJDK ORB:
 
 ## Expected output
 
+
+> The `orbd` command is not bundled with JDK >= 11, see [JEP 320](https://openjdk.java.net/jeps/320) for more information.
+> A quick way to get this quickstart running is to reuse the `orbd` bundled binary.
+>
+> Install JDK 8, locate the `orbd` executable under the `bin` directory and create a symbolic link pointing to it, like so:
+> `sudo ln -s ${JDK_8_LOCATION}/bin/orbd /usr/bin/orbd`. Tested with OpenJDK 11.
 The script will run the example using the OpenJDK ORB.
 
 Testing against OpenJDK ORB
