@@ -17,12 +17,9 @@
 
 
 # start NS
+# for orbd JDK 1.8 is needed
 function startNS {
-  export MAVEN_OPTS="--Dexec.cleanupDaemonThreads=false -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567  \
-  -Dorg.omg.CORBA.ORBInitialHost=$HOST_ADDRESS  -Dorg.omg.CORBA.ORBInitialPort=900"
-  mvn clean compile exec:java -Pnameserver -Dexec.mainClass=com.sun.corba.se.impl.naming.pcosnaming.NameServer 
-  unset MAVEN_OPTS
-
+  /usr/bin/orbd $PROG_ARGS
 }
 
 # start TM
