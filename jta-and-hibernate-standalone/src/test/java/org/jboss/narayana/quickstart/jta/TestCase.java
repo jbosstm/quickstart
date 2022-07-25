@@ -166,7 +166,7 @@ public class TestCase {
             transactionManager.commit();
             fail("QuickstartRuntimeException expected");
         } catch (Throwable t) {
-            assertTrue(t.getCause() instanceof QuickstartRuntimeException);
+            assertTrue("Exception was: " + t.getClass() + ":" + t.getMessage(), t.getCause() instanceof QuickstartRuntimeException);
         }
 
         assertEntities();
