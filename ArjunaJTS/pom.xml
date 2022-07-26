@@ -53,7 +53,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>1.2</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -68,9 +68,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${version.surefire.plugin}</version>
         <configuration>
-          <configuration>
-            <skipTests>false</skipTests>
-          </configuration>
+          <skipTests>false</skipTests>
           <forkMode>pertest</forkMode>
           <workingDirectory>${project.build.directory}/surefire-working-directory</workingDirectory>
           <runOrder>alphabetical</runOrder>
@@ -126,27 +124,7 @@
 
   <profiles>
     <profile>
-      <id>jacorb</id>
-      <activation>
-        <property>
-          <name>!useJdkOrb</name> 
-        </property>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>org.jboss.narayana.jts</groupId>
-          <artifactId>narayana-jts-jacorb</artifactId>
-          <version>${version.narayana}</version>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
       <id>idlj</id>
-      <activation>
-        <property>
-          <name>useJdkOrb</name> 
-        </property>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.jboss.narayana.jts</groupId>

@@ -44,35 +44,22 @@ bash ./run.sh
 To run an example manually you will need to run it twice, once with a flag to tell the example to
 generate a failure followed by a second run with a flag to tell the example to recover the failed transaction.
 
-```
-mvn -e clean compile exec:java -Dexec.mainClass=Test -Dexec.args="-crash"
+ ```
+ mvn -e clean compile exec:java -Dexec.mainClass=Test -Dexec.args="-crash" -Dcom.sun.CORBA.POA.ORBServerId=1\
+   -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567
 
-mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-recover"
-```
+ mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-recover" -Dcom.sun.CORBA.POA.ORBServerId=1\
+   -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567
+ ```
+ 
 
 You have to wait a while(!) when both resources have recovered.
 After that press the enter key to end the program.
 
-### Orb implemenation
-
-The quickstart uses the JacORB. Narayana offers option to switch to the orb bundled with JDK (iiop-jdk orb).
-The quickstart can be run with it when you use property `-DuseJdkOrb` (see [ArjunaJTS/pom.xml](../pom.xml)).
-
-
-> The JDK orb alternative comes with issue and you must define the following two properties when running this quickstart:
+> The OpenJDK ORB comes with issue and you must define the following two properties when running this quickstart:
  -Dcom.sun.CORBA.POA.ORBServerId=1 -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567
  [The link http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4505128 provides some details about
  why you would need to define these].
-
- If you run the JDK alternative go with
-
- ```
- mvn -e clean compile exec:java -Dexec.mainClass=Test -Dexec.args="-crash" -Dcom.sun.CORBA.POA.ORBServerId=1\
-   -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567 -DuseJdkOrb
-
- mvn -e exec:java -Dexec.mainClass=Test -Dexec.args="-recover" -Dcom.sun.CORBA.POA.ORBServerId=1\
-   -Dcom.sun.CORBA.POA.ORBPersistentServerPort=12567 -DuseJdkOrb
- ```
 
 ## Expected output
 

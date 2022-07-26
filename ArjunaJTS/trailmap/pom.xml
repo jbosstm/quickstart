@@ -39,84 +39,207 @@
     </repositories>
     <dependencies>
         <dependency>
-            <groupId>org.jboss.narayana.jts</groupId>
-            <artifactId>narayana-jts-jacorb</artifactId>
-            <version>${version.narayana}</version>
+            <groupId>org.jboss.openjdk-orb</groupId>
+            <artifactId>openjdk-orb</artifactId>
+            <version>8.1.9.Final</version>
+            <classifier>sources</classifier>
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-            <version>1.0.0.Alpha3</version>
+            <version>1.1.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.jts</groupId>
+            <artifactId>narayana-jts-idlj</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.5.0.Final</version>
         </dependency>
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>idlj-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jacorb</groupId>
-                        <artifactId>jacorb-idl-compiler</artifactId>
-                        <version>2.2.3</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <compiler>jacorb</compiler>
-                            <sources>
-                                <source>
-                                    <includes>
-                                        <include>com/arjuna/demo/simple/Hello.idl</include>
-                                        <include>com/arjuna/demo/jts/remotebank/Bank.idl</include>
-                                        <include>com/arjuna/demo/jts/explicitremotebank/Bank.idl</include>
-                                        <include>com/arjuna/demo/jts/txojbank/Bank.idl</include>
-                                    </includes>
-                                    <additionalArguments>
-                                        <additionalArgument>-DORB_OTS_SUPPORT=1</additionalArgument>
-                                        <additionalArgument>-DORB_CURRENT_SUPPORT=1</additionalArgument>
-                                    </additionalArguments>
-                                </source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+          <!-- Unpacks the IDL files needed to compile CosTransaction -->
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-corba-idl</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.jboss.openjdk-orb</groupId>
+                      <artifactId>openjdk-orb</artifactId>
+                      <classifier>sources</classifier>
+                      <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                      <includes>**/*.idl</includes>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Compilation of IDL files -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <id>generate-sources</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target name="Generate idl stubs">
+                    <property name="idl.compiler.class"
+                      value="com.sun.tools.corba.se.idl.toJavaPortable.Compile" />
+                    <property name="idl.main.src"
+                      location="src/main/idl" />
+                    <property name="compile_classpath"
+                      value="${maven.compile.classpath}" />
+    
+                    <!-- Compilation of explicit remote bank -->
+                    <java fork="true" classname="${idl.compiler.class}"
+                      failonerror="true">
+                      <arg value="-i" />
+                      <arg value="${idl.main.src}" />
+                      <arg value="-td" />
+                      <arg
+                        value="${project.build.directory}/generated-sources" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="CosTransactions" />
+                      <arg value="org.omg" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="Bank" />
+                      <arg
+                        value="com.arjuna.demo.jts.explicitremotebank" />
+                      <arg value="-i" />
+                      <arg
+                        value="${project.build.directory}/lib/com/sun/tools/corba/se/idl" />
+                      <arg value="-d" />
+                      <arg value="ORB_CURRENT_SUPPORT=1" />
+                      <arg value="-d" />
+                      <arg value="ORB_OTS_SUPPORT=1" />
+                      <arg value="-fallTIE" />
+                      <arg
+                        value="${idl.main.src}/com/arjuna/demo/jts/explicitremotebank/Bank.idl" />
+                      <classpath refid="maven.compile.classpath" />
+                    </java>
+    
+                    <!-- Compilation of remote bank -->
+                    <java fork="true" classname="${idl.compiler.class}"
+                      failonerror="true">
+                      <arg value="-i" />
+                      <arg value="${idl.main.src}" />
+                      <arg value="-td" />
+                      <arg
+                        value="${project.build.directory}/generated-sources" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="CosTransactions" />
+                      <arg value="org.omg" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="Bank" />
+                      <arg value="com.arjuna.demo.jts.remotebank" />
+                      <arg value="-i" />
+                      <arg
+                        value="${project.build.directory}/lib/com/sun/tools/corba/se/idl" />
+                      <arg value="-d" />
+                      <arg value="ORB_CURRENT_SUPPORT=1" />
+                      <arg value="-d" />
+                      <arg value="ORB_OTS_SUPPORT=1" />
+                      <arg value="-fallTIE" />
+                      <arg
+                        value="${idl.main.src}/com/arjuna/demo/jts/remotebank/Bank.idl" />
+                      <classpath refid="maven.compile.classpath" />
+                    </java>
+    
+                    <!-- Compilation of explicit txojbank bank -->
+                    <java fork="true" classname="${idl.compiler.class}"
+                      failonerror="true">
+                      <arg value="-i" />
+                      <arg value="${idl.main.src}" />
+                      <arg value="-td" />
+                      <arg
+                        value="${project.build.directory}/generated-sources" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="CosTransactions" />
+                      <arg value="org.omg" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="Bank" />
+                      <arg value="com.arjuna.demo.jts.txojbank" />
+                      <arg value="-i" />
+                      <arg
+                        value="${project.build.directory}/lib/com/sun/tools/corba/se/idl" />
+                      <arg value="-d" />
+                      <arg value="ORB_CURRENT_SUPPORT=1" />
+                      <arg value="-d" />
+                      <arg value="ORB_OTS_SUPPORT=1" />
+                      <arg value="-fallTIE" />
+                      <arg
+                        value="${idl.main.src}/com/arjuna/demo/jts/txojbank/Bank.idl" />
+                      <classpath refid="maven.compile.classpath" />
+                    </java>
+    
+                    <!-- Compilation of explicit simple Hello -->
+                    <java fork="true" classname="${idl.compiler.class}"
+                      failonerror="true">
+                      <arg value="-i" />
+                      <arg value="${idl.main.src}" />
+                      <arg value="-td" />
+                      <arg
+                        value="${project.build.directory}/generated-sources" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="CosTransactions" />
+                      <arg value="org.omg" />
+                      <arg value="-pkgPrefix" />
+                      <arg value="Hello" />
+                      <arg value="com.arjuna.demo.simple" />
+                      <arg value="-i" />
+                      <arg
+                        value="${project.build.directory}/lib/com/sun/tools/corba/se/idl" />
+                      <arg value="-d" />
+                      <arg value="ORB_CURRENT_SUPPORT=1" />
+                      <arg value="-d" />
+                      <arg value="ORB_OTS_SUPPORT=1" />
+                      <arg value="-fallTIE" />
+                      <arg
+                        value="${idl.main.src}/com/arjuna/demo/simple/Hello.idl" />
+                      <classpath refid="maven.compile.classpath" />
+                    </java>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- This plugin adds the folder `generate-sources` to the classpath -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>3.3.0</version>
+            <executions>
+              <execution>
+                <id>add-source</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.build.directory}/generated-sources</source>
+                  </sources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
-        <pluginManagement>
-          <plugins>
-            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-            <plugin>
-              <groupId>org.eclipse.m2e</groupId>
-              <artifactId>lifecycle-mapping</artifactId>
-              <version>1.0.0</version>
-              <configuration>
-                <lifecycleMappingMetadata>
-                  <pluginExecutions>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>idlj-maven-plugin</artifactId>
-                        <versionRange>[1.2.1,)</versionRange>
-                        <goals>
-                          <goal>generate</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore></ignore>
-                      </action>
-                    </pluginExecution>
-                  </pluginExecutions>
-                </lifecycleMappingMetadata>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
     </build>
 </project>

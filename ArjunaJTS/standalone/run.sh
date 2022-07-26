@@ -19,26 +19,16 @@
 # ALLOW JOBS TO BE BACKGROUNDED
 set -m
 
-JDKORBPROPS="-DOrbPortabilityEnvironmentBean.orbDataClassName=com.arjuna.orbportability.internal.orbspecific.versions.javaidl_1_4 -DOrbPortabilityEnvironmentBean.orbImpleClassName=com.arjuna.orbportability.internal.orbspecific.javaidl.orb.implementations.javaidl_1_4"
-
-echo "Running jts standalone quickstart using JacOrb"
+OPENJDKORBPROPS="-DOrbPortabilityEnvironmentBean.orbDataClassName=com.arjuna.orbportability.internal.orbspecific.versions.javaidl_1_4 -DOrbPortabilityEnvironmentBean.orbImpleClassName=com.arjuna.orbportability.internal.orbspecific.javaidl.orb.implementations.javaidl_1_4"
 
 [ "x$QUICKSTART_NARAYANA_VERSION" != 'x' ] &&\
   NARAYANA_VERSION_PARAM="-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}"
 
-
-mvn -e exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.TransactionExample $NARAYANA_VERSION_PARAM
-
-if [ "$?" != "0" ]; then
-    echo jts standalone using JacOrb quickstart failed
-    exit -1
-fi
-
-echo "Running jts standalone quickstart using JdkOrb"
-mvn -e exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.TransactionExample $JDKORBPROPS $NARAYANA_VERSION_PARAM
+echo "Running jts standalone quickstart using OpenJDK ORB"
+mvn -e exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.TransactionExample $OPENJDKORBPROPS $NARAYANA_VERSION_PARAM
 
 if [ "$?" != "0" ]; then
-    echo jts standalone using JdkOrb quickstart failed
+    echo jts standalone using OpenJDK ORB quickstart failed
     exit -1
 fi
 

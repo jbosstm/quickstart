@@ -43,8 +43,7 @@ import java.util.Properties;
 public class TransactionExample {
 
     private static final String ORB_IMPL_PROP = "OrbPortabilityEnvironmentBean.orbImpleClassName";
-    private static String JDKORB_CLASSNAME = com.arjuna.orbportability.internal.orbspecific.javaidl.orb.implementations.javaidl_1_4.class.getName();
-    private static String JACORB_CLASSNAME = com.arjuna.orbportability.internal.orbspecific.jacorb.orb.implementations.jacorb_2_0.class.getName();
+    private static String OPENJDKORB_CLASSNAME = com.arjuna.orbportability.internal.orbspecific.javaidl.orb.implementations.javaidl_1_4.class.getName();
 
     public static void main(String[] args) throws Exception {
         System.setProperty("ObjectStoreBaseDir", "target");
@@ -65,10 +64,8 @@ public class TransactionExample {
         RootOA myOA = OA.getRootOA(myORB);
         String orbImpl = BeanPopulator.getDefaultInstance(OrbPortabilityEnvironmentBean.class).getOrbImpleClassName();
 
-        if (JACORB_CLASSNAME.equals(orbImpl)) {
-            System.out.printf("Testing against JacOrb%n");
-        }  else if (JDKORB_CLASSNAME.equals(orbImpl)) {
-            System.out.printf("Testing against JdkOrb%n");
+        if (OPENJDKORB_CLASSNAME.equals(orbImpl)) {
+            System.out.printf("Testing against OpenJDK ORB%n");
         } else {
             throw new RuntimeException("please configure an orb using the property " + ORB_IMPL_PROP);
         }

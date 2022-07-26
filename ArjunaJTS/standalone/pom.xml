@@ -76,28 +76,16 @@
       <version>3.1.0.GA</version>
     </dependency>
 
-    <!-- JacORB only dependencies -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
-      <version>1.5.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.narayana.jts</groupId>
-      <artifactId>narayana-jts-jacorb</artifactId>
-      <version>${version.narayana}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jacorb</groupId>
-      <artifactId>jacorb</artifactId>
-      <version>2.3.1.jbossorg-1</version>
-    </dependency>
-
-    <!-- JDK ORB only dependencies -->
+    <!-- OPEN JDK ORB only dependencies -->
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>narayana-jts-idlj</artifactId>
       <version>${version.narayana}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.openjdk-orb</groupId>
+      <artifactId>openjdk-orb</artifactId>
+      <version>8.1.9.Final</version>
     </dependency>
   </dependencies>
 
@@ -117,6 +105,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
+            <version>3.0.0</version>
             <executions>
               <execution>
                 <id>Run a CORBA name server</id>
@@ -152,6 +141,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
+            <version>3.0.0</version>
             <executions>
               <execution>
                 <id>Run tests</id>
