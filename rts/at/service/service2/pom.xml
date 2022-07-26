@@ -103,7 +103,7 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
-            <artifactId>narayana-jts-jacorb</artifactId>
+            <artifactId>narayana-jts-idlj</artifactId>
             <version>${version.narayana}</version>
         </dependency>
         <!-- JBoss logging -->

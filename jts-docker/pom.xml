@@ -59,7 +59,7 @@
         <!-- Narayana JTS implementation dependencies -->
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
-            <artifactId>narayana-jts-jacorb</artifactId>
+            <artifactId>narayana-jts-idlj</artifactId>
             <version>${version.narayana}</version>
             <scope>test</scope>
         </dependency>
@@ -70,19 +70,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JacORB dependencies -->
-        <dependency>
-            <groupId>jacorb</groupId>
-            <artifactId>jacorb</artifactId>
-            <version>${version.jacorb}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${version.org.slf4j}</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Other dependencies -->
         <dependency>
