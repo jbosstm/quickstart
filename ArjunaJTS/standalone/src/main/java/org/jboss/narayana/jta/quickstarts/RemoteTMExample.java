@@ -40,8 +40,7 @@ public class RemoteTMExample {
     private static String NAME_SERVER_PORT = "9999";
 
     private static final String ORB_IMPL_PROP = "OrbPortabilityEnvironmentBean.orbImpleClassName";
-    private static final String JDKORB_CLASSNAME = com.arjuna.orbportability.internal.orbspecific.javaidl.orb.implementations.javaidl_1_4.class.getName();
-    private static final String JACORB_CLASSNAME = com.arjuna.orbportability.internal.orbspecific.jacorb.orb.implementations.jacorb_2_0.class.getName();
+    private static final String OPENJDKORB_CLASSNAME = com.arjuna.orbportability.internal.orbspecific.javaidl.orb.implementations.javaidl_1_4.class.getName();
 
     private ORB testORB;
     private OA testOA;
@@ -74,17 +73,8 @@ public class RemoteTMExample {
         testORB = ORB.getInstance("test");
         testOA = OA.getRootOA(testORB);
 
-        if (JACORB_CLASSNAME.equals(orbImpl)) {
-            System.out.printf("Testing against JacOrb%n");
-            String OAIAddrProp = "OAIAddr"; //"jacorb.ior_proxy_host"
-            String nsURL = String.format("corbaloc::%s:%s/StandardNS/NameServer-POA/_root", NAME_SERVER_HOST, NAME_SERVER_PORT);
-
-            orbProperties.setProperty(OAIAddrProp, NAME_SERVER_HOST);
-            orbProperties.setProperty("ORBInitRef.NameService", nsURL);
-
-            args = new String[] {};
-        } else if (JDKORB_CLASSNAME.equals(orbImpl)) {
-            System.out.printf("Testing against JdkOrb%n");
+        if (OPENJDKORB_CLASSNAME.equals(orbImpl)) {
+            System.out.printf("Testing against OpenJDK ORB%n");
             args = new String[]{
                     "-ORBInitialHost", NAME_SERVER_HOST, "-ORBInitialPort", NAME_SERVER_PORT
             };

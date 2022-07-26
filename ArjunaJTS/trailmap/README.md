@@ -28,6 +28,25 @@ wrapped with the transaction processing.
 
 **README needs to be fixed**
 
+#Run the simple sample
+
+`mvn clean compile exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=com.arjuna.demo.simple.HelloServer &`
+
+`mvn clean compile exec:java  -Dexec.cleanupDaemonThreads=false -Dexec.mainClass=com.arjuna.demo.simple.HelloClient`
+
+#Output
+```
+The Hello server is now ready... 
+
+Creating a transaction !
+Jul 06, 2022 10:53:44 AM com.arjuna.ats.arjuna.recovery.TransactionStatusManager start
+INFO: ARJUNA012170: TransactionStatusManager started on port 46133 and host 127.0.0.1 with service > com.arjuna.ats.arjuna.recovery.ActionStatusService
+Call the Hello Server !
+Hello - called within a scope of a transaction
+Commit transaction
+Done 
+```
+
 # Deprecated instructions
 
 To build the sources files you should follow instructions given below:
@@ -51,9 +70,6 @@ appropriately to use JBoss Transaction Service.
 
 Important Note:
 
-  Ensure that, in your CLASSPATH, any JBossTS jar file appears before
-  the jacorb (version 2.2.2) jar files
-
  From a command prompt,  go (or 'cd') to  the directory containing the
  build.xml file (`<jbossjts_install_root>/trailmap`) and type 'ant'.
 
@@ -63,8 +79,6 @@ Important Note:
 
 When running the local JTS transactions part of the trailmap, you will need to start
 the recovery manager: java com.arjuna.ats.arjuna.recovery.RecoveryManager -test
-
-You will need a jacorb.properties file to run the distributed JTS tests.
 
  For each sample, refer to the appropriate trail page.
 

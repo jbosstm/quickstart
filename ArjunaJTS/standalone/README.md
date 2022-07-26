@@ -19,7 +19,7 @@ mvn clean compile
 ./run.[sh|bat]
 ```
 
-Using the run script will run the example twice, once with JacOrb and then again but using JdkOrb.
+Using the run script will run using OpenJDK ORB.
 
 
 ### Driving JTS transaction remotely with ORB API
@@ -27,7 +27,7 @@ Using the run script will run the example twice, once with JacOrb and then again
 There is also a second example that you must run manually using a bash script.
 The example shows how a client can connect to a
 remote transaction manager (TM) using a CORBA Name Service for looking up the TM.
-The example runs using either JacOrb or JdkOrb:
+The example runs using OpenJDK ORB:
 
 You need to set 2 environment variables to run the example:
 
@@ -44,54 +44,35 @@ please override the setting in `start.sh` if it is incorrect.
 > If you are running on Windows you will need to port
   the script to Windows batch commands.
 
-Running with JacOrb:
+Running with OpenJDK ORB:
 
 1. start a CORBA name server
 ```
-./start.sh jacorb NS
+./start.sh NS
 ```
 
 2. start a Transaction Recovery Manager
 ```
-./start.sh jacorb RM
+./start.sh RM
 ```
 
 3. start a JTS Transaction Manager
 ```
-./start.sh jacorb TM
+./start.sh TM
 ```
 
 4. start a transactional client program
 ```
-./start.sh jacorb CL
+./start.sh CL
 ```
-
-Running with JdkORB:
-
-as above but replace JacORB with JdkORB
-
 
 ## Expected output
 
-The run script will the example twice, the first run uses JacORB for the CORBA ORB followed by a second run using
-the ORB bundled with the standard JDK.
+The script will run the example using the OpenJDK ORB.
 
-> The `orbd` command is not bundled with JDK >= 11, see [JEP 320](https://openjdk.java.net/jeps/320) for more information.
-> A quick way to get this quickstart running in the `jacorb` mode is to reuse the forementioned `orbd` bundled binary.
->
-> Install JDK 8, locate the `orbd` executable under the `bin` directory and create a symbolic link pointing to it, like so:
-> `sudo ln -s ${JDK_8_LOCATION}/bin/orbd /usr/bin/orbd`. Tested with OpenJDK 11.
+Testing against OpenJDK ORB
 
-Both runs should produce a line indicating success:
-
-Testing against JacORB
-
-```
-...
-[INFO] BUILD SUCCESS
-```
-
-Testing against JdkORB
+The run should produce a line indicating success:
 
 ```
 ...
