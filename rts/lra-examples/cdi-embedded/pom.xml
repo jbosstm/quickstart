@@ -75,8 +75,7 @@
             <artifactId>microprofile-lra-api</artifactId>
             <version>${version.microprofile.lra}</version>
         </dependency>
-
-       <dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
         </dependency>
