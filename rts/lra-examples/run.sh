@@ -108,7 +108,7 @@ function start_and_test_service {
 function test_recovery {
   # now test recovery
   echo "===== CdiBasedResource halt the service on pid $service_pid"
-  curl ${CURL_IP_OPTS} -X PUT -I "http://localhost:8082/${svctype}?fault=halt${svctype}during"
+  curl ${CURL_IP_OPTS} -X PUT -I "http://localhost:${service_port}/${svctype}?fault=halt${svctype}during"
   sleep `timeout_adjust 1 2>/dev/null || echo 1`
   # verify that the service is not running
   kill -0 $service_pid > /dev/null 2>&1
@@ -122,15 +122,18 @@ function test_recovery {
 
 echo "===== Running qickstart $qsname in directory $PWD"
 
-if [[ "$last" != "coordinator" ]]; then
+if [[ "$last" = "participant" ]]; then
 #  start_coordinator
   echo "===== starting external coordinator on port ${coord_port}"
   JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
   java ${JAVA_OPTS} ${IP_OPTS} -jar ../lra-coordinator/target/lra-coordinator-quarkus.jar &
   coord_pid=$!
   sleep `timeout_adjust 10 2>/dev/null || echo 10`
+elif [[ "$last" = "embedded" ]]; then
+  service_port=${coord_port} # the coordinator is running in-VM with the service
 else
-  coord_port=${service_port} # the coordinator is running in-VM with the service
+  echo "===== error you need to choose if you need external coordinator and edit the run.sh file"
+  exit 1
 fi
 
 start_and_test_service
