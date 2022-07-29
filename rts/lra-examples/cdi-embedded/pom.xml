@@ -8,7 +8,7 @@
     <artifactId>examples-microprofile-lra-cdi-embedded</artifactId>
 
     <name>LRA Examples: LRA participant with embedded Coordinator</name>
-    <description>LRA participant with embedded Coordinato</description>
+    <description>LRA participant with embedded Coordinator</description>
 
     <packaging>jar</packaging>
 
@@ -75,19 +75,18 @@
             <artifactId>microprofile-lra-api</artifactId>
             <version>${version.microprofile.lra}</version>
         </dependency>
-
-       <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy</artifactId>
-        </dependency>
-
-        <!-- MP LRA CDI support defines annotations for controlling the lifecycle
-             of LRAs and for controlling participation in an LRA
-             -->
         <dependency>
-            <groupId>org.eclipse.microprofile.lra</groupId>
-            <artifactId>microprofile-lra-api</artifactId>
-            <version>${version.microprofile.lra}</version>
+          <groupId>org.jboss.narayana.rts</groupId>
+          <artifactId>lra-service-base</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-client-jackson</artifactId>
         </dependency>
     </dependencies>
 
