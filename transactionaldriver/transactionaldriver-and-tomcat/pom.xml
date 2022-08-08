@@ -13,8 +13,8 @@
         <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
         <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
         <version.tomcat.plugin>2.2</version.tomcat.plugin>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
