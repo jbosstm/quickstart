@@ -33,7 +33,7 @@
     <description>Narayana Spring Boot example</description>
 
     <properties>
-        <version.org.springframework.boot>1.5.3.RELEASE</version.org.springframework.boot>
+        <version.org.springframework.boot>2.0.9.RELEASE</version.org.springframework.boot>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>

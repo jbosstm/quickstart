@@ -104,9 +104,9 @@ public class PortfolioControllerTests {
     @Test
     public void testBuyAndSell() {
         portfolioController.buy(USERNAME, SYMBOL, 1);
-        User user = userRepository.findOne(USERNAME);
+        User user = userRepository.getOne(USERNAME);
         assertEquals(BUDGET - PRICE, user.getBudget());
-        Share share = shareRepository.findOne(SYMBOL);
+        Share share = shareRepository.getOne(SYMBOL);
         assertEquals(AMOUNT - 1, share.getAmount());
         PortfolioEntry portfolioEntry = portfolioEntryRepository.findByUserAndShare(user, share);
         assertEquals(1, portfolioEntry.getAmount());
