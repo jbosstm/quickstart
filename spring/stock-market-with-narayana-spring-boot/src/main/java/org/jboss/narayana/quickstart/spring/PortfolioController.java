@@ -178,7 +178,7 @@ public class PortfolioController {
      * @throws IllegalArgumentException if a user doesn't exist.
      */
     private User getUser(String username) {
-        User user = userRepository.findOne(username);
+        User user = userRepository.getOne(username);
         if (user == null) {
             throw new IllegalArgumentException(String.format("User '%s' not found", username));
         }
@@ -194,7 +194,7 @@ public class PortfolioController {
      * @throws IllegalArgumentException if the share doesn't exist.
      */
     private Share getShare(String symbol) {
-        Share share = shareRepository.findOne(symbol);
+        Share share = shareRepository.getOne(symbol);
         if (share == null) {
             throw new IllegalArgumentException(String.format("Share '%s' not found", symbol));
         }
