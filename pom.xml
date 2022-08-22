@@ -173,7 +173,6 @@
         <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
         <spring.version>2.0.9.RELEASE</spring.version>
         <test.logs.to.file>false</test.logs.to.file>
-        <undertow.io.version>2.2.19.Final</undertow.io.version>
         <version.agroal>1.3</version.agroal>
 <!--         arquillian -->
         <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
@@ -217,7 +216,7 @@
         <version.jboss-transaction-api>1.1.1.Final</version.jboss-transaction-api>
         <version.jboss.bom>1.0.7.Final</version.jboss.bom>
         <version.jboss.logging.spi>2.2.0.CR1</version.jboss.logging.spi>
-        <version.jboss.logging>3.1.4.GA</version.jboss.logging>
+        <version.jboss.logging>3.5.0.Final</version.jboss.logging>
         <version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
         <version.jboss.spec.javaee.6.0>3.0.2.Final</version.jboss.spec.javaee.6.0>
         
@@ -255,10 +254,8 @@
         <version.org.wildfly.arquillian>4.0.0.Alpha5</version.org.wildfly.arquillian>
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
-        <version.resteasy.api>3.0.5.Final</version.resteasy.api>
-        <version.resteasy.client>4.6.0.Final</version.resteasy.client>
-        <version.resteasy.jaxrs>4.0.0.Beta5</version.resteasy.jaxrs>
-        <version.resteasy>3.0.23.Final</version.resteasy>
+        <version.resteasy.api>3.0.12.Final</version.resteasy.api>
+        <version.resteasy>5.0.4.Final</version.resteasy>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
         <version.surefire.plugin>3.0.0-M7</version.surefire.plugin>
         <version.tomcat.plugin>2.2</version.tomcat.plugin>
