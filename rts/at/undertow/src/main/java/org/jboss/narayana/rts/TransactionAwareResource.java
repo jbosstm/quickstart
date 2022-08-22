@@ -54,7 +54,7 @@ public class TransactionAwareResource {
 
     private static Map<String, String> values = new HashMap<String, String>();
 
-    @ApplicationPath("eg")
+    @ApplicationPath("/")
     public static class ServiceApp extends Application
     {
         @Override
