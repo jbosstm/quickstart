@@ -50,7 +50,6 @@ public class TxnHelper {
             response = client.target(txurl).request().post(Entity.entity(new Form(), MediaType.APPLICATION_FORM_URLENCODED_TYPE));
             Set<Link> links = response.getLinks();
 
-            EntityUtils.consume((HttpEntity) response.getEntity());
             if (response.getStatus() != HttpURLConnection.HTTP_CREATED)
                 throw new RuntimeException("beginTxn returned " + response.getStatus());
 
@@ -69,8 +68,6 @@ public class TxnHelper {
                     .request().put(Entity.entity(TxStatusMediaType.TX_COMMITTED, TxMediaType.TX_STATUS_MEDIA_TYPE));
 
             int sc = response.getStatus();
-
-            EntityUtils.consume((HttpEntity) response.getEntity());
 
             if (sc != HttpURLConnection.HTTP_OK)
                 throw new RuntimeException("endTxn returned " + sc);

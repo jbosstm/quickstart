@@ -81,12 +81,6 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-jaxrs</artifactId>
-          <version>3.0.16.Final</version>
-        </dependency>
-
         <!-- JBoss logging -->
         <dependency>
             <groupId>org.jboss.logging</groupId>

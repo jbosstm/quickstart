@@ -60,13 +60,6 @@
             <artifactId>restat-util</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- include resteasy since it provide some utility methods for manipulating HTTP headers -->
-        <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-jaxrs</artifactId>
-          <version>3.0.16.Final</version>
-        </dependency>
-
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
