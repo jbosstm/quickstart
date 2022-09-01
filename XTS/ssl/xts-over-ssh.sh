@@ -28,7 +28,9 @@ SLEEP_TIME=`timeout_adjust 3 2>/dev/null || echo 3` # default sleep time is 3
 
 WORKSPACE=${WORKSPACE:-$PWD}
 WILDFLY_QUICKSTART_HOME=${WILDFLY_QUICKSTART_HOME:-$QUICKSTART_HOME}
-JBOSS_BIN=${JBOSS_BIN:-$JBOSS_HOME} # jboss_bin is unpacked jboss distribution
+#comment so main wildfly will be used (TODO: uncomment it as soon as narayana works with main wildfly)
+#this comment will be reverted with the issue: https://issues.redhat.com/browse/JBTM-3679
+#JBOSS_BIN=${JBOSS_BIN:-$JBOSS_HOME} # jboss_bin is unpacked jboss distribution
 JBOSS_CLIENT="${WORKSPACE}/client"
 JBOSS_SERVER="${WORKSPACE}/server"
 # we don't want jboss home settings confusing startup scripts
@@ -154,10 +156,11 @@ cd "$WORKSPACE"
 if [ ! -d "$JBOSS_BIN" ]; then
   [ -d "$CURRENT_SCRIPT_DIR/target" ] && cd "$CURRENT_SCRIPT_DIR/target"
   echo "Variable \$JBOSS_BIN not defined going to clone 'wildfly' from github"
-  git clone --depth=1 https://github.com/wildfly/wildfly.git
-  mvn clean install -DskipTests -f wildfly/pom.xml
+  rm -rf wildfly-main
+  git clone --depth=1 https://github.com/wildfly/wildfly.git wildfly-main
+  mvn clean install -DskipTests -f wildfly-main/pom.xml
 
-  JBOSS_BIN=`find wildfly/dist/target -maxdepth 1 -type d -name 'wildfly-*'`
+  JBOSS_BIN=`find wildfly-main/dist/target -maxdepth 1 -type d -name 'wildfly-*'`
   command -v realpath
   [ $? -eq 0 ] && JBOSS_BIN=`realpath "$JBOSS_BIN"`
 
@@ -199,7 +202,7 @@ sed "s#http://localhost:8080/wsat-simple/RestaurantServiceAT?wsdl#https://localh
 
 # -s ../settings.xml
 DEPLOYMENT_NAME=wsat-simple.war
-mvn clean install -B -e -Dversion.server.bom=20.0.0.Final -Dversion.microprofile.bom=20.0.0.Final -DskipTests -Dinsecure.repositories=WARN
+mvn clean install -B -DskipTests -Dinsecure.repositories=WARN
 [ $? -ne 0 ] && echo "Failure to build deployment '$DEPLOYMENT_NAME' from quickstart '$WSAT_QUICKSTART_PATH'"
 
 # Settings for client

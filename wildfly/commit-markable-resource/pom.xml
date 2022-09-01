@@ -38,32 +38,11 @@
     <url>http://narayana.io</url>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-
         <server.args>-Dprojectdir=${project.build.directory}</server.args>
         <surefire.argline></surefire.argline>
         <jvm.args>-server -Xms64m -Xmx1024m -XX:MaxMetaspaceSize=512m ${server.args}</jvm.args>
         <jvm.args.debug></jvm.args.debug>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
-
-        <version.javaee.spec>1.1.1.Final</version.javaee.spec>
-        <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
-
-        <version.junit>4.13.1</version.junit>
-        <version.surefire.plugin>2.19.1</version.surefire.plugin>
-        <version.arquillian>1.1.11.Final</version.arquillian>
-        <version.arquillian.wildfly>2.2.0.Final</version.arquillian.wildfly>
-        <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
-        <version.byteman>4.0.10</version.byteman>
-        <version.h2>2.1.210</version.h2>
-        <version.creaper>1.6.1</version.creaper>
-        <version.wildfly.core>4.0.0.Final</version.wildfly.core>
-        <version.shrinkwrap>1.2.6</version.shrinkwrap>
-        <version.javax.xml.ws>2.3.1</version.javax.xml.ws>
-        <version.javax.annotation.api>1.3.2</version.javax.annotation.api>
     </properties>
 
     <build>
@@ -137,12 +116,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
@@ -170,7 +143,7 @@
         <dependency>
             <groupId>org.wildfly.arquillian</groupId>
             <artifactId>wildfly-arquillian-container-managed</artifactId>
-            <version>${version.arquillian.wildfly}</version>
+            <version>${version.org.wildfly.arquillian}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

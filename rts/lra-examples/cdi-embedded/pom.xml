@@ -3,26 +3,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+      <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
+      <artifactId>lra-examples</artifactId>
+      <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <artifactId>examples-microprofile-lra-cdi-embedded</artifactId>
 
     <name>LRA Examples: LRA participant with embedded Coordinator</name>
     <description>LRA participant with embedded Coordinator</description>
 
     <packaging>jar</packaging>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.test.skip>true</maven.test.skip>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
-        <version.microprofile.lra>1.0</version.microprofile.lra>
-        <quarkus.platform.version>2.10.0.Final</quarkus.platform.version>
-        <quarkus-plugin.version>2.10.0.Final</quarkus-plugin.version>
-        <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-    </properties>
 
     <dependencyManagement>
       <dependencies>
@@ -103,7 +95,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire-plugin.version}</version>
+                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>

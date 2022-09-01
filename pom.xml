@@ -140,37 +140,149 @@
     <module>wildfly/setCheckedActionFactoryExample</module>
     <module>STM</module>
     <module>jts-docker</module>
+    <module>jta-1_2-in-wildfly</module>
+    <module>wildfly/commit-markable-resource</module>
     <!-- JBTM-3565 disable the osgi quickstart until it is fixed -->
     <!-- module>karaf/osgi-jta</module-->
     <module>jta-and-hibernate-standalone</module>
   </modules>
 
   <properties>
-    <modular.jdk.args></modular.jdk.args>
+        <artemis.version>2.4.0</artemis.version>
+        <camel.version>2.25.4</camel.version>
+        <felix.plugin.version>3.0.1</felix.plugin.version>
+        <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
+        <jboss-transaction-spi.version>7.5.2.Final</jboss-transaction-spi.version>
+        
+        <jvm.args.debug/>
+        <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxMetaspaceSize=512m</jvm.args.memory>
+        <jvm.args.other>-server</jvm.args.other>
+        
+        <karaf.version>4.1.2</karaf.version>
+        <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <modular.jdk.args></modular.jdk.args>
+        <osgi.version>6.0.0</osgi.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+<!--         quarkus -->
+        <quarkus-plugin.version>2.10.0.Final</quarkus-plugin.version>
+        <quarkus.platform.version>2.10.0.Final</quarkus.platform.version>
+        
+        <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
+        <spring.version>2.0.9.RELEASE</spring.version>
+        <test.logs.to.file>false</test.logs.to.file>
+        <undertow.io.version>2.2.19.Final</undertow.io.version>
+        <version.agroal>1.3</version.agroal>
+<!--         arquillian -->
+        <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
+        <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
+        <version.arquillian>1.1.11.Final</version.arquillian>
+        
+        <version.byteman>4.0.19</version.byteman>
+        <version.clear.plugin>3.0.0</version.clear.plugin>
+        <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
+        <version.com.sun.faces.jsf-api>2.2.0-m13</version.com.sun.faces.jsf-api>
+        <version.com.sun.faces.jsf-impl>2.2.0-m13</version.com.sun.faces.jsf-impl>
+        <version.commons-dbcp2>2.2.0</version.commons-dbcp2>
+        <version.commons-logging>1.1.0.jboss</version.commons-logging>
+        <version.commons-pool2>2.5.0</version.commons-pool2>
+        <version.compiler.plugin>3.5.1</version.compiler.plugin>
+        <version.creaper>1.6.1</version.creaper>
+        <version.ear.plugin>2.10.1</version.ear.plugin>
+        <version.exec-maven-plugin>1.4.0</version.exec-maven-plugin>
+        <version.glassfish.corba.omgapi>4.2.1</version.glassfish.corba.omgapi>
+        <version.glassfish.json>1.1.4</version.glassfish.json>
+        <version.h2>2.1.210</version.h2>
+        <version.hibernate.javax.persistence>1.0.0.Final</version.hibernate.javax.persistence>
+        <version.hibernate.validator>6.1.5.Final</version.hibernate.validator>
+        <version.hibernate>6.0.0.Alpha7</version.hibernate>
+        <version.jackson>2.13.0</version.jackson>
+        <version.jakarta.json-api>2.0.1</version.jakarta.json-api>
+        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
+        <version.javaee.spec>1.1.1.Final</version.javaee.spec>
+        <version.javaee>7.0</version.javaee>
+<!--         javax -->
+        <version.javax.annotation.api>1.3.2</version.javax.annotation.api>
+        <version.javax.el>3.0.4</version.javax.el>
+        <version.javax.enterprise>1.1</version.javax.enterprise>
+        <version.javax.json.api>1.1.4</version.javax.json.api>
+        <version.javax.jw.jsr181>1.0-MR1</version.javax.jw.jsr181>
+        <version.javax.servlet.javax.servlet-api>3.0.1</version.javax.servlet.javax.servlet-api>
+        <version.javax.servlet.jstl>1.2</version.javax.servlet.jstl>
+        <version.javax.validation>2.0.1.Final</version.javax.validation>
+        <version.javax.xml.ws>2.3.1</version.javax.xml.ws>
+        
+        <version.jboss-transaction-api>1.1.1.Final</version.jboss-transaction-api>
+        <version.jboss.bom>1.0.7.Final</version.jboss.bom>
+        <version.jboss.logging.spi>2.2.0.CR1</version.jboss.logging.spi>
+        <version.jboss.logging>3.1.4.GA</version.jboss.logging>
+        <version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
+        <version.jboss.spec.javaee.6.0>3.0.2.Final</version.jboss.spec.javaee.6.0>
+        
+        <version.jnpserver>5.0.3.GA</version.jnpserver>
+        <version.json>1.0</version.json>
+        <version.jta.api>1.0.0.Final</version.jta.api>
+        <version.junit>4.13.1</version.junit>
+        <version.karaf.services>4.2.1</version.karaf.services>
+        <version.lifecycle.mapping.plugin>1.0.0</version.lifecycle.mapping.plugin>
+        <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
+        <version.microprofile.lra>1.0</version.microprofile.lra>
+        <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
+        <version.nimbus.jose.jwt>7.9</version.nimbus.jose.jwt>
+        <version.org.codehaus.jettison>1.3.2</version.org.codehaus.jettison>
+        <version.org.glassfish.javax.json>1.1</version.org.glassfish.javax.json>
+<!--         org.jboss -->
+        <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
+        <version.org.jboss.bom>1.0.0.Final</version.org.jboss.bom>
+        <version.org.jboss.ironjacamar>1.4.35.Final</version.org.jboss.ironjacamar>
+        <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
+        <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
+        <version.org.jboss.logmanager-log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager-log4j-jboss-logmanager>
+        <version.org.jboss.naming>5.0.3.GA</version.org.jboss.naming>
+        <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
+        <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
+        <version.org.jboss.spec.javax.ejb>1.0.0.Final</version.org.jboss.spec.javax.ejb>
+        <version.org.jboss.spec.javax.jms>1.0.0.Final</version.org.jboss.spec.javax.jms>
+        <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
+        <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
+        <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>
+        
+        <version.org.slf4j>1.7.2</version.org.slf4j>
+        <version.org.springframework.boot>2.0.9.RELEASE</version.org.springframework.boot>
+        <version.org.springframwork>5.2.22.RELEASE</version.org.springframwork>
+        <version.org.wildfly.arquillian>4.0.0.Alpha5</version.org.wildfly.arquillian>
+        <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
+        <version.postgresql>9.1-901.jdbc4</version.postgresql>
+        <version.resteasy.api>3.0.5.Final</version.resteasy.api>
+        <version.resteasy.client>4.6.0.Final</version.resteasy.client>
+        <version.resteasy.jaxrs>4.0.0.Beta5</version.resteasy.jaxrs>
+        <version.resteasy>3.0.23.Final</version.resteasy>
+        <version.shrinkwrap>1.2.6</version.shrinkwrap>
+        <version.surefire.plugin>3.0.0-M7</version.surefire.plugin>
+        <version.tomcat.plugin>2.2</version.tomcat.plugin>
+        <version.transaction.api>1.0.1.Final</version.transaction.api>
+        <version.war.plugin>3.2.3</version.war.plugin>
+        <version.weld>3.1.9.Final</version.weld>
+        
+        <version.wildfly.plugin>1.1.0.Alpha10</version.wildfly.plugin>
+        <version.wildfly.core>18.1.2.Final</version.wildfly.core>
+        <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
+        
   </properties>
 
-  <profiles>
-    <profile>
-      <id>jdk9</id>
-      <activation>
-        <jdk>[9,)</jdk>
-      </activation>
-      <properties>
-        <modular.jdk.args>--add-exports=java.base/sun.nio.ch=ALL-UNNAMED
-          --add-exports=jdk.unsupported/sun.reflect=ALL-UNNAMED
-          --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED
-          --add-modules=java.se</modular.jdk.args>
-      </properties>
-    </profile>
-    <profile>
-      <id>include-for-JDK11-above-versions</id>
-      <activation>
-        <jdk>[11,)</jdk>
-      </activation>
-      <modules>
-        <module>jta-1_2-in-wildfly</module>
-        <module>wildfly/commit-markable-resource</module>
-      </modules>
-    </profile>
-  </profiles>
+  <build>
+    <pluginManagement>
+      <plugins>
+            <plugin>
+              <artifactId>maven-war-plugin</artifactId>
+              <version>${version.war.plugin}</version>
+              <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+              </configuration>
+            </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

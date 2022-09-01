@@ -36,18 +36,6 @@
     </description>
 
     <properties>
-        <!-- Explicitly declaring the source encoding eliminates the following
-       message: -->
-        <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
-  resources, i.e. build is platform dependent! -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.org.wildfly.arquillian>2.1.1.Final</version.org.wildfly.arquillian>
-        <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
-        <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxMetaspaceSize=512m</jvm.args.memory>
-        <jvm.args.debug></jvm.args.debug>
-        <jvm.args.other>-server</jvm.args.other>
-        <version.surefire.plugin>2.19.1</version.surefire.plugin>
         <jboss1.env.home>${env.JBOSS_HOME_1}</jboss1.env.home>
         <jboss2.env.home>${env.JBOSS_HOME_2}</jboss2.env.home>
         <jboss1.home>${$jboss1.env.home}</jboss1.home>

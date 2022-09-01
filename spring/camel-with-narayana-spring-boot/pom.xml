@@ -32,24 +32,10 @@
     </parent>
     <groupId>org.jboss.narayana.quickstart.spring</groupId>
     <artifactId>camel-with-narayana-spring-boot</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>camel-with-narayana-spring-boot</name>
     <description>Demo project for Spring Boot</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
-        <camel.version>2.25.4</camel.version>
-        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
-        <spring.version>2.0.9.RELEASE</spring.version>
-        <artemis.version>2.4.0</artemis.version>
-        <h2.version>1.4.199</h2.version>
-        <commons-pool2.version>2.5.0</commons-pool2.version>
-        <commons-dbcp2.version>2.2.0</commons-dbcp2.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -105,7 +91,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
-            <version>${commons-dbcp2.version}</version>
+            <version>${version.commons-dbcp2}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -116,12 +102,12 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
-            <version>${commons-pool2.version}</version>
+            <version>${version.commons-pool2}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
+            <version>${version.h2}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -141,12 +127,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.2</version>
+                <version>${version.org.springframework.boot}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12.4</version>
                 <configuration>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 </configuration>

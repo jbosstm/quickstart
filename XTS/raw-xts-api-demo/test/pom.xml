@@ -44,21 +44,27 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>${version.arquillian}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+           <dependency>
+              <groupId>org.jboss.arquillian</groupId>
+              <artifactId>arquillian-bom</artifactId>
+              <version>1.7.0.Alpha12</version>
+              <type>pom</type>
+              <scope>import</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.jboss.arquillian.extension</groupId>
+              <artifactId>arquillian-drone-bom</artifactId>
+              <version>1.2.4.Final</version>
+              <type>pom</type>
+              <scope>import</scope>
+          </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <version>${version.arquillian.graphene}</version>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
@@ -127,7 +133,7 @@
                             Used in arquillian.xml - arguments for all WildFly instances.
                             System properties are duplicated here until ARQ-647 is implemented.
                         -->
-                        <server.jvm.args>-Xmx512m -XX:MaxMetaspaceSize=128m ${jvm.args.ip.server}
+                        <server.jvm.args>-Xmx512m -XX:MaxMetaspaceSize=256m ${jvm.args.ip.server}
                             -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}
                             -Djava.awt.headless=false
                         </server.jvm.args>
@@ -150,7 +156,7 @@
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.arquillian.wildfly}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -163,7 +169,7 @@
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${version.arquillian.wildfly}</version>
+                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

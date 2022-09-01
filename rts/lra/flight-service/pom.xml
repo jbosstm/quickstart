@@ -15,24 +15,6 @@
     <name>LRA Quickstart flight-service</name>
     <description>LRA Quickstart</description>
 
-    <properties>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-        <quarkus.platform.version>2.10.0.Final</quarkus.platform.version>
-        <quarkus-plugin.version>2.10.0.Final</quarkus-plugin.version>
-        <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-
-        <version.narayana>${project.version}</version.narayana>
-        <version.resteasy-client>4.6.0.Final</version.resteasy-client>
-        <version.json>1.0</version.json>
-
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <test.logs.to.file>false</test.logs.to.file>
-
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -50,7 +32,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire-plugin.version}</version>
+                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
@@ -96,7 +78,7 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>narayana-lra</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- JAXRS 2 Client API implementation -->

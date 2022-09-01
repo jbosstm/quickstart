@@ -12,14 +12,6 @@
     <name>WildFly Examples: LRA client with JWT token</name>
     <description>examples-microprofile-lra - client with JWT token</description>
 
-    <properties>
-        <version.resteasy.client>4.6.0.Final</version.resteasy.client>
-        <version.resteasy.jaxrs>4.0.0.Beta5</version.resteasy.jaxrs>
-        <version.nimbus.jose.jwt>7.9</version.nimbus.jose.jwt>
-        <version.javax.json.api>1.1.4</version.javax.json.api>
-        <version.org.glassfish.javax.json>1.1</version.org.glassfish.javax.json>
-    </properties>
-
     <dependencies>
 
         <dependency>
