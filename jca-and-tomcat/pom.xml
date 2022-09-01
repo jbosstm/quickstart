@@ -24,47 +24,19 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <artifactId>narayana-quickstarts-all</artifactId>
+        <groupId>org.jboss.narayana.quickstart</groupId>
+        <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstarts</groupId>
     <artifactId>jca-and-tomcat</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Narayana Quickstarts: JBTM, IronJacamar, and Tomcat</name>
     <description>JBTM and IronJacamar on Tomcat examle</description>
 
     <url>http://jboss.org/jbosstm</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.org.jboss.ironjacamar>1.4.22.Final</version.org.jboss.ironjacamar>
-        <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
-        <version.hibernate.validator>6.1.5.Final</version.hibernate.validator>
-        <version.javax.el>3.0.4</version.javax.el>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.jboss.logging>3.1.4.GA</version.jboss.logging>
-        <version.jboss.logging.spi>2.2.0.CR1</version.jboss.logging.spi>
-        <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
-        <version.org.jboss.logmanager-log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager-log4j-jboss-logmanager>
-        <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
-        <version.org.jboss.threads>2.0.0.GA</version.org.jboss.threads>
-        <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
-        <version.org.jboss.naming>5.0.3.GA</version.org.jboss.naming>
-        <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
-        <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
-        <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
-        <version.javax.validation>2.0.1.Final</version.javax.validation>
-        <version.javax.servlet.jstl>1.2</version.javax.servlet.jstl>
-        <version.javax.servlet.javax.servlet-api>3.0.1</version.javax.servlet.javax.servlet-api>
-        <version.com.sun.faces.jsf-api>2.2.0-m13</version.com.sun.faces.jsf-api>
-        <version.com.sun.faces.jsf-impl>2.2.0-m13</version.com.sun.faces.jsf-impl>
-        <version.postgresql>9.1-901.jdbc4</version.postgresql>
-        <version.commons-logging>1.1.0.jboss</version.commons-logging>
-        <version.h2>2.1.210</version.h2>
-        <version.junit>4.13.1</version.junit>
-    </properties>
 
     <repositories>
         <repository>
@@ -120,11 +92,6 @@
 
         <!-- IronJacamar Core Dependencies -->
         <dependency>
-            <groupId>com.github.fungal</groupId>
-            <artifactId>fungal-cli</artifactId>
-            <version>${version.com.github.fungal}</version>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${version.hibernate.validator}</version>
@@ -135,26 +102,6 @@
             <artifactId>jakarta.el</artifactId>
             <version>${version.javax.el}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-api</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-impl</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-spi</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-api</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
@@ -305,7 +252,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.servlet</groupId>
@@ -316,7 +263,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-integration</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.servlet</groupId>

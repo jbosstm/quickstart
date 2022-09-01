@@ -25,20 +25,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.jboss.narayana.quickstarts.spring</groupId>
+        <artifactId>spring-all</artifactId>
+        <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstarts.spring</groupId>
     <artifactId>narayana-spring-boot</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
 
     <name>Narayana and Spring Boot Quickstart</name>
     <description>Narayana Spring Boot example</description>
-
-    <properties>
-        <version.org.springframework.boot>2.0.9.RELEASE</version.org.springframework.boot>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
-    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -52,30 +48,37 @@
             <dependency>
               <groupId>org.jboss.narayana.jta</groupId>
               <artifactId>jdbc</artifactId>
-              <version>${version.narayana}</version>
+              <version>${project.version}</version>
             </dependency>
             <dependency>
               <groupId>org.jboss.narayana.jta</groupId>
               <artifactId>jms</artifactId>
-              <version>${version.narayana}</version>
+              <version>${project.version}</version>
             </dependency>
             <dependency>
               <groupId>org.jboss.narayana.jta</groupId>
               <artifactId>jta</artifactId>
-              <version>${version.narayana}</version>
+              <version>${project.version}</version>
             </dependency>
             <dependency>
               <groupId>org.jboss.narayana.jts</groupId>
               <artifactId>narayana-jts-integration</artifactId>
-              <version>${version.narayana}</version>
+              <version>${project.version}</version>
             </dependency>
           </dependencies>
     </dependencyManagement>
 
     <dependencies>
+<!--         spring-boot-starter-data-jpa includes hibernate-core -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+<!--         javassist dependency updates javassist version 3.22.0-GA included in hibernate-core -->
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.25.0-GA</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -124,8 +127,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <skip>false</skip>
+                    <argLine>${modular.jdk.args}</argLine>
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
@@ -145,4 +150,20 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+<!--     jdk17 profile is defined because org.springframework.cglib.core.ReflectUtils needs -->
+<!--     java.lang add-opens in order to work with JDK17  -->
+<!--     see https://docs.oracle.com/en/java/javase/16/migrate/migrating-jdk-8-later-jdk-releases.html#GUID-7BB28E4D-99B3-4078-BDC4-FC24180CE82B -->
+     <profile> 
+          <id>jdk17</id>
+          <activation>
+            <jdk>[17,)</jdk>
+          </activation>
+          <properties>
+             <modular.jdk.args>
+              --add-opens=java.base/java.lang=ALL-UNNAMED
+            </modular.jdk.args>
+          </properties>
+      </profile>
+  </profiles>
 </project>

@@ -69,8 +69,32 @@ function int_env {
     echo "pull closed"
     exit 0
   fi
+  # WildFly 27 requires JDK 11 (see JBTM-3582 for details)
+    _jdk=`which_java`
+    if [ "$_jdk" -lt 11 ]; then
+      fatal "Narayana does not support JDKs less than 11"
+    fi
 }
+function which_java {
+  type -p java 2>&1 > /dev/null
+  if [ $? = 0 ]; then
+    _java=java
+  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]]; then
+    _java="$JAVA_HOME/bin/java"
+  else
+    unset _java
+  fi
 
+  if [[ "$_java" ]]; then
+    version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
+
+    if [[ $version = 17* ]]; then
+      echo 17
+    elif [[ $version = 11* ]]; then
+      echo 11
+    fi
+  fi
+}
 function rebase_quickstart_repo {
   cd $WORKSPACE
   git remote add upstream https://github.com/jbosstm/quickstart.git
@@ -121,7 +145,7 @@ function build_narayana {
 
 function configure_wildfly {
   cd $WORKSPACE
-  wget -nv https://ci.wildfly.org/guestAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
+  wget -nv https://ci.wildfly.org/guestAuth/repository/downloadAll/WF_26xNightlyJobs_Nightly/.lastSuccessful/artifacts.zip
   unzip -q artifacts.zip
   # the artifacts.zip may be wrapping several zip files: artifacts.zip -> wildfly-latest-SNAPSHOT.zip -> wildfly-###-SNAPSHOT.zip
   local wildflyLatestZipWrapper=$(ls wildfly-latest-*.zip | head -n 1)
@@ -156,7 +180,61 @@ function build_apache-karaf {
     exit -1
   fi
 }
+function clone_as {
+  REPO="https://github.com/wildfly/wildfly.git"
+  echo "Cloning AS sources from $REPO"
 
+  cd $WORKSPACE
+
+  if [ -d jboss-as ]; then
+    rm -rf jboss-as # start afresh
+  fi
+
+  git clone $REPO jboss-as || fatal "git clone $REPO failed"
+
+  if [ $REDUCE_SPACE = 1 ]; then
+    echo "Deleting git dir to reduce disk usage"
+    rm -rf .git
+  fi
+
+  cd $WORKSPACE
+}
+function build_as {
+  AS_BRANCH=27.0.0.Alpha1
+  echo "Building WildFly $AS_BRANCH"
+
+  cd $WORKSPACE/jboss-as
+
+  git checkout $AS_BRANCH || fatal "git checkout $AS_BRANCH failed"
+
+  # building WildFly
+  [ "$_jdk" -lt 17 ] && export MAVEN_OPTS="-XX:MaxMetaspaceSize=512m -XX:+UseConcMarkSweepGC $MAVEN_OPTS"
+  [ "$_jdk" -ge 17 ] && export MAVEN_OPTS="-XX:MaxMetaspaceSize=512m $MAVEN_OPTS"
+  JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxMetaspaceSize=512m $JAVA_OPTS" ./build.sh clean install -B -DskipTests -Dts.smoke=false $IPV6_OPTS -Dversion.org.jboss.narayana=${NARAYANA_CURRENT_VERSION} "$@"
+  [ $? -eq 0 ] || fatal "AS build failed"
+
+  WILDFLY_VERSION_FROM_JBOSS_AS=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' ${WORKSPACE}/jboss-as/pom.xml | cut -d \< -f 2|cut -d \> -f 2`
+  echo "AS version is ${WILDFLY_VERSION_FROM_JBOSS_AS}"
+  JBOSS_HOME=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}
+  export JBOSS_HOME=`echo  $JBOSS_HOME`
+
+  # init files under JBOSS_HOME before AS TESTS is started
+  init_jboss_home
+
+  cd $WORKSPACE
+}
+function init_jboss_home {
+  [ -d $JBOSS_HOME ] || fatal "missing AS - $JBOSS_HOME is not a directory"
+  echo "JBOSS_HOME=$JBOSS_HOME"
+  cp ${JBOSS_HOME}/docs/examples/configs/standalone-xts.xml ${JBOSS_HOME}/standalone/configuration
+  cp ${JBOSS_HOME}/docs/examples/configs/standalone-rts.xml ${JBOSS_HOME}/standalone/configuration
+  # configuring bigger connection timeout for jboss cli (WFLY-13385)
+  CONF="${JBOSS_HOME}/bin/jboss-cli.xml"
+  sed -e 's#^\(.*</jboss-cli>\)#<connection-timeout>30000</connection-timeout>\n\1#' "$CONF" > "$CONF.tmp" && mv "$CONF.tmp" "$CONF"
+  grep 'connection-timeout' "${CONF}"
+  #Enable remote debugger
+  echo JAVA_OPTS='"$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,address=8797,server=y,suspend=n"' >> "$JBOSS_HOME"/bin/standalone.conf
+}
 function run_quickstarts {
   cd $WORKSPACE
   echo Running quickstarts
@@ -174,6 +252,8 @@ int_env
 comment_on_pull "Started testing this pull request: $BUILD_URL"
 rebase_quickstart_repo
 build_narayana
-configure_wildfly || exit 1
+clone_as "$@"
+build_as "$@"
+#configure_wildfly || exit 1
 #build_apache-karaf # JBTM-2820 disable the karaf build
 run_quickstarts

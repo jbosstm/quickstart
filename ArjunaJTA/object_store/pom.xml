@@ -76,7 +76,7 @@
                   <executable>bash</executable>
                   <commandlineArgs>${basedir}/run.sh</commandlineArgs>
                   <environmentVariables>
-                    <QUICKSTART_NARAYANA_VERSION>${version.narayana}</QUICKSTART_NARAYANA_VERSION>
+                    <QUICKSTART_NARAYANA_VERSION>${project.version}</QUICKSTART_NARAYANA_VERSION>
                   </environmentVariables>
                 </configuration>
               </execution>
@@ -109,7 +109,7 @@
                      <exec dir="${project.basedir}" executable="cmd.exe" failonerror="true">
                        <arg value="/c"/>
                        <arg value="run.bat"/>
-                       <env key="QUICKSTART_NARAYANA_VERSION" value="${version.narayana}" />
+                       <env key="QUICKSTART_NARAYANA_VERSION" value="${project.version}" />
                      </exec>
                    </target>
                  </configuration>

@@ -49,23 +49,6 @@
       </repository>
     </repositories>
     
-    <properties>
-        <!-- Explicitly declaring the source encoding eliminates the following
-       message: -->
-        <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
-  resources, i.e. build is platform dependent! -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.org.wildfly.arquillian>2.1.1.Final</version.org.wildfly.arquillian>
-        <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
-        <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxMetaspaceSize=512m</jvm.args.memory>
-        <jvm.args.debug></jvm.args.debug>
-        <jvm.args.other>-server</jvm.args.other>
-        <version.surefire.plugin>2.19.1</version.surefire.plugin>
-        <version.javax.xml.ws>2.3.1</version.javax.xml.ws>
-        <version.javax.jw.jsr181>1.0-MR1</version.javax.jw.jsr181>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <!-- Define the version of JBoss' Java EE 6 APIs and Tools we want to import.  -->
@@ -81,7 +64,7 @@
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-javaee-6.0-with-tools</artifactId>
-                <version>1.0.0.Final</version>
+                <version>1.0.7.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -104,7 +87,7 @@
             <groupId>org.jboss.narayana.xts</groupId>
             <artifactId>jbossxts</artifactId>
             <classifier>api</classifier>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -117,7 +100,7 @@
         <dependency>
             <groupId>org.jboss.narayana.compensations</groupId>
             <artifactId>compensations</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -130,7 +113,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

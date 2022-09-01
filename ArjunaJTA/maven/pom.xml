@@ -13,18 +13,17 @@
   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.jta</groupId>
+        <artifactId>narayana-quickstarts-jta</artifactId>
+        <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>maven</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>basic maven example</name>
     <description>basic maven example</description>
-    <properties>
-      <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-      <maven.compiler.source>11</maven.compiler.source>
-      <maven.compiler.target>11</maven.compiler.target>
-      <version.junit>4.13.1</version.junit>
-    </properties>
+
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -102,7 +101,7 @@ read this as the JBoss stack of the Java EE 6 Web Profile APIs) -->
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -139,7 +138,7 @@ read this as the JBoss stack of the Java EE 6 Web Profile APIs) -->
                                   <executable>bash</executable>
                                   <commandlineArgs>${basedir}/run.sh</commandlineArgs>
                                   <environmentVariables>
-                                      <QUICKSTART_NARAYANA_VERSION>${version.narayana}</QUICKSTART_NARAYANA_VERSION>
+                                      <QUICKSTART_NARAYANA_VERSION>${project.version}</QUICKSTART_NARAYANA_VERSION>
                                   </environmentVariables>
                               </configuration>
                           </execution>
@@ -172,7 +171,7 @@ read this as the JBoss stack of the Java EE 6 Web Profile APIs) -->
                                          <exec dir="${project.basedir}" executable="cmd" failonerror="true">
                                              <arg value="/c"/>
                                              <arg value="run.bat"/>
-                                             <env key="QUICKSTART_NARAYANA_VERSION" value="${version.narayana}" />
+                                             <env key="QUICKSTART_NARAYANA_VERSION" value="${project.version}" />
                                          </exec>
                                      </target>
                                  </configuration>

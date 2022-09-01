@@ -29,22 +29,6 @@
     <description>Parent artifact of all XTS demos of Narayna quickstarts</description>
     <url>http://narayana.io</url>
 
-    <properties>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.javaee>7.0</version.javaee>
-        <version.arquillian>1.1.11.Final</version.arquillian>
-        <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
-        <version.arquillian.wildfly>1.1.0.Final</version.arquillian.wildfly>
-        <version.junit>4.13.1</version.junit>
-        <version.ear.plugin>2.10.1</version.ear.plugin>
-        <version.wildfly.plugin>1.0.2.Final</version.wildfly.plugin>
-        <version.lifecycle.mapping.plugin>1.0.0</version.lifecycle.mapping.plugin>
-        <version.compiler.plugin>3.5.1</version.compiler.plugin>
-        <version.clear.plugin>3.0.0</version.clear.plugin>
-        <version.surefire.plugin>2.19.1</version.surefire.plugin>
-        <version.war.plugin>2.6</version.war.plugin>
-    </properties>
-
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -63,7 +47,7 @@
         <pluginRepository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Repository Group</name>
-            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

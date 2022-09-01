@@ -35,9 +35,6 @@
   <packaging>jar</packaging>
   <name>JTS recovery</name>
 
-  <properties>
-    <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
-  </properties>
   <dependencies>
     <!-- For logging -->
     <dependency>
@@ -49,7 +46,7 @@
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>narayana-jts-idlj</artifactId>
-      <version>${version.narayana}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.openjdk-orb</groupId>
@@ -96,7 +93,7 @@
                   <executable>bash</executable>
                   <commandlineArgs>${basedir}/run.sh</commandlineArgs>
                   <environmentVariables>
-                    <QUICKSTART_NARAYANA_VERSION>${version.narayana}</QUICKSTART_NARAYANA_VERSION>
+                    <QUICKSTART_NARAYANA_VERSION>${project.version}</QUICKSTART_NARAYANA_VERSION>
                   </environmentVariables>
                 </configuration>
               </execution>
@@ -129,7 +126,7 @@
                      <exec dir="${project.basedir}" executable="cmd.exe" failonerror="true">
                        <arg value="/c"/>
                        <arg value="run.bat"/>
-                       <env key="QUICKSTART_NARAYANA_VERSION" value="${version.narayana}" />
+                       <env key="QUICKSTART_NARAYANA_VERSION" value="${project.version}" />
                      </exec>
                    </target>
                  </configuration>

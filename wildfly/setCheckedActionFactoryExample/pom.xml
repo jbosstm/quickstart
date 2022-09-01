@@ -23,17 +23,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>narayana-quickstarts-all</artifactId>
+        <groupId>org.jboss.narayana.quickstart</groupId>
+        <version>5.13.1.Final-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
 	<groupId>org.jboss.narayana</groupId>
 	<artifactId>setCheckedActionFactoryExample</artifactId>
-	<version>5.13.1.Final-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.target>11</maven.compiler.target>
-		<maven.compiler.source>11</maven.compiler.source>
-                <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-	</properties>
   <repositories>
     <repository>
       <id>jboss-public-repository-group</id>
@@ -51,7 +50,7 @@
 		<dependency>
 			<groupId>org.jboss.narayana.jta</groupId>
 			<artifactId>jta</artifactId>
-			<version>${version.narayana}</version>
+			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -61,22 +60,4 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
-				<configuration>
-					<!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<warName>ROOT</warName>
-					<archive>
-						<manifestEntries>
-							<Dependencies>org.jboss.jts</Dependencies>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

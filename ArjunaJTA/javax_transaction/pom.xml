@@ -85,7 +85,7 @@
                 <configuration>
                   <executable>${basedir}/run.sh</executable>
                   <environmentVariables>
-                    <QUICKSTART_NARAYANA_VERSION>${version.narayana}</QUICKSTART_NARAYANA_VERSION>
+                    <QUICKSTART_NARAYANA_VERSION>${project.version}</QUICKSTART_NARAYANA_VERSION>
                   </environmentVariables>
                 </configuration>
               </execution>
@@ -118,7 +118,7 @@
                      <exec dir="${project.basedir}" executable="cmd" failonerror="true">
                        <arg value="/c"/>
                        <arg value="run.bat"/>
-                       <env key="QUICKSTART_NARAYANA_VERSION" value="${version.narayana}" />
+                       <env key="QUICKSTART_NARAYANA_VERSION" value="${project.version}" />
                      </exec>
                    </target>
                  </configuration>

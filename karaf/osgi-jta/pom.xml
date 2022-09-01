@@ -34,17 +34,6 @@
 
     <url>http://jboss.org/jbosstm</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
-        <osgi.version>6.0.0</osgi.version>
-        <karaf.version>4.1.2</karaf.version>
-        <felix.plugin.version>3.0.1</felix.plugin.version>
-        <version.karaf.services>4.2.1</version.karaf.services>
-    </properties>
-
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -69,7 +58,7 @@
         <dependency>
             <groupId>org.jboss.narayana.osgi</groupId>
             <artifactId>narayana-osgi-jta</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
