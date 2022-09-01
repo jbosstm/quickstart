@@ -2,20 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+      <artifactId>transactionaldriver</artifactId>
+      <groupId>io.narayana</groupId>
+      <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>io.narayana</groupId>
     <artifactId>transactionaldriver-and-tomcat</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <packaging>war</packaging>
-
-    <properties>
-        <version.resteasy>3.0.23.Final</version.resteasy>
-        <version.h2>2.1.210</version.h2>
-        <version.org.jboss.spec.javax.transaction>1.0.0.Final</version.org.jboss.spec.javax.transaction>
-        <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
-        <version.tomcat.plugin>2.2</version.tomcat.plugin>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
 
     <dependencies>
         <dependency>

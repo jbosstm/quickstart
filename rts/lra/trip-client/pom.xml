@@ -16,21 +16,6 @@
     <description>LRA Quickstart</description>
     <packaging>war</packaging>
 
-    <properties>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-        <lra.coordinator.url>http://localhost:8080/lra-coordinator</lra.coordinator.url>
-
-        <version.resteasy-client>4.6.0.Final</version.resteasy-client>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <test.logs.to.file>false</test.logs.to.file>
-
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -55,7 +40,7 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>narayana-lra</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- JAXRS 2 Client API implementation -->

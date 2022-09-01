@@ -9,7 +9,6 @@
     </parent>
 
     <artifactId>examples-lra-jwt-wildfly</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <name>LRA jwt wildfly Quickstart Examples</name>
     <description>Provides examples of how to secure LRA endpoints using JWT security mechanism on wildfly</description>
     <packaging>pom</packaging>

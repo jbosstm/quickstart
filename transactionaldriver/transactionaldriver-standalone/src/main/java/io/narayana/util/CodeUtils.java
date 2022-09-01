@@ -53,7 +53,7 @@ public final class CodeUtils {
             try {
                 log.tracef("Closing: %s", closable);
                 closable.close();
-            } catch (Throwable t) {
+            } catch (Exception t) {
                 if(re == null) re = new RuntimeException("Error on closing multiple closable statemens: " + Arrays.asList(closables));
                 re.addSuppressed(t);
             }

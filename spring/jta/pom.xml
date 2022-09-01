@@ -36,24 +36,6 @@
     <name>Narayana Quickstarts: JBTM and Spring - JTA Example</name>
     <description>JTA Examples</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.maven-surefire-plugin>2.19.1</version.maven-surefire-plugin>
-        <version.org.springframwork>5.2.22.RELEASE</version.org.springframwork>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.jboss.logging>3.1.4.GA</version.jboss.logging>
-	<version.commons-dbcp2>2.1.1</version.commons-dbcp2>
-	<version.commons-pool2>2.4.3</version.commons-pool2>
-        <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
-        <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
-        <version.h2>2.1.210</version.h2>
-        <version.junit>4.13.1</version.junit>
-        <version.javax.annotation.api>1.3.2</version.javax.annotation.api>
-    </properties>
-
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -100,12 +82,12 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>jta</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-integration</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.logging</groupId>

@@ -32,22 +32,18 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>xts-demo-core</artifactId>
     <packaging>jar</packaging>
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jboss.narayana.arjunacore</groupId>
             <artifactId>arjunacore</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.xts</groupId>
             <artifactId>jbossxts</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <classifier>api</classifier>
             <scope>provided</scope>
         </dependency>

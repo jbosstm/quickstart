@@ -25,32 +25,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <artifactId>narayana-quickstarts-all</artifactId>
+        <groupId>org.jboss.narayana.quickstart</groupId>
+        <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jta-and-hibernate-standalone</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
 
     <name>Narayana Quickstart: Standalone JTA 1.2 and Hibernate Quickstart</name>
     <description>Example shows how to use JTA 1.2 and Hibernate in standalone application</description>
 
     <url>http://narayana.io</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
-        <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.maven-surefire-plugin>2.19.1</version.maven-surefire-plugin>
-        <version.exec-maven-plugin>1.4.0</version.exec-maven-plugin>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <version.jnpserver>5.0.3.GA</version.jnpserver>
-        <version.junit>4.13.1</version.junit>
-        <version.h2>2.1.210</version.h2>
-        <version.hibernate>5.1.7.Final</version.hibernate>
-        <version.weld>2.3.4.Final</version.weld>
-        <version.jboss-transaction-api>1.0.1.Final</version.jboss-transaction-api>
-        <version.byteman>4.0.19</version.byteman>
-        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
-    </properties>
 
     <repositories>
         <repository>
@@ -70,7 +56,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>${version.narayana}</version>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.logmanager</groupId>
@@ -145,11 +131,11 @@
         <!-- Standalone CDI container -->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se</artifactId>
+            <artifactId>weld-se-core</artifactId>
             <version>${version.weld}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${version.hibernate}</version>
         </dependency>
@@ -222,7 +208,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.maven-surefire-plugin}</version>
+                <version>${version.surefire.plugin}</version>
                 <configuration>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <environmentVariables>

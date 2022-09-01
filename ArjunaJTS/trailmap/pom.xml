@@ -13,17 +13,17 @@
 	Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+      <groupId>org.jboss.narayana.quickstart.jts</groupId>
+      <artifactId>narayana-quickstarts-jts</artifactId>
+      <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.jts</groupId>
     <artifactId>narayana-jts-quickstart-trailmap</artifactId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>${project.artifactId}</description>
     <packaging>jar</packaging>
-    <properties>
-        <version.narayana>5.13.1.Final-SNAPSHOT</version.narayana>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
+
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>

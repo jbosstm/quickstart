@@ -28,10 +28,6 @@
     </license>
   </licenses>
 
-  <properties>
-    <version.junit>4.13.1</version.junit>
-  </properties>
-
   <modules>
     <!-- Build module 2 first as it is the remote EJB which provides a stub 
       for module 1 -->
@@ -84,16 +80,6 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-                <configuration>
-                    <!-- Java EE 6 doesn't require web.xml, Maven needs to 
-                        catch up! -->
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
             <!-- The WildFly plugin deploys your war to a local WildFly container -->

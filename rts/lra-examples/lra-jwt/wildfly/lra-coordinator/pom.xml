@@ -3,8 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
+        <artifactId>examples-lra-jwt-wildfly</artifactId>
+        <version>5.13.1.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
-    <version>5.13.1.Final-SNAPSHOT</version>
     <artifactId>jwt-lra-coordinator</artifactId>
     <name>WildFly Examples: LRA Coordinator with JWT security</name>
     <description>WildFly Examples: LRA Coordinator with JWT security</description>
@@ -14,7 +18,7 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>lra-coordinator-jar</artifactId>
-            <version>5.10.6.Final</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

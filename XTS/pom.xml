@@ -44,20 +44,11 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>include-for-JDK11-above-versions</id>
-      <activation>
-        <jdk>[11,)</jdk>
-      </activation>
-      <modules>
-        <module>wsat-jta-multi_service</module>
-        <module>wsat-jta-multi_hop</module>
-        <module>ssl</module>
-      </modules>
-    </profile>
-  </profiles>
+
   <modules>
     <module>raw-xts-api-demo</module>
+    <module>wsat-jta-multi_service</module>
+    <module>wsat-jta-multi_hop</module>
+    <module>ssl</module>
   </modules>
 </project>
