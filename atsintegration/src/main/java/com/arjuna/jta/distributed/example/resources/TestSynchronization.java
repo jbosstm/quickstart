@@ -21,7 +21,7 @@
  */
 package com.arjuna.jta.distributed.example.resources;
 
-import javax.transaction.Synchronization;
+import jakarta.transaction.Synchronization;
 
 /**
  * This is a simple Synchronization, any knowledge (such as the server name) it

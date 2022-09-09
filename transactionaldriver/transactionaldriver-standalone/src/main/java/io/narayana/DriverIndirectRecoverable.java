@@ -30,7 +30,7 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.XADataSource;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 import com.arjuna.ats.jdbc.TransactionalDriver;
 

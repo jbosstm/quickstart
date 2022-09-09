@@ -20,7 +20,7 @@ import io.undertow.Undertow;
 
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.core.Application;
 
 public class JAXRSServer {
     private UndertowJaxrsServer server;

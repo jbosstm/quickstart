@@ -20,8 +20,8 @@
  */
 package org.jboss.narayana.quickstarts.compensationsApi.taxi1.jaxws;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
 import java.util.Date;
 
 /**

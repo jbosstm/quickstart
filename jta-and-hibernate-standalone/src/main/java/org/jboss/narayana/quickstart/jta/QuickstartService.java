@@ -24,10 +24,10 @@ package org.jboss.narayana.quickstart.jta;
 
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 import javax.transaction.xa.XAResource;
 import java.util.List;
 

@@ -25,9 +25,9 @@ import com.mongodb.MongoClient;
 import org.jboss.narayana.compensations.api.CompensationManager;
 import org.jboss.narayana.compensations.api.TxCompensate;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.InjectionPoint;
+import jakarta.inject.Inject;
 import java.net.UnknownHostException;
 
 /**

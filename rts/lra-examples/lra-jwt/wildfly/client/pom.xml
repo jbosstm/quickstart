@@ -58,7 +58,7 @@
                     <artifactId>btf</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.jboss.spec.javax.xml.bind</groupId>
+                    <groupId>org.jboss.spec.jakarta.xml.bind</groupId>
                     <artifactId>jboss-jaxb-api_2.3_spec</artifactId>
                 </exclusion>
                 <exclusion>
@@ -83,7 +83,7 @@
 
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
+            <artifactId>jakarta.json</artifactId>
             <version>${version.org.glassfish.javax.json}</version>
         </dependency>
 

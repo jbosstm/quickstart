@@ -18,9 +18,9 @@ package org.jboss.narayana.quickstart.jta;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 /**
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>

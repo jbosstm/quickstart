@@ -26,7 +26,7 @@ import java.sql.PreparedStatement;
 
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 import javax.transaction.xa.XAResource;
 
 import io.narayana.util.DBUtils;

@@ -36,7 +36,7 @@ import javax.xml.rpc.handler.Handler;
 import javax.xml.rpc.handler.HandlerInfo;
 import javax.xml.rpc.handler.MessageContext;
 import javax.xml.rpc.handler.soap.SOAPMessageContext;
-import javax.xml.soap.SOAPMessage;
+import jakarta.xml.soap.SOAPMessage;
 
 
 import com.arjuna.webservices.wscoor.CoordinationConstants;

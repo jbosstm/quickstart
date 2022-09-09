@@ -27,10 +27,10 @@
  */
 package org.jboss.narayana.quickstarts.wsat.jtabridge.second.jaxws;
 
-import javax.ejb.Remote;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
+import jakarta.ejb.Remote;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
 
 /**
  * Interface to a simple Second. Provides simple methods to manipulate bookings.

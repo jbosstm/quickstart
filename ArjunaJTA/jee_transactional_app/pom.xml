@@ -120,7 +120,7 @@
         <!-- Import the JSF API, we use provided scope as the API is included in 
 			JBoss AS 7 -->
         <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
+            <groupId>org.jboss.spec.jakarta.faces</groupId>
             <artifactId>jboss-jsf-api_2.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
@@ -154,8 +154,8 @@
         </dependency>
         <!-- Import the injection annotations -->
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject</artifactId>
             <version>1</version>
             <scope>provided</scope>
         </dependency>

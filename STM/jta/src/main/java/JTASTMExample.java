@@ -15,8 +15,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
 
 import org.jboss.stm.Container;
 import org.jboss.stm.Container.MODEL;
@@ -65,7 +65,7 @@ public class JTASTMExample {
         try {
             tm.commit();
             throw new RuntimeException("Expected the OCC to violate and rollback the transaction");
-        } catch (javax.transaction.RollbackException e) {
+        } catch (jakarta.transaction.RollbackException e) {
             // Expected
         }
 

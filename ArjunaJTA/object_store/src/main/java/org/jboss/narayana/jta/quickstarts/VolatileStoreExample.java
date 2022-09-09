@@ -22,7 +22,7 @@ package org.jboss.narayana.jta.quickstarts;
 
 import java.io.File;
 
-import javax.transaction.UserTransaction;
+import jakarta.transaction.UserTransaction;
 
 import com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean;
 import com.arjuna.common.internal.util.propertyservice.BeanPopulator;

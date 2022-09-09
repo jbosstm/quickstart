@@ -21,7 +21,7 @@
  */
 package com.arjuna.jta.distributed.example.server;
 
-import javax.transaction.SystemException;
+import jakarta.transaction.SystemException;
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.Xid;
 

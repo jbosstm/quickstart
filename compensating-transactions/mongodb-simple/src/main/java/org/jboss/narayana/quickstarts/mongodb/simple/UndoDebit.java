@@ -23,7 +23,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import org.jboss.narayana.compensations.api.CompensationHandler;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.UnknownHostException;
 
 /**

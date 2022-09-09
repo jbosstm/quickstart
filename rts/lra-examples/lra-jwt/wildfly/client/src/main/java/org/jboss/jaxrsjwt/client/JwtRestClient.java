@@ -22,8 +22,8 @@ package org.jboss.jaxrsjwt.client;
 
 import org.jboss.jaxrsjwt.auth.JwtManager;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Response;
 
 public class JwtRestClient {
     private static final String AUTHZ_HEADER = "Authorization";

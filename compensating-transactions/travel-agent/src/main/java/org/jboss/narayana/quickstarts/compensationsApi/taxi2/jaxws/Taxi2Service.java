@@ -22,8 +22,8 @@ package org.jboss.narayana.quickstarts.compensationsApi.taxi2.jaxws;
 
 import org.jboss.narayana.quickstarts.compensationsApi.taxi2.BookingStatus;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
 import java.util.Date;
 
 /**

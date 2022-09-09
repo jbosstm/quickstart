@@ -26,12 +26,12 @@ import org.jboss.narayana.compensations.api.TxCompensate;
 import org.jboss.narayana.compensations.api.TxConfirm;
 import org.jboss.narayana.quickstarts.compensationsApi.hotel.jaxws.HotelService;
 
-import javax.inject.Inject;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import java.util.Date;
 
 /**

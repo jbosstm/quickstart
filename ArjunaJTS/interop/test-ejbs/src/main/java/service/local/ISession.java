@@ -21,7 +21,7 @@
  */
 package service.local;
 
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 // Extending remote interface for convenience of method declaration
 @Local
