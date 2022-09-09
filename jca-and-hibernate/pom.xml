@@ -38,7 +38,7 @@
     <url>http://jboss.org/jbosstm</url>
 
 	<properties>
-		<version.javax.el>3.0.1-b11</version.javax.el>
+		<version.jakarta.el>5.0.0-M1</version.jakarta.el>
 	</properties>
     <repositories>
         <repository>
@@ -63,15 +63,9 @@
         <!-- Hibernate Dependencies -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-core-jakarta</artifactId>
             <version>${version.hibernate}</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${version.hibernate}</version>
-        </dependency>
-
         <!-- IronJacamar Core Dependencies -->
         <dependency>
             <groupId>com.github.fungal</groupId>
@@ -85,13 +79,13 @@
         </dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${version.javax.validation}</version>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>${version.jakarta.validation}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.el</artifactId>
-            <version>${version.javax.el}</version>
+            <version>${version.jakarta.el}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
