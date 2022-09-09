@@ -66,30 +66,19 @@
         </dependency>
         <!-- JSF dependencies -->
         <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>${version.com.sun.faces.jsf-api}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>${version.com.sun.faces.jsf-impl}</version>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.faces</artifactId>
+            <version>3.0.1</version>
         </dependency>
 
         <!-- Servlet dependencies -->
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>${version.javax.servlet.javax.servlet-api}</version>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>${version.jakarta.servlet.jstl}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${version.javax.servlet.jstl}</version>
-            <scope>provided</scope>
-        </dependency>
-
+        
         <!-- IronJacamar Core Dependencies -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>

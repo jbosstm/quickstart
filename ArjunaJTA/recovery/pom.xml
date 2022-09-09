@@ -34,21 +34,11 @@
   <packaging>jar</packaging>
   <name>Recovery Examples</name>
   <dependencies>
-    <dependency>
-      <groupId>org.jboss.spec.javax.jms</groupId>
-      <artifactId>jboss-jms-api_1.1_spec</artifactId>
-      <version>1.0.0.Final</version>
-    </dependency>
     <!-- Embedded Hornetq -->
     <dependency>
       <groupId>org.hornetq</groupId>
-      <artifactId>hornetq-core</artifactId>
-      <version>2.2.2.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hornetq</groupId>
-      <artifactId>hornetq-jms</artifactId>
-      <version>2.2.2.Final</version>
+      <artifactId>hornetq-jms-server</artifactId>
+      <version>2.4.9.Final</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.netty</groupId>
@@ -60,6 +50,12 @@
        <artifactId>wildfly-logging</artifactId>
        <version>5.0.0.Beta5</version>
     </dependency>
+    
+            <dependency>
+    <groupId>jakarta.jms</groupId>
+    <artifactId>jakarta.jms-api</artifactId>
+    <version>3.1.0</version>
+</dependency>
   </dependencies>
 
   <profiles>
