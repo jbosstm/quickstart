@@ -55,7 +55,7 @@
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>${version.javax.annotation.api}</version>
+            <version>${version.jakarta.annotation.api}</version>
         </dependency>
 
         <dependency>
@@ -72,17 +72,18 @@
            <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.jboss.spec.javax.jms</groupId>
-            <artifactId>jboss-jms-api_1.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<dependency>
+    <groupId>jakarta.jms</groupId>
+    <artifactId>jakarta.jms-api</artifactId>
+    <version>3.1.0</version>
+</dependency>
 
-        <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!-- https://mvnrepository.com/artifact/jakarta.ejb/jakarta.ejb-api -->
+<dependency>
+    <groupId>jakarta.ejb</groupId>
+    <artifactId>jakarta.ejb-api</artifactId>
+    <version>4.0.1</version>
+</dependency>
 
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>

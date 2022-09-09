@@ -93,7 +93,7 @@
     <dependencies>
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
-            <artifactId>jaxws-api</artifactId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
             <version>${version.jakarta.xml.ws}</version>
         </dependency>
 
@@ -151,8 +151,8 @@
         </dependency>
         <dependency>
             <groupId>jakarta.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0.2</version>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
     </dependencies>
