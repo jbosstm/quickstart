@@ -21,9 +21,9 @@ import org.jboss.narayana.compensations.api.Compensatable;
 import org.jboss.narayana.compensations.api.CompensationManager;
 import org.jboss.narayana.quickstarts.compensationsApi.hotel.jaxws.HotelService;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
+import jakarta.xml.ws.Service;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;

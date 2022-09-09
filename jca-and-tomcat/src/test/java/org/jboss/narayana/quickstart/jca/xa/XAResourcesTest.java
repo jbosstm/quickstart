@@ -18,7 +18,7 @@ package org.jboss.narayana.quickstart.jca.xa;
 
 import java.sql.SQLException;
 
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 import org.jboss.narayana.quickstart.jca.common.AbstractTest;
 import org.jboss.narayana.quickstart.jca.model.Customer;

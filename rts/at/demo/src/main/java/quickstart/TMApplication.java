@@ -21,7 +21,7 @@
 package quickstart;
 
 
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.core.Application;
 import java.util.Set;
 import java.util.HashSet;
 import org.jboss.logging.Logger;

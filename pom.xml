@@ -211,7 +211,7 @@
         <version.javax.servlet.javax.servlet-api>3.0.1</version.javax.servlet.javax.servlet-api>
         <version.javax.servlet.jstl>1.2</version.javax.servlet.jstl>
         <version.javax.validation>2.0.1.Final</version.javax.validation>
-        <version.javax.xml.ws>2.3.1</version.javax.xml.ws>
+        <version.jakarta.xml.ws>2.3.1</version.jakarta.xml.ws>
         
         <version.jboss-transaction-api>1.1.1.Final</version.jboss-transaction-api>
         <version.jboss.bom>1.0.7.Final</version.jboss.bom>

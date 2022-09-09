@@ -84,13 +84,13 @@
             <version>${version.hibernate.validator}</version>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
+            <groupId>jakarta.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${version.javax.validation}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
+            <artifactId>jakarta.el</artifactId>
             <version>${version.javax.el}</version>
         </dependency>
         <dependency>
@@ -178,11 +178,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>
@@ -201,11 +201,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>

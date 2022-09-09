@@ -32,12 +32,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.Response;
-import javax.json.Json;
-import javax.json.JsonArray;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Link;
+import jakarta.ws.rs.core.Response;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import java.io.StringReader;
 import java.io.File;
 

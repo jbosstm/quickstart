@@ -16,12 +16,12 @@
  */
 package org.jboss.narayana.quickstarts.jta;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.transaction.Transactional;
-import javax.transaction.TransactionalException;
-import javax.transaction.UserTransaction;
+import jakarta.transaction.Transactional;
+import jakarta.transaction.TransactionalException;
+import jakarta.transaction.UserTransaction;
 
 /**
  * <p>

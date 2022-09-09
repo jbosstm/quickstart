@@ -20,8 +20,8 @@ package org.jboss.narayana.quickstarts.mongodb.simple;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.InjectionPoint;
 import java.net.UnknownHostException;
 
 /**

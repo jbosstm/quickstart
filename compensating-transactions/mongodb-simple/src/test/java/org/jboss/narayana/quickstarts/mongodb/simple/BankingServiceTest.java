@@ -37,7 +37,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.File;
 
 @RunWith(Arquillian.class)

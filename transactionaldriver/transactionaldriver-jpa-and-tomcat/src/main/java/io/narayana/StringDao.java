@@ -23,8 +23,8 @@
 package io.narayana;
 
 
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

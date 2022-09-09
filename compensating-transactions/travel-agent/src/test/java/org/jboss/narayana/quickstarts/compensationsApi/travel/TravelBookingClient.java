@@ -23,8 +23,8 @@ import org.jboss.narayana.quickstarts.compensationsApi.taxi1.jaxws.Taxi1Service;
 import org.jboss.narayana.quickstarts.compensationsApi.taxi2.jaxws.Taxi2Service;
 
 import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-import javax.xml.ws.soap.SOAPFaultException;
+import jakarta.xml.ws.Service;
+import jakarta.xml.ws.soap.SOAPFaultException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;

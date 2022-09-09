@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 /**
  * Portfolio controller exposing REST endpoints for buying and selling shares.

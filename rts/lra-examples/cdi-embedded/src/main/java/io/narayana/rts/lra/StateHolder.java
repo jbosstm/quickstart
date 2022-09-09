@@ -2,7 +2,7 @@ package io.narayana.rts.lra;
 
 import org.eclipse.microprofile.lra.annotation.ParticipantStatus;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 

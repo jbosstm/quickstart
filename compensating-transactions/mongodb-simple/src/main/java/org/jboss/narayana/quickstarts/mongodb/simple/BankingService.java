@@ -19,7 +19,7 @@ package org.jboss.narayana.quickstarts.mongodb.simple;
 
 import org.jboss.narayana.compensations.api.Compensatable;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * This service is responsible for transferring money from one account to another.

@@ -29,7 +29,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 @Configuration
 public class DatabaseConfig {

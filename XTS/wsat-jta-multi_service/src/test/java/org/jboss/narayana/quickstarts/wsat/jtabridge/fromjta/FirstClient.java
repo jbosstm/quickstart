@@ -20,7 +20,7 @@ package org.jboss.narayana.quickstarts.wsat.jtabridge.fromjta;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.jaxws.FirstServiceAT;
 
 import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
+import jakarta.xml.ws.Service;
 import java.net.URL;
 
 /**

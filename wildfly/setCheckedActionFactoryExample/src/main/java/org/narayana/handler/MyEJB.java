@@ -17,9 +17,9 @@
  */
 package org.narayana.handler;
 
-import javax.ejb.Singleton;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 
 import com.arjuna.ats.arjuna.coordinator.BasicAction;
 

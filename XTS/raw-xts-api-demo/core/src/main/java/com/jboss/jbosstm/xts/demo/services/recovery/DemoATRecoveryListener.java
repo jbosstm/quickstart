@@ -17,8 +17,8 @@
  */
 package com.jboss.jbosstm.xts.demo.services.recovery;
 
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
 
 /**
  * Listener to register and unregister teh XTS application specific listener -- we have to
