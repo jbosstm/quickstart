@@ -20,10 +20,10 @@ import org.jboss.logging.Logger;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.transaction.RollbackException;
-import javax.transaction.TransactionManager;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.transaction.RollbackException;
+import jakarta.transaction.TransactionManager;
 import java.util.List;
 
 /**

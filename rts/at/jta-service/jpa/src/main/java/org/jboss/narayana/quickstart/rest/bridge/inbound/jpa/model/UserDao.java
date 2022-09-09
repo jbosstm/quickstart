@@ -16,7 +16,7 @@
  */
 package org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model;
 
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 /**
  * Basic operations for manipulation with users

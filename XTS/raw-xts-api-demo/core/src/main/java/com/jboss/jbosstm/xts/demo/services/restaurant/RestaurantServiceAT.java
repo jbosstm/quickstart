@@ -34,11 +34,11 @@ import com.arjuna.mw.wst11.TransactionManagerFactory;
 import com.arjuna.mw.wst11.UserTransactionFactory;
 import com.jboss.jbosstm.xts.demo.restaurant.IRestaurantServiceAT;
 
-import javax.jws.HandlerChain;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import javax.jws.WebMethod;
-import javax.jws.soap.SOAPBinding;
+import jakarta.jws.HandlerChain;
+import jakarta.jws.WebParam;
+import jakarta.jws.WebService;
+import jakarta.jws.WebMethod;
+import jakarta.jws.soap.SOAPBinding;
 
 /**
  * An adapter class that exposes the RestaurantManager business API as a

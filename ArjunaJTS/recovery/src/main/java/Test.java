@@ -25,8 +25,8 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.transaction.Transaction;
-import javax.transaction.UserTransaction;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.UserTransaction;
 
 import com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean;
 import com.arjuna.ats.arjuna.common.arjPropertyManager;

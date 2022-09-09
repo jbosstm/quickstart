@@ -20,7 +20,7 @@ import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 import javax.transaction.xa.XAResource;
 import java.util.List;
 

@@ -22,9 +22,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
 
 @Service
 public class ExampleService {

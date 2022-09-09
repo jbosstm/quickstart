@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 /**
  * @author <a href="mailto:zfeng@redhat.com">Zheng Feng</a>

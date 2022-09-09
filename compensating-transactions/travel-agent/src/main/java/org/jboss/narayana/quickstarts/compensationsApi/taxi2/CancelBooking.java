@@ -19,10 +19,10 @@ package org.jboss.narayana.quickstarts.compensationsApi.taxi2;
 
 import org.jboss.narayana.compensations.api.CompensationHandler;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 /**
  * This is the compensation handler to be invoke if the transaction is cancelled. In this example the compensation handler will

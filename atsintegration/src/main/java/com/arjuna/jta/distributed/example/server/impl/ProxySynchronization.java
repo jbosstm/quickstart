@@ -21,8 +21,8 @@
  */
 package com.arjuna.jta.distributed.example.server.impl;
 
-import javax.transaction.Synchronization;
-import javax.transaction.SystemException;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.SystemException;
 import javax.transaction.xa.Xid;
 
 import com.arjuna.jta.distributed.example.server.LookupProvider;

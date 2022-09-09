@@ -36,8 +36,8 @@ import com.arjuna.wst11.BAParticipantManager;
 import com.arjuna.wst.SystemException;
 import com.jboss.jbosstm.xts.demo.restaurant.IRestaurantServiceBA;
 
-import javax.jws.*;
-import javax.jws.soap.SOAPBinding;
+import jakarta.jws.*;
+import jakarta.jws.soap.SOAPBinding;
 
 /**
  * An adapter class that exposes the RestaurantManager business API as a

@@ -24,13 +24,13 @@ import org.jboss.jbossts.qa.astests.ejbutil.TestResource;
 /*  AS5 only
 import org.jboss.annotation.ejb.RemoteBinding;  // AS4 only
 */
-import javax.ejb.Stateless;
-import javax.ejb.Remote;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
-import javax.transaction.RollbackException;
+import jakarta.ejb.Stateless;
+import jakarta.ejb.Remote;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.RollbackException;
 
 import org.jboss.jbossts.qa.astests.ejbutil.Util2;
 
@@ -38,7 +38,7 @@ import org.jboss.jbossts.qa.astests.ejbutil.Util2;
 @Remote(EJB3Remote.class)
 // JBoss specific binding replaces jboss.xml invokers cfg
 //@RemoteBinding(factory= RemoteBindingDefaults.PROXY_FACTORY_IMPLEMENTATION_IOR, jndiBinding="TestIIOPBean")
-//@javax.ejb.TransactionManagement(TransactionManagementType.CONTAINER)
+//@jakarta.ejb.TransactionManagement(TransactionManagementType.CONTAINER)
 public class EJB3StatelessBean
 {
 //	@org.jboss.ejb3.annotation.JndiInject(jndiName="java:/TransactionManager") TransactionManager tm;

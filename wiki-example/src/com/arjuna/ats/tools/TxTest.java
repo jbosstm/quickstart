@@ -28,7 +28,7 @@ import javax.naming.NamingException;
 import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
 
-import javax.transaction.UserTransaction;
+import jakarta.transaction.UserTransaction;
 
 // imports for the case where the client controls the distributed transaction
 // these are not need if the client is using JNDI to look up the UserTransaction object

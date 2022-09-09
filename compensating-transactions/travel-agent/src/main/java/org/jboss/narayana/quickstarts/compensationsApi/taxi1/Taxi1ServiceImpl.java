@@ -24,8 +24,8 @@ import org.jboss.narayana.compensations.api.Compensatable;
 import org.jboss.narayana.compensations.api.CompensationTransactionType;
 import org.jboss.narayana.quickstarts.compensationsApi.taxi1.jaxws.Taxi1Service;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
 import java.util.Date;
 
 /**

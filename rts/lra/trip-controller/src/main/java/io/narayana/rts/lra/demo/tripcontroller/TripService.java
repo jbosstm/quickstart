@@ -25,11 +25,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.narayana.lra.client.NarayanaLRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
-import javax.ws.rs.client.WebTarget;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -43,7 +43,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
 @ApplicationScoped
 public class TripService {

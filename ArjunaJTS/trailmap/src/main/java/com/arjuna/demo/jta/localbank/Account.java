@@ -27,9 +27,9 @@
  */
 package com.arjuna.demo.jta.localbank;
 
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
+import jakarta.transaction.RollbackException;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
 
 /**
  * The account object reflects a non-persistent transaction-aware representation of a bank account. As a bank account,
@@ -106,7 +106,7 @@ public class Account
     private AccountResource getXAResource() throws SystemException, RollbackException
     {
         // Obtain a reference to the transaction manager, this could also be done via JNDI.
-        javax.transaction.TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
+        jakarta.transaction.TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
         // Obtain a reference to the current transaction, this code assumes that the transaction has had begin() called
         // on it before reaching this point. begin() is called from the corresponding invocations to the account
         // operations in this class in the <CODE>BankClient</CODE> class

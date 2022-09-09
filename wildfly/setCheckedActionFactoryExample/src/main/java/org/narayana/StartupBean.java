@@ -19,12 +19,12 @@ package org.narayana;
 
 import java.util.Hashtable;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.AccessTimeout;
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.AccessTimeout;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 
 import org.narayana.handler.MyEJB;
 
@@ -34,7 +34,7 @@ import com.arjuna.ats.arjuna.coordinator.CheckedAction;
 import com.arjuna.ats.arjuna.coordinator.CheckedActionFactory;
 
 @Singleton
-@javax.ejb.Startup
+@jakarta.ejb.Startup
 @TransactionAttribute(TransactionAttributeType.NEVER)
 @AccessTimeout(-1)
 public class StartupBean {

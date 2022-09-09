@@ -2,9 +2,9 @@
 <Context>
     <!-- Narayana resources -->
     <Transaction factory="org.jboss.narayana.tomcat.io.narayana.jta.UserTransactionFactory"/>
-    <Resource name="TransactionManager" type="javax.transaction.TransactionManager"
+    <Resource name="TransactionManager" type="jakarta.transaction.TransactionManager"
               factory="org.jboss.narayana.tomcat.jta.TransactionManagerFactory"/>
-    <Resource name="TransactionSynchronizationRegistry" type="javax.transaction.TransactionSynchronizationRegistry"
+    <Resource name="TransactionSynchronizationRegistry" type="jakarta.transaction.TransactionSynchronizationRegistry"
               factory="org.jboss.narayana.tomcat.jta.TransactionSynchronizationRegistryFactory"/>
 
     <!-- Database resources -->

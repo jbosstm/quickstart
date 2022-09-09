@@ -84,11 +84,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>
@@ -107,11 +107,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>

@@ -21,11 +21,16 @@ import org.jboss.jbossts.star.util.TxLinkNames;
 
 import org.jboss.logging.Logger;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.MediaType;
+import com.arjuna.ats.arjuna.common.CoordinatorEnvironmentBean;
+import com.arjuna.ats.arjuna.common.arjPropertyManager;
+import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
+import com.arjuna.ats.arjuna.coordinator.TxControl;
+
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Link;
+import jakarta.ws.rs.core.MediaType;
 
 import java.io.IOException;
 
@@ -49,7 +54,12 @@ public class TxnTest {
     static Client svc1Client;
     static Client svc2Client;
 
-    public static void setup() throws Exception {
+    public static void setup(){
+        arjPropertyManager.getCoordinatorEnvironmentBean().setTransactionStatusManagerEnable(false);
+        recoveryPropertyManager.getRecoveryEnvironmentBean().setRecoveryListener(false);
+        arjPropertyManager.getCoordinatorEnvironmentBean().setTxReaperZombieMax(0);
+        
+        
         txnServer = new JAXRSServer("coordinator", TXN_PORT);
         txnServer.addDeployment(new TMApplication(), "/");
 

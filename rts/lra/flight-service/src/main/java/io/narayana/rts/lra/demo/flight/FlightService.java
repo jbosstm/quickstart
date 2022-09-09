@@ -24,10 +24,10 @@ package io.narayana.rts.lra.demo.flight;
 import io.narayana.lra.client.NarayanaLRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 import java.net.URI;
 import java.net.URISyntaxException;

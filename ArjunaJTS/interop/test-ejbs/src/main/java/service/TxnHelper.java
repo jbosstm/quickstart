@@ -28,10 +28,10 @@ import org.jboss.narayana.DummyXAResource;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.RollbackException;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.TransactionManager;
 
 public class TxnHelper {
     static private final String WL_TM = "weblogic.transaction.TransactionManager";

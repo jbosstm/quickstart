@@ -22,7 +22,7 @@ package org.jboss.jbossts.qa.astests.ejb2;
 
 import java.rmi.RemoteException;
 
-public interface EJB2Remote extends javax.ejb.EJBObject
+public interface EJB2Remote extends jakarta.ejb.EJBObject
 {
     /**
      * Simple EJB implementation

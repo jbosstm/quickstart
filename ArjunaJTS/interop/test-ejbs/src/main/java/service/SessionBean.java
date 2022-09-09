@@ -23,15 +23,15 @@ package service;
 
 import service.remote.ISessionHome;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.RemoteHome;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.RemoteHome;
 
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+import jakarta.ejb.TransactionManagement;
+import jakarta.ejb.TransactionManagementType;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

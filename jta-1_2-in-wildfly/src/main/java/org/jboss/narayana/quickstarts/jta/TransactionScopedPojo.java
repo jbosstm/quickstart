@@ -16,7 +16,7 @@
  */
 package org.jboss.narayana.quickstarts.jta;
 
-import javax.transaction.TransactionScoped;
+import jakarta.transaction.TransactionScoped;
 import java.io.Serializable;
 
 /**
