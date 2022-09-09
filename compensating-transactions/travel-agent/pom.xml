@@ -62,9 +62,9 @@
             the JBoss stack of the Java EE 6 APIs, with some extras tools for your project, such
             as Arquillian for testing) -->
             <dependency>
-                <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-javaee-6.0-with-tools</artifactId>
-                <version>1.0.7.Final</version>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-jakartaee-8.0</artifactId>
+                <version>1.0.1.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -73,13 +73,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>jakarta.jws</groupId>
-            <artifactId>jsr181-api</artifactId>
-            <version>${version.javax.jw.jsr181}</version>
-        </dependency>
-        <dependency>
             <groupId>jakarta.xml.ws</groupId>
-            <artifactId>jaxws-api</artifactId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
             <version>${version.jakarta.xml.ws}</version>
         </dependency>
         <!-- The XTS api needed to use WS-AT -->
@@ -122,64 +117,53 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            <scope>provided</scope>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
-
         <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
-            <scope>provided</scope>
+          <groupId>jakarta.enterprise</groupId>
+          <artifactId>jakarta.enterprise.cdi-api</artifactId>
+              <version>4.0.1</version>
         </dependency>
-
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <scope>provided</scope>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
         </dependency>
-
-        <!-- Import the CDI API, we use provided scope as the API is included
-        in JBoss AS 7 -->
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>2.0.1</version>
         </dependency>
-
-        <!-- Import the Common Annotations API (JSR-250), we use provided scope
-        as the API is included in JBoss AS 7 -->
+        
         <dependency>
-            <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
-            <scope>provided</scope>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+            <version>2.0.1</version>
         </dependency>
 
         <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
+            <version>1.7.0.Alpha12</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
             <artifactId>arquillian-protocol-servlet</artifactId>
+            <version>1.7.0.Alpha12</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-            <version>1.0.0.Alpha3</version>
-            <scope>provided</scope>
         </dependency>
 
     </dependencies>

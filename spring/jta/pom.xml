@@ -76,7 +76,7 @@
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>${version.javax.annotation.api}</version>
+            <version>${version.jakarta.annotation.api}</version>
         </dependency>
         <!-- Narayana dependencies -->
         <dependency>

@@ -22,7 +22,7 @@ package org.jboss.narayana.quickstarts.jsf;
 
 import java.util.List;
 
-import jakarta.faces.bean.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import javax.naming.NamingException;

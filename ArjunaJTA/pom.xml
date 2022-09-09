@@ -155,7 +155,8 @@
   <modules>
     <module>javax_transaction</module>
     <module>object_store/</module>
-    <module>recovery</module>
+<!--     jakarta TODO: error in class HornetQConnectionFactory incompatible types: javax.jms.XAConnection cannot be converted to jakarta.jms.XAConnection -->
+<!--     <module>recovery</module> -->
     <module>maven</module>
   </modules>
 </project>

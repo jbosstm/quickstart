@@ -46,9 +46,10 @@
   </build>
 
   <modules>
-    <module>raw-xts-api-demo</module>
-    <module>wsat-jta-multi_service</module>
-    <module>wsat-jta-multi_hop</module>
-    <module>ssl</module>
+<!--   jakarta TODO: https://issues.redhat.com/browse/JBTM-3679 -->
+<!--     <module>raw-xts-api-demo</module> -->
+<!--     <module>wsat-jta-multi_service</module> -->
+<!--     <module>wsat-jta-multi_hop</module> -->
+<!--     <module>ssl</module> -->
   </modules>
 </project>
