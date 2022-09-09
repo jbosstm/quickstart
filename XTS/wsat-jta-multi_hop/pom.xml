@@ -92,13 +92,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.xml.ws</groupId>
+            <groupId>jakarta.xml.ws</groupId>
             <artifactId>jaxws-api</artifactId>
-            <version>${version.javax.xml.ws}</version>
+            <version>${version.jakarta.xml.ws}</version>
         </dependency>
 
         <dependency>
-            <groupId>javax.jws</groupId>
+            <groupId>jakarta.jws</groupId>
             <artifactId>jsr181-api</artifactId>
             <version>${version.javax.jw.jsr181}</version>
         </dependency>
@@ -150,7 +150,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
+            <groupId>jakarta.persistence</groupId>
             <artifactId>persistence-api</artifactId>
             <version>1.0.2</version>
         </dependency>

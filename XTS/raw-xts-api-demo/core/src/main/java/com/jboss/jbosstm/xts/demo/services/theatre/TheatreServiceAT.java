@@ -35,11 +35,11 @@ import com.arjuna.mw.wst11.UserTransactionFactory;
 import com.jboss.jbosstm.xts.demo.theatre.ITheatreServiceAT;
 import static com.jboss.jbosstm.xts.demo.services.theatre.TheatreConstants.*;
 
-import javax.jws.WebService;
-import javax.jws.WebParam;
-import javax.jws.HandlerChain;
-import javax.jws.WebMethod;
-import javax.jws.soap.SOAPBinding;
+import jakarta.jws.WebService;
+import jakarta.jws.WebParam;
+import jakarta.jws.HandlerChain;
+import jakarta.jws.WebMethod;
+import jakarta.jws.soap.SOAPBinding;
 
 /**
  * An adapter class that exposes the TheatreManager business API as a

@@ -31,7 +31,7 @@ package com.jboss.jbosstm.xts.demo.services.restaurant;
 import com.jboss.jbosstm.xts.demo.services.state.ServiceStateManager;
 import static com.jboss.jbosstm.xts.demo.services.restaurant.RestaurantConstants.*;
 
-import javax.xml.ws.WebServiceException;
+import jakarta.xml.ws.WebServiceException;
 import java.io.*;
 
 /**

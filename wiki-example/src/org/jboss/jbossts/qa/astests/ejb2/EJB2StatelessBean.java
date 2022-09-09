@@ -22,8 +22,8 @@ package org.jboss.jbossts.qa.astests.ejb2;
 
 import org.jboss.jbossts.qa.astests.ejbutil.Util2;
 
-import javax.ejb.SessionBean;
-import javax.ejb.SessionContext;
+import jakarta.ejb.SessionBean;
+import jakarta.ejb.SessionContext;
 
 public class EJB2StatelessBean implements SessionBean
 {

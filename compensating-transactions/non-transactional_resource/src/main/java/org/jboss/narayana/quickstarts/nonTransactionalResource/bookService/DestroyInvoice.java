@@ -19,7 +19,7 @@ package org.jboss.narayana.quickstarts.nonTransactionalResource.bookService;
 
 import org.jboss.narayana.compensations.api.CompensationHandler;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * @author paul.robinson@redhat.com 02/08/2013

@@ -19,15 +19,15 @@ package org.jboss.narayana.quickstarts.cmr;
 
 import java.util.Optional;
 
-import javax.annotation.Resource;
-import javax.enterprise.context.Dependent;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSContext;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Queue;
-import javax.jms.TextMessage;
-import javax.transaction.Transactional;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.context.Dependent;
+import jakarta.jms.ConnectionFactory;
+import jakarta.jms.JMSContext;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.Queue;
+import jakarta.jms.TextMessage;
+import jakarta.transaction.Transactional;
 
 /**
  * Helper class used for sending and receiving messages

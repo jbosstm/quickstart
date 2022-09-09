@@ -21,9 +21,9 @@
 package org.jboss.jbossts.qa.astests.ejbutil;
 
 import javax.transaction.xa.XAResource;
-import javax.transaction.Synchronization;
-import javax.transaction.Transaction;
-import javax.transaction.RollbackException;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.Transaction;
+import jakarta.transaction.RollbackException;
 import java.util.*;
 import javax.transaction.xa.*;
 import java.io.Serializable;
@@ -174,7 +174,7 @@ public class TestResource implements Synchronization, Serializable, XAResource
                 e.printStackTrace();
             }
         }
-        catch (javax.transaction.SystemException e)
+        catch (jakarta.transaction.SystemException e)
         {
             e.printStackTrace();
         }

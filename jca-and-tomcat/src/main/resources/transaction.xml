@@ -179,7 +179,7 @@
         <depends>NamingServer</depends>
     </bean>
 
-    <!-- Make javax.transaction.TransactionManager available for injection -->
+    <!-- Make jakarta.transaction.TransactionManager available for injection -->
     <bean name="RealTransactionManager">
         <constructor factoryMethod="getTransactionManager">
             <factory bean="TransactionManager"/>

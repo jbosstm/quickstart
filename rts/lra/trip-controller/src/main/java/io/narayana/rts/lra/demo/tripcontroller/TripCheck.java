@@ -23,8 +23,8 @@ package io.narayana.rts.lra.demo.tripcontroller;
 
 import io.narayana.rts.lra.demo.model.Booking;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Response;
 import java.util.Arrays;
 
 /**

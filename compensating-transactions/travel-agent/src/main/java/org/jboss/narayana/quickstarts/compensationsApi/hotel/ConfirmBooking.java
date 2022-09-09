@@ -19,10 +19,10 @@ package org.jboss.narayana.quickstarts.compensationsApi.hotel;
 
 import org.jboss.narayana.compensations.api.ConfirmationHandler;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 /**
  * This is the confirmation handler to be invoke if the compensation-based transaction is closed (completed successfully).

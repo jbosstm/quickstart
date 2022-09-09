@@ -31,7 +31,7 @@ package com.jboss.jbosstm.xts.demo.services.theatre;
 
 import com.jboss.jbosstm.xts.demo.services.state.ServiceStateManager;
 
-import javax.xml.ws.WebServiceException;
+import jakarta.xml.ws.WebServiceException;
 
 import static com.jboss.jbosstm.xts.demo.services.theatre.TheatreConstants.*;
 
