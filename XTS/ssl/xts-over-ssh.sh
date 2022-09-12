@@ -29,8 +29,7 @@ SLEEP_TIME=`timeout_adjust 3 2>/dev/null || echo 3` # default sleep time is 3
 WORKSPACE=${WORKSPACE:-$PWD}
 WILDFLY_QUICKSTART_HOME=${WILDFLY_QUICKSTART_HOME:-$QUICKSTART_HOME}
 #comment so main wildfly will be used (TODO: uncomment it as soon as narayana works with main wildfly)
-#this comment will be reverted with the issue: https://issues.redhat.com/browse/JBTM-3679
-#JBOSS_BIN=${JBOSS_BIN:-$JBOSS_HOME} # jboss_bin is unpacked jboss distribution
+JBOSS_BIN=${JBOSS_BIN:-$JBOSS_HOME} # jboss_bin is unpacked jboss distribution
 JBOSS_CLIENT="${WORKSPACE}/client"
 JBOSS_SERVER="${WORKSPACE}/server"
 # we don't want jboss home settings confusing startup scripts
