@@ -139,14 +139,11 @@
             <artifactId>hibernate-core-jakarta</artifactId>
             <version>${version.hibernate}</version>
         </dependency>
-        
         <dependency>
-        
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
+            <version>${version.jakarta.persistence-api}</version>
         </dependency>
-        
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

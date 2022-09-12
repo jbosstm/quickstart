@@ -50,44 +50,35 @@
          <artifactId>dummy-resources</artifactId>
          <version>${project.version}</version>
       </dependency>
-<dependency>
-    <groupId>jakarta.transaction</groupId>
-    <artifactId>jakarta.transaction-api</artifactId>
-    <version>2.0.1</version>
-</dependency>
-<dependency>
-    <groupId>jakarta.inject</groupId>
-    <artifactId>jakarta.inject-api</artifactId>
-        <version>2.0.1</version>
-    
-</dependency>
-
-    <dependency>
-      <groupId>jakarta.enterprise</groupId>
-      <artifactId>jakarta.enterprise.cdi-api</artifactId>
-    </dependency>
-
-
-      
-<dependency>
-    <groupId>jakarta.annotation</groupId>
-    <artifactId>jakarta.annotation-api</artifactId>
-    <version>2.1.1</version>
-</dependency>
-
-<dependency>
-    <groupId>jakarta.ws.rs</groupId>
-    <artifactId>jakarta.ws.rs-api</artifactId>
-    <version>3.1.0</version>
-</dependency>
-
-
-<dependency>
-    <groupId>jakarta.ejb</groupId>
-    <artifactId>jakarta.ejb-api</artifactId>
-    <version>4.0.1</version>
-</dependency>
-
+      <dependency>
+          <groupId>jakarta.transaction</groupId>
+          <artifactId>jakarta.transaction-api</artifactId>
+          <version>${version.jakarta.transaction-api}</version>
+      </dependency>
+      <dependency>
+          <groupId>jakarta.inject</groupId>
+          <artifactId>jakarta.inject-api</artifactId>
+          <version>2.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.enterprise</groupId>
+        <artifactId>jakarta.enterprise.cdi-api</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>jakarta.annotation</groupId>
+          <artifactId>jakarta.annotation-api</artifactId>
+          <version>${version.jakarta.annotation.api}</version>
+      </dependency>
+      <dependency>
+          <groupId>jakarta.ws.rs</groupId>
+          <artifactId>jakarta.ws.rs-api</artifactId>
+          <version>3.1.0</version>
+      </dependency>
+      <dependency>
+          <groupId>jakarta.ejb</groupId>
+          <artifactId>jakarta.ejb-api</artifactId>
+          <version>${version.jakarta.ejb-api}</version>
+      </dependency>
        <dependency>
            <groupId>org.glassfish.corba</groupId>
            <artifactId>glassfish-corba-omgapi</artifactId>

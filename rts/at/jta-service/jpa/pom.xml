@@ -94,17 +94,15 @@
             <version>${version.glassfish.json}</version>
             <scope>provided</scope>
         </dependency>
-<dependency>
-    <groupId>jakarta.ejb</groupId>
-    <artifactId>jakarta.ejb-api</artifactId>
-    <version>4.0.1</version>
-</dependency>
-
-
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <version>${version.jakarta.ejb-api}</version>
+        </dependency>
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
+            <version>${version.jakarta.persistence-api}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
