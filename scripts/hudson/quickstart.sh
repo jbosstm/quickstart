@@ -251,8 +251,8 @@ int_env
 comment_on_pull "Started testing this pull request: $BUILD_URL"
 rebase_quickstart_repo
 build_narayana
-clone_as "$@"
-build_as "$@"
-#configure_wildfly || exit 1
+#clone_as "$@"
+#build_as "$@"
+configure_wildfly || exit 1
 #build_apache-karaf # JBTM-2820 disable the karaf build
 run_quickstarts
