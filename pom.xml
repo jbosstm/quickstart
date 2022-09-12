@@ -238,9 +238,12 @@
         <version.org.jboss.naming>5.0.3.GA</version.org.jboss.naming>
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
         <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
-        <version.org.jboss.spec.javax.ejb>1.0.0.Final</version.org.jboss.spec.javax.ejb>
-        <version.org.jboss.spec.javax.jms>1.0.0.Final</version.org.jboss.spec.javax.jms>
-        <version.org.jboss.spec.javax.transaction>1.0.1.Final</version.org.jboss.spec.javax.transaction>
+        
+        <version.jakarta.ejb-api>4.0.1</version.jakarta.ejb-api>
+        <version.jakarta.jms-api>3.1.0</version.jakarta.jms-api>
+        <version.jakarta.transaction-api>2.0.1</version.jakarta.transaction-api>
+        <version.jakarta.persistence-api>3.1.0</version.jakarta.persistence-api>
+        
         <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
         <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>
         
