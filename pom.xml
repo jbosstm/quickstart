@@ -193,22 +193,21 @@
         <version.glassfish.corba.omgapi>4.2.1</version.glassfish.corba.omgapi>
         <version.glassfish.json>2.0.1</version.glassfish.json>
         <version.h2>2.1.210</version.h2>
-        <version.hibernate.validator>6.1.5.Final</version.hibernate.validator>
+        <version.hibernate.validator>8.0.0.Final</version.hibernate.validator>
         <version.hibernate>5.6.11.Final</version.hibernate>
         <version.jackson>2.13.0</version.jackson>
-        <version.jakarta.json-api>2.0.1</version.jakarta.json-api>
+        <version.jakarta.json-api>2.1.1</version.jakarta.json-api>
         <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
         <version.javaee.spec>1.1.1.Final</version.javaee.spec>
         <version.javaee>7.0</version.javaee>
 <!--         javax -->
         <version.jakarta.annotation.api>2.1.1</version.jakarta.annotation.api>
-        <version.javax.el>3.0.4</version.javax.el>
-        <version.javax.enterprise>1.1</version.javax.enterprise>
-        <version.javax.json.api>1.1.4</version.javax.json.api>
-        <version.javax.jw.jsr181>1.0-MR1</version.javax.jw.jsr181>
+        <version.jakarta.inject-api>2.0.1</version.jakarta.inject-api>
+        <version.jakarta.el>5.0.1</version.jakarta.el>
         <version.jakarta.servlet.jstl>3.0.0</version.jakarta.servlet.jstl>
         <version.jakarta.validation>3.0.2</version.jakarta.validation>
         <version.jakarta.xml.ws>4.0.0</version.jakarta.xml.ws>
+        <version.jakarta.ws.rs-api>3.1.0</version.jakarta.ws.rs-api>
         
         <version.jboss-transaction-api>1.1.1.Final</version.jboss-transaction-api>
         <version.jboss.bom>1.0.7.Final</version.jboss.bom>
@@ -217,21 +216,21 @@
         <version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
         <version.jboss.spec.javaee.6.0>3.0.2.Final</version.jboss.spec.javaee.6.0>
         
-        <version.jnpserver>5.0.3.GA</version.jnpserver>
+        <version.jnpserver>5.0.6.CR1</version.jnpserver>
         <version.json>1.0</version.json>
         <version.jta.api>1.0.0.Final</version.jta.api>
         <version.junit>4.13.1</version.junit>
         <version.karaf.services>4.2.1</version.karaf.services>
         <version.lifecycle.mapping.plugin>1.0.0</version.lifecycle.mapping.plugin>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.microprofile.lra>1.0</version.microprofile.lra>
+        <version.microprofile.lra>2.0-RC1</version.microprofile.lra>
         <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
         <version.nimbus.jose.jwt>7.9</version.nimbus.jose.jwt>
         <version.org.codehaus.jettison>1.3.2</version.org.codehaus.jettison>
 <!--         org.jboss -->
-        <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian>1.7.0.Alpha12</version.org.jboss.arquillian>
         <version.org.jboss.bom>1.0.1.Final</version.org.jboss.bom>
-        <version.org.jboss.ironjacamar>1.4.35.Final</version.org.jboss.ironjacamar>
+        <version.org.jboss.ironjacamar>1.5.8.Final</version.org.jboss.ironjacamar>
         <version.org.jboss.jboss-transaction-spi>7.5.2.Final</version.org.jboss.jboss-transaction-spi>
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
         <version.org.jboss.logmanager-log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager-log4j-jboss-logmanager>
@@ -243,6 +242,7 @@
         <version.jakarta.jms-api>3.1.0</version.jakarta.jms-api>
         <version.jakarta.transaction-api>2.0.1</version.jakarta.transaction-api>
         <version.jakarta.persistence-api>3.1.0</version.jakarta.persistence-api>
+        <version.jakarta.enterprise.cdi-api>4.0.1</version.jakarta.enterprise.cdi-api>
         
         <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
         <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>

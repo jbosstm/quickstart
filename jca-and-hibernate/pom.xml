@@ -89,42 +89,42 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-api</artifactId>
+            <artifactId>ironjacamar-common-api-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-impl</artifactId>
+            <artifactId>ironjacamar-common-impl-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-spi</artifactId>
+            <artifactId>ironjacamar-common-spi-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-api</artifactId>
+            <artifactId>ironjacamar-core-api-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-impl</artifactId>
+            <artifactId>ironjacamar-core-impl-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-deployers-common</artifactId>
+            <artifactId>ironjacamar-deployers-common-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-deployers-fungal</artifactId>
+            <artifactId>ironjacamar-deployers-fungal-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-jdbc</artifactId>
+            <artifactId>ironjacamar-jdbc-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>

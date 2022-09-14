@@ -42,7 +42,6 @@
         <jboss2.home>${jboss2.env.home}</jboss2.home>
         <skip.resource.plugin>false</skip.resource.plugin>
         <version.jakarta.xml.ws>2.3.1</version.jakarta.xml.ws>
-        <version.javax.jw.jsr181>1.0-MR1</version.javax.jw.jsr181>
     </properties>
 
     <!-- We add the JBoss repository as we need the JBoss AS connectors
@@ -106,13 +105,6 @@
             <artifactId>jakarta.xml.ws-api</artifactId>
             <version>${version.jakarta.xml.ws}</version>
         </dependency>
-
-        <dependency>
-            <groupId>jakarta.jws</groupId>
-            <artifactId>jsr181-api</artifactId>
-            <version>${version.javax.jw.jsr181}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>

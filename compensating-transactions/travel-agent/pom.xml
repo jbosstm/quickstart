@@ -123,9 +123,9 @@
             <version>${version.jakarta.persistence-api}</version>
         </dependency>
         <dependency>
-          <groupId>jakarta.enterprise</groupId>
-          <artifactId>jakarta.enterprise.cdi-api</artifactId>
-              <version>4.0.1</version>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${version.jakarta.enterprise.cdi-api}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.annotation</groupId>
@@ -135,7 +135,7 @@
         <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
-            <version>2.0.1</version>
+            <version>${version.jakarta.inject-api}</version>
         </dependency>
         
         <dependency>
