@@ -50,16 +50,6 @@
 
     <dependencyManagement>
         <dependencies>
-        <!-- Define the version of JBoss' Java EE 6 APIs and Tools we want to import.  -->
-
-        <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill
-          of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
-          of artifacts. We use this here so that we always get the correct versions
-          of artifacts.-->
-
-          <!-- This BOM provides the jboss-javaee-6.0 with tools stack (you can read this as
-          the JBoss stack of the Java EE 6 APIs, with some extras tools for your project, such
-          as Arquillian for testing) -->
          <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-jakartaee-8.0</artifactId>
@@ -101,40 +91,35 @@
 
         <!-- Import the CDI API, we use provided scope as the API is included
         in JBoss AS 7 -->
-<dependency>
-    <groupId>jakarta.enterprise</groupId>
-    <artifactId>jakarta.enterprise.cdi-api</artifactId>
-    <version>4.0.1</version>
-</dependency>
-
-<dependency>
-    <groupId>jakarta.inject</groupId>
-    <artifactId>jakarta.inject-api</artifactId>
-        <version>2.0.1</version>
-</dependency>
-
-
-
-<dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.13.2</version>
-    <scope>test</scope>
-</dependency>
-
         <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <version>1.7.0.Alpha12</version>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${version.jakarta.enterprise.cdi-api}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>${version.jakarta.inject-api}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.jboss.arquillian.junit5</groupId>
+            <artifactId>arquillian-junit5-container</artifactId>
+            <version>${version.org.jboss.arquillian}</version>
+            <scope>test</scope>
+        </dependency>
+        
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
-            <artifactId>arquillian-protocol-servlet</artifactId>
-            <version>1.7.0.Alpha12</version>
-            <scope>test</scope>
+            <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
+            <version>${version.org.jboss.arquillian}</version>
         </dependency>
+
 
     </dependencies>
 
