@@ -58,7 +58,7 @@
       <dependency>
           <groupId>jakarta.inject</groupId>
           <artifactId>jakarta.inject-api</artifactId>
-          <version>2.0.1</version>
+          <version>${version.jakarta.inject-api}</version>
       </dependency>
       <dependency>
         <groupId>jakarta.enterprise</groupId>
@@ -72,7 +72,7 @@
       <dependency>
           <groupId>jakarta.ws.rs</groupId>
           <artifactId>jakarta.ws.rs-api</artifactId>
-          <version>3.1.0</version>
+          <version>${version.jakarta.ws.rs-api}</version>
       </dependency>
       <dependency>
           <groupId>jakarta.ejb</groupId>
