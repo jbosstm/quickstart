@@ -80,31 +80,34 @@
             <version>${version.hibernate.validator}</version>
         </dependency>
         <dependency>
-            <!-- for testing we need to provide this but for Tomcat deployment it's provided by Tomcat -->
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.el</artifactId>
-            <version>${version.javax.el}</version>
-            <scope>test</scope>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
+            <version>10.1.0-M17</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-impl</artifactId>
+            <artifactId>ironjacamar-core-impl-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-deployers-common</artifactId>
+            <artifactId>ironjacamar-deployers-common-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-deployers-fungal</artifactId>
+            <artifactId>ironjacamar-deployers-fungal-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-jdbc</artifactId>
+            <artifactId>ironjacamar-jdbc-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>${version.jakarta.validation}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.logging</groupId>
@@ -197,7 +200,7 @@
         <!-- IronJacamar Embedded Dependencies -->
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-embedded</artifactId>
+            <artifactId>ironjacamar-embedded-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
