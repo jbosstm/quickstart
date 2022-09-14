@@ -96,13 +96,6 @@
             <artifactId>jakarta.xml.ws-api</artifactId>
             <version>${version.jakarta.xml.ws}</version>
         </dependency>
-
-        <dependency>
-            <groupId>jakarta.jws</groupId>
-            <artifactId>jsr181-api</artifactId>
-            <version>${version.javax.jw.jsr181}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>

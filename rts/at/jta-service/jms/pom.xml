@@ -72,17 +72,17 @@
            <scope>test</scope>
         </dependency>
 
-<dependency>
-    <groupId>jakarta.jms</groupId>
-    <artifactId>jakarta.jms-api</artifactId>
-    <version>${version.jakarta.jms-api}</version>
-</dependency>
-
-<dependency>
-    <groupId>jakarta.ejb</groupId>
-    <artifactId>jakarta.ejb-api</artifactId>
-    <version>${version.jakarta.ejb-api}</version>
-</dependency>
+        <dependency>
+            <groupId>jakarta.jms</groupId>
+            <artifactId>jakarta.jms-api</artifactId>
+            <version>${version.jakarta.jms-api}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <version>${version.jakarta.ejb-api}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
@@ -94,19 +94,19 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <version>${version.junit}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
+            <version>${version.org.jboss.arquillian}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
             <artifactId>arquillian-protocol-servlet</artifactId>
-            <scope>test</scope>
+            <version>${version.org.jboss.arquillian}</version>
         </dependency>
     </dependencies>
 
