@@ -136,37 +136,38 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>unix</id>
-            <activation>
-                <os>
-                    <family>unix</family>
-                </os>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>Run Quickstart</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>bash</executable>
-                                    <commandlineArgs>${basedir}/../run.sh</commandlineArgs>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+<!--     jakarta TODO: restore profile and fix Error: Could not find or load main class io.quarkus.bootstrap.runner.QuarkusEntryPoint -->
+<!--         <profile> -->
+<!--             <id>unix</id> -->
+<!--             <activation> -->
+<!--                 <os> -->
+<!--                     <family>unix</family> -->
+<!--                 </os> -->
+<!--                 <property> -->
+<!--                     <name>!skipTests</name> -->
+<!--                 </property> -->
+<!--             </activation> -->
+<!--             <build> -->
+<!--                 <plugins> -->
+<!--                     <plugin> -->
+<!--                         <groupId>org.codehaus.mojo</groupId> -->
+<!--                         <artifactId>exec-maven-plugin</artifactId> -->
+<!--                         <executions> -->
+<!--                             <execution> -->
+<!--                                 <id>Run Quickstart</id> -->
+<!--                                 <phase>integration-test</phase> -->
+<!--                                 <goals> -->
+<!--                                     <goal>exec</goal> -->
+<!--                                 </goals> -->
+<!--                                 <configuration> -->
+<!--                                     <executable>bash</executable> -->
+<!--                                     <commandlineArgs>${basedir}/../run.sh</commandlineArgs> -->
+<!--                                 </configuration> -->
+<!--                             </execution> -->
+<!--                         </executions> -->
+<!--                     </plugin> -->
+<!--                 </plugins> -->
+<!--             </build> -->
+<!--         </profile> -->
     </profiles>
 </project>

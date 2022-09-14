@@ -51,37 +51,38 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>unix</id>
-            <activation>
-                <os>
-                    <family>unix</family>
-                </os>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <executions>
-                            <execution>
-                                <id>Run tests</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>bash</executable>
-                                    <commandlineArgs>${basedir}/run.sh</commandlineArgs>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+<!--     jakarta TODO: enable profile below -->
+<!--         <profile> -->
+<!--             <id>unix</id> -->
+<!--             <activation> -->
+<!--                 <os> -->
+<!--                     <family>unix</family> -->
+<!--                 </os> -->
+<!--                 <property> -->
+<!--                     <name>!skipTests</name> -->
+<!--                 </property> -->
+<!--             </activation> -->
+<!--             <build> -->
+<!--                 <plugins> -->
+<!--                     <plugin> -->
+<!--                         <artifactId>exec-maven-plugin</artifactId> -->
+<!--                         <groupId>org.codehaus.mojo</groupId> -->
+<!--                         <executions> -->
+<!--                             <execution> -->
+<!--                                 <id>Run tests</id> -->
+<!--                                 <phase>integration-test</phase> -->
+<!--                                 <goals> -->
+<!--                                     <goal>exec</goal> -->
+<!--                                 </goals> -->
+<!--                                 <configuration> -->
+<!--                                     <executable>bash</executable> -->
+<!--                                     <commandlineArgs>${basedir}/run.sh</commandlineArgs> -->
+<!--                                 </configuration> -->
+<!--                             </execution> -->
+<!--                         </executions> -->
+<!--                     </plugin> -->
+<!--                 </plugins> -->
+<!--             </build> -->
+<!--         </profile> -->
     </profiles>
 </project>
