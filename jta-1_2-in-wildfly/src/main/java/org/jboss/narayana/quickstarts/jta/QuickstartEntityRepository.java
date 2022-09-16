@@ -16,6 +16,7 @@
  */
 package org.jboss.narayana.quickstarts.jta;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -25,6 +26,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
+@ApplicationScoped
 public class QuickstartEntityRepository {
 
     @PersistenceContext
