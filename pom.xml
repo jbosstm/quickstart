@@ -250,7 +250,7 @@
         <version.org.slf4j>1.7.2</version.org.slf4j>
         <version.org.springframework.boot>2.0.9.RELEASE</version.org.springframework.boot>
         <version.org.springframwork>5.2.22.RELEASE</version.org.springframwork>
-        <version.org.wildfly.arquillian>4.0.0.Alpha5</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>5.0.0.Alpha5</version.org.wildfly.arquillian>
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
