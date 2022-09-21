@@ -177,7 +177,6 @@
 <!--         arquillian -->
         <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
         <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
-        <version.arquillian>1.1.11.Final</version.arquillian>
         
         <version.byteman>4.0.19</version.byteman>
         <version.clear.plugin>3.0.0</version.clear.plugin>
