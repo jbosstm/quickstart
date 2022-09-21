@@ -66,18 +66,6 @@
         </plugins>
     </build>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.spec</groupId>
-                <artifactId>jboss-jakartaee-8.0</artifactId>
-                <version>1.0.1.Final</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
     		<groupId>jakarta.jms</groupId>
@@ -125,13 +113,13 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <version>${version.arquillian}</version>
+            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
-            <artifactId>arquillian-protocol-servlet</artifactId>
-            <version>${version.arquillian}</version>
+            <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
+            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -143,7 +131,7 @@
         <dependency>
             <groupId>org.jboss.arquillian.core</groupId>
             <artifactId>arquillian-core-api</artifactId>
-            <version>${version.arquillian}</version>
+            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
