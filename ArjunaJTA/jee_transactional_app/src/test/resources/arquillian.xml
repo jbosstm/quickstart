@@ -35,9 +35,7 @@
 	<container qualifier="jboss" default="true">
 		<configuration>
 			<property name="javaVmArguments">${modular.jdk.args} -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n</property>
-		    <property name="enableConversationScope">true</property>
-            <property name="environment">SE</property>
-    </configuration>
+        </configuration>
 	</container>
 
 </arquillian>
