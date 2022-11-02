@@ -46,8 +46,6 @@ import org.junit.Test;
  * </ul>
  * </p>
  */
-//jakarta TODO:  WELD-001334: Unsatisfied dependencies for type RequiredCounterManager with qualifiers
-@Ignore
 public class CDIBindingTestCase {
 
     private Weld weld;
