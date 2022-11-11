@@ -46,6 +46,7 @@
     </plugins>
   </build>
   <modules>
+    <module>coordinator-quarkus</module>
     <module>lra-coordinator</module>
     <module>cdi-participant</module>
     <module>cdi-embedded</module>

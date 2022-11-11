@@ -46,7 +46,7 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.jboss.narayana.rts</groupId>
+                                    <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
                                     <artifactId>lra-coordinator-quarkus</artifactId>
                                     <version>${project.version}</version>
                                     <classifier>runner</classifier>
