@@ -16,7 +16,7 @@ Narayana standalone example of using JTS API.
 
 ## [JTS](jts/)
 
-Java EE example showing how to make transactional EJB calls between multiple containers. This quickstart builds on the jta quickstart in the same folder.
+Java EE example showing how to make transactional EJB calls between multiple containers. You can find the quickstarts in the wildfly repository [wildfly quickstarts repository](https://github.com/wildfly/quickstart/tree/main/jts)
 
 ## [Recovery](recovery/)
 
