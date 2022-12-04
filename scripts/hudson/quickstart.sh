@@ -138,7 +138,6 @@ function build_narayana {
     exit -1
   fi
   echo "Deleting check out - assuming all artifacts are in the .m2"
-  cp -rp narayana-full/target/narayana-full-6.0.0.Final-SNAPSHOT-bin.zip $WORKSPACE
   cd ..
   rm -rf narayana
 }
