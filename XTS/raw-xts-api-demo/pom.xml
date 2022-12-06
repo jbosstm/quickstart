@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 		JBoss, Home of Professional Open Source Copyright 2008, Red Hat
 		Middleware LLC, and others contributors as indicated by the @authors
@@ -16,52 +16,52 @@
 		02110-1301, USA.
 	-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.jboss.narayana.quickstart.xts</groupId>
-        <artifactId>narayana-quickstarts-xts</artifactId>
-        <version>6.0.0.Final-SNAPSHOT</version>
-    </parent>
-    <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
-    <artifactId>xts-demo-all</artifactId>
-    <packaging>pom</packaging>
-    <name>XTS demo All (parent)</name>
-    <description>Parent artifact of all XTS demos of Narayna quickstarts</description>
-    <url>http://narayana.io</url>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jboss.narayana.quickstart.xts</groupId>
+    <artifactId>narayana-quickstarts-xts</artifactId>
+    <version>6.0.0.Final-SNAPSHOT</version>
+  </parent>
+  <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+  <artifactId>xts-demo-all</artifactId>
+  <packaging>pom</packaging>
+  <name>XTS demo All (parent)</name>
+  <description>Parent artifact of all XTS demos of Narayna quickstarts</description>
+  <url>http://narayana.io</url>
 
-    <repositories>
-        <repository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Maven Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+  <modules>
+    <module>core</module>
+    <module>webservices</module>
+    <module>war</module>
+    <module>ear</module>
+    <module>test</module>
+  </modules>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Maven Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+    </repository>
+  </repositories>
 
-    <modules>
-        <module>core</module>
-        <module>webservices</module>
-        <module>war</module>
-        <module>ear</module>
-        <module>test</module>
-    </modules>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>

@@ -262,7 +262,9 @@
         <version.wildfly.plugin>4.0.0.Final</version.wildfly.plugin>
         <version.wildfly.core>18.1.2.Final</version.wildfly.core>
         <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
-        
+        <version.sortpom>3.0.0</version.sortpom>
+
+        <sortpom.skip>true</sortpom.skip>
   </properties>
 
   <build>
@@ -277,5 +279,25 @@
             </plugin>
       </plugins>
     </pluginManagement>
+      <plugins>
+          <plugin>
+              <groupId>com.github.ekryd.sortpom</groupId>
+              <artifactId>sortpom-maven-plugin</artifactId>
+              <version>${version.sortpom}</version>
+              <configuration>
+                  <skip>${sortpom.skip}</skip>
+                  <createBackupFile>false</createBackupFile>
+                  <sortProperties>true</sortProperties>
+              </configuration>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>sort</goal>
+                      </goals>
+                      <phase>verify</phase>
+                  </execution>
+              </executions>
+          </plugin>
+      </plugins>
   </build>
 </project>

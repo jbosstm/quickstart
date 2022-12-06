@@ -20,167 +20,168 @@
 ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
-        <artifactId>xts-demo-all</artifactId>
-        <version>6.0.0.Final-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>xts-demo-test</artifactId>
-    <packaging>jar</packaging>
+  <parent>
+    <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+    <artifactId>xts-demo-all</artifactId>
+    <version>6.0.0.Final-SNAPSHOT</version>
+  </parent>
+  <artifactId>xts-demo-test</artifactId>
+  <packaging>jar</packaging>
 
-    <properties>
-        <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
-        <jvm.args.ip.server>${jvm.args.ip}</jvm.args.ip.server>
-        <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
-        <node0>127.0.0.1</node0>
-        <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
-        <skipX11Tests>false</skipX11Tests>
-    </properties>
+  <properties>
+    <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+    <jvm.args.ip.client>${jvm.args.ip}</jvm.args.ip.client>
+    <jvm.args.ip.server>${jvm.args.ip}</jvm.args.ip.server>
+    <node0>127.0.0.1</node0>
+    <skipX11Tests>false</skipX11Tests>
+    <surefire.forked.process.timeout>1200</surefire.forked.process.timeout>
+  </properties>
 
-    <dependencyManagement>
-        <dependencies>
-           <dependency>
-              <groupId>org.jboss.arquillian</groupId>
-              <artifactId>arquillian-bom</artifactId>
-              <version>1.7.0.Alpha12</version>
-              <type>pom</type>
-              <scope>import</scope>
-          </dependency>
-          <dependency>
-              <groupId>org.jboss.arquillian.extension</groupId>
-              <artifactId>arquillian-drone-bom</artifactId>
-              <version>1.2.4.Final</version>
-              <type>pom</type>
-              <scope>import</scope>
-          </dependency>
-        </dependencies>
-    </dependencyManagement>
-
+  <dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
-        </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>1.7.0.Alpha12</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.extension</groupId>
+        <artifactId>arquillian-drone-bom</artifactId>
+        <version>1.2.4.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
+  </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>${version.wildfly.plugin}</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.compiler.plugin}</version>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>${version.clear.plugin}</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${basedir}</directory>
-                            <includes>
-                                <include>restaurantManagerState</include>
-                                <include>theatreManagerState</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.surefire.plugin}</version>
-                <configuration>
-                    <skip>${skipX11Tests}</skip>
-                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                    <enableAssertions>true</enableAssertions>
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.arquillian.extension</groupId>
+      <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${version.junit}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-                    <!-- Forked process timeout -->
-                    <forkedProcessTimeoutInSeconds>${surefire.forked.process.timeout}</forkedProcessTimeoutInSeconds>
-                    <!-- System properties to forked surefire JVM which runs clients. -->
-                    <argLine>${jvm.args.ip.client}</argLine>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
+        <version>${version.wildfly.plugin}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${version.compiler.plugin}</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${version.clear.plugin}</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}</directory>
+              <includes>
+                <include>restaurantManagerState</include>
+                <include>theatreManagerState</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${version.surefire.plugin}</version>
+        <configuration>
+          <skip>${skipX11Tests}</skip>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <enableAssertions>true</enableAssertions>
 
-                    <!-- System properties passed to test cases -->
-                    <systemPropertyVariables>
-                        <node0>${node0}</node0>
-                        <!--
+          <!-- Forked process timeout -->
+          <forkedProcessTimeoutInSeconds>${surefire.forked.process.timeout}</forkedProcessTimeoutInSeconds>
+          <!-- System properties to forked surefire JVM which runs clients. -->
+          <argLine>${jvm.args.ip.client}</argLine>
+
+          <!-- System properties passed to test cases -->
+          <systemPropertyVariables>
+            <node0>${node0}</node0>
+            <!--
                             Used in arquillian.xml - arguments for all WildFly instances.
                             System properties are duplicated here until ARQ-647 is implemented.
                         -->
-                        <server.jvm.args>-Xmx512m -XX:MaxMetaspaceSize=256m ${jvm.args.ip.server}
+            <server.jvm.args>-Xmx512m -XX:MaxMetaspaceSize=256m ${jvm.args.ip.server}
                             -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}
-                            -Djava.awt.headless=false
-                        </server.jvm.args>
-                        <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
-                        <!-- For arquillian -->
-                        <jbossHome>${env.JBOSS_HOME}</jbossHome>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+                            -Djava.awt.headless=false</server.jvm.args>
+            <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
+            <!-- For arquillian -->
+            <jbossHome>${env.JBOSS_HOME}</jbossHome>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
-    <profiles>
-        <profile>
-            <id>arq-wildfly-managed</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.wildfly.arquillian</groupId>
-                    <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.org.wildfly.arquillian}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <!-- An optional Arquillian testing profile that executes tests in a remote JBoss AS instance -->
-            <!-- Run with: mvn clean test -Parq-wildfly-remote -->
-            <id>arq-wildfly-remote</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.wildfly.arquillian</groupId>
-                    <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${version.org.wildfly.arquillian}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>ipv6</id>
-            <activation><property><name>ipv6</name></property></activation>
-            <properties>
-                <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
-                <node0>::1</node0>
-            </properties>
-        </profile>
-    </profiles>
+  <profiles>
+    <profile>
+      <id>arq-wildfly-managed</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.wildfly.arquillian</groupId>
+          <artifactId>wildfly-arquillian-container-managed</artifactId>
+          <version>${version.org.wildfly.arquillian}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <!-- An optional Arquillian testing profile that executes tests in a remote JBoss AS instance -->
+      <!-- Run with: mvn clean test -Parq-wildfly-remote -->
+      <id>arq-wildfly-remote</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.wildfly.arquillian</groupId>
+          <artifactId>wildfly-arquillian-container-remote</artifactId>
+          <version>${version.org.wildfly.arquillian}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>ipv6</id>
+      <activation>
+        <property>
+          <name>ipv6</name>
+        </property>
+      </activation>
+      <properties>
+        <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
+        <node0>::1</node0>
+      </properties>
+    </profile>
+  </profiles>
 </project>
