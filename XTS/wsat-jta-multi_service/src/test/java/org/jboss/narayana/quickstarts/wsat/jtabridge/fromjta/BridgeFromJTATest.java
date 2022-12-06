@@ -25,10 +25,9 @@ import org.jboss.narayana.quickstarts.wsat.jtabridge.first.FirstServiceATImpl;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.jaxws.FirstServiceAT;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.SecondServiceATImpl;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.jaxws.SecondServiceAT;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,6 +37,8 @@ import org.junit.runner.RunWith;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import jakarta.transaction.UserTransaction;
+
+import java.io.File;
 
 /**
  * Simple set of tests for the FirstServiceAT
@@ -61,15 +62,13 @@ public class BridgeFromJTATest {
      */
     @Deployment(name = "deployment-jboss1")
     @TargetsContainer("jboss1")
-    public static JavaArchive createTestArchive1() {
+    public static WebArchive createTestArchive1() {
 
-        JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "bridge.jar")
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "bridge.war")
                 .addPackages(true, FirstServiceATImpl.class.getPackage())
                 .addPackages(true, SecondServiceATImpl.class.getPackage())
                 .addPackages(true, FirstClient.class.getPackage())
-                .addAsManifestResource("persistence.xml");
-
-        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
+                .addAsWebInfResource(new File("src/test/resources/persistence.xml"), "classes/META-INF/persistence.xml");
 
         archive.setManifest(new StringAsset(ManifestMF));
 
@@ -78,13 +77,11 @@ public class BridgeFromJTATest {
 
     @Deployment(name="deployment-jboss2")
     @TargetsContainer("jboss2")
-    public static JavaArchive createTestArchive2() {
+    public static WebArchive createTestArchive2() {
 
-        JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "bridge.jar")
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "bridge.war")
                 .addPackages(true, SecondServiceATImpl.class.getPackage())
-                .addAsManifestResource("persistence.xml");
-
-        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
+                .addAsWebInfResource(new File("src/test/resources/persistence.xml"), "classes/META-INF/persistence.xml");
 
         archive.setManifest(new StringAsset(ManifestMF));
 

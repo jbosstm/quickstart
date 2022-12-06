@@ -29,7 +29,7 @@ import java.net.URL;
 public class SecondClient {
 
     public static SecondServiceAT newInstance() throws Exception {
-        URL wsdlLocation = new URL("http://localhost:8180/test/SecondServiceATService/SecondServiceAT?wsdl");
+        URL wsdlLocation = new URL("http://localhost:8180/bridge/SecondServiceATService/SecondServiceAT?wsdl");
         QName serviceName = new QName("http://www.jboss.org/narayana/quickstarts/wsat/simple/second", "SecondServiceATService");
         QName portName = new QName("http://www.jboss.org/narayana/quickstarts/wsat/simple/second", "SecondServiceAT");
 
