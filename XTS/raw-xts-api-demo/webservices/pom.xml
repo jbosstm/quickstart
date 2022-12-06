@@ -20,42 +20,40 @@
 ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <parent>
-        <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
-        <artifactId>xts-demo-all</artifactId>
-        <version>6.0.0.Final-SNAPSHOT</version>
-    </parent>
+  <modelVersion>4.0.0</modelVersion>
 
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>xts-demo-webservices</artifactId>
-    <packaging>war</packaging>
+  <parent>
+    <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+    <artifactId>xts-demo-all</artifactId>
+    <version>6.0.0.Final-SNAPSHOT</version>
+  </parent>
+  <artifactId>xts-demo-webservices</artifactId>
+  <packaging>war</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
-            <artifactId>xts-demo-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
+      <artifactId>xts-demo-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${version.war.plugin}</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Dependencies>org.jboss.xts,org.jboss.jts</Dependencies>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${version.war.plugin}</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Dependencies>org.jboss.xts,org.jboss.jts</Dependencies>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
