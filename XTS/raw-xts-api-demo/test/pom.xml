@@ -128,9 +128,9 @@
           <systemPropertyVariables>
             <node0>${node0}</node0>
             <!--
-                            Used in arquillian.xml - arguments for all WildFly instances.
-                            System properties are duplicated here until ARQ-647 is implemented.
-                        -->
+              Used in arquillian.xml - arguments for all WildFly instances.
+              System properties are duplicated here until ARQ-647 is implemented.
+            -->
             <server.jvm.args>-Xmx512m -XX:MaxMetaspaceSize=256m ${jvm.args.ip.server}
                             -Djboss.bind.address=${node0} -Djboss.bind.address.management=${node0}
                             -Djava.awt.headless=false</server.jvm.args>

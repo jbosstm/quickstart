@@ -19,21 +19,21 @@
   (C) 2005-2006,
   @author JBoss Inc.
 -->
-<java-wsdl-mapping xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+<java-wsdl-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://java.sun.com/xml/ns/j2ee"
+                   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 http://www.ibm.com/webservices/xsd/j2ee_jaxrpc_mapping_1_1.xsd"
-	version="1.1">
-	<package-mapping>
-		<package-type>com.arjuna.xts.nightout.clients.jboss.restaurant</package-type>
-		<namespaceURI>http://www.jboss.com/jbosstm/xts/demo/Restaurant</namespaceURI>
-	</package-mapping>
-	<package-mapping>
-		<package-type>com.arjuna.xts.nightout.clients.jboss.theatre</package-type>
-		<namespaceURI>http://www.jboss.com/jbosstm/xts/demo/Theatre</namespaceURI>
-	</package-mapping>
-	<package-mapping>
-		<package-type>com.arjuna.xts.nightout.clients.jboss.taxi</package-type>
-		<namespaceURI>http://www.jboss.com/jbosstm/xts/demo/Taxi</namespaceURI>
-	</package-mapping>
+                   version="1.1">
+    <package-mapping>
+        <package-type>com.arjuna.xts.nightout.clients.jboss.restaurant</package-type>
+        <namespaceURI>http://www.jboss.com/jbosstm/xts/demo/Restaurant</namespaceURI>
+    </package-mapping>
+    <package-mapping>
+        <package-type>com.arjuna.xts.nightout.clients.jboss.theatre</package-type>
+        <namespaceURI>http://www.jboss.com/jbosstm/xts/demo/Theatre</namespaceURI>
+    </package-mapping>
+    <package-mapping>
+        <package-type>com.arjuna.xts.nightout.clients.jboss.taxi</package-type>
+        <namespaceURI>http://www.jboss.com/jbosstm/xts/demo/Taxi</namespaceURI>
+    </package-mapping>
 </java-wsdl-mapping>
