@@ -19,10 +19,10 @@
   (C) 2005-2006,
   @author JBoss Inc.
 -->
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-	version="2.4">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
 
     <listener>
         <listener-class>com.jboss.jbosstm.xts.demo.services.recovery.DemoATRecoveryListener</listener-class>
@@ -31,52 +31,52 @@
         <listener-class>com.jboss.jbosstm.xts.demo.services.recovery.DemoBARecoveryListener</listener-class>
     </listener>
     <servlet>
-		<servlet-name>RestaurantServiceAT</servlet-name>
-		<servlet-class>com.jboss.jbosstm.xts.demo.services.restaurant.RestaurantServiceAT</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>RestaurantServiceBA</servlet-name>
-		<servlet-class>com.jboss.jbosstm.xts.demo.services.restaurant.RestaurantServiceBA</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>TheatreServiceAT</servlet-name>
-		<servlet-class>com.jboss.jbosstm.xts.demo.services.theatre.TheatreServiceAT</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>TheatreServiceBA</servlet-name>
-		<servlet-class>com.jboss.jbosstm.xts.demo.services.theatre.TheatreServiceBA</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>TaxiServiceAT</servlet-name>
-		<servlet-class>com.jboss.jbosstm.xts.demo.services.taxi.TaxiServiceAT</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>TaxiServiceBA</servlet-name>
-		<servlet-class>com.jboss.jbosstm.xts.demo.services.taxi.TaxiServiceBA</servlet-class>
-	</servlet>
+        <servlet-name>RestaurantServiceAT</servlet-name>
+        <servlet-class>com.jboss.jbosstm.xts.demo.services.restaurant.RestaurantServiceAT</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestaurantServiceBA</servlet-name>
+        <servlet-class>com.jboss.jbosstm.xts.demo.services.restaurant.RestaurantServiceBA</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TheatreServiceAT</servlet-name>
+        <servlet-class>com.jboss.jbosstm.xts.demo.services.theatre.TheatreServiceAT</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TheatreServiceBA</servlet-name>
+        <servlet-class>com.jboss.jbosstm.xts.demo.services.theatre.TheatreServiceBA</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TaxiServiceAT</servlet-name>
+        <servlet-class>com.jboss.jbosstm.xts.demo.services.taxi.TaxiServiceAT</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TaxiServiceBA</servlet-name>
+        <servlet-class>com.jboss.jbosstm.xts.demo.services.taxi.TaxiServiceBA</servlet-class>
+    </servlet>
 
-	<servlet-mapping>
-		<servlet-name>RestaurantServiceAT</servlet-name>
-		<url-pattern>/RestaurantServiceAT</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>RestaurantServiceBA</servlet-name>
-		<url-pattern>/RestaurantServiceBA</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>TheatreServiceAT</servlet-name>
-		<url-pattern>/TheatreServiceAT</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>TheatreServiceBA</servlet-name>
-		<url-pattern>/TheatreServiceBA</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>TaxiServiceAT</servlet-name>
-		<url-pattern>/TaxiServiceAT</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>TaxiServiceBA</servlet-name>
-		<url-pattern>/TaxiServiceBA</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestaurantServiceAT</servlet-name>
+        <url-pattern>/RestaurantServiceAT</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestaurantServiceBA</servlet-name>
+        <url-pattern>/RestaurantServiceBA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TheatreServiceAT</servlet-name>
+        <url-pattern>/TheatreServiceAT</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TheatreServiceBA</servlet-name>
+        <url-pattern>/TheatreServiceBA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaxiServiceAT</servlet-name>
+        <url-pattern>/TaxiServiceAT</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaxiServiceBA</servlet-name>
+        <url-pattern>/TaxiServiceBA</url-pattern>
+    </servlet-mapping>
 </web-app>
