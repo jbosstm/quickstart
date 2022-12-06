@@ -46,8 +46,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Import the CDI API, we use provided scope as the API is included
-        in JBoss AS 7 -->
+    <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
     <dependency>
       <groupId>jakarta.enterprise</groupId>
       <artifactId>jakarta.enterprise.cdi-api</artifactId>
@@ -55,8 +54,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Import the Common Annotations API (JSR-250), we use provided scope
-        as the API is included in JBoss AS 7 -->
+    <!-- Import the Common Annotations API (JSR-250), we use provided scope as the API is included in JBoss AS 7 -->
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
@@ -101,15 +99,12 @@
 
   </dependencies>
 
-  <!-- We add the JBoss repository as we need the JBoss AS connectors
-  for Arquillian and also for the Narayana libraries-->
+  <!-- We add the JBoss repository as we need the JBoss AS connectors for Arquillian and also for the Narayana libraries-->
   <repositories>
-    <!-- The JBoss Community public repository is a composite repository
-    of several major repositories -->
+    <!-- The JBoss Community public repository is a composite repository of several major repositories -->
     <!-- see http://community.jboss.org/wiki/MavenGettingStarted-Users -->
     <repository>
-      <!-- These optional flags are designed to speed up your builds
-       by reducing remote server calls -->
+      <!-- These optional flags are designed to speed up your builds by reducing remote server calls -->
       <releases></releases>
       <snapshots>
         <enabled>false</enabled>
@@ -133,12 +128,10 @@
   </pluginRepositories>
 
   <build>
-    <!-- Set the name of the jar, used as the context root when the app is
-              deployed -->
+    <!-- Set the name of the jar, used as the context root when the app is deployed -->
     <finalName>wsat-jta-multi_hop</finalName>
     <plugins>
-      <!-- Compiler plugin enforces Java 1.6 compatibility and activates
-          annotation processors -->
+      <!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation processors -->
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
@@ -190,9 +183,7 @@
             <configuration>
               <skip>false</skip>
               <systemPropertyVariables combine.children="append">
-                <!--
-                                    Used in arquillian.xml
-                                -->
+                <!-- Used in arquillian.xml -->
                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
                 <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                 <node.address>127.0.0.1</node.address>
@@ -224,9 +215,7 @@
               <skip>false</skip>
               <argLine>${ipv6.server.jvm.args}</argLine>
               <systemPropertyVariables combine.children="append">
-                <!--
-                                    Used in arquillian.xml
-                                -->
+                <!-- Used in arquillian.xml -->
                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
                 <node.address>[::1]</node.address>
               </systemPropertyVariables>

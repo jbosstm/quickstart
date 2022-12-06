@@ -20,32 +20,34 @@
 ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
-<arquillian xmlns="http://jboss.org/schema/arquillian"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian
         http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
     <group qualifier="jboss-containers" default="true">
 
-	    <container qualifier="jboss1" default="true">
-	        <configuration>
-	            <property name="jbossHome">${jboss1.home:target/jboss1}</property>
-				<property name="javaVmArguments">${modular.jdk.args} ${server.jvm.args}</property>
-	            <property name="serverConfig">standalone-xts.xml</property>
-	            <property name="managementAddress">${node.address}</property>
-	        </configuration>
-	    </container>
+        <container qualifier="jboss1" default="true">
+            <configuration>
+                <property name="jbossHome">${jboss1.home:target/jboss1}</property>
+                <property name="javaVmArguments">${modular.jdk.args} ${server.jvm.args}</property>
+                <property name="serverConfig">standalone-xts.xml</property>
+                <property name="managementAddress">${node.address}</property>
+            </configuration>
+        </container>
 
-	    <container qualifier="jboss2">
-	        <configuration>
-	            <property name="jbossHome">${jboss2.home:target/jboss2}</property>
-				<property name="javaVmArguments">${modular.jdk.args} ${server.jvm.args} -Djboss.socket.binding.port-offset=100</property>
-	            <property name="serverConfig">standalone-xts.xml</property>
-	            <property name="managementAddress">${node.address}</property>
-	            <property name="managementPort">10090</property> <!-- for arquillian to know where to connect to, it's 9990 + 100 -->
-	        </configuration>
-	    </container>
-	</group>
+        <container qualifier="jboss2">
+            <configuration>
+                <property name="jbossHome">${jboss2.home:target/jboss2}</property>
+                <property name="javaVmArguments">${modular.jdk.args} ${server.jvm.args}
+                    -Djboss.socket.binding.port-offset=100
+                </property>
+                <property name="serverConfig">standalone-xts.xml</property>
+                <property name="managementAddress">${node.address}</property>
+                <property name="managementPort">10090</property> <!-- for arquillian to know where to connect to, it's 9990 + 100 -->
+            </configuration>
+        </container>
+    </group>
 
     <!-- Uncomment to have test archives exported to the file system for inspection -->
     <!-- <engine>
