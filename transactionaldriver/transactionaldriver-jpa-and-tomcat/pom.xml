@@ -23,12 +23,12 @@
             <artifactId>jakarta.transaction-api</artifactId>
             <version>${version.jakarta.transaction-api}</version>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.narayana.jta</groupId>
-            <artifactId>jdbc</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
+<!--         update needed -->
+<!--         <dependency> -->
+<!--             <groupId>org.jboss.integration</groupId> -->
+<!--             <artifactId>narayana-tomcat</artifactId> -->
+<!--             <version>${version.narayana.tomcat.integration}</version> -->
+<!--         </dependency> -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-servlet-initializer</artifactId>
