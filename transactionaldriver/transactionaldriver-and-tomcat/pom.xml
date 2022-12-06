@@ -23,6 +23,7 @@
             <artifactId>jakarta.transaction-api</artifactId>
             <version>${version.jakarta.transaction-api}</version>
         </dependency>
+        <!--jakarta TODO narayana-tomcat needs update -->
         <dependency>
             <groupId>org.jboss.integration</groupId>
             <artifactId>narayana-tomcat</artifactId>
