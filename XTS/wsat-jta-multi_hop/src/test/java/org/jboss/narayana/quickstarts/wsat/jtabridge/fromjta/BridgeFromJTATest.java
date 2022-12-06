@@ -22,10 +22,10 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.FirstServiceATImpl;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.jaxws.FirstServiceAT;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.SecondServiceATImpl;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,6 +35,8 @@ import org.junit.runner.RunWith;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import jakarta.transaction.UserTransaction;
+
+import java.io.File;
 
 /**
  * Simple set of tests for the FirstServiceAT
@@ -56,15 +58,14 @@ public class BridgeFromJTATest {
      * @return a JavaArchive representing the required deployment
      */
     @Deployment
-    public static JavaArchive createTestArchive() {
+    public static WebArchive createTestArchive() {
 
-        JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "bridge.jar")
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "bridge.war")
                 .addPackages(true, FirstServiceATImpl.class.getPackage())
                 .addPackages(true, SecondServiceATImpl.class.getPackage())
                 .addPackages(true, FirstClient.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml");
+                .addAsWebInfResource(new File("src/main/resources/META-INF/persistence.xml"), "classes/META-INF/persistence.xml");
 
-        archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
         archive.setManifest(new StringAsset(ManifestMF));
 
         return archive;
