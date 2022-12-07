@@ -48,38 +48,6 @@
         </snapshots>
       </repository>
     </repositories>
-    
-    <dependencyManagement>
-        <dependencies>
-            <!-- Define the version of JBoss' Java EE 6 APIs and Tools we want to import.  -->
-
-            <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill
-              of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
-              of artifacts. We use this here so that we always get the correct versions
-              of artifacts.-->
-
-            <!-- This BOM provides the jboss-javaee-6.0 with tools stack (you can read this as
-            the JBoss stack of the Java EE 6 APIs, with some extras tools for your project, such
-            as Arquillian for testing) -->
-            <dependency>
-                <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-javaee-6.0-with-tools</artifactId>
-                <version>1.0.0.Final</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                <artifactId>shrinkwrap-resolver-bom</artifactId>
-                <version>2.0.0-beta-1</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-
-
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -136,60 +104,62 @@
         <!-- Import the CDI API, we use provided scope as the API is included
         in WildFly -->
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${version.jakarta.enterprise.cdi-api}</version>
         </dependency>
 
-        <!-- Import the Common Annotations API (JSR-250), we use provided scope
-        as the API is included in WildFly -->
         <dependency>
-            <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
-            <scope>provided</scope>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${version.jakarta.annotation.api}</version>
         </dependency>
 
         <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
+            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
-            <artifactId>arquillian-protocol-servlet</artifactId>
+            <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
+            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>2.10.1</version>
+            <version>3.12.11</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-api</artifactId>
-            <version>2.0.0-beta-1</version>
+            <version>${version.org.jboss.shrinkwrap.resolver}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
-            <version>2.0.0-beta-1</version>
+            <version>${version.org.jboss.shrinkwrap.resolver}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-api-maven</artifactId>
-            <version>2.0.0-beta-1</version>
+            <version>${version.org.jboss.shrinkwrap.resolver}</version>
             <scope>test</scope>
         </dependency>
 
@@ -222,7 +192,7 @@
         <profile>
             <id>arq</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
                 <dependency>
@@ -246,6 +216,7 @@
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
                                 <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>127.0.0.1</node.address>
+                                <server.config>standalone-xts.xml</server.config>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         </configuration>
@@ -281,6 +252,7 @@
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
                                 <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>[::1]</node.address>
+                                <server.config>standalone-xts.xml</server.config>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         </configuration>
