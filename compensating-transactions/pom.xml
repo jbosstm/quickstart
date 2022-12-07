@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 ~ JBoss, Home of Professional Open Source.
 ~ Copyright 2016, Red Hat, Inc., and individual contributors
@@ -23,8 +23,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>narayana-quickstarts-all</artifactId>
     <groupId>org.jboss.narayana.quickstart</groupId>
+    <artifactId>narayana-quickstarts-all</artifactId>
     <version>6.0.0.Final-SNAPSHOT</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
@@ -32,6 +32,17 @@
   <packaging>pom</packaging>
   <name>Compensating Transactions Examples</name>
   <description>All quickstarts of for usage of Compensations API</description>
+
+  <modules>
+    <module>non-transactional_resource</module>
+    <module>travel-agent</module>
+    <module>mongodb-simple</module>
+  </modules>
+
+  <properties>
+    <sortpom.skip>false</sortpom.skip>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -44,10 +55,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <modules>
-    <module>non-transactional_resource</module>
-    <module>travel-agent</module>
-    <module>mongodb-simple</module>
-  </modules>
 </project>
