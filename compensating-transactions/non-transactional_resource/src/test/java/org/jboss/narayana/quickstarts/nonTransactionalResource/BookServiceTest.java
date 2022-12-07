@@ -27,6 +27,7 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.narayana.quickstarts.nonTransactionalResource.bookService.BookService;
 import org.jboss.narayana.quickstarts.nonTransactionalResource.bookService.InvoicePrinter;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,8 +38,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import jakarta.inject.Inject;
 
 @ExtendWith(ArquillianExtension.class)
-@Disabled
-// jakarta TODO: remove @Ignore and fix NullPointerException at deployment.test.war//org.jboss.narayana.quickstarts.nonTransactionalResource.BookServiceTest.testSuccess(BookServiceTest.java:70)
 public class BookServiceTest {
 
     @Inject
@@ -49,7 +48,7 @@ public class BookServiceTest {
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, BookService.class.getPackage().getName())
-                .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/beans.xml"));
+                .addAsWebInfResource(new StringAsset("<beans bean-discovery-mode=\"all\"></beans>"), "beans.xml");
 
         return archive;
     }
