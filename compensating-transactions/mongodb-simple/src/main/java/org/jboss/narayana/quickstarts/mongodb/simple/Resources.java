@@ -22,7 +22,6 @@ import com.mongodb.MongoClient;
 
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
-import java.net.UnknownHostException;
 
 /**
  * A simple class for managing the lifecycle of the MongoDB connection and making it available for CDI injection.
@@ -42,12 +41,8 @@ public class Resources {
      */
     @Produces
     public DB produceDB(InjectionPoint injectionPoint) {
-        try {
-            MongoClient mongo = new MongoClient("localhost", 27017);
-            return mongo.getDB("test");
-        } catch (UnknownHostException e) {
-            throw new RuntimeException("Failed to connect to MongoDB", e);
-        }
+        MongoClient mongo = new MongoClient("localhost", 27017);
+        return mongo.getDB("test");
     }
 
 }
