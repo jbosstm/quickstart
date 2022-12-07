@@ -48,18 +48,6 @@
       </repository>
     </repositories>
 
-    <dependencyManagement>
-        <dependencies>
-         <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-jakartaee-8.0</artifactId>
-            <version>1.0.1.Final</version>
-            <type>pom</type>
-            <scope>import</scope>
-         </dependency>
-      </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <!-- The XTS api needed to use WS-AT -->
         <dependency>

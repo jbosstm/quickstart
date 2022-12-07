@@ -29,7 +29,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.narayana.compensations.api.TransactionCompensatedException;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,11 +52,11 @@ public class BankingServiceTest {
     public static WebArchive createTestArchive() {
 
         //Use 'Shrinkwrap Resolver' to include the mongodb java driver in the deployment
-        File lib = Maven.resolver().loadPomFromFile("pom.xml").resolve("org.mongodb:mongo-java-driver:2.10.1").withoutTransitivity().asSingleFile();
+        File lib = Maven.resolver().resolve("org.mongodb:mongo-java-driver:3.12.11").withoutTransitivity().asSingleFile();
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, BankingService.class.getPackage().getName())
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addAsWebInfResource(new StringAsset("<beans bean-discovery-mode=\"all\"></beans>"), "beans.xml")
                 .addAsLibraries(lib);
 
         return archive;
