@@ -28,3 +28,6 @@ IF %ERRORLEVEL% NEQ 0 exit -1
 
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.FileStoreExample %NARAYANA_VERSION_PARAM%
 IF %ERRORLEVEL% NEQ 0 exit -1
+
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JDBCStoreExample %NARAYANA_VERSION_PARAM%
+IF %ERRORLEVEL% NEQ 0 exit -1
