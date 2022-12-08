@@ -38,3 +38,8 @@ mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.FileStoreEx
 if [ "$?" != "0" ]; then
 	exit -1
 fi
+
+mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JDBCStoreExample $NARAYANA_VERSION_PARAM
+if [ "$?" != "0" ]; then
+	exit -1
+fi
