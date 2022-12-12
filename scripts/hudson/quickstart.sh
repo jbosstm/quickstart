@@ -200,7 +200,7 @@ function clone_as {
   cd $WORKSPACE
 }
 function build_as {
-  AS_BRANCH=27.0.0.Alpha1
+  AS_BRANCH=main
   echo "Building WildFly $AS_BRANCH"
 
   cd $WORKSPACE/jboss-as
