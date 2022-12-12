@@ -22,7 +22,7 @@ Overview
 ---
 
 You can spot here three different approaches to work with Narayana jdbc transactional driver
-(the implementation can be found at https://github.com/jbosstm/narayana/tree/master/ArjunaJTA/jdbc).
+(the implementation can be found at https://github.com/jbosstm/narayana/tree/main/ArjunaJTA/jdbc).
 
 You can see here how to register an XADataSource to the driver, how to get managed connection and then how to work
 with such connection to be correctly handled in Narayana. Additionally you can check settings needed for

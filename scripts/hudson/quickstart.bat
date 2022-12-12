@@ -20,7 +20,7 @@ SETLOCAL EnableDelayedExpansion
 call:comment_on_pull "Starting tests %BUILD_URL%"
 
 git remote add upstream https://github.com/jbosstm/quickstart.git
-set BRANCHPOINT=master
+set BRANCHPOINT=main
 git branch %BRANCHPOINT% origin/%BRANCHPOINT%
 git pull --rebase --ff-only origin %BRANCHPOINT% || (call:comment_on_pull "Rebase failed %BUILD_URL%" && exit -1)
 

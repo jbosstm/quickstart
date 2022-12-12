@@ -85,7 +85,7 @@ end the transaction and finally query each service for the contents of the docum
 The following is an example of the expected output:
 
 ```
-[mmusgrov@localhost meetings](master)$ txctl.sh
+[mmusgrov@localhost meetings](main)$ txctl.sh
 syntax:
  /home/mmusgrov/bin/txctl.sh -s [timeout]            - start a transaction (with an optional timeout)
  /home/mmusgrov/bin/txctl.sh -l                      - list active transactions 
@@ -94,7 +94,7 @@ syntax:
  /home/mmusgrov/bin/txctl.sh -a <term URL>           - abort a transaction
  /home/mmusgrov/bin/txctl.sh -w <service URL> <value> <enlist URL> - ask a web service to transactionally update a value
  /home/mmusgrov/bin/txctl.sh -q <service URL>        - ask a web service for its current value
-[mmusgrov@localhost meetings](master)$ txctl.sh -s 1000000
+[mmusgrov@localhost meetings](main)$ txctl.sh -s 1000000
 HTTP/1.1 201 Created
 Connection: keep-alive
 Location: http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_5551cf0b_2
@@ -104,29 +104,29 @@ Link: <http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_5551cf0b
 Link: <http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_5551cf0b_2/volatile-participant>; rel="volatile-participant"; title="volatile-participant"
 Date: Tue, 12 May 2015 09:59:43 GMT
 
-[mmusgrov@localhost meetings](master)$ txctl.sh -w http://localhost:8092/eg/service newVal http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_5551cf0b_2
+[mmusgrov@localhost meetings](main)$ txctl.sh -w http://localhost:8092/eg/service newVal http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_5551cf0b_2
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Type: text/plain
 Content-Length: 1
 Date: Tue, 12 May 2015 09:59:57 GMT
 
-1[mmusgrov@localhost meetings](master)$ txctl.sh -w http://localhost:8094/eg/service newVal http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_5551cf0b_2
+1[mmusgrov@localhost meetings](main)$ txctl.sh -w http://localhost:8094/eg/service newVal http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_5551cf0b_2
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Type: text/plain
 Content-Length: 1
 Date: Tue, 12 May 2015 10:00:05 GMT
 
-2[mmusgrov@localhost meetings](master)$ txctl.sh -c http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_551cf0b_2/terminator
+2[mmusgrov@localhost meetings](main)$ txctl.sh -c http://localhost:8090/tx/transaction-manager/0_ffff7f000001_d1da_551cf0b_2/terminator
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Type: application/octet-stream
 Content-Length: 29
 Date: Tue, 12 May 2015 10:00:16 GMT
 
-txstatus=TransactionCommitted[mmusgrov@localhost meetings](master)$ 
-[mmusgrov@localhost meetings](master)$ txctl.sh -q http://localhost:8092/eg/service
-newVal[mmusgrov@localhost meetings](master)$ txctl.sh -q http://localhost:8094/eg/service
-newVal[mmusgrov@localhost meetings](master)$ 
+txstatus=TransactionCommitted[mmusgrov@localhost meetings](main)$ 
+[mmusgrov@localhost meetings](main)$ txctl.sh -q http://localhost:8092/eg/service
+newVal[mmusgrov@localhost meetings](main)$ txctl.sh -q http://localhost:8094/eg/service
+newVal[mmusgrov@localhost meetings](main)$ 
 ```

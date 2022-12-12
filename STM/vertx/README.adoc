@@ -1,1 +1,1 @@
-This quickstart was never automated so has been replaced by [a better one in the narayana conferences repository](https://github.com/jbosstm/conferences/tree/master/mucon2017).
+This quickstart was never automated so has been replaced by [a better one in the narayana conferences repository](https://github.com/jbosstm/conferences/tree/main/mucon2017).
