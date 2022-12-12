@@ -6,7 +6,7 @@ Currently, here we only demonstrate **WFLY** as the application server, configur
 
 ## Narayana JWT-LRA Role mapping recommendation
 
-The lra-endpoints listed in below table can be found in [Coordinator.java](https://github.com/jbosstm/narayana/blob/master/rts/lra/coordinator/src/main/java/io/narayana/lra/coordinator/api/Coordinator.java) and [RecoveryCoordinator.java](https://github.com/jbosstm/narayana/blob/master/rts/lra/coordinator/src/main/java/io/narayana/lra/coordinator/api/RecoveryCoordinator.java)
+The lra-endpoints listed in below table can be found in [Coordinator.java](https://github.com/jbosstm/narayana/blob/main/rts/lra/coordinator/src/main/java/io/narayana/lra/coordinator/api/Coordinator.java) and [RecoveryCoordinator.java](https://github.com/jbosstm/narayana/blob/main/rts/lra/coordinator/src/main/java/io/narayana/lra/coordinator/api/RecoveryCoordinator.java)
 
 | lra-endpoints        | Allowed Roles   | 
 | ------------- |:-------------:|

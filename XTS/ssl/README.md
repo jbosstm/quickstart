@@ -9,7 +9,7 @@ For example, a section entitled "Tab 1" , is stating that the commands in that s
 
 ## Tab 1
 
-Obtain WildFly master and make two copies of the distribution. One for the client and one for the server.
+Obtain WildFly main and make two copies of the distribution. One for the client and one for the server.
 
     git clone https://github.com/wildfly/wildfly.git
     mvn clean install -DskipTests -f wildfly/pom.xml

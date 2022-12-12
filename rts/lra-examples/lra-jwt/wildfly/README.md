@@ -2,7 +2,7 @@
 
  This quickstart will demonstrate how to secure LRA coordinator endpoints using JSON Web Tokens(JWTs) when the lra-coordinator is deployed on WildFly server
 
- The `lra-coordinator WAR` expects to be the same as one at https://github.com/jbosstm/narayana/blob/master/rts/lra/coordinator-war/pom.xml. But the purpose is to compile into this one with a different web.xml, which would be used to define the Authentication/Authorization mechanism.
+ The `lra-coordinator WAR` expects to be the same as one at https://github.com/jbosstm/narayana/blob/main/rts/lra/coordinator-war/pom.xml. But the purpose is to compile into this one with a different web.xml, which would be used to define the Authentication/Authorization mechanism.
 
 
 ## Follow along below steps:
