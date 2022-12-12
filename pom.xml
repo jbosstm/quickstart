@@ -142,8 +142,6 @@
     <module>jts-docker</module>
     <module>jta-1_2-in-wildfly</module>
     <module>wildfly/commit-markable-resource</module>
-    <!-- JBTM-3565 disable the osgi quickstart until it is fixed -->
-    <!-- module>karaf/osgi-jta</module-->
     <module>jta-and-hibernate-standalone</module>
   </modules>
 
