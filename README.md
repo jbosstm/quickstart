@@ -23,9 +23,8 @@ Each quickstart is categorized with tags that depict areas the quickstart is con
 WildFly quickstarts contain some more examples how to work with transactions
 in the Java EE environment. See repository: [wildfly/quickstart](https://github.com/wildfly/quickstart).
 The quickstarts particularly connected to transaction managements are:
-[jta-crash-rec](https://github.com/wildfly/quickstart/tree/master/jta-crash-rec),
-[jts-distributed-crash-rec](https://github.com/wildfly/quickstart/tree/master/jts-distributed-crash-rec),
-[jts](https://github.com/wildfly/quickstart/tree/master/jts).
+[jta-crash-rec](https://github.com/wildfly/quickstart/tree/main/jta-crash-rec),
+[jts](https://github.com/wildfly/quickstart/tree/main/jts).
 
 ---
 

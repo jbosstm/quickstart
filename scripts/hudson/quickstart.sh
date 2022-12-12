@@ -24,7 +24,7 @@ function fatal {
 set -x
 [ $WORKSPACE ] || fatal "please set WORKSPACE to the quickstarts directory"
 NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
-NARAYANA_BRANCH="${NARAYANA_BRANCH:-master}"
+NARAYANA_BRANCH="${NARAYANA_BRANCH:-main}"
 QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-6.0.0.Final-SNAPSHOT}
 
 function comment_on_pull
@@ -98,7 +98,7 @@ function which_java {
 function rebase_quickstart_repo {
   cd $WORKSPACE
   git remote add upstream https://github.com/jbosstm/quickstart.git
-  export BRANCHPOINT=master
+  export BRANCHPOINT=main
   git branch $BRANCHPOINT origin/$BRANCHPOINT
   git pull --rebase --ff-only origin $BRANCHPOINT
   if [ $? -ne 0 ]; then

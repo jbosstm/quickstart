@@ -39,7 +39,7 @@ import org.omg.CORBA.ORBPackage.InvalidName;
 import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
 import java.util.Properties;
 
-// Based on a quickstart in the wildfly quickstart repo: https://github.com/jbosstm/quickstart/tree/master/ArjunaJTA/javax_transaction
+// Based on a quickstart in the wildfly quickstart repo: https://github.com/jbosstm/quickstart/tree/main/ArjunaJTA/javax_transaction
 public class TransactionExample {
 
     private static final String ORB_IMPL_PROP = "OrbPortabilityEnvironmentBean.orbImpleClassName";
