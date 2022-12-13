@@ -4,28 +4,32 @@ OVERVIEW
 This example builds on the service quickstart by showing how you can make your web services transactional
 and still recover when the VM hosting the service crashes whilst the transaction is being committed.
 
-
 USAGE
 -----
-Prior to running the example make sure that the [RESTAT coordinator is deployed](../../README.md#usage).
-If you run the RESTAT coordinator on an endpoint url different from the default you will need to
+Prior to running the example make sure that the [REST-AT coordinator is deployed](../../README.md#usage).
+If you run the REST-AT coordinator on an endpoint url different from the
+default (http://localhost:8080/rest-at-coordinator/tx/transaction-manager) you will need to
 update the java source file recovery1/src/main/java/quickstart/ParticipantRecovery.java and replace
 coordinatorUrl with the correct url.
 
-To test recovery you will need to run the example twice, once to generate a failure condition:
+To test recovery you need to run the example twice, once to generate a failure condition:
 
-    mvn clean compile exec:java -Dexec.mainClass=quickstart.ParticipantRecovery -Dexec.args="-f"
+    mvn -P fail clean compile exec:java
+or
+    mvn clean compile exec:java -Dexec.mainClass=quickstart.ParticipantRecovery -Dexec.args="coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager service=http://localhost:58082/service -f"
 
 and a second time in order to test that the web service is asked to replay the commit phase:
 
-    mvn exec:java -Dexec.mainClass=quickstart.ParticipantRecovery -Dexec.args="-r"
+    mvn -P recover exec:java
+or
+    mvn exec:java -Dexec.mainClass=quickstart.ParticipantRecovery -Dexec.args="coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager service=http://localhost:58082/service -r"
 
 Use the run.sh or run.bat script to run both parts together.
 
 If you just want the same behaviour as the service example - ie without failures then run the example without
 any arguments:
 
-    mvn clean compile exec:java -Dexec.mainClass=quickstart.ParticipantRecovery
+    mvn clean compile exec:java -Dexec.mainClass=quickstart.ParticipantRecovery -Dexec.args="coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager service=http://localhost:58082/service"
 
 
 EXPECTED OUTPUT

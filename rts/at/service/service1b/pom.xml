@@ -50,19 +50,9 @@
             </snapshots>
         </repository>
     </repositories>
-
+<!--
     <dependencyManagement>
         <dependencies>
-            <!-- Define the version of JBoss' Java EE 6 APIs we want to import. 
-                Any dependencies from org.jboss.spec will have their version defined by this 
-                BOM -->
-            <!-- JBoss distributes a complete set of Java EE 6 APIs including
-                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
-                a collection) of artifacts. We use this here so that we always get the correct
-                versions of artifacts. Here we use the jboss-javaee-6.0 stack (you can
-                read this as the JBoss stack of the Java EE 6 APIs). You can actually
-                use this stack with any version of JBoss AS that implements Java EE 6, not
-                just JBoss AS 7! -->
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-6.0</artifactId>
@@ -72,6 +62,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    -->
+
+    <properties>
+        <version.cdi-api>4.0.1</version.cdi-api>
+        <version.javax.ws.rs-api>3.1.0</version.javax.ws.rs-api>
+    </properties>
 
     <dependencies>
         <!-- REST-AT helper -->
@@ -82,33 +78,38 @@
             <scope>provided</scope>
         </dependency>
         <!-- JBoss logging -->
+        <!--
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
             <version>3.1.0.GA</version>
         </dependency>
+        -->
 
         <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${version.cdi-api}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>${version.javax.ws.rs-api}</version>
             <scope>provided</scope>
         </dependency>
 
         <!-- Import the Common Annotations API (JSR-250), we use provided scope 
             as the API is included in JBoss AS 7 -->
+            <!--
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+        -->
 
-        <!-- Import the JAX-RS API, we use provided scope as the API is included in JBoss AS 7 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.ws.rs</groupId>
-            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -122,9 +123,6 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>${version.wildfly.plugin}</version>
             </plugin>
-
-            <!-- Compiler plugin enforces Java 1.6 compatibility and activates 
-                annotation processors -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.compiler.plugin}</version>
@@ -175,7 +173,7 @@
                             <arguments>
                                 <!--argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8788</argument-->
                                 <argument>coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager</argument>
-                                <argument>service=http://localhost:8080/${project.artifactId}/rest/service</argument>
+                                <argument>service=http://localhost:8080/${project.artifactId}/service</argument>
                             </arguments>
                         </configuration>
                     </plugin>

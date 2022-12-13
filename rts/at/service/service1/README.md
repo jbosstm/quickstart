@@ -1,15 +1,15 @@
 OVERVIEW
 --------
-This example shows how you can make your web services transactional. [It uses Jersey and Grizzly
+This example shows how you can make your web services transactional. [It uses UndertowJaxrsServer
 for deploying the participant web services, but any conforming web container will do]. Briefly, the client
-in the example starts a RESTAT transaction, invokes two web services which in turn enlist themselves into the 
-transaction and finally the client terminates the transaction. A RESTAT coordinator for begining and
+in the example starts a REST-AT transaction, invokes two web services which in turn enlist themselves into the 
+transaction and finally the client terminates the transaction. A REST-AT coordinator for beginning and
 ending transactions should be running and be available before starting the client.
 
 
 USAGE
 -----
-Prior to running the example make sure that the [RESTAT coordinator is deployed](../../README.md#usage).
+Prior to running the example make sure that the [REST-AT coordinator is deployed](../../README.md#usage).
 
     mvn clean compile exec:java
 

@@ -17,12 +17,16 @@
  */
 package quickstart;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
@@ -44,6 +48,7 @@ import org.jboss.narayana.rest.integration.api.ParticipantsManagerFactory;
 @Path(TransactionAwareResource.PSEGMENT)
 public class TransactionAwareResource {
     public static final String PSEGMENT = "service";
+    public static final String APPLICATION_ID = TransactionAwareResource.class.getName();
     public static String FAIL_COMMIT; // set by the client to simulate a failure by halting the JVM
 
     private static AtomicInteger workId = new AtomicInteger(0);
@@ -54,7 +59,8 @@ public class TransactionAwareResource {
             return Response.ok("non transactional request").build();
 
         Work work = new Work(workId.incrementAndGet());
-        ParticipantsManagerFactory.getInstance().enlist(TransactionAwareResource.class.getName(), enlistUrl, work);
+        // enlist this resource instance
+        ParticipantsManagerFactory.getInstance().enlist(APPLICATION_ID, enlistUrl, work);
 
         return Response.ok(Integer.toString(work.getId())).build();
     }
