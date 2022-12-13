@@ -23,6 +23,7 @@ import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
 
 public class ParticipantRecovery {
+    static JAXRSServer txnServer;
 
     public static void main(String[] args) {
         String coordinatorUrl = null; // the endpoint of the resource for creating transaction coordinators
@@ -42,6 +43,7 @@ public class ParticipantRecovery {
             throw new RuntimeException("Missing coordinator or service URLs");
 
         startServer(serviceUrl);
+        txnServer.addDeployment(new TransactionAwareResource.ServiceApp(), "/");
 
         // get a helper for using RESTful transactions, passing in the well know resource endpoint for the transaction manager
         TxSupport txn = new TxSupport(coordinatorUrl);
@@ -51,7 +53,7 @@ public class ParticipantRecovery {
             System.out.println("Client: WAITING FOR RECOVERY IN 2 SECOND INTERVALS (FOR A MAX OF 130 SECONDS)");
             System.out.println("=============================================================================");
 
-            for (long i = 0l; i < 130l; i += 2) {
+            for (long i = 0L; i < 130L; i += 2) {
                 try {
                     // ask the service how many transactions it has committed since the VM started
 
@@ -89,12 +91,14 @@ public class ParticipantRecovery {
          */
         String serviceRequest = serviceUrl + "?enlistURL=" + txn.getDurableParticipantEnlistmentURI();
 
-        String wId1 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
-        String wId2 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+        String wId1 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest,
+                "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+        String wId2 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest,
+                "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
 
         // commit the transaction
         if ("-f".equals(opt)) {
-            System.out.println("Client: Failing work load " + wId2);
+            System.out.printf("Client: Failing work load %s in txn %s%n", wId2, txn.getTxnUri());
             TransactionAwareResource.FAIL_COMMIT = wId2;
         }
 
@@ -108,13 +112,13 @@ public class ParticipantRecovery {
     }
 
     public static void startServer(String serviceUrl) {
-        int servicePort = Integer.valueOf(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
+        int servicePort = Integer.parseInt(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
         // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
-        JaxrsServer.startServer("localhost", servicePort);
+        txnServer = new JAXRSServer("recovery1", servicePort);
     }
 
     public static void stopServer() {
         // shutdown the embedded JAX-RS server
-        JaxrsServer.stopServer();
+        txnServer.stop();
     }
 }

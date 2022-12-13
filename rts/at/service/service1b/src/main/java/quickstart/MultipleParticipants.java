@@ -42,7 +42,8 @@ public class MultipleParticipants {
         // get a helper for using REST Atomic Transactions, passing in the well know resource endpoint for the transaction coordinator
         TxSupport txn = new TxSupport(coordinatorUrl);
 
-        int oldCommitCnt = Integer.valueOf(txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
+        int oldCommitCnt = Integer.parseInt(
+                txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
                 TxMediaType.PLAIN_MEDIA_TYPE, null, null));
 
         // start a REST Atomic transaction
@@ -72,7 +73,8 @@ public class MultipleParticipants {
 
         // the web service should have received prepare and commit requests from the transaction coordinator
         // (TXN_MGR_URL) for each work unit
-        int newCommitCnt = Integer.valueOf(txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
+        int newCommitCnt = Integer.parseInt(
+                txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
                 TxMediaType.PLAIN_MEDIA_TYPE, null, null));
 
 //        stopServer();

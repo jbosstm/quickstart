@@ -1,7 +1,7 @@
 RESTful Transactions Quickstarts
 ================================
 
-Examples using RESTAT (RESTful Atomic Transactions).
+Examples using REST-AT (RESTful Atomic Transactions).
 
 OVERVIEW
 ========
@@ -14,9 +14,9 @@ also contains a script for automating the execution of the quickstart.
 USAGE
 =====
 
-Each example needs a RESTAT coordinator for begining and ending transactions. Before running any of the
-examples you must make sure that the RESTAT coordinator is deployed. If you have access to the
-wildfly application server then the RESTAT coordinator can be deployed out of the box by starting
+Each example needs a REST-AT coordinator for beginning and ending transactions. Before running any of the
+examples you must make sure that the REST-AT coordinator is deployed. If you have access to the
+wildfly application server then the REST-AT coordinator can be deployed out of the box by starting
 the server with the RTS subsystem enabled using an optional server configuration:
 
     Linux: ./bin/standalone.sh --server-config=../../docs/examples/configs/standalone-rts.xml
@@ -67,7 +67,7 @@ to update a database and JMS to send a message.
 Recovery
 ========
 
-An example which builds on the service quickstarts and demonstrates that web services which use RESTAT
+An example which builds on the service quickstarts and demonstrates that web services which use REST-AT
 remain consistent in the presence of failures. Two versions of the quickstart are provided, the second
 version uses an integration API which simplifies writing of participants.
 

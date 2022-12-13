@@ -14,13 +14,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-package org.jboss.narayana.rts;
+package quickstart;
 
 import io.undertow.Undertow;
-
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
-
 import jakarta.ws.rs.core.Application;
+import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
 public class JAXRSServer {
     private final UndertowJaxrsServer server;
