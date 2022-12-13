@@ -5,7 +5,7 @@ An example of how to start and end a transaction using REST style semantics.
 
 USAGE
 -----
-Prior to running the example make sure that the [RESTAT coordinator is deployed](../README.md#usage).
+Prior to running the example make sure that the [REST-AT coordinator is deployed](../README.md#usage).
 
     mvn clean compile exec:java
 

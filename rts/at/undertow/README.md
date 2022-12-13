@@ -4,7 +4,7 @@ This example shows how you can make your web services transactional using undert
 
 The quickstart runs 3 Undertow servers:
 
-- one for the RESTAT coordinator
+- one for the REST-AT coordinator
 - two servers for deploying participants
 
 The example can be ran programmatically or interactively.
