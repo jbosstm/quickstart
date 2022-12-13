@@ -18,9 +18,12 @@
 package quickstart;
 
 import java.net.HttpURLConnection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
@@ -48,12 +51,31 @@ public class TransactionAwareResource {
     private static AtomicInteger workId = new AtomicInteger(0);
     private static AtomicInteger commitCnt = new AtomicInteger(0);
 
+    @ApplicationPath("/")
+    public static class ServiceApp extends Application {
+        @Override
+        public Set<Class<?>> getClasses() {
+            HashSet<Class<?>> classes = new HashSet<Class<?>>();
+            classes.add(TransactionAwareResource.class);
+
+            return classes;
+        }
+    }
+
     @GET
     public Response someServiceRequest(@Context UriInfo info, @QueryParam("enlistURL") String enlistUrl) {
         if (enlistUrl == null || enlistUrl.length() == 0)
             return Response.ok("non transactional request").build();
 
-        String serviceURL = info.getBaseUri() + info.getPath();
+        String serviceURL;
+        String path = info.getPath();
+
+        // build the service URL taking care not to include two forward slash characters in the part after the scheme
+        if (path.startsWith("/")) {
+            serviceURL = info.getBaseUri() + path.substring(1);
+        } else {
+            serviceURL = info.getBaseUri() + path;
+        }
 
         String linkHeader = new TxSupport().makeTwoPhaseAwareParticipantLinkHeader(
                 serviceURL, false, String.valueOf(workId), null);

@@ -22,10 +22,14 @@
     <artifactId>restat-quickstarts</artifactId>
     <version>6.0.0.Final-SNAPSHOT</version>
   </parent>
-  <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>simple</artifactId>
-  <name>RESTAT Quickstart: Basic</name>
+  <name>REST-AT Quickstart: Basic</name>
   <description>Basic example of how to start and stop a REST Atomic transaction</description>
+
+  <properties>
+    <version.org.jboss.logging.jboss-logging>3.5.0.Final</version.org.jboss.logging.jboss-logging>
+    <version.org.jboss.resteasy>6.0.3.Final</version.org.jboss.resteasy>
+  </properties>
 
     <repositories>
         <repository>
@@ -86,7 +90,14 @@
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
-      <version>3.1.0.GA</version>
+      <version>${version.org.jboss.logging.jboss-logging}</version>
     </dependency>
+    <!-- need to define a JAX-RS implementation (jakarta.ws.rs.ext.RuntimeDelegate) -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-core</artifactId>
+      <version>${version.org.jboss.resteasy}</version>
+    </dependency>
+
   </dependencies>
 </project>

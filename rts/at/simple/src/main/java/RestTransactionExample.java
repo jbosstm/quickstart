@@ -22,7 +22,7 @@ import org.jboss.jbossts.star.util.TxSupport;
 import org.jboss.jbossts.star.util.TxStatusMediaType;
 
 public class RestTransactionExample {
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         String coordinatorUrl = "http://localhost:8080/rest-at-coordinator/tx/transaction-manager";
 
         if (args.length > 0 && args[0].startsWith("coordinator="))

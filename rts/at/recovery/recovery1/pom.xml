@@ -28,9 +28,13 @@
         <version>6.0.0.Final-SNAPSHOT</version>
     </parent>
     <artifactId>recovery1</artifactId>
-    <groupId>org.jboss.narayana.quickstart.rts</groupId>
-    <name>RESTAT Quickstart: Participant Service with Recovery</name>
+    <name>REST-AT Quickstart: Participant Service with Recovery</name>
     <description>Example of how a web service can recover from failures during transaction completion</description>
+
+  <properties>
+    <version.org.jboss.logging.jboss-logging>3.5.0.Final</version.org.jboss.logging.jboss-logging>
+    <version.org.jboss.resteasy>6.0.3.Final</version.org.jboss.resteasy>
+  </properties>
 
     <repositories>
         <!-- Jersey -->
@@ -54,34 +58,22 @@
         </repository>
     </repositories>
     <dependencies>
-        <!-- RESTAT utils -->
+        <!-- REST-AT utils -->
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-util</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.1.0.GA</version>
-        </dependency>
-        <!-- Jersey container for running participant services -->
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>1.5</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-core</artifactId>
+            <version>${version.resteasy}</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>1.5</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-undertow</artifactId>
+            <version>${version.resteasy}</version>
         </dependency>
-        <dependency>
-            <groupId>com.sun.grizzly</groupId>
-            <artifactId>grizzly-servlet-webserver</artifactId>
-            <version>1.9.18-i</version>
-        </dependency>
-        <!-- end Jersey -->
     </dependencies>
 
     <profiles>

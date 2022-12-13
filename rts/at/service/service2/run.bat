@@ -16,7 +16,11 @@ rem MA  02110-1301, USA.
 
 @echo off
 
-echo "Running service2 quickstart"
+echo "Running recovery2 quickstart"
 
-mvn clean compile exec:java
+mvn -f fail clean compile exec:java
+IF %ERRORLEVEL% EQU 0 exit -1
+echo "Recovering failed service - this could take up to 2 minutes"
+mvn -f recover compile exec:java
 IF %ERRORLEVEL% NEQ 0 exit -1
+echo "Service recovery example succeeded"

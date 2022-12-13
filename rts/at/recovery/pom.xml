@@ -22,9 +22,8 @@
     <artifactId>restat-quickstarts</artifactId>
     <version>6.0.0.Final-SNAPSHOT</version>
   </parent>
-  <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>recovery-quickstarts</artifactId>
-  <name>RESTAT Recovery Quickstarts</name>
+  <name>REST-AT Recovery Quickstarts</name>
   <description>Provides examples of how recoverable REST based transactional services</description>
   <packaging>pom</packaging>
   <modules>

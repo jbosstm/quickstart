@@ -23,6 +23,7 @@ import org.jboss.jbossts.star.util.TxSupport;
 import java.net.HttpURLConnection;
 
 public class MultipleParticipants {
+    static JAXRSServer txnServer;
 
     public static void main(String[] args) {
         String coordinatorUrl = null; // the endpoint of the resource for creating transaction coordinators
@@ -38,11 +39,13 @@ public class MultipleParticipants {
             throw new RuntimeException("Missing coordinator or service URLs");
 
         startServer(serviceUrl);
+        txnServer.addDeployment(new TransactionAwareResource.ServiceApp(), "/");
 
         // get a helper for using REST Atomic Transactions, passing in the well know resource endpoint for the transaction coordinator
         TxSupport txn = new TxSupport(coordinatorUrl);
 
-        int oldCommitCnt = Integer.valueOf(txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
+        int oldCommitCnt = Integer.parseInt(
+                txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
                 TxMediaType.PLAIN_MEDIA_TYPE, null, null));
 
         // start a REST Atomic transaction
@@ -72,7 +75,8 @@ public class MultipleParticipants {
 
         // the web service should have received prepare and commit requests from the transaction coordinator
         // (TXN_MGR_URL) for each work unit
-        int newCommitCnt = Integer.valueOf(txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
+        int newCommitCnt = Integer.parseInt(
+                txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceUrl + "/query", "GET",
                 TxMediaType.PLAIN_MEDIA_TYPE, null, null));
 
         stopServer();
@@ -86,13 +90,13 @@ public class MultipleParticipants {
     }
 
     public static void startServer(String serviceUrl) {
-        int servicePort = Integer.valueOf(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
+        int servicePort = Integer.parseInt(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
         // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
-        JaxrsServer.startServer("localhost", servicePort);
+        txnServer = new JAXRSServer("recovery1", servicePort);
     }
 
     public static void stopServer() {
         // shutdown the embedded JAX-RS server
-        JaxrsServer.stopServer();
+        txnServer.stop();
     }
 }

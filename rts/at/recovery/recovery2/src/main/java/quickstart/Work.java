@@ -24,8 +24,10 @@ import org.jboss.narayana.rest.integration.api.Vote;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
+// Work defines the actions performed by a service that should be transactional
 public class Work implements Participant, Serializable {
     // package scope since these two fields are accessed by the service (TransactionAwareResource)
+    // commitCnt and abortCnt are guaranteed to be incremented even in the JVM crashes
     transient static AtomicInteger commitCnt = new AtomicInteger(0);
     transient static AtomicInteger abortCnt = new AtomicInteger(0);
 
