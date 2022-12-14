@@ -153,7 +153,7 @@
   </profiles>
 
   <modules>
-    <module>javax_transaction</module>
+    <module>jakarta_transaction</module>
     <module>object_store/</module>
 <!--     jakarta TODO: error in class HornetQConnectionFactory incompatible types: javax.jms.XAConnection cannot be converted to jakarta.jms.XAConnection -->
 <!--     <module>recovery</module> -->
