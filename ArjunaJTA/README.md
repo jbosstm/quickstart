@@ -14,7 +14,7 @@ These quickstarts showcase the various ways of using JTA:
 A minimal maven project which shows how to include the narayana JTA artifact
 and how to begin and end a JTA style transaction
 
-### [Javax transaction](javax_transaction/)
+### [Jakarta transaction](jakarta_transaction/)
 
 Basic example showing how to use the standard JTA APIs
 
