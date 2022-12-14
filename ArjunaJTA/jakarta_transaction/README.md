@@ -19,12 +19,12 @@ MA  02110-1301, USA.
 @author JBoss Inc.
 -->
 
-## Javax transaction quickstart
+## Jakarta transaction quickstart
 
 ## Overview
 
-This example shows how to obtain a Java EE conforming transaction and how to invoke various methods
-of the `javax.transaction.Transaction` interface such as starting and ending transactions, examining
+This example shows how to obtain a Jakarta EE conforming transaction and how to invoke various methods
+of the `jakarta.transaction.Transaction` interface such as starting and ending transactions, examining
 transacton status, timeouts etc.
 
 ## Usage
