@@ -108,7 +108,7 @@ public class TaskResourceTest {
 
     @Test
     public void testCommit() throws Exception {
-        System.out.println("XXXXXTaskResourceTest.testCommit()");
+        System.out.println("TaskResourceTest.testCommit()");
 
         System.out.println("Starting REST-AT transaction...");
         txSupport.startTx();
