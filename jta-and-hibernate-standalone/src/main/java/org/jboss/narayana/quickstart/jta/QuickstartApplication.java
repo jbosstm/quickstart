@@ -118,8 +118,8 @@ public class QuickstartApplication {
                 .forEach(m -> ((XARecoveryModule) m).addXAResourceRecoveryHelper(new DummyXAResourceRecoveryHelper()));
 
         // Start CDI container and get quickstart service instance
-        WELD_CONTAINER = new Weld().initialize();
-        QUICKSTART_SERVICE = WELD_CONTAINER.instance().select(QuickstartService.class).get();
+        WELD_CONTAINER = new Weld().addPackage(false, QuickstartApplication.class).initialize();
+        QUICKSTART_SERVICE = WELD_CONTAINER.select(QuickstartService.class).get();
     }
 
     static void shutdown() {
