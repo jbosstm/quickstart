@@ -42,8 +42,6 @@
 
   <modules>
     <module>service1</module>
-    <module>service1b</module>
     <module>service2</module>
-    <module>service2b</module>
   </modules>
 </project>
