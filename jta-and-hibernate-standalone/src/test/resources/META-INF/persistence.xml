@@ -31,7 +31,7 @@
             <!-- Set Hibernate to use Narayana as a JTA platform -->
             <property name="hibernate.transaction.jta.platform" value="JBossTS"/>
             <!-- We provide our own connection provider, in order to integrate TransactionalDriver with Hibernate -->
-            <property name="hibernate.connection.provider_class" value="org.jboss.narayana.quickstart.jta.TransactionalConnectionProvider" />
+            <property name="hibernate.connection.provider_class" value="org.jboss.narayana.quickstart.jta.TransactionalConnectionProviderTest" />
         </properties>
     </persistence-unit>
 </persistence>

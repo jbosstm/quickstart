@@ -27,6 +27,7 @@ import jakarta.transaction.TransactionManager;
 import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
+import org.h2.jdbcx.JdbcDataSource;
 import org.jboss.byteman.contrib.bmunit.BMRule;
 import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
 import org.jboss.weld.junit4.WeldInitiator;
@@ -80,7 +81,7 @@ public class TestCase {
     public static void beforeClass() throws Exception {
         NAMING_BEAN.start();
         JNDIManager.bindJTAImplementation();
-        new InitialContext().bind(TransactionalConnectionProvider.DATASOURCE_JNDI, QuickstartApplication.getDataSource());
+        new InitialContext().bind(TransactionalConnectionProviderTest.DATASOURCE_JNDI, TestCase.getDataSource());
         recoveryPropertyManager.getRecoveryEnvironmentBean()
                 .setRecoveryModuleClassNames(QuickstartApplication.getRecoveryModuleClassNames());
         recoveryPropertyManager.getRecoveryEnvironmentBean().setRecoveryBackoffPeriod(1);
@@ -178,9 +179,9 @@ public class TestCase {
     }
 
     private List<QuickstartEntity> getEntitiesFromTheDatabase() throws Exception {
-        DataSource dataSource = InitialContext.doLookup("java:/quickstartDataSource");
-        Connection connection = dataSource.getConnection(TransactionalConnectionProvider.USERNAME,
-                TransactionalConnectionProvider.PASSWORD);
+        DataSource dataSource = InitialContext.doLookup(TransactionalConnectionProviderTest.DATASOURCE_JNDI);
+        Connection connection = dataSource.getConnection(TransactionalConnectionProviderTest.USERNAME,
+                TransactionalConnectionProviderTest.PASSWORD);
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT `value2` FROM `QuickstartEntity`");
         List<QuickstartEntity> entities = new LinkedList<>();
@@ -197,4 +198,12 @@ public class TestCase {
         return new QuickstartEntity("Test entity at " + LocalTime.now());
     }
 
+    private static JdbcDataSource getDataSource() {
+        JdbcDataSource dataSource = new JdbcDataSource();
+        dataSource.setURL("jdbc:h2:mem:test_mem");
+        dataSource.setUser("sa");
+        dataSource.setPassword("");
+
+        return dataSource;
+    }
 }
