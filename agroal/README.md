@@ -9,7 +9,7 @@ Technologies: JTA, JDBC, Agroal
 What is it?
 ---
 
-This examle demostrates usage of Agroal (https://agroal.github.io) jdbc pooling library
+This example demostrates usage of Agroal (https://agroal.github.io) jdbc pooling library
 in the standalone application while integrated with Narayana transaction manager.
 
 
