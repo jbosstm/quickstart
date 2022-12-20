@@ -251,7 +251,7 @@
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
-        <version.resteasy>6.2.1.Final</version.resteasy>
+        <version.resteasy>6.2.2.Final</version.resteasy>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
 <!--         Using an older plugin version to have compatibility with older maven version -->
         <version.surefire.plugin>2.22.2</version.surefire.plugin>
