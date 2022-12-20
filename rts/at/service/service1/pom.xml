@@ -93,8 +93,7 @@
                     <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
                     <arguments>
                         <!--argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8788</argument-->
-                        <argument>coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager
-                        </argument>
+                        <argument>coordinator=http://localhost:8080/rest-at-coordinator/tx/transaction-manager</argument>
                         <argument>service=http://localhost:58082/service</argument>
                     </arguments>
                 </configuration>
