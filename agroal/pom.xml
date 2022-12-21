@@ -2,16 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+      <artifactId>narayana-quickstarts-all</artifactId>
+      <groupId>org.jboss.narayana.quickstart</groupId>
+      <version>6.0.0.Final-SNAPSHOT</version>
+    </parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
-    <artifactId>agoral</artifactId>
-    <version>6.0.0.Final-SNAPSHOT</version>
+    <artifactId>agroal</artifactId>
+    
+    <properties>
+<!--     for Byteman JUnit configuration -->
+        <argLine>-Djdk.attach.allowAttachSelf=true</argLine>
+    </properties>
 
     <dependencies>
-        <dependency>
-          <groupId>org.jboss.spec.javax.transaction</groupId>
-          <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-          <version>${version.jta.api}</version>
-        </dependency>
         <dependency>
           <groupId>org.jboss.narayana.jta</groupId>
           <artifactId>narayana-jta</artifactId>
