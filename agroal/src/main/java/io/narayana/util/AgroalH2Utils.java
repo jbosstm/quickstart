@@ -50,10 +50,10 @@ public class AgroalH2Utils {
     public static final String DB_PASSWORD = "";
 
     private static String TEST_TABLE_NAME = "TXN_DRIVER_TEST";
-    private static String CREATE_TABLE = String.format("CREATE TABLE %s(id int primary key, value varchar(42))", TEST_TABLE_NAME);
-    private static String DROP_TABLE = String.format("DROP TABLE %s", TEST_TABLE_NAME);
+    private static String CREATE_TABLE = String.format("CREATE TABLE if not exists %s(id int primary key, name varchar(42))", TEST_TABLE_NAME);
+    private static String DROP_TABLE = String.format("DROP TABLE if exists %s", TEST_TABLE_NAME);
     private static String SELECT_QUERY = String.format("SELECT * FROM %s", TEST_TABLE_NAME);
-    public static String INSERT_STATEMENT = String.format("INSERT INTO %s (id, value) values (?,?)", TEST_TABLE_NAME);
+    public static String INSERT_STATEMENT = String.format("INSERT INTO %s (id, name) values (?,?)", TEST_TABLE_NAME);
 
 
     public static int createTable(Connection conn) {
