@@ -207,6 +207,7 @@ function build_as {
   WILDFLY_VERSION_FROM_JBOSS_AS=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' ${WORKSPACE}/jboss-as/pom.xml | cut -d \< -f 2|cut -d \> -f 2`
   echo "AS version is ${WILDFLY_VERSION_FROM_JBOSS_AS}"
   export JBOSS_HOME=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}
+  export JBOSS_ZIP=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}.zip
 
   # init files under JBOSS_HOME before AS TESTS is started
   init_jboss_home
