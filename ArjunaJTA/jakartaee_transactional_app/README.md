@@ -13,7 +13,7 @@ along with this distribution; if not, write to the Free Software Foundation,
 Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 -->
 
-# Java EE transactional application quickstart
+# Jakarta EE transactional application quickstart
 
 ## Overview
 
@@ -48,7 +48,7 @@ mvn compile wildfly:deploy -DnoArq
 ```
 
 Once the application is deployed, you can access it from a browser by:
-http://localhost:8080/jee_transactional_app/
+http://localhost:8080/jakartaee_transactional_app/
 
 
 ## Expected output

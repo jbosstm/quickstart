@@ -142,7 +142,7 @@
   </dependencies>
 
   <modules>
-    <module>jee_transactional_app</module>
+    <module>jakartaee_transactional_app</module>
     <module>jakarta_transaction</module>
     <module>object_store/</module>
     <module>recovery</module>
