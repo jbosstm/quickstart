@@ -18,9 +18,9 @@ and how to begin and end a JTA style transaction
 
 Basic example showing how to use the standard JTA APIs
 
-### [Java EE Transactional Application](jee_transactional_app/)
+### [Jakarta EE Transactional Application](jakartaee_transactional_app/)
 
-A more advanced example demonstrating how to build transactional JEE applications
+A more advanced example demonstrating how to build transactional JakartaEE applications
 
 ### [Object Store](object_store/)
 
