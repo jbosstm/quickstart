@@ -143,30 +143,6 @@ function build_narayana {
   rm -rf narayana
 }
 
-function configure_wildfly {
-  cd $WORKSPACE
-  wget -nv https://ci.wildfly.org/guestAuth/repository/downloadAll/WF_Nightly/.lastSuccessful/artifacts.zip
-  unzip -q artifacts.zip
-  # the artifacts.zip may be wrapping several zip files: artifacts.zip -> wildfly-latest-SNAPSHOT.zip -> wildfly-###-SNAPSHOT.zip
-  local wildflyLatestZipWrapper=$(ls wildfly-latest-*.zip | head -n 1)
-  if [ -f "${wildflyLatestZipWrapper}" ]; then # wrapper zip exists, let's unzip it to proceed further to distro zip
-    unzip -q "${wildflyLatestZipWrapper}"
-    [ $? -ne 0 ] && echo "Cannot unzip WildFly nightly build wrapper zip file '${wildflyLatestZipWrapper}'" && return 2
-    rm -f $wildflyLatestZipWrapper
-  fi
-  local wildflyDistZip=$(ls wildfly-*-SNAPSHOT.zip | head -n 1)
-  [ "x$wildflyDistZip" = "x" ] && echo "Cannot find any zip file of SNAPSHOT WildFly distribution in the nightly build artifacts" && return 1
-  unzip -q "${wildflyDistZip}"
-  [ $? -ne 0 ] && echo "Cannot unzip WildFly nightly build distribution zip file '${wildflyDistZip}'" && return 3
-  export JBOSS_HOME="${PWD}/${wildflyDistZip%.zip}"
-  [ ! -d "${JBOSS_HOME}" ] && echo "After unzipping the file '${wildflyDistZip}' the JBOSS_HOME directory at '${JBOSS_HOME}' does not exist" && return 4
-  cp $JBOSS_HOME/docs/examples/configs/standalone-xts.xml $JBOSS_HOME/standalone/configuration/
-  cp $JBOSS_HOME/docs/examples/configs/standalone-rts.xml $JBOSS_HOME/standalone/configuration/
-  # cleaning
-  rm -f artifacts.zip
-  rm -f wildfly-*-SNAPSHOT*.zip
-}
-
 function build_apache-karaf {
   cd $WORKSPACE
   git clone --depth=1 https://github.com/apache/karaf.git apache-karaf
@@ -181,16 +157,34 @@ function build_apache-karaf {
   fi
 }
 function clone_as {
-  REPO="https://github.com/wildfly/wildfly.git"
-  echo "Cloning AS sources from $REPO"
+  echo "Cloning AS sources from https://github.com/jbosstm/jboss-as.git"
 
-  cd $WORKSPACE
-
+  cd ${WORKSPACE}
   if [ -d jboss-as ]; then
     rm -rf jboss-as # start afresh
   fi
 
-  git clone $REPO jboss-as || fatal "git clone $REPO failed"
+  echo "First time checkout of WildFly"
+  git clone https://github.com/jbosstm/jboss-as.git -o jbosstm
+  [ $? -eq 0 ] || fatal "git clone https://github.com/jbosstm/jboss-as.git failed"
+
+  cd jboss-as
+
+  git remote add upstream https://github.com/wildfly/wildfly.git
+
+  [ ! -z "$AS_BRANCH" ] || AS_BRANCH=main
+  git checkout $AS_BRANCH
+  [ $? -eq 0 ] || fatal "git checkout of branch $AS_BRANCH failed"
+
+  git fetch upstream
+  echo "This is the JBoss-AS commit"
+  echo $(git rev-parse upstream/main)
+  echo "This is the AS_BRANCH $AS_BRANCH commit"
+  echo $(git rev-parse HEAD)
+
+  echo "Rebasing the wildfly upstream/main on top of the AS_BRANCH $AS_BRANCH"
+  git pull --rebase upstream main
+  [ $? -eq 0 ] || fatal "git rebase failed"
 
   if [ $REDUCE_SPACE = 1 ]; then
     echo "Deleting git dir to reduce disk usage"
@@ -200,12 +194,9 @@ function clone_as {
   cd $WORKSPACE
 }
 function build_as {
-  AS_BRANCH=main
-  echo "Building WildFly $AS_BRANCH"
+  echo "Building WildFly's branch $AS_BRANCH"
 
   cd $WORKSPACE/jboss-as
-
-  git checkout $AS_BRANCH || fatal "git checkout $AS_BRANCH failed"
 
   # building WildFly
   [ "$_jdk" -lt 17 ] && export MAVEN_OPTS="-XX:MaxMetaspaceSize=512m -XX:+UseConcMarkSweepGC $MAVEN_OPTS"
@@ -215,8 +206,7 @@ function build_as {
 
   WILDFLY_VERSION_FROM_JBOSS_AS=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' ${WORKSPACE}/jboss-as/pom.xml | cut -d \< -f 2|cut -d \> -f 2`
   echo "AS version is ${WILDFLY_VERSION_FROM_JBOSS_AS}"
-  JBOSS_HOME=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}
-  export JBOSS_HOME=`echo  $JBOSS_HOME`
+  export JBOSS_HOME=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}
 
   # init files under JBOSS_HOME before AS TESTS is started
   init_jboss_home
@@ -252,8 +242,9 @@ int_env
 comment_on_pull "Started testing this pull request: $BUILD_URL"
 rebase_quickstart_repo
 build_narayana
-#clone_as "$@"
-#build_as "$@"
-configure_wildfly || exit 1
+if [ -z "$JBOSS_HOME" ]; then
+  clone_as "$@"
+  build_as "$@"
+fi
 #build_apache-karaf # JBTM-2820 disable the karaf build
 run_quickstarts
