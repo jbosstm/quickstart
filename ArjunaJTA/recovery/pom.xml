@@ -30,20 +30,20 @@
   <description>Recovery example
 	</description>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>recovery</artifactId>
+  <artifactId>jta_recovery</artifactId>
   <packaging>jar</packaging>
   <name>Recovery Examples</name>
   <dependencies>
-    <!-- Embedded Hornetq -->
+    <!-- Embedded Artemis ActiveMQ -->
     <dependency>
-      <groupId>org.hornetq</groupId>
-      <artifactId>hornetq-jms-server</artifactId>
-      <version>2.4.9.Final</version>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>artemis-jakarta-server</artifactId>
+      <version>2.24.0</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.netty</groupId>
-      <artifactId>netty</artifactId>
-      <version>3.2.0.Final</version>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>5.0.0.Alpha2</version>
     </dependency>
     <dependency>
        <groupId>org.wildfly.core</groupId>
