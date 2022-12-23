@@ -49,8 +49,8 @@ function cleanup {
   unset CLIENT_PID SERVER_PID
   sleep $SLEEP_TIME
 
-  rm -rf "$JBOSS_CLIENT"
-  rm -rf "$JBOSS_SERVER"
+  rm -r "$JBOSS_CLIENT"
+  rm -r "$JBOSS_SERVER"
 }
 
 function prompt {
@@ -162,7 +162,7 @@ EOF
 cd "$WORKSPACE"
 
 echo "Creating jboss distro directories '$JBOSS_CLIENT' and '$JBOSS_SERVER'"
-rm -rf "$JBOSS_CLIENT" "$JBOSS_SERVER"
+rm -r "$JBOSS_CLIENT" "$JBOSS_SERVER"
 prepareServerWorkingDirectories "$JBOSS_ZIP" "$JBOSS_CLIENT"
 prepareServerWorkingDirectories "$JBOSS_ZIP" "$JBOSS_SERVER"
 
