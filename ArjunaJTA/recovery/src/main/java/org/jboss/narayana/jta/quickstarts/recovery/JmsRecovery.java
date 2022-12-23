@@ -23,6 +23,31 @@ package org.jboss.narayana.jta.quickstarts.recovery;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.xa.XAException;
+import javax.transaction.xa.XAResource;
+import javax.transaction.xa.Xid;
+
+import org.apache.activemq.artemis.api.core.TransportConfiguration;
+import org.apache.activemq.artemis.api.jms.ActiveMQJMSClient;
+import org.apache.activemq.artemis.api.jms.JMSFactoryType;
+import org.apache.activemq.artemis.core.config.Configuration;
+import org.apache.activemq.artemis.core.config.impl.ConfigurationImpl;
+import org.apache.activemq.artemis.core.remoting.impl.invm.InVMAcceptorFactory;
+import org.apache.activemq.artemis.core.remoting.impl.invm.InVMConnectorFactory;
+import org.apache.activemq.artemis.core.remoting.impl.netty.NettyAcceptorFactory;
+import org.apache.activemq.artemis.core.remoting.impl.netty.NettyConnectorFactory;
+import org.apache.activemq.artemis.core.server.JournalType;
+import org.apache.activemq.artemis.core.server.embedded.EmbeddedActiveMQ;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
+import org.apache.activemq.artemis.service.extensions.xa.recovery.ActiveMQXAResourceRecovery;
+import org.apache.activemq.artemis.utils.UUIDGenerator;
+import org.jboss.narayana.jta.quickstarts.util.DummyXAResource;
+import org.jboss.narayana.jta.quickstarts.util.DummyXid;
+import org.jboss.narayana.jta.quickstarts.util.Util;
+
+import com.arjuna.ats.jta.common.JTAEnvironmentBean;
+import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
+
 import jakarta.jms.JMSException;
 import jakarta.jms.MessageConsumer;
 import jakarta.jms.MessageProducer;
@@ -37,40 +62,10 @@ import jakarta.transaction.NotSupportedException;
 import jakarta.transaction.RollbackException;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.TransactionManager;
-import javax.transaction.xa.XAException;
-import javax.transaction.xa.XAResource;
-import javax.transaction.xa.Xid;
-
-import org.hornetq.api.core.TransportConfiguration;
-import org.hornetq.api.jms.HornetQJMSClient;
-import org.hornetq.api.jms.JMSFactoryType;
-import org.hornetq.core.config.Configuration;
-import org.hornetq.core.config.impl.ConfigurationImpl;
-import org.hornetq.core.remoting.impl.invm.InVMAcceptorFactory;
-import org.hornetq.core.remoting.impl.invm.InVMConnectorFactory;
-import org.hornetq.core.remoting.impl.netty.NettyAcceptorFactory;
-import org.hornetq.core.remoting.impl.netty.NettyConnectorFactory;
-import org.hornetq.core.server.JournalType;
-import org.hornetq.jms.client.HornetQConnectionFactory;
-import org.hornetq.jms.server.config.ConnectionFactoryConfiguration;
-import org.hornetq.jms.server.config.JMSConfiguration;
-import org.hornetq.jms.server.config.JMSQueueConfiguration;
-import org.hornetq.jms.server.config.impl.ConnectionFactoryConfigurationImpl;
-import org.hornetq.jms.server.config.impl.JMSConfigurationImpl;
-import org.hornetq.jms.server.config.impl.JMSQueueConfigurationImpl;
-import org.hornetq.jms.server.embedded.EmbeddedJMS;
-import org.hornetq.jms.server.recovery.HornetQXAResourceRecovery;
-import org.hornetq.utils.UUIDGenerator;
-import org.jboss.narayana.jta.quickstarts.util.DummyXAResource;
-import org.jboss.narayana.jta.quickstarts.util.DummyXid;
-import org.jboss.narayana.jta.quickstarts.util.Util;
-
-import com.arjuna.ats.jta.common.JTAEnvironmentBean;
-import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
 
 public class JmsRecovery extends RecoverySetup {
-    private static EmbeddedJMS jmsServer;
-    private static HornetQConnectionFactory xacf;
+    private static EmbeddedActiveMQ jmsServer;
+    private static ActiveMQConnectionFactory xacf;
     private static Queue queue;
     private static boolean inVM = true;
 
@@ -78,34 +73,44 @@ public class JmsRecovery extends RecoverySetup {
 
         if (args.length == 1) {
             startServices();
+            try {
+                if (args[0].equals("-f")) {
+                    new JmsRecovery().testXAWithErrorPart1();
+                } else if (args[0].equals("-r")) {
+                    startRecovery();
+                    new JmsRecovery().testXAWithErrorPart2();
+                } else {
+                    printErrorMessage();
+                }
 
-            if (args[0].equals("-f")) {
-                new JmsRecovery().testXAWithErrorPart1();
-            } else if (args[0].equals("-r")) {
-                startRecovery();
-                new JmsRecovery().testXAWithErrorPart2();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             stopServices();
+        }else {
+            printErrorMessage();
         }
 
+    }
+
+    private static void printErrorMessage() {
         System.err.println("to generate something to recover: java JmsRecovery -f");
         System.err.println("to recover from the failure: java JmsRecovery -r");
     }
-
     public static void startServices() throws Exception
     {
-        startHornetq();
+        startActiveMQ();
         startRecovery();
     }
 
     public static void stopServices() throws Exception
     {
         stopRecovery();
-        stopHornetq();
+        stopActiveMQ();
     }
 
-    private static void startHornetq() throws Exception {
+    private static void startActiveMQ() throws Exception {
         /*
          * Step 1. Decide whether to use inVM or remote communications:
          *  clients connect to servers by obtaining connections from a ConnectorFactory
@@ -114,21 +119,21 @@ public class JmsRecovery extends RecoverySetup {
         String acceptorName = inVM ? InVMAcceptorFactory.class.getName() : NettyAcceptorFactory.class.getName();
         String connFacName = inVM ? InVMConnectorFactory.class.getName() :NettyConnectorFactory.class.getName();
 
-        String queueName = "/queue/queue1";
 
-        startHornetqServer(acceptorName, connFacName, queueName);
-        initialiseHornetqClient(connFacName, queueName);
+        startActiveMQServer(acceptorName, connFacName);
+        initialiseActiveMQClient(connFacName);
     }
 
-    private static void stopHornetq() throws Exception {
+    private static void stopActiveMQ() throws Exception {
         xacf.close();
         jmsServer.stop();
+        System.out.println("Waiting some seconds to stop the server...");
     }
 
     public static void startRecovery() {
-        String resourceRecoveryClass = HornetQXAResourceRecovery.class.getName();
-        String inVMResourceRecoveryOpts = org.hornetq.core.remoting.impl.invm.InVMConnectorFactory.class.getName();
-        String remoteResourceRecoveryOpts = org.hornetq.core.remoting.impl.netty.NettyConnectorFactory.class.getName();
+        String resourceRecoveryClass = ActiveMQXAResourceRecovery.class.getName();
+        String inVMResourceRecoveryOpts = InVMConnectorFactory.class.getName();
+        String remoteResourceRecoveryOpts = NettyConnectorFactory.class.getName();
 
         /*
          * Tell JBossTS how to recover Hornetq resources. To do it via jbossts-properties.xml use
@@ -146,47 +151,38 @@ public class JmsRecovery extends RecoverySetup {
         RecoverySetup.startRecovery();
     }
 
-    private static void startHornetqServer(String acceptorName, String connFacName, String queueName) throws Exception
+    private static void startActiveMQServer(String acceptorName, String connFacName) throws Exception
     {
-        // Step 2. Create the server configuration
+        // Create the server configuration
         Configuration configuration = new ConfigurationImpl();
 
         configuration.setPersistenceEnabled(true);
         configuration.setSecurityEnabled(false);
         configuration.setJournalType(JournalType.NIO);
-        configuration.setJournalDirectory(Util.hornetqStoreDir);
-        configuration.setBindingsDirectory(Util.hornetqStoreDir + "/bindings");
-        configuration.setLargeMessagesDirectory(Util.hornetqStoreDir + "/largemessages");
+        configuration.setJournalDirectory(Util.activeMQStoreDir);
+        configuration.setBindingsDirectory(Util.activeMQStoreDir + "/bindings");
+        configuration.setLargeMessagesDirectory(Util.activeMQStoreDir + "/largemessages");
 
         configuration.getAcceptorConfigurations().add(new TransportConfiguration(acceptorName));
         configuration.getConnectorConfigurations().put("connector", new TransportConfiguration(connFacName));
 
-        // Step 3. Create the JMS configuration
-        JMSConfiguration jmsConfig = new JMSConfigurationImpl();
-
-        // Step 4. Configure the JMS ConnectionFactory
-        ArrayList<String> connectorNames = new ArrayList<String>();
-        connectorNames.add("connector");
-        ConnectionFactoryConfiguration cfConfig = new ConnectionFactoryConfigurationImpl("cf", true,  connectorNames, "/cf");
-        jmsConfig.getConnectionFactoryConfigurations().add(cfConfig);
-
-        // Step 5. Configure the JMS Queue
-        JMSQueueConfiguration queueConfig = new JMSQueueConfigurationImpl("queue1", null, true, queueName);
-        jmsConfig.getQueueConfigurations().add(queueConfig);
-
-        // Step 6. Start the JMS Server using the HornetQ core server and the JMS configuration
-        jmsServer = new EmbeddedJMS();
+        // Start the JMS Server using the ActiveMQ core server
+        jmsServer = new EmbeddedActiveMQ();
         jmsServer.setConfiguration(configuration);
-        jmsServer.setJmsConfiguration(jmsConfig);
         jmsServer.start();
 
         System.out.println("Embedded JMS Server is running");
     }
 
-    // Step 6 Initialise client side objects: connection factory and JMS queue
-    private static void initialiseHornetqClient(String connFacName, String queueName) {
-        xacf = HornetQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.XA_CF, new TransportConfiguration(connFacName));
-        queue = (Queue)jmsServer.lookup(queueName);
+    // Initialise client side objects: connection factory and JMS queue
+    private static void initialiseActiveMQClient(String connFacName) {
+        xacf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.XA_CF, new TransportConfiguration(connFacName));
+        try(Session s = xacf.createConnection().createSession()) {
+            queue = s.createQueue("TestQueue");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void endTx(XAResource xaRes, Xid xid, boolean commit) throws XAException {

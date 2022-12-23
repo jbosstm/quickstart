@@ -14,7 +14,7 @@ package org.jboss.narayana.jta.quickstarts.util;
 
 import javax.transaction.xa.Xid;
 
-import org.hornetq.utils.Base64;
+import org.apache.activemq.artemis.utils.Base64;
 
 /**
  * @author <a href="mailto:andy.taylor@jboss.org">Andy Taylor</a>

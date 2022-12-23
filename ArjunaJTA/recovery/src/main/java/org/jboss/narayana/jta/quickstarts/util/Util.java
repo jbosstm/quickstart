@@ -28,7 +28,7 @@ import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
 public class Util {
     public static final String dataDir = "target/data";
     public static final String recoveryStoreDir = dataDir + "/recoveryTestStore";
-    public static final String hornetqStoreDir = dataDir + "/hornetq";
+    public static final String activeMQStoreDir = dataDir + "/activeMQ";
 
     public static void emptyObjectStore() {
         String objectStoreDirName = BeanPopulator.getDefaultInstance(ObjectStoreEnvironmentBean.class).getObjectStoreDir();
