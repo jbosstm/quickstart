@@ -25,7 +25,6 @@ import java.util.List;
 
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
-import javax.transaction.xa.Xid;
 
 import org.apache.activemq.artemis.api.core.TransportConfiguration;
 import org.apache.activemq.artemis.api.jms.ActiveMQJMSClient;
@@ -40,9 +39,7 @@ import org.apache.activemq.artemis.core.server.JournalType;
 import org.apache.activemq.artemis.core.server.embedded.EmbeddedActiveMQ;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.service.extensions.xa.recovery.ActiveMQXAResourceRecovery;
-import org.apache.activemq.artemis.utils.UUIDGenerator;
 import org.jboss.narayana.jta.quickstarts.util.DummyXAResource;
-import org.jboss.narayana.jta.quickstarts.util.DummyXid;
 import org.jboss.narayana.jta.quickstarts.util.Util;
 
 import com.arjuna.ats.jta.common.JTAEnvironmentBean;
@@ -183,26 +180,8 @@ public class JmsRecovery extends RecoverySetup {
 
     }
 
-    private void endTx(XAResource xaRes, Xid xid, boolean commit) throws XAException {
-        xaRes.end(xid, XAResource.TMSUCCESS);
-        xaRes.prepare(xid);
-        if (commit)
-            xaRes.commit(xid, false);
-        else
-            xaRes.rollback(xid);
-    }
-
-    private Xid startTx(XAResource xaRes) throws XAException {
-        Xid xid = new DummyXid("xa-example1".getBytes(), 1, UUIDGenerator.getInstance()
-                    .generateStringUUID()
-                    .getBytes());
-
-        xaRes.start(xid, XAResource.TMNOFLAGS);
-
-        return xid;
-    }
-
-    private void startJTATx(XAResource... resources) throws XAException, SystemException, NotSupportedException, RollbackException {
+    private void startJTATx(XAResource... resources)
+            throws XAException, SystemException, NotSupportedException, RollbackException {
         TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
         tm.begin();
@@ -224,39 +203,26 @@ public class JmsRecovery extends RecoverySetup {
 
     private void produceMessages(XAConnection connection, String... msgs) throws Exception {
         // Create an XA session and a message producer
-        //Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Session session = connection.createXASession();
-        MessageProducer producer = session.createProducer(queue);
-
-        for (String msg : msgs)
-            producer.send(session.createTextMessage(msg));
-
-        producer.close();
-        session.close();
+        try(Session session = connection.createXASession();
+                MessageProducer producer = session.createProducer(queue);){
+            for (String msg : msgs)
+                producer.send(session.createTextMessage(msg));
+        }
     }
 
-    public void produceMessages(DummyXAResource.faultType fault, String ... messages) throws Exception {
-        XAConnection connection = xacf.createXAConnection();
-
-        try
-        {
+    public void produceMessages(DummyXAResource.faultType fault, String... messages) throws Exception {
+        try(XAConnection connection = xacf.createXAConnection();) {
             connection.start();
 
             // Begin some Transaction work
             XASession xaSession = connection.createXASession();
             XAResource xaRes = xaSession.getXAResource();
 
-            //Xid xid = startTx(xaRes);
             startJTATx(new DummyXAResource(fault), xaRes);
-
 
             produceMessages(connection, messages);
 
             endJTATx(true);
-        }
-        finally
-        {
-             connection.close();
         }
     }
 
@@ -273,32 +239,24 @@ public class JmsRecovery extends RecoverySetup {
     }
 
     public int consumeMessages(int cnt, long millis) throws Exception {
-        XAConnection connection = xacf.createXAConnection();
         int msgCnt = 0;
 
-        try
-        {
+        try(XAConnection connection = xacf.createXAConnection();
+                XASession xaSession = connection.createXASession();
+                MessageConsumer xaConsumer = xaSession.createConsumer(queue);) {
             connection.start();
 
             // create an XA JMS session and enlist the corresponding XA resource within a transaction
-            XASession xaSession = connection.createXASession();
             XAResource xaRes = xaSession.getXAResource();
 
             startJTATx(xaRes, new DummyXAResource(DummyXAResource.faultType.NONE));
 
             // consume 2 messages withing a transaction
-            MessageConsumer xaConsumer =  xaSession.createConsumer(queue);
             msgCnt = consumeMessages(xaConsumer, millis, cnt);
 
-            // roll back the transaction - since we consumed the messages inside a transaction they should still be available
+            // roll back the transaction - since we consumed the messages inside a
+            // transaction they should still be available
             endJTATx(true);
-
-            xaConsumer.close();
-            xaSession.close();
-        }
-        finally
-        {
-             connection.close();
         }
 
         return msgCnt;
@@ -306,53 +264,7 @@ public class JmsRecovery extends RecoverySetup {
 
     public void drainQueue() throws Exception {
         while (consumeMessages(100, 500) == 100)
-           System.out.println("drained 100 messages");
-    }
-
-    public void testIsJmsWorking() throws Exception {
-        XAConnection connection = xacf.createXAConnection();
-
-        drainQueue();
-
-        try
-        {
-            connection.start();
-
-            produceMessages(connection, "hello", "world");
-
-            // create an XA JMS session and enlist the corresponding XA resource within a transaction
-            XASession xaSession = connection.createXASession();
-            XAResource xaRes = xaSession.getXAResource();
-
-            startJTATx(xaRes, new DummyXAResource(DummyXAResource.faultType.NONE));
-
-            // consume the 2 messages within a transaction
-            MessageConsumer xaConsumer =  xaSession.createConsumer(queue);
-
-            if (consumeMessages(xaConsumer, 1000, 2) != 2)
-                throw new Exception("missing messages");
-
-            // roll back the transaction - since we consumed the messages inside a transaction they should still be available
-            endJTATx(false);
-
-            // now have another go at consuming the 2 messages but this time commit
-            startJTATx(xaRes, new DummyXAResource(DummyXAResource.faultType.NONE));
-            if (consumeMessages(xaConsumer, 1000, 2) != 2)
-                throw new Exception("missing messages");
-            // commit the message consumption
-            endJTATx(true);
-
-            // since the work was committed we expect there to be no more messages available
-            if (consumeMessages(xaConsumer, 1000, 1) != 0)
-                throw new Exception("additional messages");
-
-            xaConsumer.close();
-            xaSession.close();
-        }
-        finally
-        {
-             connection.close();
-        }
+            System.out.println("drained 100 messages");
     }
 
     public void testXASendWithoutError() throws Exception {
