@@ -204,7 +204,7 @@ prompt "Going to configure jboss client '$JBOSS_CLIENT' to use SSL"
 cd "$JBOSS_CLIENT"
 
 cp docs/examples/configs/standalone-xts.xml standalone/configuration/
-keytool -genkey -alias client -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass client -storepass client -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
+keytool -genkey -alias client -keyalg RSA -keysize 4096 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass client -storepass client -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
 keytool -export -keystore ./standalone/configuration/server.keystore -alias client -file client.cer -keypass client -storepass client
 verify $?
 
@@ -252,7 +252,7 @@ cd "$JBOSS_SERVER"
 
 prompt "server configuring keystore"
 cp docs/examples/configs/standalone-xts.xml standalone/configuration/
-keytool -genkey -alias server -keyalg RSA -keysize 1024 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass server -storepass server -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
+keytool -genkey -alias server -keyalg RSA -keysize 4096 -keystore ./standalone/configuration/server.keystore -validity 3650 -keypass server -storepass server -dname "cn=$HOSTNAME, ou=jbossdev, o=Red Hat, l=Raleigh, st=NC, c=US"
 keytool -export -keystore ./standalone/configuration/server.keystore -alias server -file server.cer -keypass server -storepass server
 
 prompt "server starting"
