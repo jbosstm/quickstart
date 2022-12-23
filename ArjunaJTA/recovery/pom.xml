@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- ~ JBoss, Home of Professional Open Source. ~ Copyright 2016, Red Hat, 
   Inc., and individual contributors ~ as indicated by the @author tags. See 
   the copyright.txt file in the ~ distribution for a full listing of individual 
@@ -13,21 +13,23 @@
   this software; if not, write to the Free ~ Software Foundation, Inc., 51 
   Franklin St, Fifth Floor, Boston, MA ~ 02110-1301 USA, or see the FSF site: 
   http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>narayana-quickstarts-jta</artifactId>
     <version>6.0.0.Final-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <description>Recovery example
-	</description>
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>jta_recovery</artifactId>
   <packaging>jar</packaging>
   <name>Recovery Examples</name>
+  <description>Recovery example</description>
+
+  <properties>
+    <sortpom.skip>false</sortpom.skip>
+  </properties>
+
   <dependencies>
     <!-- Embedded Artemis ActiveMQ -->
     <dependency>
@@ -72,10 +74,10 @@
             <executions>
               <execution>
                 <id>Run tests</id>
-                <phase>integration-test</phase>
                 <goals>
                   <goal>exec</goal>
                 </goals>
+                <phase>integration-test</phase>
                 <configuration>
                   <executable>bash</executable>
                   <commandlineArgs>${basedir}/run.sh</commandlineArgs>
@@ -107,21 +109,19 @@
             <version>1.6</version>
             <executions>
               <execution>
-                <phase>integration-test</phase>
-                <configuration>
-                  <target>
-                    <exec dir="${project.basedir}"
-                      executable="cmd.exe" failonerror="true">
-                      <arg value="/c" />
-                      <arg value="run.bat" />
-                      <env key="QUICKSTART_NARAYANA_VERSION"
-                        value="${project.version}" />
-                    </exec>
-                  </target>
-                </configuration>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>integration-test</phase>
+                <configuration>
+                  <target>
+                    <exec dir="${project.basedir}" executable="cmd.exe" failonerror="true">
+                      <arg value="/c"></arg>
+                      <arg value="run.bat"></arg>
+                      <env key="QUICKSTART_NARAYANA_VERSION" value="${project.version}"></env>
+                    </exec>
+                  </target>
+                </configuration>
               </execution>
             </executions>
           </plugin>
