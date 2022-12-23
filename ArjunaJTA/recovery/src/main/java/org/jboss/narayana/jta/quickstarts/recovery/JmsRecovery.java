@@ -98,27 +98,25 @@ public class JmsRecovery extends RecoverySetup {
         System.err.println("to generate something to recover: java JmsRecovery -f");
         System.err.println("to recover from the failure: java JmsRecovery -r");
     }
-    public static void startServices() throws Exception
-    {
+
+    public static void startServices() throws Exception {
         startActiveMQ();
         startRecovery();
     }
 
-    public static void stopServices() throws Exception
-    {
+    public static void stopServices() throws Exception {
         stopRecovery();
         stopActiveMQ();
     }
 
     private static void startActiveMQ() throws Exception {
         /*
-         * Step 1. Decide whether to use inVM or remote communications:
-         *  clients connect to servers by obtaining connections from a ConnectorFactory
-         *  servers accept connections from clients by obtaining acceptors from an AcceptorFactory
+         * Step 1. Decide whether to use inVM or remote communications: clients connect
+         * to servers by obtaining connections from a ConnectorFactory servers accept
+         * connections from clients by obtaining acceptors from an AcceptorFactory
          */
         String acceptorName = inVM ? InVMAcceptorFactory.class.getName() : NettyAcceptorFactory.class.getName();
-        String connFacName = inVM ? InVMConnectorFactory.class.getName() :NettyConnectorFactory.class.getName();
-
+        String connFacName = inVM ? InVMConnectorFactory.class.getName() : NettyConnectorFactory.class.getName();
 
         startActiveMQServer(acceptorName, connFacName);
         initialiseActiveMQClient(connFacName);
@@ -151,8 +149,7 @@ public class JmsRecovery extends RecoverySetup {
         RecoverySetup.startRecovery();
     }
 
-    private static void startActiveMQServer(String acceptorName, String connFacName) throws Exception
-    {
+    private static void startActiveMQServer(String acceptorName, String connFacName) throws Exception {
         // Create the server configuration
         Configuration configuration = new ConfigurationImpl();
 
@@ -176,8 +173,9 @@ public class JmsRecovery extends RecoverySetup {
 
     // Initialise client side objects: connection factory and JMS queue
     private static void initialiseActiveMQClient(String connFacName) {
-        xacf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.XA_CF, new TransportConfiguration(connFacName));
-        try(Session s = xacf.createConnection().createSession()) {
+        xacf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.XA_CF,
+                new TransportConfiguration(connFacName));
+        try (Session s = xacf.createConnection().createSession()) {
             queue = s.createQueue("TestQueue");
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,7 +202,7 @@ public class JmsRecovery extends RecoverySetup {
         return xid;
     }
 
-    private void startJTATx(XAResource ... resources) throws XAException, SystemException, NotSupportedException, RollbackException {
+    private void startJTATx(XAResource... resources) throws XAException, SystemException, NotSupportedException, RollbackException {
         TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
         tm.begin();
@@ -213,7 +211,8 @@ public class JmsRecovery extends RecoverySetup {
             tm.getTransaction().enlistResource(xaRes);
     }
 
-    private void endJTATx(boolean commit) throws SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException {
+    private void endJTATx(boolean commit)
+            throws SystemException, RollbackException, HeuristicRollbackException, HeuristicMixedException {
         TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
         // no need to delist resources since that is done automatically by a JTA compliant TM
@@ -223,7 +222,7 @@ public class JmsRecovery extends RecoverySetup {
             tm.rollback();
     }
 
-    private void produceMessages(XAConnection connection, String ... msgs) throws Exception{
+    private void produceMessages(XAConnection connection, String... msgs) throws Exception {
         // Create an XA session and a message producer
         //Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         Session session = connection.createXASession();
