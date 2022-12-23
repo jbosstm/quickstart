@@ -4,7 +4,7 @@ set -x
 trap cleanup EXIT
 
 # Script for quickstart execution of XTS over HTTPS, see
-# https://github.com/jbosstm/quickstart/tree/master/XTS/ssl
+# https://github.com/jbosstm/quickstart/tree/main/XTS/ssl
 # the original XTS quickstart could be found at
 # https://github.com/wildfly/quickstart.git
 
