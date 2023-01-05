@@ -33,6 +33,11 @@
   <name>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with MongoDB</name>
   <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with MongoDB</description>
 
+  <properties>
+    <version.testcontainers>1.17.6</version.testcontainers>
+    <version.mongodb>3.12.11</version.mongodb>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.jboss.narayana.xts</groupId>
@@ -100,15 +105,22 @@
 
     <!-- Test dependencies -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${version.junit}</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${version.jupiter}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.arquillian.junit</groupId>
-      <artifactId>arquillian-junit-container</artifactId>
+      <groupId>org.jboss.arquillian.junit5</groupId>
+      <artifactId>arquillian-junit5-container</artifactId>
+      <version>${version.org.jboss.arquillian}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.arquillian.junit5</groupId>
+      <artifactId>arquillian-junit5-core</artifactId>
       <version>${version.org.jboss.arquillian}</version>
       <scope>test</scope>
     </dependency>
@@ -119,10 +131,25 @@
       <version>${version.org.jboss.arquillian}</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.mongodb</groupId>
       <artifactId>mongo-java-driver</artifactId>
-      <version>3.12.11</version>
+      <version>${version.mongodb}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
+      <version>${version.testcontainers}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${version.testcontainers}</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

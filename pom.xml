@@ -218,6 +218,7 @@
         <version.json>1.0</version.json>
         <version.jta.api>1.0.0.Final</version.jta.api>
         <version.junit>4.13.1</version.junit>
+        <version.jupiter>5.9.1</version.jupiter>
         <version.karaf.services>4.2.1</version.karaf.services>
         <version.lifecycle.mapping.plugin>1.0.0</version.lifecycle.mapping.plugin>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
