@@ -26,22 +26,30 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.narayana.compensations.api.TransactionCompensatedException;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.utility.DockerImageName;
+
 import java.io.File;
 
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class BankingServiceTest {
+
+    @Container
+    private final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
 
     private DBCollection accounts;
 
@@ -68,8 +76,11 @@ public class BankingServiceTest {
      *
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void resetAccountData() throws Exception {
+
+        mongoDBContainer.start();
+
         MongoClient mongo = new MongoClient("localhost", 27017);
         DB database = mongo.getDB("test");
 
@@ -78,6 +89,11 @@ public class BankingServiceTest {
 
         accounts.insert(new BasicDBObject("name", "A").append("balance", 1000.0));
         accounts.insert(new BasicDBObject("name", "B").append("balance", 1000.0));
+    }
+
+    @AfterEach
+    public void cleanUp(){
+        mongoDBContainer.stop();
     }
 
     /**
@@ -107,7 +123,7 @@ public class BankingServiceTest {
         //Initiate a 'high value' transfer that will fail
         try {
             bankingService.transferMoney("A", "B", 600.0);
-            Assert.fail("Expected a TransactionCompensatedException to be thrown");
+            Assertions.fail("Expected a TransactionCompensatedException to be thrown");
         } catch (TransactionCompensatedException e) {
             //expected
         }
@@ -124,6 +140,6 @@ public class BankingServiceTest {
     private void assertBalance(String account, Double expectedBalance) {
         DBObject accountDoc = accounts.findOne(new BasicDBObject("name", account));
         Double actualBalance = (Double) accountDoc.get("balance");
-        Assert.assertEquals("Balance is not as expected. Got '" + actualBalance + "', expected: '" + expectedBalance + "'", expectedBalance, actualBalance, 0);
+        Assertions.assertEquals(expectedBalance, actualBalance, 0, "Balance is not as expected. Got '" + actualBalance + "', expected: '" + expectedBalance + "'");
     }
 }
