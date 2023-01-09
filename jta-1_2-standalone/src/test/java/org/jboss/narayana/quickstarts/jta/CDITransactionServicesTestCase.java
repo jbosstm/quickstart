@@ -16,10 +16,10 @@
  */
 package org.jboss.narayana.quickstarts.jta;
 
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionalException;
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionalException;
 
 import org.jboss.narayana.quickstarts.jta.cdi.CDITransactionServices;
 import org.jboss.narayana.quickstarts.jta.cdi.CDITransactionsProducers;
@@ -29,6 +29,7 @@ import org.jboss.weld.transaction.spi.TransactionServices;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**

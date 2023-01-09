@@ -25,7 +25,7 @@ package io.narayana;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 import org.jboss.byteman.contrib.bmunit.BMScript;
 import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
@@ -60,15 +60,18 @@ public class AgroalTest {
         // cleaning possible active global transaction
         TransactionManager txn = com.arjuna.ats.jta.TransactionManager.transactionManager();
         if(txn != null) {
-            if(txn.getStatus() == javax.transaction.Status.STATUS_ACTIVE)
+            if(txn.getStatus() == jakarta.transaction.Status.STATUS_ACTIVE)
                 txn.rollback();
-            if(txn.getStatus() != javax.transaction.Status.STATUS_NO_TRANSACTION)
+            if(txn.getStatus() != jakarta.transaction.Status.STATUS_NO_TRANSACTION)
                 txn.suspend();
         }
         try {
             connForVerification1.close();
             connForVerification2.close();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            
+            ignored.printStackTrace();
+        }
     }
 
     @Test
@@ -82,6 +85,7 @@ public class AgroalTest {
 
     	Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
     	Assert.assertTrue("Second database does not contain data as expected to be commited", rs2.next());
+    	ag.closeConnections();
     }
     
     @Test
@@ -91,7 +95,7 @@ public class AgroalTest {
     	try {
     		ag.process(() -> {throw new RuntimeException("expected");});
     	} catch (Exception e) {
-    		checkcException(e);
+    	    checkException(e);
     	}
 
     	ResultSet rs1 = AgroalH2Utils.select(connForVerification1);
@@ -120,15 +124,16 @@ public class AgroalTest {
         // manually run recovery manager to check if integration with Agroal works
         // this verifies that XAResourceRecovery was setup and if recovery finishes the failed transaction
         ag.getRecoveryManager().scan();
-        ag.getRecoveryManager().terminate();
 
         rs1 = AgroalH2Utils.select(connForVerification1);
         Assert.assertTrue("First database does not contain data as expected to be commited", rs1.next());
 
-        ag.closeConnections();
+        //after recovery cycle we need a way to close XAResource
+        //see https://issues.redhat.com/browse/JBTM-3325
+        ag.closeConnectionsAfterRecovery();
     }
 
-    private void checkcException(Exception e) {
+    private void checkException(Exception e) {
         if (!e.getMessage().toLowerCase().contains("expected"))
             Assert.fail("Exception message does not contain 'expected' but it's '"
                 + e.getClass().getName() + ":" + e.getMessage() + "'");

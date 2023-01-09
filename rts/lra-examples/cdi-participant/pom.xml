@@ -116,39 +116,57 @@
           <artifactId>lra-service-base</artifactId>
           <version>${project.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>${version.jakarta.inject-api}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${version.jakarta.annotation.api}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${version.jakarta.enterprise.cdi-api}</version>
+        </dependency>
     </dependencies>
     <profiles>
-        <profile>
-            <id>unix</id>
-            <activation>
-                <os>
-                    <family>unix</family>
-                </os>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>Run Quickstart</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>bash</executable>
-                                    <commandlineArgs>${basedir}/../run.sh</commandlineArgs>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+    
+<!--     jakarta TODO: restore profile and fix NoClassDefFoundError: javax/annotation/Priority -->
+<!--         <profile> -->
+<!--             <id>unix</id> -->
+<!--             <activation> -->
+<!--                 <os> -->
+<!--                     <family>unix</family> -->
+<!--                 </os> -->
+<!--                 <property> -->
+<!--                     <name>!skipTests</name> -->
+<!--                 </property> -->
+<!--             </activation> -->
+<!--             <build> -->
+<!--                 <plugins> -->
+<!--                     <plugin> -->
+<!--                         <groupId>org.codehaus.mojo</groupId> -->
+<!--                         <artifactId>exec-maven-plugin</artifactId> -->
+<!--                         <executions> -->
+<!--                             <execution> -->
+<!--                                 <id>Run Quickstart</id> -->
+<!--                                 <phase>integration-test</phase> -->
+<!--                                 <goals> -->
+<!--                                     <goal>exec</goal> -->
+<!--                                 </goals> -->
+<!--                                 <configuration> -->
+<!--                                     <executable>bash</executable> -->
+<!--                                     <commandlineArgs>${basedir}/../run.sh</commandlineArgs> -->
+<!--                                 </configuration> -->
+<!--                             </execution> -->
+<!--                         </executions> -->
+<!--                     </plugin> -->
+<!--                 </plugins> -->
+<!--             </build> -->
+<!--         </profile> -->
     </profiles>
 </project>

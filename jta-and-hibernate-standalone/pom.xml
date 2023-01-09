@@ -38,6 +38,10 @@
 
     <url>http://narayana.io</url>
 
+    <properties>
+        <version.weld-junit>4.0.0.Final</version.weld-junit>
+    </properties>
+
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -65,12 +69,6 @@
             </exclusions>
         </dependency>
         <dependency>
-          <groupId>org.jboss.spec.javax.transaction</groupId>
-          <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-          <version>${version.jboss-transaction-api}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.17.1</version>
@@ -84,11 +82,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>
@@ -107,11 +105,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>
@@ -128,16 +126,20 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Standalone CDI container -->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
             <version>${version.weld}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core-jakarta</artifactId>
             <version>${version.hibernate}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>${version.jakarta.persistence-api}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -149,6 +151,11 @@
             <artifactId>junit</artifactId>
             <version>${version.junit}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-junit4</artifactId>
+            <version>${version.weld-junit}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.byteman</groupId>
@@ -173,11 +180,6 @@
             <artifactId>byteman-bmunit</artifactId>
             <scope>test</scope>
             <version>${version.byteman}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${version.jakarta.xml.bind}</version>
         </dependency>
     </dependencies>
 

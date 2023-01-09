@@ -74,9 +74,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>${version.javax.annotation.api}</version>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${version.jakarta.annotation.api}</version>
         </dependency>
         <!-- Narayana dependencies -->
         <dependency>
@@ -104,11 +104,6 @@
                     <artifactId>jboss-logging-spi</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.transaction}</version>
         </dependency>
         <!-- Other dependencies -->
         <dependency>
@@ -147,11 +142,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>
@@ -170,11 +165,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>

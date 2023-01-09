@@ -19,7 +19,7 @@
     <narayana.version>${project.version}</narayana.version>
     <quarkus.http.port>8080</quarkus.http.port>
     <surefire-plugin.version>2.22.0</surefire-plugin.version>
-    <version.quarkus>2.14.0.Final</version.quarkus>
+    <version.quarkus>3.0.0.Alpha1</version.quarkus>
   </properties>
 
   <dependencyManagement>

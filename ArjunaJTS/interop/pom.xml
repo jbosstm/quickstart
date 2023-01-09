@@ -50,29 +50,9 @@
     </repository>
   </repositories>
 
-  <profiles>
-    <profile>
-      <id>include-for-JDK11-above-versions</id>
-      <activation>
-        <jdk>[11,)</jdk>
-      </activation>
-      <modules>
-        <module>glassfish</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>skip-for-JDK9-all-versions</id>
-      <activation>
-        <jdk>(,9)</jdk>
-      </activation>
-      <modules>
-      </modules>
-    </profile>
-  </profiles>
-
-
   <modules>
     <module>resource</module>
     <module>test-ejbs</module>
+    <module>glassfish</module>
   </modules>
 </project>

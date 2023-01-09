@@ -33,11 +33,15 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
+
+import java.io.File;
 import java.util.Date;
 
 @RunWith(Arquillian.class)
@@ -47,15 +51,15 @@ public class TravelBookingTest {
     TravelBookingClient client;
 
     @Deployment
-    public static JavaArchive createTestArchive() {
+    public static WebArchive createTestArchive() {
 
-        return ShrinkWrap.create(JavaArchive.class, "test.jar")
+        return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, HotelServiceImpl.class.getPackage().getName())
                 .addPackages(true, Taxi1ServiceImpl.class.getPackage().getName())
                 .addPackages(true, Taxi2ServiceImpl.class.getPackage().getName())
                 .addPackages(true, TravelBookingTest.class.getPackage().getName())
-                .addAsManifestResource("persistence.xml")
-                .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+                .addAsWebInfResource(new File("src/test/resources/persistence.xml"), "classes/META-INF/persistence.xml")
+                .addAsWebInfResource(new StringAsset("<beans bean-discovery-mode=\"all\"></beans>"), "beans.xml");
     }
 
 

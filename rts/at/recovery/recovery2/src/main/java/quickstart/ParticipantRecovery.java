@@ -18,17 +18,22 @@
 package quickstart;
 
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
 
+// see the quickstart README for details of the quickstart
 public class ParticipantRecovery {
+    static JAXRSServer txnServer;
+
     public static void main(String[] args) {
         String coordinatorUrl = null; // the endpoint of the resource for creating transaction coordinators
-        String serviceUrl = null; // the endpoint for the example web service that will take part in a transaction
+        String serviceUrl = null; // the endpoint for the local example JAX-RS service that will take part in a transaction
         String opt = "";
 
-        for (String arg : args) {    System.out.printf("checking arg %s%n", arg);
+        for (String arg : args) {
             if (arg.startsWith("coordinator="))
                 coordinatorUrl = arg.substring("coordinator=".length());
             else if (arg.startsWith("service="))
@@ -42,10 +47,12 @@ public class ParticipantRecovery {
 
         startServer(serviceUrl);
 
-        // get a helper for using RESTful transactions, passing in the well know resource endpoint for the transaction manager
+        // get a helper for using RESTful transactions, passing in the well known resource endpoint for the transaction manager
+        // (however a typical application would use an instance of jakarta.ws.rs.client.Client
         TxSupport txn = new TxSupport(coordinatorUrl);
 
         if ("-r".equals(opt)) {
+            // wait for recovery of a crashed REST-AT transaction to recover
             System.out.println("=============================================================================");
             System.out.println("Client: WAITING FOR RECOVERY IN 2 SECOND INTERVALS (FOR A MAX OF 130 SECONDS)");
             System.out.println("=============================================================================");
@@ -83,18 +90,21 @@ public class ParticipantRecovery {
         txn.startTx();
 
         /*
-         * Send two web service requests. Include the resource url for registering durable participation
-         * in the transaction with the request
+         * Send two web service requests to ensure that 2PC is used. Include the resource url for registering durable
+         * participation in the transaction with the request.
          */
-        String serviceRequest = serviceUrl + "?enlistURL=" + txn.getDurableParticipantEnlistmentURI();
+        String participantEnlistmentURL = URLEncoder.encode(txn.getDurableParticipantEnlistmentURI(), StandardCharsets.UTF_8);
+        String serviceRequest = String.format("%s?enlistURL=%s", serviceUrl, participantEnlistmentURL);
 
-        String wId1 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
-        String wId2 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest, "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+        String wId1 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest,
+                "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
+        String wId2 = txn.httpRequest(new int[] {HttpURLConnection.HTTP_OK}, serviceRequest,
+                "GET", TxMediaType.PLAIN_MEDIA_TYPE, null, null);
 
         // commit the transaction
         if ("-f".equals(opt)) {
-            System.out.println("Client: Failing work load " + wId2);
-            TransactionAwareResource.FAIL_COMMIT = wId2;
+            System.out.printf("Client: Failing work load %s in txn %s%n", wId2, txn.getTxnUri());
+            TransactionAwareResource.FAIL_COMMIT = wId2; // when participant wId2 commits it will halt the JVM
         }
 
         System.out.println("Client: Committing transaction");
@@ -102,18 +112,19 @@ public class ParticipantRecovery {
 
         // the web service should have received prepare and commit requests from the transaction manager
 
-        // shutdown the embedded JAX-RS server
+        // shutdown the embedded JAX-RS server.
+        // nb. not reached if ("-f".equals(opt))
         stopServer();
     }
 
     public static void startServer(String serviceUrl) {
-        int servicePort = Integer.valueOf(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
+        int servicePort = Integer.parseInt(serviceUrl.replaceFirst(".*:(.*)/.*", "$1"));
         // the example uses an embedded JAX-RS server for running the service that will take part in a transaction
-        JaxrsServer.startServer("localhost", servicePort);
+        txnServer = new JAXRSServer("localhost", servicePort);
     }
 
     public static void stopServer() {
         // shutdown the embedded JAX-RS server
-        JaxrsServer.stopServer();
+        txnServer.stop();
     }
 }

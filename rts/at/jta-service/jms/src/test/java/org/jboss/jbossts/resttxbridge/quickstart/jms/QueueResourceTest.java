@@ -32,9 +32,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Link;
+import jakarta.ws.rs.core.Response;
 
 /**
  * 
@@ -67,6 +67,8 @@ public class QueueResourceTest {
                 .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/beans.xml"))
                 .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/web.xml"))
                 .addPackages(true, "org.jboss.jbossts.resttxbridge.quickstart.jms")
+                .addPackages(true, "jakarta.ws.rs.core")
+                .addPackages(true, "jakarta.ws.rs.ext")
                 .setManifest(new StringAsset(MANIFEST_STRING));
 
         return archive;

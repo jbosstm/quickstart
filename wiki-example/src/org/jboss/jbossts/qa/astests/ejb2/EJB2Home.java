@@ -21,8 +21,8 @@
 
 package org.jboss.jbossts.qa.astests.ejb2;
 
-import javax.ejb.CreateException;
-import javax.ejb.EJBHome;
+import jakarta.ejb.CreateException;
+import jakarta.ejb.EJBHome;
 import java.rmi.RemoteException;
 
 public interface EJB2Home extends EJBHome

@@ -28,8 +28,7 @@
         <version>6.0.0.Final-SNAPSHOT</version>
     </parent>
     <artifactId>recovery2</artifactId>
-    <groupId>org.jboss.narayana.quickstart.rts</groupId>
-    <name>RESTAT Quickstart: Participant Service with Recovery 2</name>
+    <name>REST-AT Quickstart: Participant Service with Recovery 2</name>
     <description>Example of how a web service can recover from failures during transaction completion (using the integration API</description>
 
     <build>
@@ -47,14 +46,6 @@
     </build>
 
     <repositories>
-        <!-- Jersey -->
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>https://download.java.net/maven/2/</url>
-            <layout>default</layout>
-        </repository>
-        <!-- end Jersey -->
         <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Maven Repository Group</name>
@@ -80,34 +71,27 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- RESTAT utils -->
+        <!-- REST-AT utils -->
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>restat-util</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.1.0.GA</version>
-        </dependency>
-        <!-- Jersey container for running participant services -->
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>1.5</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-core</artifactId>
+            <version>${version.resteasy}</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>1.5</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-undertow</artifactId>
+            <version>${version.resteasy}</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.grizzly</groupId>
-            <artifactId>grizzly-servlet-webserver</artifactId>
-            <version>1.9.18-i</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-netty4</artifactId>
+            <version>${version.resteasy}</version>
         </dependency>
-        <!-- end Jersey -->
     </dependencies>
     <profiles>
         <profile>

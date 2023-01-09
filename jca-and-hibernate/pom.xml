@@ -38,7 +38,7 @@
     <url>http://jboss.org/jbosstm</url>
 
 	<properties>
-		<version.javax.el>3.0.1-b11</version.javax.el>
+		<version.jakarta.el>5.0.0-M1</version.jakarta.el>
 	</properties>
     <repositories>
         <repository>
@@ -63,15 +63,9 @@
         <!-- Hibernate Dependencies -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-core-jakarta</artifactId>
             <version>${version.hibernate}</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${version.hibernate}</version>
-        </dependency>
-
         <!-- IronJacamar Core Dependencies -->
         <dependency>
             <groupId>com.github.fungal</groupId>
@@ -84,53 +78,53 @@
             <version>${version.hibernate.validator}</version>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${version.javax.validation}</version>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>${version.jakarta.validation}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>${version.javax.el}</version>
+            <artifactId>jakarta.el</artifactId>
+            <version>${version.jakarta.el}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-api</artifactId>
+            <artifactId>ironjacamar-common-api-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-impl</artifactId>
+            <artifactId>ironjacamar-common-impl-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-spi</artifactId>
+            <artifactId>ironjacamar-common-spi-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-api</artifactId>
+            <artifactId>ironjacamar-core-api-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-impl</artifactId>
+            <artifactId>ironjacamar-core-impl-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-deployers-common</artifactId>
+            <artifactId>ironjacamar-deployers-common-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-deployers-fungal</artifactId>
+            <artifactId>ironjacamar-deployers-fungal-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-jdbc</artifactId>
+            <artifactId>ironjacamar-jdbc-jakarta</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
@@ -178,11 +172,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>
@@ -201,11 +195,11 @@
                     <artifactId>jmxtools</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.jms</groupId>
+                    <groupId>jakarta.jms</groupId>
                     <artifactId>jms</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>javax.mail</groupId>
+                    <groupId>jakarta.mail</groupId>
                     <artifactId>mail</artifactId>
                 </exclusion>
             </exclusions>
@@ -264,12 +258,6 @@
             <artifactId>narayana-jts-integration</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.transaction}</version>
-        </dependency>
-
         <!-- JDBC -->
         <dependency>
             <groupId>postgresql</groupId>

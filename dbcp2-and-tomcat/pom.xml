@@ -13,20 +13,56 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-            <version>${version.org.jboss.spec.javax.transaction}</version>
-            <scope>provided</scope>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>${version.jakarta.ws.rs-api}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+            <version>${version.jakarta.transaction-api}</version>
+        </dependency>
+<!--         jakarta TODO: how to replace narayana-tomcat? -->
+<!--         <dependency> -->
+<!--             <groupId>org.jboss.integration</groupId> -->
+<!--             <artifactId>narayana-tomcat</artifactId> -->
+<!--             <version>${version.narayana.tomcat.integration}</version> -->
+<!--         </dependency> -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>10.1.0-M17</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.integration</groupId>
-            <artifactId>narayana-tomcat</artifactId>
-            <version>${version.narayana.tomcat.integration}</version>
+            <groupId>org.jboss.narayana</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.arjunacore</groupId>
+            <artifactId>arjuna</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>jta</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-servlet-initializer</artifactId>
             <version>${version.resteasy}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-transaction-spi-jakarta</artifactId>
+            <version>7.6.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -45,56 +81,38 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>unix</id>
-            <activation>
-                <os>
-                    <family>unix</family>
-                </os>
-                <property>
-                    <name>!skipTests</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <executions>
-                            <execution>
-                                <id>Run tests</id>
-                                <phase>integration-test</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <configuration>
-                                    <executable>bash</executable>
-                                    <commandlineArgs>${basedir}/run.sh</commandlineArgs>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-          <!-- JAX-B dependencies are not part of the JDK9+, explicit addition -->
-          <id>jdk11-additional-maven-dependencies</id>
-          <activation>
-            <jdk>[9,</jdk>
-          </activation>
-          <dependencies>
-            <dependency>
-              <groupId>javax.xml.bind</groupId>
-              <artifactId>jaxb-api</artifactId>
-              <version>2.3.1</version>
-            </dependency>
-            <dependency>
-              <groupId>org.glassfish.jaxb</groupId>
-              <artifactId>jaxb-runtime</artifactId>
-              <version>2.3.1</version>
-            </dependency>
-          </dependencies>
-        </profile>
+<!--     jakarta TODO: enable profile below -->
+<!--         <profile> -->
+<!--             <id>unix</id> -->
+<!--             <activation> -->
+<!--                 <os> -->
+<!--                     <family>unix</family> -->
+<!--                 </os> -->
+<!--                 <property> -->
+<!--                     <name>!skipTests</name> -->
+<!--                 </property> -->
+<!--             </activation> -->
+<!--             <build> -->
+<!--                 <plugins> -->
+<!--                     <plugin> -->
+<!--                         <artifactId>exec-maven-plugin</artifactId> -->
+<!--                         <groupId>org.codehaus.mojo</groupId> -->
+<!--                         <executions> -->
+<!--                             <execution> -->
+<!--                                 <id>Run tests</id> -->
+<!--                                 <phase>integration-test</phase> -->
+<!--                                 <goals> -->
+<!--                                     <goal>exec</goal> -->
+<!--                                 </goals> -->
+<!--                                 <configuration> -->
+<!--                                     <executable>bash</executable> -->
+<!--                                     <commandlineArgs>${basedir}/run.sh</commandlineArgs> -->
+<!--                                 </configuration> -->
+<!--                             </execution> -->
+<!--                         </executions> -->
+<!--                     </plugin> -->
+<!--                 </plugins> -->
+<!--             </build> -->
+<!--         </profile> -->
     </profiles>
 </project>

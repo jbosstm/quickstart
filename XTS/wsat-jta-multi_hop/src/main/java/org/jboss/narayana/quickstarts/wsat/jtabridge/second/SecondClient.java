@@ -20,7 +20,7 @@ package org.jboss.narayana.quickstarts.wsat.jtabridge.second;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.jaxws.SecondServiceAT;
 
 import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
+import jakarta.xml.ws.Service;
 import java.net.URL;
 
 /**
@@ -29,7 +29,7 @@ import java.net.URL;
 public class SecondClient {
 
     public static SecondServiceAT newInstance() throws Exception {
-        URL wsdlLocation = new URL("http://localhost:8080/test/SecondServiceATService/SecondServiceAT?wsdl");
+        URL wsdlLocation = new URL("http://localhost:8080/bridge/SecondServiceATService/SecondServiceAT?wsdl");
         QName serviceName = new QName("http://www.jboss.org/narayana/quickstarts/wsat/simple/second", "SecondServiceATService");
         QName portName = new QName("http://www.jboss.org/narayana/quickstarts/wsat/simple/second", "SecondServiceAT");
 

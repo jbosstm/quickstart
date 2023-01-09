@@ -28,7 +28,7 @@ import java.sql.PreparedStatement;
 import java.util.Properties;
 
 import javax.sql.XADataSource;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 import com.arjuna.ats.internal.jdbc.drivers.PropertyFileDynamicClass;
 import com.arjuna.ats.jdbc.TransactionalDriver;

@@ -101,6 +101,12 @@
             <artifactId>jakarta.xml.bind-api</artifactId>
             <version>${version.jakarta.xml.bind}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>${version.jakarta.persistence-api}</version>
+        </dependency>
     </dependencies>
 
     <build>

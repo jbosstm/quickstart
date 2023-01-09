@@ -69,11 +69,7 @@ mvn exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.recovery.Basic
 which can be ignored. It caused by the recovery subsystem not performing an orderly shutdown of JMS
 communications. This will be fixed in the next revision of JBossTS.
 
-And finally, to read the (binary) hornetq logs use the PrintData tool:
-
-```
-mvn exec:java -Dexec.mainClass=org.hornetq.core.persistence.impl.journal.PrintData -Dexec.classpathScope=test -Dexec.args="target/data/hornetq/bindings target/data/hornetq/largemessages"
-```
+And finally, to read the (binary) ActiveMQ logs use the following guide: https://activemq.apache.org/components/artemis/documentation/latest/persistence.html
 
 Pass a `-e` flag to the mvn command line to enable exception stack traces.
 

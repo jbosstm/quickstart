@@ -16,9 +16,9 @@
  */
 package org.jboss.narayana.quickstart.spring;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 /**
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>

@@ -26,8 +26,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Properties;
 
-import javax.transaction.TransactionManager;
-import javax.transaction.TransactionSynchronizationRegistry;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionSynchronizationRegistry;
 
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.jbossatx.jta.RecoveryManagerService;
@@ -52,7 +52,7 @@ import io.narayana.util.AgroalH2Utils;
  */
 public class AgroalDatasource {
     private RecoveryManager recoveryManager;
-    private Connection conn1, conn2;
+    AgroalDataSource ds1, ds2;
 
     public void process(Runnable middleAction) throws Exception {
         TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
@@ -89,7 +89,7 @@ public class AgroalDatasource {
                         .autoCommit(false))
                         .maxSize(10)
             );
-        AgroalDataSource ds1 = AgroalDataSource.from(configurationSupplier);
+        ds1 = AgroalDataSource.from(configurationSupplier);
 
         // properties to create Agroal datasource configuration
         Properties db2Agroal = new Properties();
@@ -106,18 +106,18 @@ public class AgroalDatasource {
                 com.arjuna.ats.jta.TransactionManager.transactionManager(), jtaPropertyManager.getJTAEnvironmentBean().getTransactionSynchronizationRegistry(),
                 "java:/agroalds2", false, recoveryManagerService);
         agroalDataSourceConf2.connectionPoolConfiguration().transactionIntegration(txIntegration2);
-        AgroalDataSource ds2 = AgroalDataSource.from(agroalDataSourceConf2);
+        ds2 = AgroalDataSource.from(agroalDataSourceConf2);
 
 
         // starting transaction
         transactionManager.begin();
 
-        conn1 = ds1.getConnection();
+        Connection conn1 = ds1.getConnection();
         PreparedStatement ps1 = conn1.prepareStatement(AgroalH2Utils.INSERT_STATEMENT);
         ps1.setInt(1, 1);
         ps1.setString(2, "Arjuna");
 
-        conn2 = ds2.getConnection();
+        Connection conn2 = ds2.getConnection();
         PreparedStatement ps2 = conn2.prepareStatement(AgroalH2Utils.INSERT_STATEMENT);
         ps2.setInt(1, 1);
         ps2.setString(2, "Narayana");
@@ -141,12 +141,32 @@ public class AgroalDatasource {
         return recoveryManager; 
     }
 
+    void closeConnectionsAfterRecovery() {
+        try { 
+            ds1.close();
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
+        try { 
+            ds2.close();
+
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+
+        }
+    }
     void closeConnections() {
         try { 
-            conn1.close();
-        } catch (Exception ignored) {}
+            ds1.getConnection().close();
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
         try { 
-            conn2.close();
-        } catch (Exception ignored) {}
+            ds2.getConnection().close();
+
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+
+        }
     }
 }

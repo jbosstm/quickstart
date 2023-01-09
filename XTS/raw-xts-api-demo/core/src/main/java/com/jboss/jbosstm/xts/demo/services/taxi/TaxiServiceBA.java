@@ -36,11 +36,11 @@ import com.arjuna.wst11.BAParticipantManager;
 import com.arjuna.wst.SystemException;
 import com.jboss.jbosstm.xts.demo.taxi.ITaxiServiceBA;
 
-import javax.jws.HandlerChain;
-import javax.jws.WebMethod;
-import javax.jws.WebResult;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
+import jakarta.jws.HandlerChain;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebResult;
+import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
 
 /**
  * An adapter class that exposes the TaxiManager business API as a

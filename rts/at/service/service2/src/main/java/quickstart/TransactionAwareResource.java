@@ -19,12 +19,13 @@ package quickstart;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 import org.jboss.narayana.rest.integration.api.ParticipantsManagerFactory;
 
@@ -43,23 +44,32 @@ import org.jboss.narayana.rest.integration.api.ParticipantsManagerFactory;
 @Path(TransactionAwareResource.PSEGMENT)
 public class TransactionAwareResource {
     public static final String PSEGMENT = "service";
+    public static final String APPLICATION_ID = TransactionAwareResource.class.getName();
+    public static String FAIL_COMMIT; // set by the client to simulate a failure by halting the JVM
 
     private static AtomicInteger workId = new AtomicInteger(0);
 
     @GET
-    public Response someServiceRequest(@Context UriInfo info, @QueryParam("enlistURL") String enlistUrl) {
+    public Response someServiceRequest(@Context UriInfo info, @QueryParam("enlistURL") @DefaultValue("")String enlistUrl) {
         if (enlistUrl == null || enlistUrl.length() == 0)
             return Response.ok("non transactional request").build();
 
         Work work = new Work(workId.incrementAndGet());
-        ParticipantsManagerFactory.getInstance().enlist(this.getClass().getName(), enlistUrl, work);
+        // enlist this resource instance
+        ParticipantsManagerFactory.getInstance().enlist(APPLICATION_ID, enlistUrl, work);
 
         return Response.ok(Integer.toString(work.getId())).build();
     }
 
     @GET
-    @Path("query")
-    public Response someServiceRequest() {
+    @Path("commits")
+    public Response getNumberOfCommits() {
         return Response.ok(Integer.toString(Work.commitCnt.intValue())).build();
+    }
+
+    @GET
+    @Path("aborts")
+    public Response getNumberOfAborts() {
+        return Response.ok(Integer.toString(Work.abortCnt.intValue())).build();
     }
 }

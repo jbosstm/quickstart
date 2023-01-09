@@ -26,7 +26,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Arrays;
 
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 import org.jboss.byteman.contrib.bmunit.BMScript;
 import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
@@ -70,9 +70,9 @@ public class TransactionalDriverTest {
         // cleaning possible active global transaction
         TransactionManager txn = com.arjuna.ats.jta.TransactionManager.transactionManager();
         if(txn != null) {
-            if(txn.getStatus() == javax.transaction.Status.STATUS_ACTIVE)
+            if(txn.getStatus() == jakarta.transaction.Status.STATUS_ACTIVE)
                 txn.rollback();
-            if(txn.getStatus() != javax.transaction.Status.STATUS_NO_TRANSACTION)
+            if(txn.getStatus() != jakarta.transaction.Status.STATUS_NO_TRANSACTION)
                 txn.suspend();
         }
         // cleaning recovery settings

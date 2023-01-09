@@ -22,19 +22,21 @@ import static org.junit.Assert.fail;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 
 import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
 import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
+import org.h2.jdbcx.JdbcDataSource;
 import org.jboss.byteman.contrib.bmunit.BMRule;
 import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
-import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.junit4.WeldInitiator;
 import org.jnp.server.NamingBeanImpl;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,6 +56,12 @@ import java.util.List;
 @RunWith(BMUnitRunner.class)
 public class TestCase {
 
+    @Rule
+    public WeldInitiator weld = WeldInitiator.of(
+            QuickstartEntityRepository.class,
+            EntityManagerFactoryProducer.class,
+            EntityManagerProducer.class);
+
     /**
      * JNDI server.
      */
@@ -69,16 +77,11 @@ public class TestCase {
      */
     private static QuickstartEntityRepository quickstartEntityRepository;
 
-    /**
-     * CDI container.
-     */
-    private Weld weld;
-
     @BeforeClass
     public static void beforeClass() throws Exception {
         NAMING_BEAN.start();
         JNDIManager.bindJTAImplementation();
-        new InitialContext().bind(TransactionalConnectionProvider.DATASOURCE_JNDI, QuickstartApplication.getDataSource());
+        new InitialContext().bind(TransactionalConnectionProviderTest.DATASOURCE_JNDI, TestCase.getDataSource());
         recoveryPropertyManager.getRecoveryEnvironmentBean()
                 .setRecoveryModuleClassNames(QuickstartApplication.getRecoveryModuleClassNames());
         recoveryPropertyManager.getRecoveryEnvironmentBean().setRecoveryBackoffPeriod(1);
@@ -96,9 +99,8 @@ public class TestCase {
 
     @Before
     public void before() throws Exception {
-        weld = new Weld();
         transactionManager = InitialContext.doLookup("java:/TransactionManager");
-        quickstartEntityRepository = weld.initialize().instance().select(QuickstartEntityRepository.class).get();
+        quickstartEntityRepository = weld.select(QuickstartEntityRepository.class).get();
         quickstartEntityRepository.clear();
     }
 
@@ -108,8 +110,6 @@ public class TestCase {
             transactionManager.rollback();
         } catch (Throwable t) {
         }
-
-        weld.shutdown();
     }
 
     /**
@@ -179,9 +179,9 @@ public class TestCase {
     }
 
     private List<QuickstartEntity> getEntitiesFromTheDatabase() throws Exception {
-        DataSource dataSource = InitialContext.doLookup("java:/quickstartDataSource");
-        Connection connection = dataSource.getConnection(TransactionalConnectionProvider.USERNAME,
-                TransactionalConnectionProvider.PASSWORD);
+        DataSource dataSource = InitialContext.doLookup(TransactionalConnectionProviderTest.DATASOURCE_JNDI);
+        Connection connection = dataSource.getConnection(TransactionalConnectionProviderTest.USERNAME,
+                TransactionalConnectionProviderTest.PASSWORD);
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT `value2` FROM `QuickstartEntity`");
         List<QuickstartEntity> entities = new LinkedList<>();
@@ -198,4 +198,12 @@ public class TestCase {
         return new QuickstartEntity("Test entity at " + LocalTime.now());
     }
 
+    private static JdbcDataSource getDataSource() {
+        JdbcDataSource dataSource = new JdbcDataSource();
+        dataSource.setURL("jdbc:h2:mem:test_mem");
+        dataSource.setUser("sa");
+        dataSource.setPassword("");
+
+        return dataSource;
+    }
 }

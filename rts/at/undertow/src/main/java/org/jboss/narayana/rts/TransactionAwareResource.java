@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 
 import org.jboss.jbossts.star.provider.HttpResponseException;
 import org.jboss.jbossts.star.util.TxLinkNames;

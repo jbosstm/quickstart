@@ -21,14 +21,18 @@ import org.jboss.jbossts.star.util.TxLinkNames;
 
 import org.jboss.logging.Logger;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.MediaType;
+import com.arjuna.ats.arjuna.common.arjPropertyManager;
+import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
+
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Link;
+import jakarta.ws.rs.core.MediaType;
 
 import java.io.IOException;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class TxnTest {
@@ -49,7 +53,12 @@ public class TxnTest {
     static Client svc1Client;
     static Client svc2Client;
 
-    public static void setup() throws Exception {
+    public static void setup(){
+        arjPropertyManager.getCoordinatorEnvironmentBean().setTransactionStatusManagerEnable(false);
+        recoveryPropertyManager.getRecoveryEnvironmentBean().setRecoveryListener(false);
+        arjPropertyManager.getCoordinatorEnvironmentBean().setTxReaperZombieMax(0);
+        
+        
         txnServer = new JAXRSServer("coordinator", TXN_PORT);
         txnServer.addDeployment(new TMApplication(), "/");
 
@@ -59,13 +68,13 @@ public class TxnTest {
         svc2Server = new JAXRSServer("service 2", SVC2_PORT);
         svc2Server.addDeployment(new TransactionAwareResource.ServiceApp(), "eg");
 
-        // These are used in the example to programmticaly execute the transaction
+        // These are used in the example to programmatically execute the transaction
         txnClient = ClientBuilder.newClient();
         svc1Client = ClientBuilder.newClient();
         svc2Client = ClientBuilder.newClient();
     }
 
-    public static void tearDown() throws IOException {
+    public static void tearDown() {
         txnClient.close();
         svc1Client.close();
         svc2Client.close();
@@ -75,7 +84,7 @@ public class TxnTest {
         svc2Server.stop();
     }
 
-    public static int runTxn() throws IOException {
+    public static int runTxn() {
         try {
 
             log.tracef("[%s] BEGINING%n", Thread.currentThread().getName());
@@ -83,7 +92,7 @@ public class TxnTest {
             log.tracef("[%s] BEGUN%n", Thread.currentThread().getName());
             Link enlistmentLink = TxnHelper.getLink(links, TxLinkNames.PARTICIPANT);
 
-            String serviceRequest1 = String.format("%s?enlistURL=%s", SVC1_URL, enlistmentLink.getUri());
+            String serviceRequest1 = String.format("%s?enlistURL=%s", SVC1_URL, Objects.requireNonNull(enlistmentLink).getUri());
             svc1Client.target(serviceRequest1).request().post(Entity.entity("value", MediaType.TEXT_PLAIN_TYPE));
             String serviceRequest2 = String.format("%s?enlistURL=%s", SVC2_URL, enlistmentLink.getUri());
             svc2Client.target(serviceRequest2).request().post(Entity.entity("value", MediaType.TEXT_PLAIN_TYPE));

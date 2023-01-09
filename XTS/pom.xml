@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 ~ JBoss, Home of Professional Open Source.
 ~ Copyright 2016, Red Hat, Inc., and individual contributors
@@ -23,8 +23,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>narayana-quickstarts-all</artifactId>
     <groupId>org.jboss.narayana.quickstart</groupId>
+    <artifactId>narayana-quickstarts-all</artifactId>
     <version>6.0.0.Final-SNAPSHOT</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.xts</groupId>
@@ -32,18 +32,6 @@
   <packaging>pom</packaging>
   <name>XTS Examples</name>
   <description>All quickstarts of XTS</description>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 
   <modules>
     <module>raw-xts-api-demo</module>
@@ -51,4 +39,21 @@
     <module>wsat-jta-multi_hop</module>
     <module>ssl</module>
   </modules>
+
+  <properties>
+    <sortpom.skip>false</sortpom.skip>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

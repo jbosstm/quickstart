@@ -18,9 +18,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-      <groupId>org.jboss.narayana.quickstart.rts</groupId>
-      <artifactId>restat-quickstarts</artifactId>
-      <version>6.0.0.Final-SNAPSHOT</version>
+        <groupId>org.jboss.narayana.quickstart.rts</groupId>
+        <artifactId>restat-quickstarts</artifactId>
+        <version>6.0.0.Final-SNAPSHOT</version>
     </parent>
     <groupId>org.jboss.narayana</groupId>
     <artifactId>rts-undertow-qs</artifactId>
@@ -61,6 +61,11 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-core</artifactId>
+            <version>${version.resteasy}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-core-spi</artifactId>
             <version>${version.resteasy}</version>
         </dependency>
@@ -74,22 +79,22 @@
     <build>
         <defaultGoal>package</defaultGoal>
         <plugins>
-	          <plugin>
-		          <groupId>org.codehaus.mojo</groupId>
-		          <artifactId>exec-maven-plugin</artifactId>
-		          <executions>
-		            <execution>
-			            <id>Run Quickstart</id>
-			            <phase>integration-test</phase>
-			            <goals>
-			                <goal>java</goal>
-			            </goals>
-		              <configuration>
-		                <mainClass>org.jboss.narayana.rts.TxnTest</mainClass>
-		              </configuration>
-		            </execution>
-		          </executions>
-	          </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>Run Quickstart</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>org.jboss.narayana.rts.TxnTest</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

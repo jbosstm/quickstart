@@ -19,7 +19,7 @@ package org.jboss.narayana.quickstarts.nonTransactionalResource.bookService;
 
 import org.jboss.narayana.compensations.api.Compensatable;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**

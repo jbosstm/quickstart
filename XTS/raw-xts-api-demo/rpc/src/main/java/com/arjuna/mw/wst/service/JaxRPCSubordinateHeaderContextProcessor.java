@@ -34,7 +34,7 @@ package com.arjuna.mw.wst.service;
 import javax.xml.rpc.handler.Handler;
 import javax.xml.rpc.handler.MessageContext;
 import javax.xml.rpc.handler.soap.SOAPMessageContext;
-import javax.xml.soap.SOAPMessage;
+import jakarta.xml.soap.SOAPMessage;
 
 /**
  * The class is used to perform WS-Transaction context insertion

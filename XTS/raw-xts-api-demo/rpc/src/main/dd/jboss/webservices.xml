@@ -19,122 +19,122 @@
   (C) 2005-2006,
   @author JBoss Inc.
 -->
-<webservices xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:impl="http://www.jboss.com/jbosstm/xts/demo"
-	version="1.1">
+<webservices xmlns:impl="http://www.jboss.com/jbosstm/xts/demo"
+             xmlns="http://java.sun.com/xml/ns/j2ee"
+             version="1.1">
 
-	<webservice-description>
-		<webservice-description-name>RestaurantServiceAT</webservice-description-name>
+    <webservice-description>
+        <webservice-description-name>RestaurantServiceAT</webservice-description-name>
 
-		<wsdl-file>WEB-INF/wsdl/RestaurantServiceAT.wsdl</wsdl-file>
+        <wsdl-file>WEB-INF/wsdl/RestaurantServiceAT.wsdl</wsdl-file>
 
-		<jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
-		<port-component>
-			<port-component-name>RestaurantServiceAT</port-component-name>
-			<wsdl-port xmlns:rest="http://www.jboss.com/jbosstm/xts/demo/Restaurant">rest:RestaurantServiceAT</wsdl-port>
-			<service-endpoint-interface>com.arjuna.xts.nightout.services.Restaurant.IRestaurantService</service-endpoint-interface>
-			<service-impl-bean>
-				<servlet-link>RestaurantServiceAT</servlet-link>
-			</service-impl-bean>
-			<handler>
-				<handler-name>serverHandler</handler-name>
-				<handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
-			</handler>
-		</port-component>
-	</webservice-description>
-	<webservice-description>
-		<webservice-description-name>RestaurantServiceBA</webservice-description-name>
+        <jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>RestaurantServiceAT</port-component-name>
+            <wsdl-port xmlns:rest="http://www.jboss.com/jbosstm/xts/demo/Restaurant">rest:RestaurantServiceAT</wsdl-port>
+            <service-endpoint-interface>com.arjuna.xts.nightout.services.Restaurant.IRestaurantService</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>RestaurantServiceAT</servlet-link>
+            </service-impl-bean>
+            <handler>
+                <handler-name>serverHandler</handler-name>
+                <handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
+            </handler>
+        </port-component>
+    </webservice-description>
+    <webservice-description>
+        <webservice-description-name>RestaurantServiceBA</webservice-description-name>
 
-		<wsdl-file>WEB-INF/wsdl/RestaurantServiceBA.wsdl</wsdl-file>
+        <wsdl-file>WEB-INF/wsdl/RestaurantServiceBA.wsdl</wsdl-file>
 
-		<jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
-		<port-component>
-			<port-component-name>RestaurantServiceBA</port-component-name>
-			<wsdl-port xmlns:rest="http://www.jboss.com/jbosstm/xts/demo/Restaurant">rest:RestaurantServiceBA</wsdl-port>
-			<service-endpoint-interface>com.arjuna.xts.nightout.services.Restaurant.IRestaurantServiceBA</service-endpoint-interface>
-			<service-impl-bean>
-				<servlet-link>RestaurantServiceBA</servlet-link>
-			</service-impl-bean>
-			<handler>
-				<handler-name>serverHandler</handler-name>
-				<handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
-			</handler>
-		</port-component>
-	</webservice-description>
-	<webservice-description>
-		<webservice-description-name>TheatreServiceAT</webservice-description-name>
+        <jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>RestaurantServiceBA</port-component-name>
+            <wsdl-port xmlns:rest="http://www.jboss.com/jbosstm/xts/demo/Restaurant">rest:RestaurantServiceBA</wsdl-port>
+            <service-endpoint-interface>com.arjuna.xts.nightout.services.Restaurant.IRestaurantServiceBA</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>RestaurantServiceBA</servlet-link>
+            </service-impl-bean>
+            <handler>
+                <handler-name>serverHandler</handler-name>
+                <handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
+            </handler>
+        </port-component>
+    </webservice-description>
+    <webservice-description>
+        <webservice-description-name>TheatreServiceAT</webservice-description-name>
 
-		<wsdl-file>WEB-INF/wsdl/TheatreServiceAT.wsdl</wsdl-file>
+        <wsdl-file>WEB-INF/wsdl/TheatreServiceAT.wsdl</wsdl-file>
 
-		<jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
-		<port-component>
-			<port-component-name>TheatreServiceAT</port-component-name>
-			<wsdl-port xmlns:theatre="http://www.jboss.com/jbosstm/xts/demo/Theatre">theatre:TheatreServiceAT</wsdl-port>
-			<service-endpoint-interface>com.arjuna.xts.nightout.services.Theatre.ITheatreService</service-endpoint-interface>
-			<service-impl-bean>
-				<servlet-link>TheatreServiceAT</servlet-link>
-			</service-impl-bean>
-			<handler>
-				<handler-name>serverHandler</handler-name>
-				<handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
-			</handler>
-		</port-component>
-	</webservice-description>
-	<webservice-description>
-		<webservice-description-name>TheatreServiceBA</webservice-description-name>
+        <jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>TheatreServiceAT</port-component-name>
+            <wsdl-port xmlns:theatre="http://www.jboss.com/jbosstm/xts/demo/Theatre">theatre:TheatreServiceAT</wsdl-port>
+            <service-endpoint-interface>com.arjuna.xts.nightout.services.Theatre.ITheatreService</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>TheatreServiceAT</servlet-link>
+            </service-impl-bean>
+            <handler>
+                <handler-name>serverHandler</handler-name>
+                <handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
+            </handler>
+        </port-component>
+    </webservice-description>
+    <webservice-description>
+        <webservice-description-name>TheatreServiceBA</webservice-description-name>
 
-		<wsdl-file>WEB-INF/wsdl/TheatreServiceBA.wsdl</wsdl-file>
+        <wsdl-file>WEB-INF/wsdl/TheatreServiceBA.wsdl</wsdl-file>
 
-		<jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
-		<port-component>
-			<port-component-name>TheatreServiceBA</port-component-name>
-			<wsdl-port xmlns:theatre="http://www.jboss.com/jbosstm/xts/demo/Theatre">theatre:TheatreServiceBA</wsdl-port>
-			<service-endpoint-interface>com.arjuna.xts.nightout.services.Theatre.ITheatreServiceBA</service-endpoint-interface>
-			<service-impl-bean>
-				<servlet-link>TheatreServiceBA</servlet-link>
-			</service-impl-bean>
-			<handler>
-				<handler-name>serverHandler</handler-name>
-				<handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
-			</handler>
-		</port-component>
-	</webservice-description>
-	<webservice-description>
-		<webservice-description-name>TaxiServiceAT</webservice-description-name>
+        <jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>TheatreServiceBA</port-component-name>
+            <wsdl-port xmlns:theatre="http://www.jboss.com/jbosstm/xts/demo/Theatre">theatre:TheatreServiceBA</wsdl-port>
+            <service-endpoint-interface>com.arjuna.xts.nightout.services.Theatre.ITheatreServiceBA</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>TheatreServiceBA</servlet-link>
+            </service-impl-bean>
+            <handler>
+                <handler-name>serverHandler</handler-name>
+                <handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
+            </handler>
+        </port-component>
+    </webservice-description>
+    <webservice-description>
+        <webservice-description-name>TaxiServiceAT</webservice-description-name>
 
-		<wsdl-file>WEB-INF/wsdl/TaxiServiceAT.wsdl</wsdl-file>
+        <wsdl-file>WEB-INF/wsdl/TaxiServiceAT.wsdl</wsdl-file>
 
-		<jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
-		<port-component>
-			<port-component-name>TaxiServiceAT</port-component-name>
-			<wsdl-port xmlns:taxi="http://www.jboss.com/jbosstm/xts/demo/Taxi">taxi:TaxiServiceAT</wsdl-port>
-			<service-endpoint-interface>com.arjuna.xts.nightout.services.Taxi.ITaxiService</service-endpoint-interface>
-			<service-impl-bean>
-				<servlet-link>TaxiServiceAT</servlet-link>
-			</service-impl-bean>
-			<handler>
-				<handler-name>serverHandler</handler-name>
-				<handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
-			</handler>
-		</port-component>
-	</webservice-description>
-	<webservice-description>
-		<webservice-description-name>TaxiServiceBA</webservice-description-name>
+        <jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>TaxiServiceAT</port-component-name>
+            <wsdl-port xmlns:taxi="http://www.jboss.com/jbosstm/xts/demo/Taxi">taxi:TaxiServiceAT</wsdl-port>
+            <service-endpoint-interface>com.arjuna.xts.nightout.services.Taxi.ITaxiService</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>TaxiServiceAT</servlet-link>
+            </service-impl-bean>
+            <handler>
+                <handler-name>serverHandler</handler-name>
+                <handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
+            </handler>
+        </port-component>
+    </webservice-description>
+    <webservice-description>
+        <webservice-description-name>TaxiServiceBA</webservice-description-name>
 
-		<wsdl-file>WEB-INF/wsdl/TaxiServiceBA.wsdl</wsdl-file>
+        <wsdl-file>WEB-INF/wsdl/TaxiServiceBA.wsdl</wsdl-file>
 
-		<jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
-		<port-component>
-			<port-component-name>TaxiServiceBA</port-component-name>
-			<wsdl-port xmlns:taxi="http://www.jboss.com/jbosstm/xts/demo/Taxi">taxi:TaxiServiceBA</wsdl-port>
-			<service-endpoint-interface>com.arjuna.xts.nightout.services.Taxi.ITaxiServiceBA</service-endpoint-interface>
-			<service-impl-bean>
-				<servlet-link>TaxiServiceBA</servlet-link>
-			</service-impl-bean>
-			<handler>
-				<handler-name>serverHandler</handler-name>
-				<handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
-			</handler>
-		</port-component>
-	</webservice-description>
+        <jaxrpc-mapping-file>WEB-INF/jaxrpc-mapping.xml</jaxrpc-mapping-file>
+        <port-component>
+            <port-component-name>TaxiServiceBA</port-component-name>
+            <wsdl-port xmlns:taxi="http://www.jboss.com/jbosstm/xts/demo/Taxi">taxi:TaxiServiceBA</wsdl-port>
+            <service-endpoint-interface>com.arjuna.xts.nightout.services.Taxi.ITaxiServiceBA</service-endpoint-interface>
+            <service-impl-bean>
+                <servlet-link>TaxiServiceBA</servlet-link>
+            </service-impl-bean>
+            <handler>
+                <handler-name>serverHandler</handler-name>
+                <handler-class>com.arjuna.mw.wst.service.JaxRPCHeaderContextProcessor</handler-class>
+            </handler>
+        </port-component>
+    </webservice-description>
 </webservices>

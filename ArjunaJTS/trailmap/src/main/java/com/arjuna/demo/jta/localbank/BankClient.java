@@ -186,7 +186,7 @@ public class BankClient
         {
             // Obtain a reference to the user transaction object inorder to transactionally perform this work, this
             // could also be done via JNDI.
-            javax.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
+            jakarta.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
             System.out.println("Beginning a User transaction to create account");
             // Begin the transaction so all work now will be executed under transactional control
             userTransaction.begin();
@@ -238,7 +238,7 @@ public class BankClient
         {
             // Obtain a reference to the user transaction object inorder to transactionally perform this work, this
             // could also be done via JNDI.
-            javax.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
+            jakarta.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
             System.out.println("Beginning a User transaction to get balance");
             // Begin the transaction so all work now will be executed under transactional control
             userTransaction.begin();
@@ -317,7 +317,7 @@ public class BankClient
         {
             // Obtain a reference to the user transaction object inorder to transactionally perform this work, this
             // could also be done via JNDI.
-            javax.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
+            jakarta.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
             System.out.println("Beginning a User transaction to get transfer money");
             // Begin the transaction so all work now will be executed under transactional control
             userTransaction.begin();
@@ -396,7 +396,7 @@ public class BankClient
         {
             // Obtain a reference to the user transaction object inorder to transactionally perform this work, this
             // could also be done via JNDI.
-            javax.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
+            jakarta.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
             System.out.println("Beginning a User transaction to credit an account");
             // Begin the transaction so all work now will be executed under transactional control
             userTransaction.begin();
@@ -473,7 +473,7 @@ public class BankClient
         {
             // Obtain a reference to the user transaction object inorder to transactionally perform this work, this
             // could also be done via JNDI.
-            javax.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
+            jakarta.transaction.UserTransaction userTransaction = com.arjuna.ats.jta.UserTransaction.userTransaction();
             System.out.println("Beginning a User transaction to withdraw from an account");
             // Begin the transaction so all work now will be executed under transactional control
             userTransaction.begin();

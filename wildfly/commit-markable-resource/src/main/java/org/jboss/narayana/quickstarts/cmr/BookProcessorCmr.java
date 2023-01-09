@@ -17,11 +17,11 @@
 
 package org.jboss.narayana.quickstarts.cmr;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 @Named
 @RequestScoped

@@ -34,10 +34,10 @@ import com.arjuna.mw.wst11.TransactionManagerFactory;
 import com.arjuna.mw.wst11.UserTransactionFactory;
 import com.jboss.jbosstm.xts.demo.taxi.ITaxiServiceAT;
 
-import javax.jws.WebService;
-import javax.jws.HandlerChain;
-import javax.jws.WebMethod;
-import javax.jws.soap.SOAPBinding;
+import jakarta.jws.WebService;
+import jakarta.jws.HandlerChain;
+import jakarta.jws.WebMethod;
+import jakarta.jws.soap.SOAPBinding;
 
 /**
  * An adapter class that exposes the TaxiManager business API as a

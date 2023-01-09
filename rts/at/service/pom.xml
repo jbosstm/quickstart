@@ -22,16 +22,26 @@
     <artifactId>restat-quickstarts</artifactId>
     <version>6.0.0.Final-SNAPSHOT</version>
   </parent>
-  <groupId>org.jboss.narayana.quickstart.rts</groupId>
   <artifactId>service-quickstarts</artifactId>
   <name>RESTAT Service Quickstarts</name>
   <description>Provides examples of how to create REST based transactional services</description>
   <packaging>pom</packaging>
 
+  <properties>
+    <version.org.jboss.logging.jboss-logging>3.5.0.Final</version.org.jboss.logging.jboss-logging>
+    <version.org.jboss.resteasy>6.0.3.Final</version.org.jboss.resteasy>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-core</artifactId>
+      <version>${version.org.jboss.resteasy}</version>
+     </dependency>
+  </dependencies>
+
   <modules>
     <module>service1</module>
-    <module>service1b</module>
     <module>service2</module>
-    <module>service2b</module>
   </modules>
 </project>
