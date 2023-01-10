@@ -36,13 +36,11 @@ import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
 
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
-import jakarta.json.JsonObject;
 import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.Task;
 import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.TaskDao;
-import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.User;
-import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.UserDao;
+import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.UserTable;
+import org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model.UserTableDao;
 
 /**
  * A JAX-RS resource for exposing REST endpoints for Task manipulation
@@ -59,7 +57,7 @@ public class TaskResource {
     public static final String TASKS_PATH_SEGMENT = "tasks";
 
     @EJB
-    private UserDao userDao;
+    private UserTableDao userTableDao;
 
     @EJB
     private TaskDao taskDao;
@@ -75,7 +73,7 @@ public class TaskResource {
     @DELETE
     @Path(USERS_PATH_SEGMENT)
     public void deleteUsers() {
-        userDao.deleteUsers();
+        userTableDao.deleteUsers();
     }
 
     @POST
@@ -84,7 +82,7 @@ public class TaskResource {
     public Response createTask(@Context UriInfo info, @PathParam("username") String username,
             @PathParam("title") String taskTitle) {
 
-        User user = getUser(username);
+        UserTable user = getUser(username);
         Task task = new Task(taskTitle);
 
         taskDao.createTask(user, task);
@@ -101,7 +99,7 @@ public class TaskResource {
     @DELETE
     @Path(TASKS_PATH_SEGMENT + "/{username}/{id}")
     public void deleteTaskById(@PathParam("username") String username, @PathParam("id") Long id) {
-        User user = getUser(username);
+        UserTable user = getUser(username);
         Task task = getTask(user, id);
         taskDao.deleteTask(task);
     }
@@ -116,7 +114,7 @@ public class TaskResource {
     @Path(TASKS_PATH_SEGMENT + "/{username}/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public String getTaskById(@PathParam("username") String username, @PathParam("id") Long id) {
-        User user = getUser(username);
+        UserTable user = getUser(username);
         return getTask(user, id).toJson().toString();
     }
 
@@ -150,15 +148,15 @@ public class TaskResource {
 
     // Utility Methods
 
-    private List<Task> getTasks(User user, String title) {
+    private List<Task> getTasks(UserTable user, String title) {
         return taskDao.getForTitle(user, title);
     }
 
-    private List<Task> getTasks(User user) {
+    private List<Task> getTasks(UserTable user) {
         return taskDao.getAll(user);
     }
 
-    private Task getTask(User user, Long id) {
+    private Task getTask(UserTable user, Long id) {
         for (Task task : taskDao.getAll(user))
             if (task.getId().equals(id))
                 return task;
@@ -166,14 +164,14 @@ public class TaskResource {
         throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 
-    private User getUser(String username) {
+    private UserTable getUser(String username) {
         try {
-            User user = userDao.getForUsername(username);
+            UserTable user = userTableDao.getForUsername(username);
 
             if (user == null) {
-                user = new User(username);
+                user = new UserTable(username);
 
-                userDao.createUser(user);
+                userTableDao.createUser(user);
             }
 
             return user;

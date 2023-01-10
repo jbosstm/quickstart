@@ -43,7 +43,7 @@ public class Task implements Serializable {
     private Long id;
 
     @ManyToOne
-    private User owner;
+    private UserTable owner;
 
     private String title;
 
@@ -63,7 +63,7 @@ public class Task implements Serializable {
         this.id = id;
     }
 
-    public User getOwner() {
+    public UserTable getOwner() {
         return owner;
     }
 
@@ -71,7 +71,7 @@ public class Task implements Serializable {
         return owner.getUsername();
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(UserTable owner) {
         this.owner = owner;
     }
 

@@ -48,12 +48,10 @@ import java.io.File;
  * 
  */
 @RunWith(Arquillian.class)
-@Ignore
-//jakarta TODO: ModuleNotFoundException: org.codehaus.jettison"
 public class TaskResourceTest {
 
     private static final String MANIFEST_STRING = "Manifest-Version: 1.0\n"
-            + "Dependencies: org.jboss.narayana.rts, org.codehaus.jettison\n";
+            + "Dependencies: org.jboss.narayana.rts\n";
 
     private static final String DEPLOYMENT_NAME = "restat-bridge-jpa-test";
 
