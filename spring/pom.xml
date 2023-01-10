@@ -38,6 +38,7 @@
     <url>http://jboss.org/jbosstm</url>
 
     <modules>
+<!--     JBTM-3747  Disable spring quickstarts, transactionaldriver quickstarts and dbcp2-and-tomcat quickstart-->
 <!--     jakarta TODO: wait narayana jta to be migrated -->
 <!--         <module>jta</module> -->
 <!--         <module>narayana-spring-boot</module> -->
