@@ -30,13 +30,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 /**
- * User entity
+ * UserTable entity
  * 
  * @author Oliver Kiss
  */
 @SuppressWarnings("serial")
 @Entity
-public class User implements Serializable {
+public class UserTable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -49,10 +49,10 @@ public class User implements Serializable {
     @Column(updatable = false)
     private List<Task> tasks = new ArrayList<Task>();
 
-    public User() {
+    public UserTable() {
     }
 
-    public User(String username) {
+    public UserTable(String username) {
         this.username = username;
     }
 
@@ -96,7 +96,7 @@ public class User implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        User other = (User) obj;
+        UserTable other = (UserTable) obj;
         if (username == null) {
             if (other.username != null)
                 return false;

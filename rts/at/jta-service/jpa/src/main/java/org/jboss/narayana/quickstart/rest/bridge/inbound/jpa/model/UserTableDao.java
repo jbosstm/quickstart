@@ -16,41 +16,21 @@
  */
 package org.jboss.narayana.quickstart.rest.bridge.inbound.jpa.model;
 
-import java.util.List;
-
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import jakarta.ejb.Local;
 
 /**
- * Provides functionality for manipulation with users using persistence context.
+ * Basic operations for manipulation with users
  *
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  * @author Lukas Fryc
- * @author Oliver Kiss
  *
  */
-@Stateless
-public class UserDaoImpl implements UserDao {
+@Local
+public interface UserTableDao {
 
-    @PersistenceContext
-    EntityManager em;
+    public UserTable getForUsername(String username);
 
-    public User getForUsername(String username) {
-        List<User> result = em.createQuery("select u from User u where u.username = ?1", User.class).setParameter(1, username)
-                .getResultList();
-
-        if (result.isEmpty()) {
-            return null;
-        }
-        return result.get(0);
-    }
-
-    public void createUser(User user) {
-        em.persist(user);
-    }
+    public void createUser(UserTable user);
     
-    public void deleteUsers() {
-        em.createQuery("DELETE FROM User").executeUpdate();
-    }
+    public void deleteUsers();
 }
