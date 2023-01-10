@@ -20,16 +20,15 @@
  */
 package org.jboss.narayana.quickstarts.mongodb.simple;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.bson.Document;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -41,6 +40,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,6 +57,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import static com.mongodb.client.model.Filters.eq;
+
 @RunAsClient
 @ExtendWith(ArquillianExtension.class)
 public class BankingServiceTest {
@@ -66,7 +68,9 @@ public class BankingServiceTest {
 
     private final static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
 
-    private DBCollection accounts;
+    private MongoClient mongo;
+
+    private MongoCollection<Document> accounts;
 
     private Client client;
 
@@ -97,14 +101,19 @@ public class BankingServiceTest {
 
         client = ClientBuilder.newClient();
 
-        MongoClient mongo = new MongoClient("localhost", 27017);
-        DB database = mongo.getDB("test");
+        mongo = new MongoClient("localhost", 27017);
+        MongoDatabase database = mongo.getDatabase("test");
 
         database.getCollection("accounts").drop();
         accounts = database.getCollection("accounts");
 
-        accounts.insert(new BasicDBObject("name", "A").append("balance", 1000.0));
-        accounts.insert(new BasicDBObject("name", "B").append("balance", 1000.0));
+        accounts.insertOne(new Document("name", "A").append("balance", 1000.0));
+        accounts.insertOne(new Document("name", "B").append("balance", 1000.0));
+    }
+
+    @AfterEach
+    public void closeClient() {
+        mongo.close();
     }
 
     @AfterAll
@@ -146,7 +155,7 @@ public class BankingServiceTest {
      * @param expectedBalance The expected balance
      */
     private void assertBalance(String account, Double expectedBalance) {
-        DBObject accountDoc = accounts.findOne(new BasicDBObject("name", account));
+        Document accountDoc = accounts.find(eq("name", account)).first();
         Double actualBalance = (Double) accountDoc.get("balance");
         Assertions.assertEquals(expectedBalance, actualBalance, 0, "Balance is not as expected. Got '" + actualBalance + "', expected: '" + expectedBalance + "'");
     }
