@@ -20,22 +20,12 @@ it does so in a scalable manor that is compatible with a sharded environment.
 Running the Quickstart
 ----------------------
 
-_NOTE:_ You must have MongoDB installed, prior to running this quickstart. Also, it is assumed your MongoDB instance
-will be running on localhost:27017. If this is not the case, you should update the
-`MongoClient mongo = new MongoClient("localhost", 27017);` line in the AccountManager class, to reflect the actual
-location of your server
+_NOTE:_ Docker is used to instantiate a MongoDB container (the test will automatically carry out all steps needed to create the container).
+Please, make sure that Docker is installed (and configured) in your environment.
 
-_NOTE:_ The quickstart is tested to work with WildFly 8.0.0.Final and Narayana 5.0.0.Final. It should work with newer versions,
-but they are not currently tested.
+_NOTE:_ The quickstart is tested to work with WildFly 28.0.0 and Narayana 6.0. It should work with newer versions, but they are not currently tested.
 
-Console 1
-
-    mongod
-
-Console 2
-
-    mvn clean test
-
+To run the quickstart: `mvn clean test -Parq`
 
 Understanding the Code
 ----------------------
