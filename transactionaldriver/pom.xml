@@ -33,6 +33,7 @@
   <name>Transactional Drivers Examples</name>
   <description>Examples of how transaction drivers could be used</description>
   <modules>
+<!--   JBTM-3747 Disable spring quickstarts, transactionaldriver quickstarts and dbcp2-and-tomcat quickstart -->
 <!--   jakarta TODO: need dependency narayana-tomcat, not available jakarta version -->
 <!--     <module>transactionaldriver-and-tomcat</module> -->
 <!--     <module>transactionaldriver-jpa-and-tomcat</module> -->
