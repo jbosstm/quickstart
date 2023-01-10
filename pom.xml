@@ -128,7 +128,8 @@
     <module>ArjunaJTS</module>
     <module>transactionaldriver</module>
     <module>jca-and-tomcat</module>
-    <module>dbcp2-and-tomcat</module>
+<!--     JBTM-3747 Disable spring quickstarts, transactionaldriver quickstarts and dbcp2-and-tomcat quickstart -->
+<!--     <module>dbcp2-and-tomcat</module> -->
     <module>jca-and-hibernate</module>
     <module>jta-1_2-standalone</module>
     <module>spring</module>
