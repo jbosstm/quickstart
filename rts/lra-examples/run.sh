@@ -47,14 +47,6 @@ function killpid {
   test $? || echo "===== could not kill $1"
 }
 
-function start_coordinator {
-  echo "===== starting external coordinator on port ${coord_port}"
-  JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-  java ${JAVA_OPTS} ${IP_OPTS} -jar ../lra-coordinator/target/lra-coordinator-quarkus.jar &
-  coord_pid=$!
-  sleep `timeout_adjust 10 2>/dev/null || echo 10`
-}
-
 function start_service {
   echo "===== starting service on port ${service_port}"
   if test -f "target/${quarkusjar}"; then
@@ -126,7 +118,7 @@ if [[ "$last" = "participant" ]]; then
 #  start_coordinator
   echo "===== starting external coordinator on port ${coord_port}"
   JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-  java ${JAVA_OPTS} ${IP_OPTS} -jar ../lra-coordinator/target/lra-coordinator-quarkus.jar &
+  java ${JAVA_OPTS} ${IP_OPTS} -jar $PWD/../lra-coordinator/target/lra-coordinator-quarkus.jar &
   coord_pid=$!
   sleep `timeout_adjust 10 2>/dev/null || echo 10`
 elif [[ "$last" = "embedded" ]]; then
