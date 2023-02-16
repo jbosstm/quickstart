@@ -28,7 +28,7 @@
     <parent>
         <artifactId>narayana-quickstarts-all</artifactId>
         <groupId>org.jboss.narayana.quickstart</groupId>
-        <version>6.0.0.Final-SNAPSHOT</version>
+        <version>6.0.0.Final</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.jta</groupId>
     <artifactId>jta-and-hibernate-standalone</artifactId>
