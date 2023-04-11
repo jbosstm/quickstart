@@ -59,5 +59,6 @@
     <module>recovery</module>
     <module>jta-service</module>
     <module>undertow</module>
+    <module>sra</module>
   </modules>
 </project>
