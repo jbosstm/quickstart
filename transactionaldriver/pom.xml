@@ -25,7 +25,7 @@
   <parent>
     <artifactId>narayana-quickstarts-all</artifactId>
     <groupId>org.jboss.narayana.quickstart</groupId>
-    <version>6.0.1.Final</version>
+    <version>6.0.2.Final-SNAPSHOT</version>
   </parent>
   <groupId>io.narayana</groupId>
   <artifactId>transactionaldriver</artifactId>
