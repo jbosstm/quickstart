@@ -65,7 +65,6 @@
         <dependency>
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
-            <version>${version.microprofile.lra}</version>
         </dependency>
         <dependency>
           <groupId>org.jboss.narayana.rts</groupId>
@@ -84,18 +83,15 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
-            <version>${version.jakarta.inject-api}</version>
         </dependency>
 
         <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>${version.jakarta.enterprise.cdi-api}</version>
         </dependency>
         
     </dependencies>

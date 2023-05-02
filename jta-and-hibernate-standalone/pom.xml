@@ -118,7 +118,6 @@
         <dependency>
             <groupId>org.jboss.naming</groupId>
             <artifactId>jnpserver</artifactId>
-            <version>${version.jnpserver}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.logging</groupId>
@@ -144,12 +143,10 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${version.h2}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

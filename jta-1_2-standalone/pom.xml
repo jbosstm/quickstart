@@ -66,7 +66,6 @@
         <dependency>
             <groupId>org.jboss.naming</groupId>
             <artifactId>jnpserver</artifactId>
-            <version>${version.jnpserver}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.logging</groupId>
@@ -89,7 +88,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

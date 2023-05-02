@@ -62,7 +62,6 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
-            <version>${version.resteasy}</version>
             <scope>test</scope>
         </dependency>
 
@@ -76,20 +75,17 @@
         <dependency>
             <groupId>jakarta.json</groupId>
             <artifactId>jakarta.json-api</artifactId>
-            <version>${version.jakarta.json-api}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.json</artifactId>
-            <version>${version.glassfish.json}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.ejb</groupId>
             <artifactId>jakarta.ejb-api</artifactId>
-            <version>${version.jakarta.ejb-api}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.persistence</groupId>
@@ -99,21 +95,18 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
             <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
-            <version>${version.org.jboss.arquillian}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

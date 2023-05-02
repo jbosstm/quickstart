@@ -51,17 +51,6 @@
         </repository>
     </repositories>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>jakarta.ws.rs</groupId>
-                <artifactId>jakarta.ws.rs-api</artifactId>
-                <version>${version.jakarta.ws.rs-api}</version>
-                <scope>provided</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <modules>
         <module>flight-service</module>
         <module>hotel-service</module>
