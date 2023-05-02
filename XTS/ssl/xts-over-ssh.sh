@@ -33,8 +33,11 @@ SLEEP_TIME=`timeout_adjust 3 2>/dev/null || echo 3` # default sleep time is 3
 
 WORKSPACE=${WORKSPACE:-$PWD}
 WILDFLY_QUICKSTART_HOME=${WILDFLY_QUICKSTART_HOME:-$QUICKSTART_HOME}
-#comment so main wildfly will be used (TODO: uncomment it as soon as narayana works with main wildfly)
-[ ! -z "$JBOSS_ZIP" ] || fatal "\$JBOSS_ZIP is not defined"
+
+WILDFLY_VERSION_FROM_JBOSS_AS=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' $JBOSS_HOME/../../pom.xml | cut -d \< -f 2|cut -d \> -f 2`
+echo "AS version is ${WILDFLY_VERSION_FROM_JBOSS_AS}"
+JBOSS_ZIP=${JBOSS_HOME}/../../../build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}.zip
+
 JBOSS_CLIENT="${WORKSPACE}/client"
 JBOSS_SERVER="${WORKSPACE}/server"
 # we don't want jboss home settings confusing startup scripts
@@ -43,7 +46,7 @@ unset JBOSS_HOME
 CURRENT_SCRIPT_ABSPATH=`readlink -f "$0"`
 CURRENT_SCRIPT_DIR=`dirname "$ABSPATH"`
 
-function cleanup {
+cleanup() {
   [ -z ${CLIENT_PID+x} ] || pkill -9 -P $CLIENT_PID
   [ -z ${SERVER_PID+x} ] || pkill -9 -P $SERVER_PID
   unset CLIENT_PID SERVER_PID
@@ -53,7 +56,7 @@ function cleanup {
   rm -r "$JBOSS_SERVER"
 }
 
-function prompt {
+prompt() {
   if [ "$interactive" -ne "0" ]; then
     read -p "$1: continue? (y/n): " -s -n 1 confirm
     if [ "$confirm" = "n" ]; then
@@ -64,26 +67,26 @@ function prompt {
   fi
 }
 
-function verify {
+verify() {
   if [ $1 -ne 0 ]; then
     echo "last command failed"
     exit $1
   fi
 }
 
-function cli_command {
+cli_command() {
   local JBOSS_PATH=$1
   ${JBOSS_PATH}/bin/jboss-cli.sh -c --controller=localhost:${2} --commands=${3}
   verify $?
 }
 
-function verifyIsUp {
+verifyIsUp() {
   local JBOSS_PATH=$1
   ${JBOSS_PATH}/bin/jboss-cli.sh -c --controller=localhost:$PORT --command=":read-attribute(name=server-state)" | grep -s running
 }
 
 # configure_elytron port secret
-function configure_elytron {
+configure_elytron() {
   local JBOSS_PATH=$1
   cli_command $JBOSS_PATH $2 "/subsystem=elytron/key-store=LocalhostKeyStore:add(path=server.keystore,relative-to=jboss.server.config.dir,credential-reference={clear-text=\"$3\"},type=JKS)"
   cli_command $JBOSS_PATH $2 "/subsystem=elytron/key-manager=LocalhostKeyManager:add(key-store=LocalhostKeyStore,alias-filter=\"$3\",credential-reference={clear-text=\"$3\"})"
@@ -94,7 +97,7 @@ function configure_elytron {
   cli_command $JBOSS_PATH $2 ":reload()"
 }
 
-function waitServerStarted() {
+waitServerStarted() {
   local JBOSS_PATH=$1
   local PORT=${2:-$CLI_PORT_BASE}
   local TIMEOUT=`timeout_adjust 40 2>/dev/null || echo 40` # default timeout is 40 seconds
@@ -111,7 +114,7 @@ function waitServerStarted() {
   exit 2
 }
 
-function prepareServerWorkingDirectories() {
+prepareServerWorkingDirectories() {
   local JBOSS_ZIP_FILE="${1}"
   local JBOSS_TARGET_DIR="${2}"
   unzip "$JBOSS_ZIP_FILE" -d "${JBOSS_TARGET_DIR}"
@@ -122,13 +125,13 @@ function prepareServerWorkingDirectories() {
   rm -d ${JBOSS_TARGET_DIR}/${DIRNAME}
 }
 
-function getWflyStartupParameters() {
+getWflyStartupParameters() {
   local PORT_OFFSET=$1
   local JBOSS_CONF_DIR="$2"
   echo "-c standalone-xts.xml -Djboss.socket.binding.port-offset=$PORT_OFFSET" # -Djavax.net.debug=all"
 }
 
-function patchWildFlyParent {
+patchWildFlyParent() {
   patchfile=$(mktemp)
 
   # workaround for CI failure because of https://github.com/jboss/jboss-parent-pom/issues/65

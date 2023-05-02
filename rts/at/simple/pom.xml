@@ -90,13 +90,11 @@
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
-      <version>${version.org.jboss.logging.jboss-logging}</version>
     </dependency>
     <!-- need to define a JAX-RS implementation (jakarta.ws.rs.ext.RuntimeDelegate) -->
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-core</artifactId>
-      <version>${version.org.jboss.resteasy}</version>
     </dependency>
 
   </dependencies>

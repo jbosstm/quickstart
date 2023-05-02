@@ -87,7 +87,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${version.h2}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -99,7 +98,6 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${version.jakarta.xml.bind}</version>
         </dependency>
         
         <dependency>

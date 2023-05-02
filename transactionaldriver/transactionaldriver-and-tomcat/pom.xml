@@ -15,13 +15,11 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.1.0</version>
         </dependency>
         
         <dependency>
             <groupId>jakarta.transaction</groupId>
             <artifactId>jakarta.transaction-api</artifactId>
-            <version>${version.jakarta.transaction-api}</version>
         </dependency>
         <!--jakarta TODO narayana-tomcat needs update -->
         <dependency>
@@ -37,12 +35,10 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
-            <version>${version.resteasy}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${version.h2}</version>
         </dependency>
     </dependencies>
 

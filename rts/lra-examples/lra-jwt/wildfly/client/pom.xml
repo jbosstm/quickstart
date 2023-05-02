@@ -17,14 +17,12 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
-            <version>${version.resteasy}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
-            <version>${version.resteasy}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -44,7 +42,6 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.json</artifactId>
-            <version>${version.glassfish.json}</version>
         </dependency>
 
     </dependencies>

@@ -59,7 +59,6 @@
         <dependency>
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
-            <version>${version.microprofile.lra}</version>
         </dependency>
 
         <dependency>
@@ -85,7 +84,6 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
-            <version>${version.resteasy}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

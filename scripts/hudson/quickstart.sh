@@ -142,19 +142,6 @@ function build_narayana {
   rm -rf narayana
 }
 
-function build_apache-karaf {
-  cd $WORKSPACE
-  git clone --depth=1 https://github.com/apache/karaf.git apache-karaf
-  if [ $? != 0 ]; then
-    comment_on_pull "Karaf clone failed: $BUILD_URL";
-    exit -1
-  fi
-  ./build.sh -f apache-karaf/pom.xml -B -Pfastinstall
-  if [ $? != 0 ]; then
-    comment_on_pull "Karaf build failed: $BUILD_URL";
-    exit -1
-  fi
-}
 function clone_as {
   echo "Cloning AS sources from https://github.com/jbosstm/jboss-as.git"
 
@@ -206,7 +193,6 @@ function build_as {
   WILDFLY_VERSION_FROM_JBOSS_AS=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' ${WORKSPACE}/jboss-as/pom.xml | cut -d \< -f 2|cut -d \> -f 2`
   echo "AS version is ${WILDFLY_VERSION_FROM_JBOSS_AS}"
   export JBOSS_HOME=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}
-  export JBOSS_ZIP=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}.zip
 
   # init files under JBOSS_HOME before AS TESTS is started
   init_jboss_home
@@ -246,5 +232,4 @@ if [ -z "$JBOSS_HOME" ]; then
   clone_as "$@"
   build_as "$@"
 fi
-#build_apache-karaf # JBTM-2820 disable the karaf build
 run_quickstarts

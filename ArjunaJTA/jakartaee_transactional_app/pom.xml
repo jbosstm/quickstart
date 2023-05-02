@@ -100,7 +100,6 @@
         <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
-            <version>${version.jakarta.inject-api}</version>
             <scope>provided</scope>
         </dependency>
         <!-- For logging -->
@@ -114,7 +113,6 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
-            <version>1.7.0.Alpha12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -151,7 +149,6 @@
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -167,7 +164,6 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug}</server.jvm.args>
-                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>127.0.0.1</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -185,7 +181,6 @@
                 <dependency>
                     <groupId>org.wildfly.arquillian</groupId>
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.org.wildfly.arquillian}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -202,7 +197,6 @@
                                     Used in arquillian.xml
                                 -->
                                 <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${ipv6.server.jvm.args} ${jvm.args.debug}</server.jvm.args>
-                                <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                                 <node.address>[::1]</node.address>
                             </systemPropertyVariables>
                             <redirectTestOutputToFile>true</redirectTestOutputToFile>

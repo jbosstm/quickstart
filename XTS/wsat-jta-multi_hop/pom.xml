@@ -37,12 +37,10 @@
     <dependency>
       <groupId>jakarta.xml.ws</groupId>
       <artifactId>jakarta.xml.ws-api</artifactId>
-      <version>${version.jakarta.xml.ws}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.transaction</groupId>
       <artifactId>jakarta.transaction-api</artifactId>
-      <version>${version.jakarta.transaction-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -50,7 +48,6 @@
     <dependency>
       <groupId>jakarta.enterprise</groupId>
       <artifactId>jakarta.enterprise.cdi-api</artifactId>
-      <version>${version.jakarta.enterprise.cdi-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -58,14 +55,12 @@
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
-      <version>${version.jakarta.annotation.api}</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>jakarta.ejb</groupId>
       <artifactId>jakarta.ejb-api</artifactId>
-      <version>${version.jakarta.ejb-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -73,21 +68,18 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
-      <version>${version.org.jboss.arquillian}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.jboss.arquillian.protocol</groupId>
       <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
-      <version>${version.org.jboss.arquillian}</version>
       <scope>test</scope>
     </dependency>
 
@@ -171,7 +163,6 @@
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <version>${version.org.wildfly.arquillian}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -202,7 +193,6 @@
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <version>${version.org.wildfly.arquillian}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>

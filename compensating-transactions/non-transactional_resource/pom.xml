@@ -66,12 +66,10 @@
     <dependency>
       <groupId>jakarta.enterprise</groupId>
       <artifactId>jakarta.enterprise.cdi-api</artifactId>
-      <version>${version.jakarta.enterprise.cdi-api}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.inject</groupId>
       <artifactId>jakarta.inject-api</artifactId>
-      <version>${version.jakarta.inject-api}</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -89,7 +87,6 @@
     <dependency>
       <groupId>org.jboss.arquillian.protocol</groupId>
       <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
-      <version>${version.org.jboss.arquillian}</version>
     </dependency>
 
   </dependencies>
@@ -139,7 +136,6 @@
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <version>${version.org.wildfly.arquillian}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -171,7 +167,6 @@
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <version>${version.org.wildfly.arquillian}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
