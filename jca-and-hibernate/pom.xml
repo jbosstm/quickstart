@@ -150,12 +150,10 @@
         <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jboss-transaction-spi</artifactId>
-            <version>${version.org.jboss.jboss-transaction-spi}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.naming</groupId>
             <artifactId>jnpserver</artifactId>
-            <version>${version.org.jboss.naming}</version>
         </dependency>
 
         <dependency>
@@ -267,7 +265,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${version.h2}</version>
             <scope>test</scope>
         </dependency>
 
@@ -275,7 +272,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

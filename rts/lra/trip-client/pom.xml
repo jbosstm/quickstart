@@ -33,7 +33,6 @@
         <dependency>
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
-            <version>${version.microprofile.lra}</version>
         </dependency>
 
         <!-- LRA JAXRS filters -->
@@ -47,7 +46,6 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-client</artifactId>
-            <version>${version.resteasy}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

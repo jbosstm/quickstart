@@ -59,13 +59,11 @@
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>${version.jakarta.annotation.api}</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.microprofile.lra</groupId>
             <artifactId>microprofile-lra-api</artifactId>
-            <version>${version.microprofile.lra}</version>
         </dependency>
 
         <dependency>

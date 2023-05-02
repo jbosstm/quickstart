@@ -45,9 +45,6 @@
       </snapshots>
     </repository>
   </repositories>
-  <properties>
-    <version.transaction.api_1_1>1.0.0.Final</version.transaction.api_1_1>
-  </properties>
   <build>
     <pluginManagement>
       <plugins>
@@ -111,14 +108,8 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.jboss.spec.javax.transaction</groupId>
-      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-      <version>${version.transaction.api_1_1}</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -130,7 +121,6 @@
         <dependency>
           <groupId>org.jboss.narayana.jts</groupId>
           <artifactId>narayana-jts-idlj</artifactId>
-          <version>${version.narayana}</version>
         </dependency>
       </dependencies>
     </profile>

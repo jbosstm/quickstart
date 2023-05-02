@@ -150,20 +150,14 @@
   <properties>
         <artemis.version>2.4.0</artemis.version>
         <camel.version>2.25.4</camel.version>
-        <felix.plugin.version>3.0.1</felix.plugin.version>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
-        <jboss-transaction-spi.version>7.5.2.Final</jboss-transaction-spi.version>
-        
         <jvm.args.debug/>
         <jvm.args.memory>-Xms64m -Xmx1024m -XX:MaxMetaspaceSize=512m</jvm.args.memory>
         <jvm.args.other>-server</jvm.args.other>
-        
-        <karaf.version>4.1.2</karaf.version>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <modular.jdk.args></modular.jdk.args>
-        <osgi.version>6.0.0</osgi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 <!--         quarkus -->
@@ -176,82 +170,44 @@
         <version.agroal>2.0</version.agroal>
 <!--         arquillian -->
         <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
-        <version.arquillian.graphene>2.0.3.Final</version.arquillian.graphene>
         
         <version.byteman>4.0.19</version.byteman>
         <version.clear.plugin>3.0.0</version.clear.plugin>
         <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
-        <version.jakarta.faces-api>4.0.1</version.jakarta.faces-api>
         <version.commons-dbcp2>2.2.0</version.commons-dbcp2>
-        <version.commons-logging>1.1.0.jboss</version.commons-logging>
         <version.commons-pool2>2.5.0</version.commons-pool2>
         <version.compiler.plugin>3.5.1</version.compiler.plugin>
         <version.creaper>1.6.1</version.creaper>
         <version.ear.plugin>2.10.1</version.ear.plugin>
         <version.exec-maven-plugin>1.4.0</version.exec-maven-plugin>
         <version.glassfish.corba.omgapi>4.2.1</version.glassfish.corba.omgapi>
-        <version.glassfish.json>2.0.1</version.glassfish.json>
-        <version.h2>2.1.214</version.h2>
         <version.hibernate.validator>8.0.0.Final</version.hibernate.validator>
         <version.hibernate>5.6.11.Final</version.hibernate>
         <version.jackson>2.13.0</version.jackson>
-        <version.jakarta.json-api>2.1.1</version.jakarta.json-api>
-        <version.jakarta.xml.bind>2.3.2</version.jakarta.xml.bind>
-        <version.javaee.spec>1.1.1.Final</version.javaee.spec>
-        <version.javaee>7.0</version.javaee>
-<!--         javax -->
-        <version.jakarta.annotation.api>2.1.1</version.jakarta.annotation.api>
-        <version.jakarta.inject-api>2.0.1</version.jakarta.inject-api>
-        <version.jakarta.el>5.0.1</version.jakarta.el>
         <version.jakarta.servlet.jstl>3.0.0</version.jakarta.servlet.jstl>
         <version.jakarta.validation>3.0.2</version.jakarta.validation>
-        <version.jakarta.xml.ws>4.0.0</version.jakarta.xml.ws>
-        <version.jakarta.ws.rs-api>3.1.0</version.jakarta.ws.rs-api>
-        
-        <version.jboss-transaction-api>1.1.1.Final</version.jboss-transaction-api>
-        <version.jboss.bom>1.0.7.Final</version.jboss.bom>
         <version.jboss.logging.spi>2.2.0.CR1</version.jboss.logging.spi>
         <version.jboss.logging>3.5.0.Final</version.jboss.logging>
-        <version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
-        <version.jboss.spec.javaee.6.0>3.0.2.Final</version.jboss.spec.javaee.6.0>
-        
-        <version.jnpserver>5.0.6.CR1</version.jnpserver>
-        <version.json>1.0</version.json>
-        <version.jta.api>1.0.0.Final</version.jta.api>
-        <version.junit>4.13.1</version.junit>
         <version.jupiter>5.9.1</version.jupiter>
-        <version.karaf.services>4.2.1</version.karaf.services>
-        <version.lifecycle.mapping.plugin>1.0.0</version.lifecycle.mapping.plugin>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.microprofile.lra>2.0-RC1</version.microprofile.lra>
         <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
         <version.nimbus.jose.jwt>7.9</version.nimbus.jose.jwt>
-        <version.org.codehaus.jettison>1.3.2</version.org.codehaus.jettison>
-<!--         org.jboss -->
         <version.org.jboss.arquillian>1.7.0.Alpha12</version.org.jboss.arquillian>
-        <version.org.jboss.bom>1.0.1.Final</version.org.jboss.bom>
         <version.org.jboss.ironjacamar>1.5.8.Final</version.org.jboss.ironjacamar>
         <version.org.jboss.jboss-transaction-spi>8.0.0.Final</version.org.jboss.jboss-transaction-spi>
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
         <version.org.jboss.logmanager-log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager-log4j-jboss-logmanager>
-        <version.org.jboss.naming>5.0.3.GA</version.org.jboss.naming>
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
         <version.org.jboss.shrinkwrap.resolver>3.1.4</version.org.jboss.shrinkwrap.resolver>
         <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
         
-        <version.jakarta.ejb-api>4.0.1</version.jakarta.ejb-api>
-        <version.jakarta.jms-api>3.1.0</version.jakarta.jms-api>
-        <version.jakarta.transaction-api>2.0.1</version.jakarta.transaction-api>
         <version.jakarta.persistence-api>3.1.0</version.jakarta.persistence-api>
-        <version.jakarta.enterprise.cdi-api>4.0.1</version.jakarta.enterprise.cdi-api>
         
         <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
         <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>
         
-        <version.org.slf4j>1.7.2</version.org.slf4j>
         <version.org.springframework.boot>2.0.9.RELEASE</version.org.springframework.boot>
         <version.org.springframwork>5.2.22.RELEASE</version.org.springframwork>
-        <version.org.wildfly.arquillian>5.0.0.Alpha5</version.org.wildfly.arquillian>
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
@@ -259,7 +215,6 @@
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
 <!--         Using an older plugin version to have compatibility with older maven version -->
         <version.surefire.plugin>2.22.2</version.surefire.plugin>
-        <version.tomcat.plugin>2.2</version.tomcat.plugin>
         <version.war.plugin>3.2.3</version.war.plugin>
         <version.weld>5.0.1.Final</version.weld>
         
@@ -271,6 +226,17 @@
         <sortpom.skip>true</sortpom.skip>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.narayana</groupId>
+        <artifactId>narayana-bom</artifactId>
+        <version>6.0.2.Final-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <pluginManagement>
       <plugins>

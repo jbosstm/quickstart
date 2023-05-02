@@ -35,7 +35,7 @@
 
   <properties>
     <jboss1.env.home>${env.JBOSS_HOME_1}</jboss1.env.home>
-    <jboss1.home>${$jboss1.env.home}</jboss1.home>
+    <jboss1.home>${jboss1.env.home}</jboss1.home>
     <jboss2.env.home>${env.JBOSS_HOME_2}</jboss2.env.home>
     <jboss2.home>${jboss2.env.home}</jboss2.home>
     <skip.resource.plugin>false</skip.resource.plugin>
@@ -45,12 +45,10 @@
     <dependency>
       <groupId>jakarta.xml.ws</groupId>
       <artifactId>jakarta.xml.ws-api</artifactId>
-      <version>${version.jakarta.xml.ws}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.transaction</groupId>
       <artifactId>jakarta.transaction-api</artifactId>
-      <version>${version.jakarta.transaction-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -58,7 +56,6 @@
     <dependency>
       <groupId>jakarta.enterprise</groupId>
       <artifactId>jakarta.enterprise.cdi-api</artifactId>
-      <version>${version.jakarta.enterprise.cdi-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -66,14 +63,12 @@
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
-      <version>${version.jakarta.annotation.api}</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>jakarta.ejb</groupId>
       <artifactId>jakarta.ejb-api</artifactId>
-      <version>${version.jakarta.ejb-api}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -81,28 +76,25 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
-      <version>${version.org.jboss.arquillian}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.jboss.arquillian.protocol</groupId>
       <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
-      <version>${version.org.jboss.arquillian}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
-      <version>3.1.0</version>
+      <version>${version.jakarta.persistence-api}</version>
     </dependency>
   </dependencies>
 
@@ -182,7 +174,6 @@
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <version>${version.org.wildfly.arquillian}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -212,7 +203,6 @@
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
-          <version>${version.org.wildfly.arquillian}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -292,42 +282,6 @@
                 </configuration>
               </execution>
               <execution>
-                <id>copy-resources-jboss2</id>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <phase>process-test-resources</phase>
-                <configuration>
-                  <outputDirectory>${jboss2.home}</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${env.JBOSS_HOME}</directory>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>verify.existence.standalone-xts.xml.configuration</id>
-      <activation>
-        <file>
-          <missing>${jboss1.home}/standalone/configuration/standalone-xts.xml</missing>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <version>3.0.0</version>
-            <configuration>
-              <skip>${skip.resource.plugin}</skip>
-            </configuration>
-            <executions>
-              <execution>
                 <id>copy-standalone-xts-jboss1</id>
                 <goals>
                   <goal>copy-resources</goal>
@@ -341,6 +295,21 @@
                       <includes>
                         <include>standalone-xts.xml</include>
                       </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy-resources-jboss2</id>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <phase>process-test-resources</phase>
+                <configuration>
+                  <outputDirectory>${jboss2.home}</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${env.JBOSS_HOME}</directory>
                     </resource>
                   </resources>
                 </configuration>

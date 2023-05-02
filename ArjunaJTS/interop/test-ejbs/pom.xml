@@ -22,28 +22,6 @@
       </license>
    </licenses>
 
-   <dependencyManagement>
-      <dependencies>
-         <!-- Define the version of JBoss' Java EE 6 APIs we want to import. 
-            Any dependencies from org.jboss.spec will have their version defined by this 
-            BOM -->
-         <!-- JBoss distributes a complete set of Java EE 6 APIs including
-            a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
-            a collection) of artifacts. We use this here so that we always get the correct
-            versions of artifacts. Here we use the jboss-javaee-6.0 stack (you can
-            read this as the JBoss stack of the Java EE 6 APIs). You can actually
-            use this stack with any version of JBoss AS that implements Java EE 6, not
-            just JBoss AS 7! -->
-         <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-jakartaee-8.0</artifactId>
-            <version>1.0.1.Final</version>
-            <type>pom</type>
-            <scope>import</scope>
-         </dependency>
-      </dependencies>
-   </dependencyManagement>
-
    <dependencies>
       <dependency>
          <groupId>org.jboss.narayana.quickstart.jts</groupId>
@@ -53,12 +31,10 @@
       <dependency>
           <groupId>jakarta.transaction</groupId>
           <artifactId>jakarta.transaction-api</artifactId>
-          <version>${version.jakarta.transaction-api}</version>
       </dependency>
       <dependency>
           <groupId>jakarta.inject</groupId>
           <artifactId>jakarta.inject-api</artifactId>
-          <version>${version.jakarta.inject-api}</version>
       </dependency>
       <dependency>
         <groupId>jakarta.enterprise</groupId>
@@ -67,17 +43,14 @@
       <dependency>
           <groupId>jakarta.annotation</groupId>
           <artifactId>jakarta.annotation-api</artifactId>
-          <version>${version.jakarta.annotation.api}</version>
       </dependency>
       <dependency>
           <groupId>jakarta.ws.rs</groupId>
           <artifactId>jakarta.ws.rs-api</artifactId>
-          <version>${version.jakarta.ws.rs-api}</version>
       </dependency>
       <dependency>
           <groupId>jakarta.ejb</groupId>
           <artifactId>jakarta.ejb-api</artifactId>
-          <version>${version.jakarta.ejb-api}</version>
       </dependency>
        <dependency>
            <groupId>org.glassfish.corba</groupId>

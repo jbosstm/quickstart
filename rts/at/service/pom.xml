@@ -28,15 +28,12 @@
   <packaging>pom</packaging>
 
   <properties>
-    <version.org.jboss.logging.jboss-logging>3.5.0.Final</version.org.jboss.logging.jboss-logging>
-    <version.org.jboss.resteasy>6.0.3.Final</version.org.jboss.resteasy>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-core</artifactId>
-      <version>${version.org.jboss.resteasy}</version>
      </dependency>
   </dependencies>
 
