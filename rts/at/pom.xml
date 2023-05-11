@@ -74,5 +74,6 @@
     <module>recovery</module>
     <module>jta-service</module>
     <module>undertow</module>
+    <module>sra-examples</module>
   </modules>
 </project>
