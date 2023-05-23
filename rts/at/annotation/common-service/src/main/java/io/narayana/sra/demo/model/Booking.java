@@ -19,6 +19,9 @@ import java.util.stream.IntStream;
 public class Booking {
     @JsonProperty("id")
     private String id;
+
+    @JsonProperty("sraId")
+    private String sraId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("quantity")
@@ -67,6 +70,30 @@ public class Booking {
         IntStream.range(0, details.length).forEach(i -> details[i] = new Booking(booking.getDetails()[i]));
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setDetails(Booking[] details) {
+        this.details = details;
+    }
+
+    public void setDecodingException(IOException decodingException) {
+        this.decodingException = decodingException;
+    }
+
     public static Booking fromJson(String json) {
         try {
             return new ObjectMapper().readValue(json, Booking.class);
@@ -82,9 +109,11 @@ public class Booking {
     }
 
     private void init(String id, String name, Integer quantity, String type, BookingStatus status, Booking[] details) {
+        this.sraId = id;
         String[] segments = id.split("/");
 
-        this.id = segments[segments.length - 1]; // this is just a demo so don't check for a single /
+        this.id = segments[segments.length - 1];// this is just a demo so don't check for a single /
+
         this.name = name == null ? "" : name;
         this.quantity = quantity;
         this.type = type == null ? "" : type;
@@ -129,6 +158,14 @@ public class Booking {
 
     public void requestCancel() {
         status = BookingStatus.CANCEL_REQUESTED;
+    }
+
+    public String getSraId() {
+        return sraId;
+    }
+
+    public void setSraId(String sraId) {
+        this.sraId = sraId;
     }
 
     public void setConfirmed() {
