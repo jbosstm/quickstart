@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jboss.narayana.quickstart.rts</groupId>
+    <artifactId>annotation</artifactId>
+    <version>6.0.2.Final-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>flight-service</artifactId>
+  <packaging>jar</packaging>
+  <name>REST-AT Annotation Flight Service</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.narayana.rts</groupId>
+      <artifactId>restat-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.narayana.quickstart.rts</groupId>
+      <artifactId>common-service</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>rest-at-annotation-flight-service</finalName>
+    <plugins>
+      <plugin>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-maven-plugin</artifactId>
+        <version>${version.quarkus}</version>
+        <configuration>
+          <debug>5006</debug>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
