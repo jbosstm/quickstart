@@ -1,34 +1,45 @@
+OVERVIEW
+--------
+A example that demonstrates how to use [REST-AT annotations](https://github.com/jbosstm/narayana/tree/main/rts/at/tx/src/main/java/org/jboss/jbossts/star/annotation) to define transactional microservices.
 
-# start a REST-AT coordinator on port 8080
+USAGE
+--------------------
 
-cd <narayana-repo>/jboss-as/build/target/wildfly-23.0.0.Beta1-SNAPSHOT
-cp docs/examples/configs/standalone-rts.xml standalone/configuration
-./bin/standalone.sh -c standalone-rts.xml
+Prior to running the example make sure that the [REST-AT coordinator is deployed](../README.md#usage).
 
-# verify that it is running, eg:
-curl http://localhost:8080/rest-at-coordinator/tx/transaction-manager
+Once REST-AT coordinator is deployed build and run the annotation example application to run on port 8082, 8083 and 8084 as it in configured in application.properties
+    
+    cd <narayana-repo>/rts/at/annotation/
+    mvn clean package -DskipTests
+    java -jar flight-service/target/quarkus-app/quarkus-run.jar &
+    java -jar hotel-service/target/quarkus-app/quarkus-run.jar &
+    java -jar trip-service/target/quarkus-app/quarkus-run.jar &
 
-# build and run the demo application on port 8081
-cd <narayana-repo>/rts/sra
-mvn clean install
-java $JAVA_OPTS -Dquarkus.http.port=8081 -jar target/sra-participant-runner.jar &
-
-# book a trip within a transaction (see sra/demo/api/TripController.java method bookTrip)
-# this starts a transaction and you can verify it is running using
-# curl http://localhost:8080/rest-at-coordinator/tx/transaction-manager
-# except that the end attribute of `@SRA(value = SRA.Type.REQUIRED, end = false)` is ignored
-# either you or I can raise an issue for that
-
-curl -XPOST http://localhost:8081/trip/book?hotelName=Rex
-
-So you probably want to either change end = true (which is the default) or you would fix the bug.
-If the end attribute was respected then querying the transaction coordinator (`curl http://localhost:8080/rest-at-coordinator/tx/transaction-manager`) would report the in progress transaction.
+Book a trip within a transaction, refer to the [`bookTrip` method in the trip service](./trip-service/src/main/java/io/narayana/sra/demo/api/TripController.java) to see how it is annotated. The following curl command will invoke the resource.
+    
+    curl -XPOST http://localhost:8082/trip/book?hotelName=Rex&flightNumber=123
+    curl http://localhost:8082/trip/status?sraId={paste sraId here}
 
 
-# examples of how to manually test that the coordinator is working using curl
 
-curl -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8080/rest-at-coordinator/tx/transaction-manager
-curl http://localhost:8080/rest-at-coordinator/tx/transaction-manager
-curl -X PUT --data txstatus=TransactionCommitted http://localhost:8080/rest-at-coordinator/tx/transaction-manager/0_ffffc0a8000e_-60f54f29_60ad4e96_91/terminator
-curl http://localhost:8080/rest-at-coordinator/tx/transaction-manager
+Since the `bookTrip` resource is annotated with `@SRA(value = SRA.Type.REQUIRED)`, the curl request will start a new REST-AT transaction and you can verify that it is running by querying the coordinator:  `curl http://localhost:8080/rest-at-coordinator/tx/transaction-manager`.
 
+EXPECTED OUTPUT
+---------------
+    SRA: 0_ffff0ad775f3_-2e0999fe_64d0a461_3f8: Updating flight participant state to: TransactionPrepared
+    SRA: 0_ffff0ad775f3_-2e0999fe_64d0a461_3f8: Updating hotel participant state to: TransactionPrepared
+    SRA: 0_ffff0ad775f3_-2e0999fe_64d0a461_3f8: Updating trip participant state to: TransactionPrepared
+    SRA: 0_ffff0ad775f3_-2e0999fe_64d0a461_3f8: Updating trip participant state to: TransactionCommitted
+    SRA: 0_ffff0ad775f3_-2e0999fe_64d0a461_3f8: Updating hotel participant state to: TransactionCommitted
+    SRA: 0_ffff0ad775f3_-2e0999fe_64d0a461_3f8: Updating flight participant state to: TransactionCommitted
+    {"cancelPending":false,"details":[{"cancelPending":false,"details":[],"encodedId":"0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","id":"0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","name":"Rex","quantity":1,"sraId":"http://localhost:8080/rest-at-coordinator/tx/transaction-manager/0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","status":"PROVISIONAL","type":"Hotel"},{"cancelPending":false,"details":[],"encodedId":"0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","id":"0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","name":"456","quantity":1,"sraId":"http://localhost:8080/rest-at-coordinator/tx/transaction-manager/0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","status":"PROVISIONAL","type":"Flight"}],"encodedId":"0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","id":"0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","name":"Aggregate Booking","quantity":1,"sraId":"http://localhost:8080/rest-at-coordinator/tx/transaction-manager/0_ffff0ad775f3_-2e0999fe_64d0a461_3f8","status":"CONFIRMED","type":"Trip"}
+    Confirming tripBooking id 0_ffff0ad775f3_-2e0999fe_64d0a461_4a4 (Aggregate Booking) status: CONFIRMED
+
+WHAT JUST HAPPENED?
+-------------------
+
+1. Build and run the REST-AT annotation application, it starts all three microservice on different port i.e 8082, 8083 and 8084 which is configured in application.properties such as in [flight-service](flight-service/src/main/resources/application.properties), [hotel-service](hotel-service/src/main/resources/application.properties) and [trip-service](flight-service/src/main/resources/application.properties).
+
+2. Invoke book trip which start REST-AT transaction and calls individual hotel and flight service issuing the POST request to the trip service.
+
+> **_NOTE:_** The quickstart marks the services as REST-AT aware participants because they are extending a [helper](https://github.com/jbosstm/narayana/blob/main/rts/at/tx/src/main/java/org/jboss/jbossts/star/client/SRAParticipant.java) class that provides the relevant REST-AT support.

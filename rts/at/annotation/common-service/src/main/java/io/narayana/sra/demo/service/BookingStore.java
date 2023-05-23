@@ -1,6 +1,7 @@
 package io.narayana.sra.demo.service;
 
 import io.narayana.sra.demo.model.Booking;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
 public class BookingStore {
     private Map<String, Booking> bookings = new HashMap<>();
 

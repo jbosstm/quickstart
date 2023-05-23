@@ -16,4 +16,7 @@ public class ServiceConstant {
     public static final String HOTEL_SERVICE_PORT_PROPERTY = "hotel.quarkus.http.port";
 
     public static final String FLIGHT_SERVICE_PORT_PROPERTY = "flight.quarkus.http.port";
+
+    public static final String BOOKING_ID = "bookingId";
+    public static final String SRA_ID = "sraId";
 }
