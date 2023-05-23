@@ -77,3 +77,6 @@ Demonstrator
 An example using the ruby language showing how to start and end a transaction using REST style semantics
 and how services can recover from failures during the commitment protocol.
 
+Annotations
+============
+A quickstart that demonstrates how to use REST-AT annotations to define transactional microservices.
