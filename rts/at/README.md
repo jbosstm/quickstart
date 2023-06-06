@@ -26,7 +26,7 @@ For other versions of the application server you will need to deploy the coordin
 The archive is contained in the bin folder of the narayana download (restat-web.war). If you are building
 from source the archive is located in rts/at/webservice/target/restat-web-<version>.war.
 
-The coordinator endpoint is different depending on which way you deploy the coordinator. For wildfly use:
+The [coordinator](coordinator) endpoint is different depending on which way you deploy the coordinator. For wildfly use:
 
     http://localhost:8080/rest-at-coordinator/tx/transaction-manager
 

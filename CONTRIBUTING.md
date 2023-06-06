@@ -10,7 +10,7 @@ If you can't find any such issues then please contact us using our [forum](https
 
 ## Legal
 
-All original contributions are subject to the [guidelines](https://github.com/jbosstm/narayana/blob/main/CONTRIBUTING.md#legal) in the main narayana repository.
+All original contributions are subject to the [guidelines](https://github.com/jbosstm/narayana/blob/main/CONTRIBUTING.md) in the main narayana repository with the exception that we ask contributors *not* to include copyright statements, or license identifiers in contributed files, prefering instead for attribution to be tracked by information contained in the git commit. This policy makes it easier for developers to use the quickstarts to jumpstart their own development.
 
 ## Reporting an issue
 

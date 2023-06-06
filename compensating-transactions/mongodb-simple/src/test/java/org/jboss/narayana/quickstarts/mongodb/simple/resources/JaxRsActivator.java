@@ -1,11 +1,3 @@
-/*
- *
- * Copyright The Narayana Authors
- *
- * SPDX-License-Identifier: LGPL-2.1-only
- *
- */
-
 package org.jboss.narayana.quickstarts.mongodb.simple.resources;
 
 import jakarta.ws.rs.ApplicationPath;

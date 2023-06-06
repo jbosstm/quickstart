@@ -1,1 +1,0 @@
-Except where otherwise noted, files in this repository are licensed under the Apache License 2.0. If you use these quickstarts in your own projects, you need not comply with any of the notice requirements of the Apache License.
