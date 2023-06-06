@@ -1,10 +1,3 @@
-/*
- *
- * Copyright The Narayana Authors
- *
- * SPDX-License-Identifier: LGPL-2.1-only
- *
- */
 package org.jboss.narayana.quickstart.jta;
 
 import com.arjuna.ats.jdbc.TransactionalDriver;
