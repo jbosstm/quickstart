@@ -4,6 +4,9 @@ import java.io.File;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.as.arquillian.api.ServerSetup;
+import org.jboss.as.arquillian.api.ServerSetupTask;
+import org.jboss.as.arquillian.container.ManagementClient;
 import org.jboss.jbossts.star.util.TxLinkNames;
 import org.jboss.jbossts.star.util.TxMediaType;
 import org.jboss.jbossts.star.util.TxSupport;
@@ -15,6 +18,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.wildfly.extras.creaper.core.online.FailuresAllowedBlock;
+import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
+import org.wildfly.extras.creaper.core.online.OnlineOptions;
+import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Link;
@@ -26,7 +33,31 @@ import jakarta.ws.rs.core.Response;
  * 
  */
 @RunWith(Arquillian.class)
+@ServerSetup(value = QueueResourceTest.ServerQueueResourceSetup.class)
 public class QueueResourceTest {
+
+    public static class ServerQueueResourceSetup implements ServerSetupTask {
+
+        @Override
+        public void setup(ManagementClient managementClient, String containerId) throws Exception {
+            OnlineManagementClient creaper = org.wildfly.extras.creaper.core.ManagementClient
+                    .online(OnlineOptions.standalone().wrap(managementClient.getControllerClient()));
+            try (FailuresAllowedBlock allowedBlock = creaper.allowFailures()) {
+                creaper.execute(
+                        "/subsystem=messaging-activemq/server=default/jms-queue=\"resttx\":add(entries=[java:/queue/resttx])");
+            }
+            new Administration(creaper).reload();
+        }
+
+        @Override
+        public void tearDown(ManagementClient managementClient, String containerId) throws Exception {
+            OnlineManagementClient creaper = org.wildfly.extras.creaper.core.ManagementClient
+                    .online(OnlineOptions.standalone().wrap(managementClient.getControllerClient()));
+            try (FailuresAllowedBlock allowedBlock = creaper.allowFailures()) {
+                creaper.execute("/subsystem=messaging-activemq/server=default/jms-queue=\"resttx\":remove()");
+            }
+        }
+    }
 
     private static final String MANIFEST_STRING = "Manifest-Version: 1.0\n" + "Dependencies: org.jboss.narayana.rts\n";
 
@@ -47,7 +78,6 @@ public class QueueResourceTest {
     @Deployment
     public static WebArchive getDeployment() {
         WebArchive archive = ShrinkWrap.create(WebArchive.class, DEPLOYMENT_NAME + ".war")
-                .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/test-jms.xml"))
                 .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/beans.xml"))
                 .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/web.xml"))
                 .addPackages(true, "org.jboss.jbossts.resttxbridge.quickstart.jms")
