@@ -167,7 +167,7 @@
         <version.commons-dbcp2>2.2.0</version.commons-dbcp2>
         <version.commons-pool2>2.5.0</version.commons-pool2>
         <version.compiler.plugin>3.5.1</version.compiler.plugin>
-        <version.creaper>1.6.1</version.creaper>
+        <version.creaper>2.0.2</version.creaper>
         <version.ear.plugin>2.10.1</version.ear.plugin>
         <version.exec-maven-plugin>1.4.0</version.exec-maven-plugin>
         <version.glassfish.corba.omgapi>4.2.1</version.glassfish.corba.omgapi>
@@ -182,7 +182,7 @@
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
         <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
         <version.nimbus.jose.jwt>7.9</version.nimbus.jose.jwt>
-        <version.org.jboss.arquillian>1.7.0.Alpha12</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian>1.7.0.Final</version.org.jboss.arquillian>
         <version.org.jboss.ironjacamar>1.5.8.Final</version.org.jboss.ironjacamar>
         <version.org.jboss.jboss-transaction-spi>8.0.0.Final</version.org.jboss.jboss-transaction-spi>
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
@@ -209,8 +209,8 @@
         <version.weld>5.0.1.Final</version.weld>
         
         <version.wildfly.plugin>4.0.0.Final</version.wildfly.plugin>
-        <version.wildfly.core>18.1.2.Final</version.wildfly.core>
-        <version.wildfly.logging>5.0.0.Beta5</version.wildfly.logging>
+        <version.wildfly.core>20.0.2.Final</version.wildfly.core>
+        <version.wildfly.logging>5.0.0.Final</version.wildfly.logging>
         <version.sortpom>3.0.0</version.sortpom>
 
         <sortpom.skip>true</sortpom.skip>
