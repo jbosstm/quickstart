@@ -50,6 +50,8 @@ public class CmrLrcoTestCase {
 
             try(FailuresAllowedBlock allowedBlock = creaper.allowFailures()) {
                 creaper.execute("/subsystem=transactions/commit-markable-resource=\"java:jboss/datasources/jdbc-cmr\":add()");
+                creaper.execute(
+                        "/subsystem=messaging-activemq/server=default/jms-queue=\"cmr\":add(entries=[java:/queue/cmr])");
             }
             new Administration(creaper).reload();
         }
@@ -61,6 +63,7 @@ public class CmrLrcoTestCase {
 
             try(FailuresAllowedBlock allowedBlock = creaper.allowFailures()) {
                 creaper.execute("/subsystem=transactions/commit-markable-resource=\"java:jboss/datasources/jdbc-cmr\":remove()");
+                creaper.execute("/subsystem=messaging-activemq/server=default/jms-queue=\"cmr\":remove()");
             }
         }
     }
@@ -84,8 +87,8 @@ public class CmrLrcoTestCase {
             .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
             .addAsResource("META-INF/cmr-create-script.sql", "META-INF/cmr-create-script.sql")
             .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-        war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class)  
-            .importDirectory("src/main/webapp").as(GenericArchive.class),  
+        war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class)
+            .importDirectory("src/main/webapp").as(GenericArchive.class),
             "/", Filters.includeAll());
 
         System.out.printf(">>>>>>> webarchive content:%n%s%n", war.toString(true));
