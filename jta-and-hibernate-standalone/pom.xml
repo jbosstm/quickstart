@@ -111,6 +111,11 @@
             <version>${version.weld}</version>
         </dependency>
         <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core-impl</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core-jakarta</artifactId>
             <version>${version.hibernate}</version>
@@ -123,6 +128,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -158,7 +164,7 @@
             <scope>test</scope>
             <version>${version.byteman}</version>
         </dependency>
-    </dependencies>
+      </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>

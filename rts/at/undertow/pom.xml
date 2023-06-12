@@ -60,6 +60,11 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-undertow</artifactId>
         </dependency>
+        <dependency>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+          <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

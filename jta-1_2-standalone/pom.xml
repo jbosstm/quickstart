@@ -53,6 +53,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+          <groupId>org.jboss.logging</groupId>
+          <artifactId>jboss-logging</artifactId>
+          <scope>compile</scope>
+      </dependency>
         <!-- Standalone CDI container -->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>

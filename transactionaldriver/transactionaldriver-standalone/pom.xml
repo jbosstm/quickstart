@@ -30,11 +30,13 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency> <!-- for XA testing purposes -->
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.4.3</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
