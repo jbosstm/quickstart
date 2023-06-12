@@ -19,7 +19,6 @@
     <narayana.version>${project.version}</narayana.version>
     <quarkus.http.port>8080</quarkus.http.port>
     <surefire-plugin.version>2.22.0</surefire-plugin.version>
-    <version.quarkus>3.0.0.Alpha1</version.quarkus>
   </properties>
 
   <dependencyManagement>
@@ -27,7 +26,7 @@
       <dependency>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-bom</artifactId>
-        <version>${version.quarkus}</version>
+        <version>${quarkus.platform.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -54,7 +53,6 @@
     <dependency>
       <groupId>org.jboss.narayana.rts</groupId>
       <artifactId>lra-coordinator-jar</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
@@ -63,7 +61,7 @@
       <plugin>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${version.quarkus}</version>
+        <version>${quarkus-plugin.version}</version>
         <executions>
           <execution>
             <goals>

@@ -91,7 +91,6 @@
         <dependency>
             <groupId>org.jboss.narayana.rts</groupId>
             <artifactId>narayana-lra</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <!-- MP LRA CDI support defines annotations for controlling the lifecycle
