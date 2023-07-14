@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts</groupId>
         <artifactId>restat-bridge</artifactId>
-        <version>7.0.0.Final</version>
+        <version>7.0.1.Final-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
