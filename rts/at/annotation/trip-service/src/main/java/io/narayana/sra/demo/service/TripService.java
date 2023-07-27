@@ -91,4 +91,10 @@ public class TripService extends BookingStore{
 
         return tripBooking;
     }
+    public Booking book(Booking booking) {
+
+        add(booking);
+
+        return booking;
+    }
 }

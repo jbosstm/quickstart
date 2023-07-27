@@ -40,6 +40,9 @@ public class TripController extends SRAParticipant {
     @Inject
     TripService tripService;
 
+    Booking flightBooking;
+    Booking hotelBooking;
+
     @PostConstruct
     void initController() {
         try {
@@ -93,11 +96,12 @@ public class TripController extends SRAParticipant {
                               @QueryParam(ServiceConstant.FLIGHT_SEATS_PARAM) @DefaultValue("1") Integer flightSeats,
                               @QueryParam("mstimeout") @DefaultValue("500") Long timeout) throws BookingException {
 
-        Booking hotelBooking = bookHotel(sraId, hotelName, hotelGuests);
-        Booking flightBooking = bookFlight(sraId, flightNumber, flightSeats);
+        hotelBooking = bookHotel(sraId, hotelName, hotelGuests);
+        flightBooking = bookFlight(sraId, flightNumber, flightSeats);
 
         Booking tripBooking = new Booking(sraId, "Trip", hotelBooking, flightBooking);
-
+        tripService.book(tripBooking);
+   //     tripService.confirmBooking(tripBooking);
         return Response.status(Response.Status.CREATED).entity(tripBooking).build();
     }
 
@@ -112,6 +116,18 @@ public class TripController extends SRAParticipant {
         return Response.ok(booking.getStatus().name()).build(); // TODO convert to a CompensatorStatus if we we're enlisted in an SRA
     }
 
+    @GET
+    @Path("/info/{bookingId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @SRA(SRA.Type.NOT_SUPPORTED)
+    public Response getBooking(@QueryParam("bid") String bookingId) throws NotFoundException {
+        Booking tripBooking = tripService.get(bookingId);
+
+      //  tripBooking.updateDetails(hotelBooking, flightBooking);
+
+        return Response.status(Response.Status.OK).entity(tripBooking).build();
+    }
+
     private Booking bookHotel(String sraId, String name, int beds) throws BookingException {
         if (name == null || name.length() == 0 || beds <= 0)
             return null;
@@ -121,7 +137,7 @@ public class TripController extends SRAParticipant {
                 .queryParam(ServiceConstant.HOTEL_NAME_PARAM, name)
                 .queryParam(ServiceConstant.HOTEL_BEDS_PARAM, beds);
 
-        Response response = webTarget.request().header(RTS_HTTP_CONTEXT_HEADER, sraId).post(Entity.text(""));
+        Response response = webTarget.request(MediaType.APPLICATION_JSON).header(RTS_HTTP_CONTEXT_HEADER, sraId).post(Entity.text(""));
 
         if (response.getStatus() != Response.Status.OK.getStatusCode())
             throw new BookingException(response.getStatus(), "Hotel booking problem: " + response.getStatus());
@@ -150,7 +166,25 @@ public class TripController extends SRAParticipant {
     @Override
     protected SRAStatus updateParticipantState(SRAStatus status, String activityId) {
         System.out.printf("SRA: %s: Updating trip participant state to: %s%n", activityId, status);
+        Booking tripBooking = tripService.get(activityId);
+
+        switch (status) {
+            case TransactionPrepared:
+                tripBooking.setConfirming();
+                break;
+            case TransactionCommitted:
+                tripBooking.setConfirmed();
+                break;
+            case TransactionRolledBack:
+                tripBooking.setCanceled();
+                break;
+            default:
+                break;
+        }
+
         return status;
     }
+
+
 }
 

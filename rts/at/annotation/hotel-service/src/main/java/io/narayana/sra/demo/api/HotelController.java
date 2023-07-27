@@ -3,7 +3,10 @@ package io.narayana.sra.demo.api;
 
 import io.narayana.sra.demo.constant.ServiceConstant;
 import io.narayana.sra.demo.model.Booking;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 import org.jboss.jbossts.star.annotation.SRA;
+import org.jboss.jbossts.star.annotation.Status;
 import org.jboss.jbossts.star.client.SRAParticipant;
 
 import io.narayana.sra.demo.service.HotelService;
@@ -37,12 +40,21 @@ public class HotelController extends SRAParticipant {
     // end = false because we want the SRA to be associated with a booking until the user confirms the booking
     @SRA(value = SRA.Type.REQUIRED, end = false)
     public Booking bookRoom(@HeaderParam(RTS_HTTP_CONTEXT_HEADER) String sraId,
-                            @QueryParam(ServiceConstant.HOTEL_NAME_PARAM) @DefaultValue("Default") String hotelName,
-                            @QueryParam(ServiceConstant.HOTEL_BEDS_PARAM) @DefaultValue("1") Integer beds,
-                            @QueryParam("mstimeout") @DefaultValue("500") Long timeout) {
+                         @QueryParam(ServiceConstant.HOTEL_NAME_PARAM) @DefaultValue("Default") String hotelName,
+                         @QueryParam(ServiceConstant.HOTEL_BEDS_PARAM) @DefaultValue("1") Integer beds,
+                         @QueryParam("mstimeout") @DefaultValue("500") Long timeout) {
         return hotelService.book(sraId, hotelName, beds);
     }
+    @GET
+    @Path("/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Status
+    @SRA(SRA.Type.NOT_SUPPORTED)
+    public Response status(@HeaderParam(RTS_HTTP_CONTEXT_HEADER) String sraId) throws NotFoundException {
+        Booking booking = hotelService.get(sraId);
 
+        return Response.ok(booking.getStatus().name()).build(); // TODO convert to a CompensatorStatus if we we're enlisted in an SRA
+    }
     @GET
     @Path("/info/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)

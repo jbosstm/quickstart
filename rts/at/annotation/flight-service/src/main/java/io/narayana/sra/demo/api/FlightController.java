@@ -4,7 +4,10 @@ package io.narayana.sra.demo.api;
 
 import io.narayana.sra.demo.constant.ServiceConstant;
 import io.narayana.sra.demo.model.Booking;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 import org.jboss.jbossts.star.annotation.SRA;
+import org.jboss.jbossts.star.annotation.Status;
 import org.jboss.jbossts.star.client.SRAParticipant;
 import io.narayana.sra.demo.service.FlightService;
 import org.jboss.jbossts.star.client.SRAStatus;
@@ -42,6 +45,16 @@ public class FlightController extends SRAParticipant {
                               @QueryParam("mstimeout") @DefaultValue("500") Long timeout) {
 
         return flightService.book(sraId, flightNumber, seats);
+    }
+    @GET
+    @Path("/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Status
+    @SRA(SRA.Type.NOT_SUPPORTED)
+    public Response status(@HeaderParam(RTS_HTTP_CONTEXT_HEADER) String sraId) throws NotFoundException {
+        Booking booking = flightService.get(sraId);
+
+        return Response.ok(booking.getStatus().name()).build(); // TODO convert to a CompensatorStatus if we we're enlisted in an SRA
     }
 
     @GET
