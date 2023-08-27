@@ -1,143 +1,143 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.narayana.quickstart</groupId>
-  <artifactId>narayana-quickstarts-all</artifactId>
-  <version>7.0.1.Final-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <url>http://www.jboss.org/jbosstm/</url>
-  <name>${project.artifactId}</name>
-  <description>${project.artifactId}</description>
-  <issueManagement>
-    <system>JIRA</system>
-    <url>https://jira.jboss.org/jira/browse/JBTM/</url>
-  </issueManagement>
-  <ciManagement>
-    <system>hudson</system>
-    <url>http://hudson.qa.jboss.com/hudson/view/JBossTS/</url>
-  </ciManagement>
-  <developers>
-    <developer>
-      <id>tomjenkinson</id>
-      <name>Tom Jenkinson</name>
-      <email>tom.jenkinson@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <roles>
-        <role>project lead</role>
-      </roles>
-      <timezone>0</timezone>
-    </developer>
-    <developer>
-      <id>mmusgrov</id>
-      <name>Michael Musgrove</name>
-      <email>mmusgrov@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <roles>
-        <role>Core Developer</role>
-      </roles>
-      <timezone>0</timezone>
-    </developer>
-    <developer>
-      <id>zhfeng</id>
-      <name>Amos Feng</name>
-      <email>zfeng@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <roles>
-        <role>Core Developer</role>
-      </roles>
-      <timezone>0</timezone>
-    </developer>
-    <developer>
-      <id>pfrobinson</id>
-      <name>Paul Robinson</name>
-      <email>paul.robinson@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <roles>
-        <role>xts lead</role>
-      </roles>
-      <timezone>0</timezone>
-    </developer>
-    <developer>
-      <id>mark.little@jboss.com</id>
-      <name>Mark Little</name>
-      <email>mlittle@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <roles>
-        <role>JBoss CTO</role>
-      </roles>
-      <timezone>0</timezone>
-    </developer>
-    <developer>
-      <id>istudens@redhat.com</id>
-      <name>Ivo Studensky</name>
-      <email>istudens@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <roles>
-        <role>QA lead</role>
-      </roles>
-      <timezone>0</timezone>
-    </developer>
-    <developer>
-      <id>jhalliday</id>
-      <name>Jonathan Halliday</name>
-      <email>jonathan.halliday@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <timezone>0</timezone>
-    </developer>
-    <developer>
-      <id>adinn</id>
-      <name>Andrew Dinn</name>
-      <email>adinn@redhat.com</email>
-      <organization>JBoss</organization>
-      <organizationUrl>http://www.jboss.org/</organizationUrl>
-      <timezone>0</timezone>
-    </developer>
-  </developers>
-  <licenses>
-    <license>
-      <name>Apache-2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <connection>scm:git:git@github.com:jbosstm/quickstart.git</connection>
-    <developerConnection>scm:git:git@github.com:jbosstm/quickstart.git</developerConnection>
-    <url>https://github.com/jbosstm/quickstart</url>
-  </scm>
-  <modules>
-    <module>agroal</module>
-    <module>ArjunaJTS</module>
-    <module>transactionaldriver</module>
-    <module>jca-and-tomcat</module>
-<!--     JBTM-3747 Disable spring quickstarts, transactionaldriver quickstarts and dbcp2-and-tomcat quickstart -->
-<!--     <module>dbcp2-and-tomcat</module> -->
-    <module>jca-and-hibernate</module>
-    <module>jta-1_2-standalone</module>
-    <module>spring</module>
-    <module>ArjunaCore</module>
-    <module>ArjunaJTA</module>
-    <module>atsintegration</module>
-    <module>compensating-transactions</module>
-    <module>rts</module>
-    <module>XTS</module>
-    <module>wildfly/setCheckedActionFactoryExample</module>
-    <module>STM</module>
-    <module>jts-docker</module>
-    <module>jta-1_2-in-wildfly</module>
-    <module>wildfly/commit-markable-resource</module>
-    <module>jta-and-hibernate-standalone</module>
-  </modules>
 
-  <properties>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jboss.narayana.quickstart</groupId>
+    <artifactId>narayana-quickstarts-all</artifactId>
+    <version>7.0.1.Final-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <url>http://www.jboss.org/jbosstm/</url>
+    <name>${project.artifactId}</name>
+    <description>${project.artifactId}</description>
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://jira.jboss.org/jira/browse/JBTM/</url>
+    </issueManagement>
+    <ciManagement>
+        <system>hudson</system>
+        <url>http://hudson.qa.jboss.com/hudson/view/JBossTS/</url>
+    </ciManagement>
+    <developers>
+        <developer>
+            <id>tomjenkinson</id>
+            <name>Tom Jenkinson</name>
+            <email>tom.jenkinson@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <roles>
+                <role>project lead</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>mmusgrov</id>
+            <name>Michael Musgrove</name>
+            <email>mmusgrov@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <roles>
+                <role>Core Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>zhfeng</id>
+            <name>Amos Feng</name>
+            <email>zfeng@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <roles>
+                <role>Core Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>pfrobinson</id>
+            <name>Paul Robinson</name>
+            <email>paul.robinson@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <roles>
+                <role>xts lead</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>mark.little@jboss.com</id>
+            <name>Mark Little</name>
+            <email>mlittle@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <roles>
+                <role>JBoss CTO</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>istudens@redhat.com</id>
+            <name>Ivo Studensky</name>
+            <email>istudens@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <roles>
+                <role>QA lead</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>jhalliday</id>
+            <name>Jonathan Halliday</name>
+            <email>jonathan.halliday@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>adinn</id>
+            <name>Andrew Dinn</name>
+            <email>adinn@redhat.com</email>
+            <organization>JBoss</organization>
+            <organizationUrl>http://www.jboss.org/</organizationUrl>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:git@github.com:jbosstm/quickstart.git</connection>
+        <developerConnection>scm:git:git@github.com:jbosstm/quickstart.git</developerConnection>
+        <url>https://github.com/jbosstm/quickstart</url>
+    </scm>
+    <modules>
+        <module>agroal</module>
+        <module>ArjunaJTS</module>
+        <module>transactionaldriver</module>
+        <module>jca-and-tomcat</module>
+        <!--     JBTM-3747 Disable spring quickstarts, transactionaldriver quickstarts and dbcp2-and-tomcat quickstart -->
+        <!--     <module>dbcp2-and-tomcat</module> -->
+        <module>jca-and-hibernate</module>
+        <module>jta-1_2-standalone</module>
+        <module>spring</module>
+        <module>ArjunaCore</module>
+        <module>ArjunaJTA</module>
+        <module>atsintegration</module>
+        <module>compensating-transactions</module>
+        <module>rts</module>
+        <module>XTS</module>
+        <module>wildfly/setCheckedActionFactoryExample</module>
+        <module>STM</module>
+        <module>jts-docker</module>
+        <module>jta-1_2-in-wildfly</module>
+        <module>wildfly/commit-markable-resource</module>
+        <module>jta-and-hibernate-standalone</module>
+    </modules>
+
+    <properties>
         <artemis.version>2.4.0</artemis.version>
         <camel.version>2.25.4</camel.version>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
@@ -150,17 +150,17 @@
         <modular.jdk.args></modular.jdk.args>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-<!--         quarkus -->
+        <!--         quarkus -->
         <quarkus-plugin.version>3.0.1.Final</quarkus-plugin.version>
         <quarkus.platform.version>3.0.1.Final</quarkus.platform.version>
-        
+
         <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
         <spring.version>2.0.9.RELEASE</spring.version>
         <test.logs.to.file>false</test.logs.to.file>
         <version.agroal>2.0</version.agroal>
-<!--         arquillian -->
+        <!--         arquillian -->
         <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
-        
+
         <version.byteman>4.0.19</version.byteman>
         <version.clear.plugin>3.0.0</version.clear.plugin>
         <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
@@ -190,12 +190,12 @@
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
         <version.org.jboss.shrinkwrap.resolver>3.1.4</version.org.jboss.shrinkwrap.resolver>
         <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
-        
+
         <version.jakarta.persistence-api>3.1.0</version.jakarta.persistence-api>
-        
+
         <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
         <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>
-        
+
         <version.org.springframework.boot>2.0.9.RELEASE</version.org.springframework.boot>
         <version.org.springframwork>5.2.22.RELEASE</version.org.springframwork>
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
@@ -203,68 +203,101 @@
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
         <version.resteasy>6.2.2.Final</version.resteasy>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
-<!--         Using an older plugin version to have compatibility with older maven version -->
+        <!--         Using an older plugin version to have compatibility with older maven version -->
         <version.surefire.plugin>2.22.2</version.surefire.plugin>
         <version.war.plugin>3.2.3</version.war.plugin>
         <version.weld>5.0.1.Final</version.weld>
-        
+
         <version.wildfly.plugin>4.0.0.Final</version.wildfly.plugin>
         <version.wildfly.core>20.0.2.Final</version.wildfly.core>
         <version.wildfly.logging>5.0.0.Final</version.wildfly.logging>
         <version.sortpom>3.0.0</version.sortpom>
 
         <sortpom.skip>true</sortpom.skip>
-  </properties>
+        <checkstyle.skip>true</checkstyle.skip>
+        <version.io.narayana.checkstyle-config>1.0.1.Final</version.io.narayana.checkstyle-config>
+    </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.jboss.narayana</groupId>
-        <artifactId>narayana-bom</artifactId>
-        <version>${project.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.narayana</groupId>
-        <artifactId>narayana-bom-test</artifactId>
-        <version>${project.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  <build>
-    <pluginManagement>
-      <plugins>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.narayana</groupId>
+                <artifactId>narayana-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.narayana</groupId>
+                <artifactId>narayana-bom-test</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${version.war.plugin}</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
             <plugin>
-              <artifactId>maven-war-plugin</artifactId>
-              <version>${version.war.plugin}</version>
-              <configuration>
-                <failOnMissingWebXml>false</failOnMissingWebXml>
-              </configuration>
+                <groupId>com.github.ekryd.sortpom</groupId>
+                <artifactId>sortpom-maven-plugin</artifactId>
+                <version>${version.sortpom}</version>
+                <configuration>
+                    <skip>${sortpom.skip}</skip>
+                    <createBackupFile>false</createBackupFile>
+                    <sortProperties>true</sortProperties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
             </plugin>
-      </plugins>
-    </pluginManagement>
-      <plugins>
-          <plugin>
-              <groupId>com.github.ekryd.sortpom</groupId>
-              <artifactId>sortpom-maven-plugin</artifactId>
-              <version>${version.sortpom}</version>
-              <configuration>
-                  <skip>${sortpom.skip}</skip>
-                  <createBackupFile>false</createBackupFile>
-                  <sortProperties>true</sortProperties>
-              </configuration>
-              <executions>
-                  <execution>
-                      <goals>
-                          <goal>sort</goal>
-                      </goals>
-                      <phase>verify</phase>
-                  </execution>
-              </executions>
-          </plugin>
-      </plugins>
-  </build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>narayana-checkstyle/checkstyle.xml</configLocation>
+                    <suppressionsLocation>narayana-checkstyle/suppressions.xml</suppressionsLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <excludes>**/*$logger.java,**/*$bundle.java</excludes>
+                    <useFile></useFile>
+                    <!-- checkstyle is set to be run on particular modules by disabling skip -->
+                    <skip>${checkstyle.skip}</skip>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.narayana</groupId>
+                        <artifactId>narayana-checkstyle-config</artifactId>
+                        <version>${version.io.narayana.checkstyle-config}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>check-style</id>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
