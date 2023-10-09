@@ -17,15 +17,12 @@
     <module>trip-service</module>
   </modules>
 
-  <properties>
-    <version.quarkus>3.0.0.Alpha5</version.quarkus>
-  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-bom</artifactId>
-        <version>${version.quarkus}</version>
+        <version>${quarkus.platform.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
