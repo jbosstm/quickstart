@@ -21,9 +21,9 @@
   <dependencies>
     <!-- For logging -->
     <dependency>
-       <groupId>org.wildfly.core</groupId>
-       <artifactId>wildfly-logging</artifactId>
-       <version>5.0.0.Beta5</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.activemq</groupId>
