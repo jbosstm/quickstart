@@ -43,6 +43,7 @@
       <dependency>
           <groupId>jakarta.ejb</groupId>
           <artifactId>jakarta.ejb-api</artifactId>
+          <scope>compile</scope>
       </dependency>
        <dependency>
            <groupId>org.glassfish.corba</groupId>
