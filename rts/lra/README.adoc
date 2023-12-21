@@ -1,5 +1,7 @@
 ## Build the demo
 
+Make sure you export the WORKSPACE variable to the absolute path to the quickstart folder, e.g. 'export WORKSPACE=/user/myuser/quickstart/'.
+
 ```bash
 mvn clean package
 ```
@@ -13,8 +15,7 @@ mvn clean package
                 Book flight option 1
             start LRA 4
                 Book flight option 2
-    cancel LRA 3
-    close LRA 1 (results in the hotel and flight option 2 being confirmed)
+    close LRA 1 (results in the hotel and flights being confirmed)
 
 ### Before you start
 
