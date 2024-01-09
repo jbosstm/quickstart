@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart</groupId>
     <artifactId>narayana-quickstarts-all</artifactId>
-    <version>6.0.3.Final-SNAPSHOT</version>
+    <version>6.0.2.Final</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
   <artifactId>narayana-quickstarts-compensations</artifactId>
