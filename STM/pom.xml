@@ -6,7 +6,7 @@
   <parent>
     <artifactId>narayana-quickstarts-all</artifactId>
     <groupId>org.jboss.narayana.quickstart</groupId>
-    <version>6.0.2.Final</version>
+    <version>6.0.3.Final-SNAPSHOT</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.stm</groupId>
   <artifactId>stm-all</artifactId>
