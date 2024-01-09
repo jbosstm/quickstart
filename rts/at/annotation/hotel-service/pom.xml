@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.rts</groupId>
     <artifactId>annotation</artifactId>
-    <version>6.0.2.Final</version>
+    <version>7.0.1.Final-SNAPSHOT</version>
   </parent>
   <artifactId>hotel-service</artifactId>
   <packaging>jar</packaging>
