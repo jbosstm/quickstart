@@ -8,7 +8,7 @@ set -x
 [ $WORKSPACE ] || fatal "please set WORKSPACE to the quickstarts directory"
 NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
 NARAYANA_BRANCH="${NARAYANA_BRANCH:-main}"
-QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.0.1.Final-SNAPSHOT}
+QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.0.1.Final}
 
 function comment_on_pull
 {
@@ -44,7 +44,7 @@ function int_env {
   export MFACTOR=${MFACTOR:-1}
   export -f timeout_adjust || echo "Function timeout_adjust won't be used in the subshells as it can't be exported"
 
-  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.0.1.Final-SNAPSHOT" 
+  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.0.1.Final" 
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
   PULL_DESCRIPTION=$(curl -H "Authorization: token $GITHUB_TOKEN" -s https://api.github.com/repos/$GIT_ACCOUNT/$GIT_REPO/pulls/$PULL_NUMBER)
