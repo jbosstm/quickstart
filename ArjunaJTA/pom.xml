@@ -104,11 +104,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-       <groupId>org.wildfly.core</groupId>
-       <artifactId>wildfly-logging</artifactId>
-       <version>${version.wildfly.logging}</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

@@ -48,12 +48,6 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- For logging -->
-    <dependency>
-       <groupId>org.wildfly.core</groupId>
-       <artifactId>wildfly-logging</artifactId>
-       <version>${version.wildfly.logging}</version>
-    </dependency>
   </dependencies>
   <profiles>
     <profile>
