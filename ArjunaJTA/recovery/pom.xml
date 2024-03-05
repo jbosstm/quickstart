@@ -30,12 +30,6 @@
       <version>5.0.0.Alpha2</version>
     </dependency>
     <dependency>
-      <groupId>org.wildfly.core</groupId>
-      <artifactId>wildfly-logging</artifactId>
-      <version>5.0.0.Beta5</version>
-    </dependency>
-
-    <dependency>
       <groupId>jakarta.jms</groupId>
       <artifactId>jakarta.jms-api</artifactId>
     </dependency>
