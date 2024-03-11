@@ -97,11 +97,18 @@ Change directory into the required quickstart and follow the instructions in the
 
 ## Running all quickstarts in a single command
 
+Get a WildFly that has the expected version of Narayana in it. If you need to build it:
+```
+WORKSPACE=<QUICKSTARTS_REPO_ROOT> <QUICKSTARTS_REPO_ROOT>/scripts/hudson/quickstart.sh clone_as
+WORKSPACE=<QUICKSTARTS_REPO_ROOT> <QUICKSTARTS_REPO_ROOT>/scripts/hudson/quickstart.sh build_as
+#You should be able to find a WildFly to use for JBOSS_HOME under <QUICKSTARTS_REPO_ROOT>jboss-as/build/target/wildfly-<BUILT_WILDFLY_VERSION>
+```
+
 To run the quickstarts:
 
 1. set `WORKSPACE` (to the root directory where the quickstart repository was cloned)
 2. set `JBOSSAS_IP_ADDR` (default is `localhost`)
-3. set `JBOSS_HOME` (to the path of WildFly server, you can download the server at http://wildfly.org/downloads)
+3. set `JBOSS_HOME` (to the path of WildFly server)
 4. `mvn clean install`
 
 _NOTE:_

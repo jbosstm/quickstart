@@ -6,9 +6,6 @@ function fatal {
 
 set -x
 [ $WORKSPACE ] || fatal "please set WORKSPACE to the quickstarts directory"
-NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
-NARAYANA_BRANCH="${NARAYANA_BRANCH:-main}"
-QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.0.2.Final-SNAPSHOT}
 
 function comment_on_pull
 {
@@ -43,6 +40,10 @@ function int_env {
   export GIT_REPO=quickstart
   export MFACTOR=${MFACTOR:-1}
   export -f timeout_adjust || echo "Function timeout_adjust won't be used in the subshells as it can't be exported"
+  NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
+  NARAYANA_BRANCH="${NARAYANA_BRANCH:-main}"
+  QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.0.2.Final-SNAPSHOT}
+  REDUCE_SPACE=${REDUCE_SPACE:-0}
 
   [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.0.2.Final-SNAPSHOT" 
 
@@ -208,11 +209,23 @@ function run_quickstarts {
 }
 
 int_env
-comment_on_pull "Started testing this pull request: $BUILD_URL"
-rebase_quickstart_repo
-build_narayana
-if [ -z "$JBOSS_HOME" ]; then
-  clone_as "$@"
-  build_as "$@"
+functionCalled=false
+if [ $# -eq 1 ]; then
+    if [ "$1" == "clone_as" ]; then
+        clone_as
+        functionCalled=true
+    elif [ "$1" == "build_as" ]; then
+        build_as
+        functionCalled=true
+    fi
 fi
-run_quickstarts
+if [ $functionCalled = false ]; then
+    comment_on_pull "Started testing this pull request: $BUILD_URL"
+    rebase_quickstart_repo
+    build_narayana
+    if [ -z "$JBOSS_HOME" ]; then
+      clone_as "$@"
+      build_as "$@"
+    fi
+    run_quickstarts
+fi
