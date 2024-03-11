@@ -23,9 +23,18 @@ Running the Quickstart
 _NOTE:_ Docker is used to instantiate a MongoDB container (the test will automatically carry out all steps needed to create the container).
 Please, make sure that Docker is installed (and configured) in your environment.
 
-_NOTE:_ The quickstart is tested to work with WildFly 28.0.0 and Narayana 6.0. It should work with newer versions, but they are not currently tested.
+Get a WildFly that has the expected version of Narayana in it. If you need to build it:
+```
+WORKSPACE=<QUICKSTARTS_REPO_ROOT> <QUICKSTARTS_REPO_ROOT>/scripts/hudson/quickstart.sh clone_as
+WORKSPACE=<QUICKSTARTS_REPO_ROOT> <QUICKSTARTS_REPO_ROOT>/scripts/hudson/quickstart.sh build_as
+#You should be able to find a WildFly to use for JBOSS_HOME under <QUICKSTARTS_REPO_ROOT>jboss-as/build/target/wildfly-<BUILT_WILDFLY_VERSION>
+```
 
-To run the quickstart: `mvn clean test -Parq`
+And then (the JBOSS_HOME being either the built version above, or from a downloaded version if it has the expected version of Narayana in it):
+```
+export JBOSS_HOME=<PATH_TO_JBOSS_HOME>
+mvn clean test -Parq
+```
 
 Understanding the Code
 ----------------------
