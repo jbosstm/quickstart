@@ -14,6 +14,12 @@
   <artifactId>jakarta_transaction</artifactId>
   <packaging>jar</packaging>
   <name>Jakarta Transaction Examples</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <!-- This plugin allows our example to be executed by maven -->
