@@ -1,3 +1,7 @@
+*Please notice that this quickstart is disabled and does not work since the needed wildfly/quickstart 'wsat-simple' has been removed from main branch (see https://issues.redhat.com/browse/WFLY-18515).*
+
+Please feel free to contribute to the update of this quickstart working on https://issues.redhat.com/browse/JBTM-3851
+
 # How to configure WildFly and XTS to use SSL
 
 This example walks you through the steps required to setup two servers (client and server) that communicate via Web services over a secure connection.
