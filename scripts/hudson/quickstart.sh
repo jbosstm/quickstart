@@ -48,10 +48,13 @@ function int_env {
   [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.0.2.Final-SNAPSHOT" 
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
-  PULL_DESCRIPTION=$(curl -H "Authorization: token $GITHUB_TOKEN" -s https://api.github.com/repos/$GIT_ACCOUNT/$GIT_REPO/pulls/$PULL_NUMBER)
-  if [[ $PULL_DESCRIPTION =~ "\"state\": \"closed\"" ]]; then
-    echo "pull closed"
-    exit 0
+  if [ "$PULL_NUMBER" != "" ]
+  then
+    PULL_DESCRIPTION=$(curl -H "Authorization: token $GITHUB_TOKEN" -s https://api.github.com/repos/$GIT_ACCOUNT/$GIT_REPO/pulls/$PULL_NUMBER)
+    if [[ $PULL_DESCRIPTION =~ "\"state\": \"closed\"" ]]; then
+      echo "pull closed"
+      exit 0
+    fi
   fi
   # WildFly 27 requires JDK 11 (see JBTM-3582 for details)
     _jdk=`which_java`
