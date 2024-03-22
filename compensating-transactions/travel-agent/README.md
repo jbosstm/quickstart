@@ -10,5 +10,5 @@ WORKSPACE=<QUICKSTARTS_REPO_ROOT> <QUICKSTARTS_REPO_ROOT>/scripts/hudson/quickst
 
 Currently the main documentation for this quickstart is the following two blog posts. Watch this space for more docs.
 
-http://jbossts.blogspot.co.uk/2013/06/compensating-transactions-when-acid-is_26.html
-http://jbossts.blogspot.co.uk/2013/07/compensating-transactions-when-acid-is.html
+https://jbossts.blogspot.co.uk/2013/06/compensating-transactions-when-acid-is_26.html
+https://jbossts.blogspot.co.uk/2013/07/compensating-transactions-when-acid-is.html
