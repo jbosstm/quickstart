@@ -90,6 +90,7 @@ function rebase_quickstart_repo {
   git pull --rebase --ff-only origin $BRANCHPOINT
   if [ $? -ne 0 ]; then
     comment_on_pull "Narayana rebase on $BRANCHPOINT failed. Please rebase it manually: $BUILD_URL"
+    exit -1
   fi
 }
 
