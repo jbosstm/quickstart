@@ -119,13 +119,11 @@
         <dependency>
             <groupId>org.jboss.byteman</groupId>
             <artifactId>byteman</artifactId>
-            <version>${version.byteman}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.byteman</groupId>
             <artifactId>byteman-submit</artifactId>
-            <version>${version.byteman}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
