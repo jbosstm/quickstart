@@ -46,7 +46,6 @@
         <dependency>
             <groupId>org.jboss.byteman</groupId>
             <artifactId>byteman-bmunit</artifactId>
-            <version>${version.byteman}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
