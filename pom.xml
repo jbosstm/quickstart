@@ -161,7 +161,6 @@
         <!--         arquillian -->
         <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
 
-        <version.byteman>4.0.19</version.byteman>
         <version.clear.plugin>3.0.0</version.clear.plugin>
         <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
         <version.commons-dbcp2>2.2.0</version.commons-dbcp2>
