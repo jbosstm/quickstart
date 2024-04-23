@@ -126,9 +126,11 @@ function build_narayana {
     comment_on_pull "Narayana build failed: $BUILD_URL";
     exit -1
   fi
-  echo "Deleting check out - assuming all artifacts are in the .m2"
-  cd ..
-  rm -rf narayana
+  if [ $REDUCE_SPACE = 1 ]; then
+      echo "Deleting check out - assuming all artifacts are in the .m2"
+      cd ..
+      rm -rf narayana
+  fi
 }
 
 function clone_as {
