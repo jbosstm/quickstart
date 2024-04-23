@@ -133,63 +133,69 @@ function build_narayana {
   fi
 }
 
-function clone_as {
-  echo "Cloning AS sources from https://github.com/jbosstm/jboss-as.git"
-
-  cd ${WORKSPACE}
-  if [ -d jboss-as ]; then
-    rm -rf jboss-as # start afresh
-  fi
-
-  echo "First time checkout of WildFly"
-  git clone https://github.com/jbosstm/jboss-as.git -o jbosstm
-  [ $? -eq 0 ] || fatal "git clone https://github.com/jbosstm/jboss-as.git failed"
-
-  cd jboss-as
-
-  git remote add upstream https://github.com/wildfly/wildfly.git
-
-  [ ! -z "$AS_BRANCH" ] || AS_BRANCH=main
-  git checkout $AS_BRANCH
-  [ $? -eq 0 ] || fatal "git checkout of branch $AS_BRANCH failed"
-
-  git fetch upstream
-  echo "This is the JBoss-AS commit"
-  echo $(git rev-parse upstream/main)
-  echo "This is the AS_BRANCH $AS_BRANCH commit"
-  echo $(git rev-parse HEAD)
-
-  echo "Rebasing the wildfly upstream/main on top of the AS_BRANCH $AS_BRANCH"
-  git pull --rebase upstream main
-  [ $? -eq 0 ] || fatal "git rebase failed"
-
-  if [ $REDUCE_SPACE = 1 ]; then
-    echo "Deleting git dir to reduce disk usage"
-    rm -rf .git
-  fi
-
+function download_and_update_as {
+  [ ! -z "${WILDFLY_RELEASE_VERSION}" ] || fatal "No WILDFLY_RELEASE_VERSION specified"
+  
   cd $WORKSPACE
-}
-function build_as {
-  echo "Building WildFly's branch $AS_BRANCH"
-
-  cd $WORKSPACE/jboss-as
-
-  # building WildFly
-  [ "$_jdk" -lt 17 ] && export MAVEN_OPTS="-XX:MaxMetaspaceSize=512m -XX:+UseConcMarkSweepGC $MAVEN_OPTS"
-  [ "$_jdk" -ge 17 ] && export MAVEN_OPTS="-XX:MaxMetaspaceSize=512m $MAVEN_OPTS"
-  JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxMetaspaceSize=512m $JAVA_OPTS" ./build.sh clean install -B -DskipTests -Dts.smoke=false $IPV6_OPTS -Dversion.org.jboss.narayana=${NARAYANA_CURRENT_VERSION} "$@"
-  [ $? -eq 0 ] || fatal "AS build failed"
-
-  WILDFLY_VERSION_FROM_JBOSS_AS=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' ${WORKSPACE}/jboss-as/pom.xml | cut -d \< -f 2|cut -d \> -f 2`
-  echo "AS version is ${WILDFLY_VERSION_FROM_JBOSS_AS}"
-  export JBOSS_HOME=${WORKSPACE}/jboss-as/build/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}
-
-  # init files under JBOSS_HOME before AS TESTS is started
+  
+  # Check if the needed files are available in the m2 cache
+  filesToCheck=(~/.m2/repository/org/jboss/narayana/rts/restat-api/${NARAYANA_CURRENT_VERSION}/restat-api-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-bridge/${NARAYANA_CURRENT_VERSION}/restat-bridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-integration/${NARAYANA_CURRENT_VERSION}/restat-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-util/${NARAYANA_CURRENT_VERSION}/restat-util-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/xts/jbossxts/${NARAYANA_CURRENT_VERSION}/jbossxts-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jbosstxbridge/${NARAYANA_CURRENT_VERSION}/jbosstxbridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/${NARAYANA_CURRENT_VERSION}/narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-idlj/${NARAYANA_CURRENT_VERSION}/narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-coordinator-jar/${NARAYANA_CURRENT_VERSION}/lra-coordinator-jar-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-client/${NARAYANA_CURRENT_VERSION}/lra-client-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/narayana-lra/${NARAYANA_CURRENT_VERSION}/narayana-lra-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-proxy-api/${NARAYANA_CURRENT_VERSION}/lra-proxy-api-${NARAYANA_CURRENT_VERSION}.jar)
+  goOffline=false
+  for fileToCheck in "${filesToCheck[@]}"; do
+    echo Checking $fileToCheck
+    [ -f $fileToCheck ] || goOffline=true
+  done  
+  if [ $goOffline = true ]; then
+      ./build.sh dependency:go-offline -DskipTests
+  fi
+  
+  if [ ! -f wildfly-${WILDFLY_RELEASE_VERSION}.zip ]; then
+    echo "Downloading AS"
+    wget -N  https://github.com/wildfly/wildfly/releases/download/${WILDFLY_RELEASE_VERSION}/wildfly-${WILDFLY_RELEASE_VERSION}.zip
+  fi
+  rm -rf wildfly-${WILDFLY_RELEASE_VERSION}
+  unzip wildfly-${WILDFLY_RELEASE_VERSION}.zip
+  cp ~/.m2/repository/org/jboss/narayana/rts/restat-api/${NARAYANA_CURRENT_VERSION}/restat-api-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/main/restat-api-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy restat-api-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/rts/restat-bridge/${NARAYANA_CURRENT_VERSION}/restat-bridge-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/main/restat-bridge-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy restat-bridge-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/rts/restat-integration/${NARAYANA_CURRENT_VERSION}/restat-integration-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/main/restat-integration-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy restat-integration-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/rts/restat-util/${NARAYANA_CURRENT_VERSION}/restat-util-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/main/restat-util-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy restat-util-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/xts/jbossxts/${NARAYANA_CURRENT_VERSION}/jbossxts-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/xts/main/jbossxts-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy jbossxts-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/jbosstxbridge/${NARAYANA_CURRENT_VERSION}/jbosstxbridge-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/xts/main/jbosstxbridge-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy jbosstxbridge-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/${NARAYANA_CURRENT_VERSION}/narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/jts/integration/main/narayana-jts-integration-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-idlj/${NARAYANA_CURRENT_VERSION}/narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/jts/main/narayana-jts-idlj-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-coordinator/main/lra-service-base-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-service-base-${NARAYANA_CURRENT_VERSION}.jar to lra-coordinator"
+  cp ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/lra-service-base-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-service-base-${NARAYANA_CURRENT_VERSION}.jar to lra-participant"
+  cp ~/.m2/repository/org/jboss/narayana/rts/lra-coordinator-jar/${NARAYANA_CURRENT_VERSION}/lra-coordinator-jar-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-coordinator/main/lra-coordinator-jar-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-coordinator.jar"
+  cp ~/.m2/repository/org/jboss/narayana/rts/lra-client/${NARAYANA_CURRENT_VERSION}/lra-client-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/lra-client-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-client-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/rts/narayana-lra/${NARAYANA_CURRENT_VERSION}/narayana-lra-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/narayana-lra-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy narayana-lra-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/rts/lra-proxy-api/${NARAYANA_CURRENT_VERSION}/lra-proxy-api-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/lra-proxy-api-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-proxy-api-${NARAYANA_CURRENT_VERSION}.jar"
+  
+  if [ $REDUCE_SPACE = 1 ]; then
+    echo "Deleting wildfly-${WILDFLY_RELEASE_VERSION}.zip to reduce disk usage"
+    rm wildfly-${WILDFLY_RELEASE_VERSION}.zip
+  fi  
+  
+  export JBOSS_HOME=${WORKSPACE}/wildfly-${WILDFLY_RELEASE_VERSION}
+  
   init_jboss_home
 
   cd $WORKSPACE
 }
+
 function init_jboss_home {
   [ -d $JBOSS_HOME ] || fatal "missing AS - $JBOSS_HOME is not a directory"
   echo "JBOSS_HOME=$JBOSS_HOME"
@@ -218,11 +224,8 @@ function run_quickstarts {
 int_env
 functionCalled=false
 if [ $# -eq 1 ]; then
-    if [ "$1" == "clone_as" ]; then
-        clone_as
-        functionCalled=true
-    elif [ "$1" == "build_as" ]; then
-        build_as
+    if [ "$1" == "download_and_update_as" ]; then
+        download_and_update_as
         functionCalled=true
     fi
 fi
@@ -231,8 +234,7 @@ if [ $functionCalled = false ]; then
     rebase_quickstart_repo
     build_narayana
     if [ -z "$JBOSS_HOME" ]; then
-      clone_as "$@"
-      build_as "$@"
+      download_and_update_as "$@"
     fi
     run_quickstarts
 fi
