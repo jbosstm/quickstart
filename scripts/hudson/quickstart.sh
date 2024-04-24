@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function fatal {
+  comment_on_pull "Tests failed ($BUILD_URL): $1"
   echo "$1"; exit 1
 }
 
