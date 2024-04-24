@@ -95,13 +95,15 @@ If you want to see how we run the quickstarts in our continuous integration envi
 
 Change directory into the required quickstart and follow the instructions in the [README.md](README.md) file.
 
-## Running all quickstarts in a single command
+## Obtain WildFly
 
 Get a WildFly that has the expected version of Narayana in it. If you need to obtain it:
 ```
 WORKSPACE=<QUICKSTARTS_REPO_ROOT> <QUICKSTARTS_REPO_ROOT>/scripts/hudson/quickstart.sh download_and_update_as
-#You should be able to find a WildFly to use for JBOSS_HOME under <QUICKSTARTS_REPO_ROOT>/wildfly-<WILDFLY_VERSION>
 ```
+You should be able to find a WildFly to use for JBOSS_HOME under <QUICKSTARTS_REPO_ROOT>/wildfly-<WILDFLY_VERSION>.
+
+## Running all quickstarts in a single command
 
 To run the quickstarts:
 
