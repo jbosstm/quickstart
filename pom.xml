@@ -117,9 +117,6 @@
         <module>agroal</module>
         <module>ArjunaJTS</module>
         <module>transactionaldriver</module>
-        <module>jca-and-tomcat</module>
-        <!--     JBTM-3747 Disable spring quickstarts, transactionaldriver quickstarts and dbcp2-and-tomcat quickstart -->
-        <!--     <module>dbcp2-and-tomcat</module> -->
         <module>jca-and-hibernate</module>
         <module>jta-1_2-standalone</module>
         <module>spring</module>
@@ -179,7 +176,6 @@
         <version.jboss.logging>3.5.0.Final</version.jboss.logging>
         <version.jupiter>5.9.1</version.jupiter>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-        <version.narayana.tomcat.integration>1.0.0.Final</version.narayana.tomcat.integration>
         <version.nimbus.jose.jwt>7.9</version.nimbus.jose.jwt>
         <version.org.jboss.arquillian>1.7.0.Final</version.org.jboss.arquillian>
         <version.org.jboss.ironjacamar>1.5.8.Final</version.org.jboss.ironjacamar>
