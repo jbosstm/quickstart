@@ -104,6 +104,7 @@
                     <artifactId>jboss-logging-spi</artifactId>
                 </exclusion>
             </exclusions>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.se</groupId>

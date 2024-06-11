@@ -31,8 +31,14 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>artemis-journal</artifactId>
+      <scope>compile</scope>
     </dependency>
     <!-- JDBCStore dependency on h2 -->
     <dependency>
