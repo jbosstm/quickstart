@@ -44,15 +44,21 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.jboss.narayana.arjunacore</groupId>
+      <artifactId>txoj</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
     <!-- For logging -->
     <dependency>
-       <groupId>org.wildfly.core</groupId>
-       <artifactId>wildfly-logging</artifactId>
-       <version>${version.wildfly.logging}</version>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <version>${version.jboss.logging}</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <profiles>
