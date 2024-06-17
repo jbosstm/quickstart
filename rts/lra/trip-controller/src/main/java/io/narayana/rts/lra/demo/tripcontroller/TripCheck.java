@@ -37,9 +37,9 @@ class TripCheck {
         });
 
         if (isConfirm) {
-            // the hotel and only one of the flight bookings should be confirmed
-            if (confirmCount[0] != 2 || cancelCount[0] != 1) {
-                System.out.printf("TripCheck: validateBooking: the hotel and only one of the flight bookings should have been confirmed%n");
+            if (confirmCount[0] != 3) {
+                System.out.printf(
+                        "TripCheck: validateBooking: the hotel and 2 flight bookings should have been confirmed%n");
                 return false;
             }
         } else {
