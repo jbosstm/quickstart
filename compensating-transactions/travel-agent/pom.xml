@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
     <artifactId>narayana-quickstarts-compensations</artifactId>
-    <version>7.0.2.Final</version>
+    <version>7.0.3.Final-SNAPSHOT</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.compensations.travel-agent</groupId>
   <artifactId>travel-agent-all</artifactId>
