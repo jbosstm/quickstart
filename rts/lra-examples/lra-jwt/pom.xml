@@ -4,7 +4,7 @@
     <parent>
       <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
       <artifactId>lra-examples</artifactId>
-      <version>7.0.2.Final-SNAPSHOT</version>
+      <version>7.0.2.Final</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
     <artifactId>lra-jwt-examples</artifactId>
