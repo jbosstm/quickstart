@@ -48,11 +48,6 @@
         </dependency>
         <!-- IronJacamar Core Dependencies -->
         <dependency>
-            <groupId>com.github.fungal</groupId>
-            <artifactId>fungal-cli</artifactId>
-            <version>${version.com.github.fungal}</version>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${version.hibernate.validator}</version>
