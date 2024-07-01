@@ -64,32 +64,12 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-api</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
             <artifactId>ironjacamar-common-impl</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-common-spi</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-core-api</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
             <artifactId>ironjacamar-core-impl</artifactId>
-            <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.ironjacamar</groupId>
-            <artifactId>ironjacamar-deployers-common</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
         </dependency>
         <dependency>
@@ -188,36 +168,6 @@
             <groupId>org.jboss.ironjacamar</groupId>
             <artifactId>ironjacamar-embedded</artifactId>
             <version>${version.org.jboss.ironjacamar}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-api</artifactId>
-            <version>${version.org.jboss.shrinkwrap}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-            <artifactId>shrinkwrap-descriptors-api-base</artifactId>
-            <version>${version.org.jboss.shrinkwrap.descriptors}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-            <artifactId>shrinkwrap-descriptors-impl-base</artifactId>
-            <version>${version.org.jboss.shrinkwrap.descriptors}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-            <artifactId>shrinkwrap-descriptors-spi</artifactId>
-            <version>${version.org.jboss.shrinkwrap.descriptors}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-impl-base</artifactId>
-            <version>${version.org.jboss.shrinkwrap}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-spi</artifactId>
-            <version>${version.org.jboss.shrinkwrap}</version>
         </dependency>
 
         <!-- Narayana dependencies -->
