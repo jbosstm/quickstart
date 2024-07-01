@@ -159,7 +159,6 @@
         <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
 
         <version.clear.plugin>3.0.0</version.clear.plugin>
-        <version.com.github.fungal>0.11.0.Final</version.com.github.fungal>
         <version.commons-dbcp2>2.2.0</version.commons-dbcp2>
         <version.commons-pool2>2.5.0</version.commons-pool2>
         <version.compiler.plugin>3.5.1</version.compiler.plugin>
@@ -178,7 +177,7 @@
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
         <version.nimbus.jose.jwt>7.9</version.nimbus.jose.jwt>
         <version.org.jboss.arquillian>1.7.0.Final</version.org.jboss.arquillian>
-        <version.org.jboss.ironjacamar>1.5.8.Final</version.org.jboss.ironjacamar>
+        <version.org.jboss.ironjacamar>3.0.9.Final</version.org.jboss.ironjacamar>
         <version.org.jboss.jboss-transaction-spi>8.0.0.Final</version.org.jboss.jboss-transaction-spi>
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
         <version.org.jboss.logmanager-log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager-log4j-jboss-logmanager>
