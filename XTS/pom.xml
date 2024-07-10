@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -17,8 +16,8 @@
     <module>raw-xts-api-demo</module>
     <module>wsat-jta-multi_service</module>
     <module>wsat-jta-multi_hop</module>
-<!--    to enable ssl see https://issues.redhat.com/browse/JBTM-3851-->
-<!--    <module>ssl</module>-->
+    <!--    to enable ssl see https://issues.redhat.com/browse/JBTM-3851-->
+    <!--    <module>ssl</module>-->
   </modules>
 
   <properties>

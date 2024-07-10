@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -16,10 +15,10 @@
   <modules>
     <module>non-transactional_resource</module>
     <module>travel-agent</module>
-<!-- The mongodb-simple quickstart works but requires docker to run MongoDB. -->
-<!-- We have disabled it because our Jenkins infrastructure does not have docker installed. -->
-<!-- But you can run the quickstart by following the instructions in the [README](README.md). -->
-<!--     <module>mongodb-simple</module> -->
+    <!-- The mongodb-simple quickstart works but requires docker to run MongoDB. -->
+    <!-- We have disabled it because our Jenkins infrastructure does not have docker installed. -->
+    <!-- But you can run the quickstart by following the instructions in the [README](README.md). -->
+    <!--     <module>mongodb-simple</module> -->
   </modules>
 
   <properties>
