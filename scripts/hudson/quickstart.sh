@@ -144,6 +144,7 @@ function download_and_update_as {
   if [ ! -f wildfly-${WILDFLY_RELEASE_VERSION}.zip ]; then
     echo "Downloading AS"
     wget -N  https://github.com/wildfly/wildfly/releases/download/${WILDFLY_RELEASE_VERSION}/wildfly-${WILDFLY_RELEASE_VERSION}.zip
+    [ $? -eq 0 ] || fatal "Could not download https://github.com/wildfly/wildfly/releases/download/${WILDFLY_RELEASE_VERSION}/wildfly-${WILDFLY_RELEASE_VERSION}.zip"
   fi
   rm -rf wildfly-${WILDFLY_RELEASE_VERSION}
   unzip wildfly-${WILDFLY_RELEASE_VERSION}.zip
