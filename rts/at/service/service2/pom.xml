@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts</groupId>
         <artifactId>service-quickstarts</artifactId>
-        <version>6.0.3.Final</version>
+        <version>6.0.4.Final-SNAPSHOT</version>
     </parent>
     <artifactId>service2</artifactId>
     <name>REST-AT Quickstart: Participant Service using the integration API</name>
