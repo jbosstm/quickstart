@@ -6,7 +6,7 @@
     <parent>
       <groupId>org.jboss.narayana.quickstart.rts</groupId>
       <artifactId>rts-quickstarts</artifactId>
-      <version>6.0.3.Final-SNAPSHOT</version>
+      <version>6.0.3.Final</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
     <artifactId>lra-quickstarts</artifactId>
