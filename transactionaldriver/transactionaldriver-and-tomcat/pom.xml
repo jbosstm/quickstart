@@ -5,7 +5,7 @@
     <parent>
       <artifactId>transactionaldriver</artifactId>
       <groupId>io.narayana</groupId>
-      <version>6.0.4.Final</version>
+      <version>6.0.5.Final-SNAPSHOT</version>
     </parent>
     <groupId>io.narayana</groupId>
     <artifactId>transactionaldriver-and-tomcat</artifactId>
