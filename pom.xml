@@ -117,7 +117,7 @@
         <module>agroal</module>
         <module>ArjunaJTS</module>
         <module>transactionaldriver</module>
-        <module>jca-and-hibernate</module>
+<!--        <module>jca-and-hibernate</module>-->
         <module>jta-1_2-standalone</module>
         <module>spring</module>
         <module>ArjunaCore</module>
