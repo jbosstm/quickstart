@@ -8,17 +8,19 @@ mvn clean package
 
     start LRA 1
         Book hotel
-        start LRA 2
-            start LRA 3
+            start nested LRA 2
                 Book flight option 1
-            start LRA 4
+            start nested LRA 3
                 Book flight option 2
-    cancel LRA 3
-    close LRA 1 (results in the hotel and flight option 2 being confirmed)
+    cancel LRA 1 (results in the hotel and flights being cancelled)
 
 ### Before you start
 
-Obtain and unzip the Narayana distribution containing the LRA coordinator to $NARAYANA_INSTALL_LOCATION
+Make sure you export the WORKSPACE variable to the absolute path to the quickstart folder, e.g. 'export WORKSPACE=/user/myuser/quickstart/'.
+
+Make sure you have built the lra-coordinator-quarkus module, it is in $WORKSPACE/rts/lra-examples.
+
+ 
 	
 ### Make sure the LRA coordinator and various services are running 
 
