@@ -1,6 +1,6 @@
 package io.narayana.rts.lra.demo.tripcontroller;
 
-import io.narayana.lra.client.NarayanaLRAClient;
+import io.narayana.lra.client.internal.NarayanaLRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import jakarta.annotation.PostConstruct;
