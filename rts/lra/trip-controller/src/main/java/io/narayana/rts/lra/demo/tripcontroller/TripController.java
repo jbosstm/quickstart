@@ -1,7 +1,5 @@
 package io.narayana.rts.lra.demo.tripcontroller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import io.narayana.lra.client.NarayanaLRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
@@ -30,7 +28,6 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import jakarta.ws.rs.core.UriInfo;
 
-import org.eclipse.microprofile.lra.annotation.AfterLRA;
 import org.eclipse.microprofile.lra.annotation.LRAStatus;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 
@@ -40,9 +37,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 
 import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT_HEADER;
 import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_ENDED_CONTEXT_HEADER;
@@ -51,12 +46,7 @@ import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_ENDED_C
 /**
  * The quickstart scenario is:
  * <p>
- * start LRA 1
- * Book tripcontroller
- * start LRA 2
- * start LRA 3
- * Book flight option 1
- * start LRA 4
+ * start LRA 1 Book tripcontroller start LRA 2 Book flight option 1 start LRA 3
  * Book flight option 2
  */
 @RequestScoped
@@ -118,34 +108,13 @@ public class TripController {
     @PUT
     @Path("/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @LRA(LRA.Type.NOT_SUPPORTED)
     public Response confirmTrip(@PathParam("bookingId") String bookingId) throws NotFoundException, URISyntaxException, IOException {
         Booking tripBooking = service.get(bookingId);
         if (tripBooking.getStatus() == Booking.BookingStatus.CANCEL_REQUESTED)
             throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST)
                     .entity("Trying to setConfirmed a tripBooking which needs to be cancelled")
                     .build());
-
-        // THIS WOULD LIKELY BE IN A SEPARATE BUSINESS METHOD - requestCancel the first flight found (and use the second one)
-        Optional<Booking> firstFlight = Arrays.stream(tripBooking.getDetails()).filter(b -> "Flight".equals(b.getType())).findFirst();
-        firstFlight.ifPresent(Booking::requestCancel);
-        Arrays.stream(tripBooking.getDetails()).filter(Booking::isCancelPending).forEach(b -> {
-            WebTarget webTarget;
-
-            try {
-                webTarget = getFlightTarget().path(URLEncoder.encode(b.getId().toString(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                throw new BookingException(-1, "flight cancel problem: UnsupportedEncodingException" + e);
-            }
-
-            Response response = webTarget.request().delete();
-
-            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-                response.close();
-                throw new BookingException(response.getStatus(), "flight cancel problem: " + b.getId());
-            }
-
-            b.setStatus(Booking.BookingStatus.CANCELLED);
-        });
 
         service.confirmBooking(tripBooking, getHotelTarget(), getFlightTarget());
         return Response.ok(tripBooking.toJson()).build();
@@ -154,6 +123,7 @@ public class TripController {
     @DELETE
     @Path("/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @LRA(LRA.Type.NOT_SUPPORTED)
     public Response cancelTrip(@PathParam("bookingId") String bookingId) throws NotFoundException, URISyntaxException, IOException {
         Booking tripBooking = service.get(bookingId);
         if (tripBooking.getStatus() != Booking.BookingStatus.CANCEL_REQUESTED && tripBooking.getStatus() != Booking.BookingStatus.PROVISIONAL)
@@ -202,23 +172,5 @@ public class TripController {
         }
 
         return response.readEntity(Booking.class);
-    }
-
-    @PUT
-    @Path("/after")
-    @AfterLRA
-    public Response afterEnd(@HeaderParam(LRA_HTTP_ENDED_CONTEXT_HEADER) URI lraId, LRAStatus status) {
-        switch (status) {
-            case Closed:
-                // FALLTHRU
-            case Cancelled:
-                // FALLTHRU
-            case FailedToCancel:
-                // FALLTHRU
-            case FailedToClose:
-                return Response.ok().build();
-            default:
-                return Response.status(Response.Status.BAD_REQUEST).build();
-        }
     }
 }

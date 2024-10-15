@@ -27,8 +27,7 @@
   </repositories>
   <modules>
     <module>at</module>
-<!--    Disabling this quickstart, please check JBTM-3571 for more details-->
-<!--    <module>lra</module>-->
     <module>lra-examples</module>
+    <module>lra</module>
   </modules>
 </project>

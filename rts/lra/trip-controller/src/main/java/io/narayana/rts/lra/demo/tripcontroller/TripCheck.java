@@ -6,6 +6,8 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 /**
  * For testing - verify that the business data returned when ending an LRA is the same as that returned by directly
  * interrogating each sra.demo.service involved in the booking
@@ -37,14 +39,27 @@ class TripCheck {
         });
 
         if (isConfirm) {
-            // the hotel and only one of the flight bookings should be confirmed
-            if (confirmCount[0] != 2 || cancelCount[0] != 1) {
-                System.out.printf("TripCheck: validateBooking: the hotel and only one of the flight bookings should have been confirmed%n");
+            if (confirmCount[0] != 3) {
+                try {
+                    System.out.println(
+                            "TripCheck: validateBooking: the hotel and 2 flight bookings should have been confirmed, but are "
+                                    + confirmCount[0] + "\n" + booking.toJson());
+                }
+                catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
                 return false;
             }
         } else {
             if (cancelCount[0] != 3) {
-                System.out.printf("TripCheck: validateBooking: the hotel and both flight bookings should have be cancelled%n");
+                try {
+                    System.out.println(
+                            "TripCheck: validateBooking: the hotel and both flight bookings should have been cancelled, but are "
+                                    + cancelCount[0] + "\n" + booking.toJson());
+                }
+                catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
                 return false;
             }
         }
