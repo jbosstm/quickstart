@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts</groupId>
         <artifactId>restat-quickstarts</artifactId>
-        <version>7.1.0.Final</version>
+        <version>7.1.1.Final-SNAPSHOT</version>
     </parent>
     <groupId>org.jboss.narayana</groupId>
     <artifactId>rts-undertow-qs</artifactId>
