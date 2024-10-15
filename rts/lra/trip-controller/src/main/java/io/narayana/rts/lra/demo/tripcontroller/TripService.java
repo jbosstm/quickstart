@@ -37,8 +37,6 @@ public class TripService {
 
         lraClient.closeLRA(new URI(booking.getId()));
 
-        // Note that earlier version of the quicksart returned the new booking status in the response to the closeLRA call,
-        // whereas the new version does not.
         if (!TripCheck.validateBooking(booking, true, hotelTarget, flightTarget))
             throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
 
@@ -47,7 +45,7 @@ public class TripService {
     }
 
     public void cancelBooking(Booking booking, WebTarget hotelTarget, WebTarget flightTarget) throws URISyntaxException, IOException {
-        System.out.printf("Canceling booking id %s (%s) status: %s%n",
+        System.out.printf("Cancelling booking id %s (%s) status: %s%n",
                 booking.getId(), booking.getName(), booking.getStatus());
 
         lraClient.cancelLRA(new URI(booking.getId()));
