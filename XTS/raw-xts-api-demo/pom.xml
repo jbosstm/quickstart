@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.xts</groupId>
     <artifactId>narayana-quickstarts-xts</artifactId>
-    <version>7.0.3.Final-SNAPSHOT</version>
+    <version>7.1.0.Final</version>
   </parent>
   <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
   <artifactId>xts-demo-all</artifactId>
