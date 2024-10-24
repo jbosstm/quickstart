@@ -59,9 +59,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.json</artifactId>
-            <scope>provided</scope>
+          <groupId>org.eclipse.parsson</groupId>
+          <artifactId>parsson</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.ejb</groupId>
