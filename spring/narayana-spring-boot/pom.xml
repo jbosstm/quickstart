@@ -16,6 +16,10 @@
     <name>Narayana and Spring Boot Quickstart</name>
     <description>Narayana Spring Boot example</description>
 
+    <properties>
+        <modular.jdk.args>--add-opens=java.base/java.lang=ALL-UNNAMED</modular.jdk.args>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -129,20 +133,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-<!--     jdk17 profile is defined because org.springframework.cglib.core.ReflectUtils needs -->
-<!--     java.lang add-opens in order to work with JDK17  -->
-<!--     see https://docs.oracle.com/en/java/javase/16/migrate/migrating-jdk-8-later-jdk-releases.html#GUID-7BB28E4D-99B3-4078-BDC4-FC24180CE82B -->
-     <profile> 
-          <id>jdk17</id>
-          <activation>
-            <jdk>[17,)</jdk>
-          </activation>
-          <properties>
-             <modular.jdk.args>
-              --add-opens=java.base/java.lang=ALL-UNNAMED
-            </modular.jdk.args>
-          </properties>
-      </profile>
-  </profiles>
 </project>

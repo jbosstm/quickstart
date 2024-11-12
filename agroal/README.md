@@ -16,7 +16,7 @@ in the standalone application while integrated with Narayana transaction manager
 Prerequisities
 ---
 
-JDK11 required for the quickstart to run.
+JDK17 required for the quickstart to run.
 
 
 Overview
