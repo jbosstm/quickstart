@@ -15,7 +15,7 @@ This examle demostrates usage of jdbc transactional driver in a standalone appli
 Prerequisities
 ---
 
-JDK8 expected.
+JDK17 expected.
 
 
 Overview

@@ -57,10 +57,9 @@ function int_env {
       exit 0
     fi
   fi
-  # WildFly 27 requires JDK 11 (see JBTM-3582 for details)
     _jdk=`which_java`
-    if [ "$_jdk" -lt 11 ]; then
-      fatal "Narayana does not support JDKs less than 11"
+    if [ "$_jdk" -lt 17 ]; then
+      fatal "Narayana does not support JDKs less than 17"
     fi
 }
 function which_java {
