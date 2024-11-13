@@ -47,6 +47,7 @@ function int_env {
   REDUCE_SPACE=${REDUCE_SPACE:-0}
 
   [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.1.1.Final-SNAPSHOT" 
+  [ $LRA_CURRENT_VERSION ] || export LRA_CURRENT_VERSION="0.0.10.Final-SNAPSHOT" 
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
   if [ "$PULL_NUMBER" != "" ]
@@ -137,8 +138,40 @@ function download_and_update_as {
   
   cd $WORKSPACE
   
+  # INITIALIZE LRA ENV
+  export MAVEN_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
+
+  LRA_BRANCH=main
+  #rm -rf ~/.m2/repository/
+  rm -rf lra
+  git clone https://github.com/${NARAYANA_REPO}/lra.git -b ${LRA_BRANCH}
+  echo "Checking if need Narayana LRA PR"
+  if [ -n "$NY_BRANCH" ]; then
+    echo "Building NY PR"
+    [ $? = 0 ] || fatal "git clone https://github.com/${NARAYANA_REPO}/lra.git failed"
+    cd lra
+    git fetch origin +refs/pull/*/head:refs/remotes/jbosstm/pull/*/head
+    [ $? = 0 ] || fatal "git fetch of pulls failed"
+    git checkout $NY_BRANCH
+    [ $? = 0 ] || fatal "git fetch of pull branch failed"
+    cd ../
+  fi
+  
+  if [ $? != 0 ]; then
+    comment_on_pull "Checkout failed: $BUILD_URL";
+    exit -1
+  fi
+  cd lra
+  ./build.sh clean install -B -DskipTests
+
+  if [ $? != 0 ]; then
+    comment_on_pull "Narayana LRA build failed: $BUILD_URL";
+    exit -1
+  fi
+  
+  
   # Check if the needed files are available in the m2 cache
-  filesToCheck=(~/.m2/repository/org/jboss/narayana/rts/restat-api/${NARAYANA_CURRENT_VERSION}/restat-api-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-bridge/${NARAYANA_CURRENT_VERSION}/restat-bridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-integration/${NARAYANA_CURRENT_VERSION}/restat-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-util/${NARAYANA_CURRENT_VERSION}/restat-util-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/xts/jbossxts/${NARAYANA_CURRENT_VERSION}/jbossxts-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jbosstxbridge/${NARAYANA_CURRENT_VERSION}/jbosstxbridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/${NARAYANA_CURRENT_VERSION}/narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-idlj/${NARAYANA_CURRENT_VERSION}/narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-coordinator-jar/${NARAYANA_CURRENT_VERSION}/lra-coordinator-jar-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-client/${NARAYANA_CURRENT_VERSION}/lra-client-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/narayana-lra/${NARAYANA_CURRENT_VERSION}/narayana-lra-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/lra-proxy-api/${NARAYANA_CURRENT_VERSION}/lra-proxy-api-${NARAYANA_CURRENT_VERSION}.jar)
+  filesToCheck=(~/.m2/repository/org/jboss/narayana/rts/restat-api/${NARAYANA_CURRENT_VERSION}/restat-api-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-bridge/${NARAYANA_CURRENT_VERSION}/restat-bridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-integration/${NARAYANA_CURRENT_VERSION}/restat-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-util/${NARAYANA_CURRENT_VERSION}/restat-util-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/xts/jbossxts/${NARAYANA_CURRENT_VERSION}/jbossxts-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jbosstxbridge/${NARAYANA_CURRENT_VERSION}/jbosstxbridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/${NARAYANA_CURRENT_VERSION}/narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-idlj/${NARAYANA_CURRENT_VERSION}/narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-coordinator-jar/${LRA_CURRENT_VERSION}/lra-coordinator-jar-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-client/${LRA_CURRENT_VERSION}/lra-client-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/narayana-lra/${LRA_CURRENT_VERSION}/narayana-lra-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-proxy-api/${LRA_CURRENT_VERSION}/lra-proxy-api-${LRA_CURRENT_VERSION}.jar)
   goOffline=false
   for fileToCheck in "${filesToCheck[@]}"; do
     echo Checking $fileToCheck
@@ -171,18 +204,18 @@ function download_and_update_as {
   [ $? -eq 0 ] || fatal "Could not copy narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar"
   cp ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-idlj/${NARAYANA_CURRENT_VERSION}/narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/jts/main/narayana-jts-idlj-*.jar
   [ $? -eq 0 ] || fatal "Could not copy narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar"
-  cp ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-coordinator/main/lra-service-base-*.jar
-  [ $? -eq 0 ] || fatal "Could not copy lra-service-base-${NARAYANA_CURRENT_VERSION}.jar to lra-coordinator"
-  cp ~/.m2/repository/org/jboss/narayana/rts/lra-service-base/${NARAYANA_CURRENT_VERSION}/lra-service-base-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/lra-service-base-*.jar
-  [ $? -eq 0 ] || fatal "Could not copy lra-service-base-${NARAYANA_CURRENT_VERSION}.jar to lra-participant"
-  cp ~/.m2/repository/org/jboss/narayana/rts/lra-coordinator-jar/${NARAYANA_CURRENT_VERSION}/lra-coordinator-jar-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-coordinator/main/lra-coordinator-jar-*.jar
+  cp ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/lra/lra-coordinator/main/lra-service-base-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-service-base-${LRA_CURRENT_VERSION}.jar to lra-coordinator"
+  cp ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/lra/lra-participant/main/lra-service-base-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-service-base-${LRA_CURRENT_VERSION}.jar to lra-participant"
+  cp ~/.m2/repository/org/jboss/narayana/lra/lra-coordinator-jar/${LRA_CURRENT_VERSION}/lra-coordinator-jar-${LRA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/lra/lra-coordinator/main/lra-coordinator-jar-*.jar
   [ $? -eq 0 ] || fatal "Could not copy lra-coordinator.jar"
-  cp ~/.m2/repository/org/jboss/narayana/rts/lra-client/${NARAYANA_CURRENT_VERSION}/lra-client-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/lra-client-*.jar
-  [ $? -eq 0 ] || fatal "Could not copy lra-client-${NARAYANA_CURRENT_VERSION}.jar"
-  cp ~/.m2/repository/org/jboss/narayana/rts/narayana-lra/${NARAYANA_CURRENT_VERSION}/narayana-lra-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/narayana-lra-*.jar
-  [ $? -eq 0 ] || fatal "Could not copy narayana-lra-${NARAYANA_CURRENT_VERSION}.jar"
-  cp ~/.m2/repository/org/jboss/narayana/rts/lra-proxy-api/${NARAYANA_CURRENT_VERSION}/lra-proxy-api-${NARAYANA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/rts/lra-participant/main/lra-proxy-api-*.jar
-  [ $? -eq 0 ] || fatal "Could not copy lra-proxy-api-${NARAYANA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/lra/lra-client/${LRA_CURRENT_VERSION}/lra-client-${LRA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/lra/lra-participant/main/lra-client-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-client-${LRA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/lra/narayana-lra/${LRA_CURRENT_VERSION}/narayana-lra-${LRA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/lra/lra-participant/main/narayana-lra-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy narayana-lra-${LRA_CURRENT_VERSION}.jar"
+  cp ~/.m2/repository/org/jboss/narayana/lra/lra-proxy-api/${LRA_CURRENT_VERSION}/lra-proxy-api-${LRA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/lra/lra-participant/main/lra-proxy-api-*.jar
+  [ $? -eq 0 ] || fatal "Could not copy lra-proxy-api-${LRA_CURRENT_VERSION}.jar"
   
   if [ $REDUCE_SPACE = 1 ]; then
     echo "Deleting wildfly-${WILDFLY_RELEASE_VERSION}.zip to reduce disk usage"
