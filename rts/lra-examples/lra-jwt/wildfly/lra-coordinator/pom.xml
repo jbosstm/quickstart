@@ -16,9 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.narayana.rts</groupId>
+            <groupId>org.jboss.narayana.lra</groupId>
             <artifactId>lra-coordinator-jar</artifactId>
-            <version>${project.version}</version>
+            <version>${version.org.jboss.narayana.lra}</version>
         </dependency>
     </dependencies>
 
