@@ -163,6 +163,7 @@ function download_and_update_as {
   fi
   cd lra
   ./build.sh clean install -B -DskipTests
+  cd ..
 
   if [ $? != 0 ]; then
     comment_on_pull "Narayana LRA build failed: $BUILD_URL";
