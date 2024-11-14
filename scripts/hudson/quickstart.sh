@@ -133,11 +133,8 @@ function build_narayana {
   fi
 }
 
-function download_and_update_as {
-  [ ! -z "${WILDFLY_RELEASE_VERSION}" ] || fatal "No WILDFLY_RELEASE_VERSION specified"
-  
+function build_narayana_lra {
   cd $WORKSPACE
-  
   # INITIALIZE LRA ENV
   export MAVEN_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
 
@@ -156,7 +153,7 @@ function download_and_update_as {
     [ $? = 0 ] || fatal "git fetch of pull branch failed"
     cd ../
   fi
-  
+
   if [ $? != 0 ]; then
     comment_on_pull "Checkout failed: $BUILD_URL";
     exit -1
@@ -169,7 +166,12 @@ function download_and_update_as {
     comment_on_pull "Narayana LRA build failed: $BUILD_URL";
     exit -1
   fi
+}
+
+function download_and_update_as {
+  [ ! -z "${WILDFLY_RELEASE_VERSION}" ] || fatal "No WILDFLY_RELEASE_VERSION specified"
   
+  cd $WORKSPACE
   
   # Check if the needed files are available in the m2 cache
   filesToCheck=(~/.m2/repository/org/jboss/narayana/rts/restat-api/${NARAYANA_CURRENT_VERSION}/restat-api-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-bridge/${NARAYANA_CURRENT_VERSION}/restat-bridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-integration/${NARAYANA_CURRENT_VERSION}/restat-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-util/${NARAYANA_CURRENT_VERSION}/restat-util-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/xts/jbossxts/${NARAYANA_CURRENT_VERSION}/jbossxts-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jbosstxbridge/${NARAYANA_CURRENT_VERSION}/jbosstxbridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/${NARAYANA_CURRENT_VERSION}/narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-idlj/${NARAYANA_CURRENT_VERSION}/narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-coordinator-jar/${LRA_CURRENT_VERSION}/lra-coordinator-jar-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-client/${LRA_CURRENT_VERSION}/lra-client-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/narayana-lra/${LRA_CURRENT_VERSION}/narayana-lra-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-proxy-api/${LRA_CURRENT_VERSION}/lra-proxy-api-${LRA_CURRENT_VERSION}.jar)
@@ -267,6 +269,7 @@ if [ $functionCalled = false ]; then
     comment_on_pull "Started testing this pull request: $BUILD_URL"
     rebase_quickstart_repo
     build_narayana
+    build_narayana_lra
     if [ -z "$JBOSS_HOME" ]; then
       download_and_update_as "$@"
     fi
