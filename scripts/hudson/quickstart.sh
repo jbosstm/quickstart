@@ -47,7 +47,7 @@ function int_env {
   REDUCE_SPACE=${REDUCE_SPACE:-0}
 
   [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.1.1.Final-SNAPSHOT" 
-  [ $LRA_CURRENT_VERSION ] || export LRA_CURRENT_VERSION="0.0.10.Final-SNAPSHOT" 
+  [ $LRA_CURRENT_VERSION ] || export LRA_CURRENT_VERSION="0.0.11.Final-SNAPSHOT"
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
   if [ "$PULL_NUMBER" != "" ]
