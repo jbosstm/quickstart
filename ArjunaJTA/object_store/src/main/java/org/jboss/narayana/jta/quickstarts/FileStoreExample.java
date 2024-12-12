@@ -16,6 +16,7 @@ public class FileStoreExample {
         UserTransaction utx = com.arjuna.ats.jta.UserTransaction.userTransaction();
 
         utx.begin();
+        Util.enlistResources();
         utx.commit();
 
         if (!new File(storeDir).exists())

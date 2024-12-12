@@ -19,20 +19,8 @@ public class JDBCStoreExample {
 
         // start a transaction, enlist some resources with it and then commit it
         utx.begin();
-        enlistResources();
+        Util.enlistResources();
         utx.commit();
-    }
-
-    public static void enlistResources() throws SystemException, RollbackException {
-        // resource enlistment is performed via the TransactionManager API
-        TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-        // create two resources, although they won't actually do anything, they will force a log record to be created
-        DummyXAResource xar1 = new DummyXAResource();
-        DummyXAResource xar2 = new DummyXAResource();
-
-        // and enlist them with the transaction
-        tm.getTransaction().enlistResource(xar1);
-        tm.getTransaction().enlistResource(xar2);
     }
 
     private static void setupStore(boolean usePropertiesFile) {
