@@ -18,6 +18,7 @@ public class HornetqStoreExample {
         UserTransaction utx = com.arjuna.ats.jta.UserTransaction.userTransaction();
 
         utx.begin();
+        Util.enlistResources();
         utx.commit();
 
 		shutdownStore();
