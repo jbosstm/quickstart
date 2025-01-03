@@ -89,8 +89,9 @@
              starting LRAs and for enlisting resources in LRAs
         -->
         <dependency>
-            <groupId>org.jboss.narayana.rts</groupId>
+            <groupId>org.jboss.narayana.lra</groupId>
             <artifactId>narayana-lra</artifactId>
+            <version>${version.org.jboss.narayana.lra}</version>
         </dependency>
 
         <!-- MP LRA CDI support defines annotations for controlling the lifecycle
@@ -110,8 +111,9 @@
             <artifactId>quarkus-rest-client-jackson</artifactId>
         </dependency>
         <dependency>
-          <groupId>org.jboss.narayana.rts</groupId>
+          <groupId>org.jboss.narayana.lra</groupId>
           <artifactId>lra-service-base</artifactId>
+          <version>${version.org.jboss.narayana.lra}</version>
         </dependency>
         
         <dependency>

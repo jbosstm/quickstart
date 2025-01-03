@@ -45,15 +45,17 @@
     <dependencies>
         <!-- include an embedded LRA coordinator -->
         <dependency>
-            <groupId>org.jboss.narayana.rts</groupId>
+            <groupId>org.jboss.narayana.lra</groupId>
             <artifactId>lra-coordinator-jar</artifactId>
+            <version>${version.org.jboss.narayana.lra}</version>
         </dependency>
         <!-- MP LRA CDI support relies on JAX-RS filters for
              starting LRAs and for enlisting resources in LRAs
         -->
         <dependency>
-            <groupId>org.jboss.narayana.rts</groupId>
+            <groupId>org.jboss.narayana.lra</groupId>
             <artifactId>narayana-lra</artifactId>
+            <version>${version.org.jboss.narayana.lra}</version>
         </dependency>
 
 
@@ -65,8 +67,9 @@
             <artifactId>microprofile-lra-api</artifactId>
         </dependency>
         <dependency>
-          <groupId>org.jboss.narayana.rts</groupId>
+          <groupId>org.jboss.narayana.lra</groupId>
           <artifactId>lra-service-base</artifactId>
+          <version>${version.org.jboss.narayana.lra}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
