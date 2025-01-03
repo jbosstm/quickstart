@@ -47,7 +47,6 @@ function int_env {
   REDUCE_SPACE=${REDUCE_SPACE:-0}
 
   [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.1.1.Final-SNAPSHOT" 
-  [ $LRA_CURRENT_VERSION ] || export LRA_CURRENT_VERSION="0.0.11.Final-SNAPSHOT"
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
   if [ "$PULL_NUMBER" != "" ]
@@ -160,6 +159,7 @@ function build_narayana_lra {
   fi
   cd lra
   ./build.sh clean install -B -DskipTests
+  [ $LRA_CURRENT_VERSION ] || export LRA_CURRENT_VERSION=`grep "<version>" pom.xml | head -n 2 | tail -n 1 | sed "s/ *<version>//" | sed "s#</version>##"`
   cd ..
 
   if [ $? != 0 ]; then
@@ -247,7 +247,7 @@ function init_jboss_home {
 function run_quickstarts {
   cd $WORKSPACE
   echo Running quickstarts
-  ./build.sh -B clean install -fae -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION
+  ./build.sh -B clean install -fae -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION -Dversion.org.jboss.narayana.lra=$LRA_CURRENT_VERSION
 
   if [ $? != 0 ]; then
     comment_on_pull "Pull failed: $BUILD_URL";
