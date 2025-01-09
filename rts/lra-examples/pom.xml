@@ -49,6 +49,7 @@
     <module>coordinator-quarkus</module>
     <module>lra-coordinator</module>
     <module>cdi-participant</module>
+    <module>participant-availability</module>
     <module>cdi-embedded</module>
     <module>lra-jwt</module>
   </modules>
