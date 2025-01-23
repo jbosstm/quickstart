@@ -43,10 +43,10 @@ function int_env {
   export -f timeout_adjust || echo "Function timeout_adjust won't be used in the subshells as it can't be exported"
   NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
   NARAYANA_BRANCH="${NARAYANA_BRANCH:-main}"
-  QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.1.1.Final-SNAPSHOT}
+  QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.2.0.Final}
   REDUCE_SPACE=${REDUCE_SPACE:-0}
 
-  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.1.1.Final-SNAPSHOT" 
+  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.2.0.Final" 
 
   PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
   if [ "$PULL_NUMBER" != "" ]

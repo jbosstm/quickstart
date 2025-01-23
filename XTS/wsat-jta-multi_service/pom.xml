@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.xts</groupId>
     <artifactId>narayana-quickstarts-xts</artifactId>
-    <version>7.1.1.Final-SNAPSHOT</version>
+    <version>7.2.0.Final</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.txbridge.wsat-jta-multi_service</groupId>
   <artifactId>wsat-jta-multi_service-all</artifactId>

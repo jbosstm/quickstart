@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstart.compensatingtransactions</groupId>
     <artifactId>narayana-quickstarts-compensations</artifactId>
-    <version>7.1.1.Final-SNAPSHOT</version>
+    <version>7.2.0.Final</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.xts.non-transactional-resource</groupId>
   <artifactId>non-transactional-resource-all</artifactId>
