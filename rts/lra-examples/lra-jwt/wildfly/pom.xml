@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
         <artifactId>lra-jwt-examples</artifactId>
-        <version>7.1.1.Final-SNAPSHOT</version>
+        <version>7.1.1.Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
