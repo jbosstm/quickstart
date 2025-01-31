@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.narayana.quickstart</groupId>
     <artifactId>narayana-quickstarts-all</artifactId>
-    <version>7.1.1.Final</version>
+    <version>7.1.2.Final-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://www.jboss.org/jbosstm/</url>
     <name>${project.artifactId}</name>

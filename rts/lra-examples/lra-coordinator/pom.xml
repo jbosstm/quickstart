@@ -6,7 +6,7 @@
     <parent>
       <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
       <artifactId>lra-examples</artifactId>
-      <version>7.1.1.Final</version>
+      <version>7.1.2.Final-SNAPSHOT</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
     <artifactId>examples-microprofile-lra-coordinator</artifactId>
