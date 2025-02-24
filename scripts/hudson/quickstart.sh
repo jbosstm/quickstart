@@ -102,10 +102,10 @@ function build_narayana {
   #rm -rf ~/.m2/repository/
   rm -rf narayana
   git clone https://github.com/${NARAYANA_REPO}/narayana.git -b ${NARAYANA_BRANCH}
+  [ $? = 0 ] || fatal "git clone https://github.com/${NARAYANA_REPO}/narayana.git failed"
   echo "Checking if need Narayana PR"
   if [ -n "$NY_BRANCH" ]; then
     echo "Building NY PR"
-    [ $? = 0 ] || fatal "git clone https://github.com/${NARAYANA_REPO}/narayana.git failed"
     cd narayana
     git fetch origin +refs/pull/*/head:refs/remotes/jbosstm/pull/*/head
     [ $? = 0 ] || fatal "git fetch of pulls failed"
@@ -141,10 +141,10 @@ function build_narayana_lra {
   #rm -rf ~/.m2/repository/
   rm -rf lra
   git clone https://github.com/${NARAYANA_REPO}/lra.git -b ${LRA_BRANCH}
+  [ $? = 0 ] || fatal "git clone https://github.com/${NARAYANA_REPO}/lra.git failed"
   echo "Checking if need Narayana LRA PR"
   if [ -n "$NY_BRANCH" ]; then
     echo "Building NY PR"
-    [ $? = 0 ] || fatal "git clone https://github.com/${NARAYANA_REPO}/lra.git failed"
     cd lra
     git fetch origin +refs/pull/*/head:refs/remotes/jbosstm/pull/*/head
     [ $? = 0 ] || fatal "git fetch of pulls failed"
