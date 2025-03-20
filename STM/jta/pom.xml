@@ -6,7 +6,7 @@
     <parent>
       <artifactId>stm-all</artifactId>
       <groupId>org.jboss.narayana.quickstart.stm</groupId>
-      <version>6.0.5.Final</version>
+      <version>6.0.6.Final-SNAPSHOT</version>
     </parent>
 	<groupId>org.jboss.narayana.quickstart.stm</groupId>
 	<artifactId>stm-jta</artifactId>

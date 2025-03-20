@@ -8,7 +8,7 @@
     <parent>
         <artifactId>narayana-quickstarts-all</artifactId>
         <groupId>org.jboss.narayana.quickstart</groupId>
-        <version>6.0.5.Final</version>
+        <version>6.0.6.Final-SNAPSHOT</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.docker</groupId>
     <artifactId>jts-docker</artifactId>
