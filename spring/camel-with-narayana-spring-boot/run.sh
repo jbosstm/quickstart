@@ -13,7 +13,7 @@ function check_application_alive() {
 }
 
 echo -n "Application Starting ... "
-java -jar target/camel-with-narayana-spring-boot-6.0.5.Final-SNAPSHOT.jar 1>./target/test.log 2>&1 &
+java -jar target/camel-with-narayana-spring-boot-6.0.5.Final.jar 1>./target/test.log 2>&1 &
 check_application_alive
 if [ ! -z "$STATUS" ]; then
     echo "Done"
@@ -34,7 +34,7 @@ if [ ! -z "$STATUS" ]; then
 
     # Restart application
     echo -n "Application Restarting ... "
-    java -Drecover=true -jar target/camel-with-narayana-spring-boot-6.0.5.Final-SNAPSHOT.jar 1>./target/test.log 2>&1 &
+    java -Drecover=true -jar target/camel-with-narayana-spring-boot-6.0.5.Final.jar 1>./target/test.log 2>&1 &
     check_application_alive
 
     if [ ! -z "$STATUS" ]; then

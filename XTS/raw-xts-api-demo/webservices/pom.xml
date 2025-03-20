@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.jboss.narayana.quickstarts.xts.demo</groupId>
     <artifactId>xts-demo-all</artifactId>
-    <version>6.0.5.Final-SNAPSHOT</version>
+    <version>6.0.5.Final</version>
   </parent>
   <artifactId>xts-demo-webservices</artifactId>
   <packaging>war</packaging>
