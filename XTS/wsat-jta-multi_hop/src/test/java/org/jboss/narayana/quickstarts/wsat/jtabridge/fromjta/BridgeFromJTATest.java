@@ -66,7 +66,6 @@ public class BridgeFromJTATest {
 
         archive.delete(ArchivePaths.create("META-INF/MANIFEST.MF"));
         archive.setManifest(new StringAsset(ManifestMF));
-
         return archive;
     }
 
@@ -139,8 +138,8 @@ public class BridgeFromJTATest {
         ut.commit();
 
         System.out.println("[CLIENT] Asserting that the counter increments were *not* successful");
-        Assert.assertEquals(0, counter1);
-        Assert.assertEquals(0, counter2);
+        Assert.assertEquals("FirstCounter", 0, counter1);
+        Assert.assertEquals("SecondCounter", 0, counter2);
     }
 
     /**

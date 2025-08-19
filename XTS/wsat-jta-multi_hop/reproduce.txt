@@ -1,0 +1,14 @@
+unset JBOSS_HOME
+PRJ_DIR=$HOME/tmp_wsat
+mkdir $PRJ_DIR
+DOWNLOADS=$HOME/Downloads
+unzip -d $PRJ_DIR $DOWNLOADS/jboss-eap-8.0.0.zip 
+mv  $PRJ_DIR/jboss-eap-8.0 $PRJ_DIR/eap8-1
+unzip -d $PRJ_DIR $DOWNLOADS/jboss-eap-8.0.0.zip 
+mv  $PRJ_DIR/jboss-eap-8.0 $PRJ_DIR/eap8-2
+cp standalone.xml $PRJ_DIR/eap8-2/standalone/configuration/
+cp bridge.war $PRJ_DIR/eap8-2/standalone/deployments/
+$PRJ_DIR/eap8-2/bin/standalone.sh  -Djboss.socket.binding.port-offset=200 &
+cp $PRJ_DIR/eap8-1/docs/examples/configs/standalone-xts.xml $PRJ_DIR/eap8-1/standalone/configuration/
+export JBOSS_HOME=$PRJ_DIR/eap8-1
+mvn test -Dtest=BridgeFromJTATest#testClientDrivenRollback && curl -s http://localhost:10190/metrics | grep  ExampleDS | grep jboss_datasources_pool_active_count

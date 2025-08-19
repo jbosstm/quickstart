@@ -48,6 +48,9 @@ public interface FirstServiceAT {
     @WebMethod
     public void incrementCounter(int numSeats);
 
+    @WebMethod
+    void incrementCounterAndRollBack(int numSeats);
+
     /**
      * obtain the number of existing bookings
      * 
@@ -69,5 +72,4 @@ public interface FirstServiceAT {
      */
     @WebMethod
     public void resetCounter();
-
 }

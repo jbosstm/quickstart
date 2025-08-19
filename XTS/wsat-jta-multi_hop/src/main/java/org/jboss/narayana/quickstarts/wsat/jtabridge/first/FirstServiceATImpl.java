@@ -20,19 +20,25 @@
  */
 package org.jboss.narayana.quickstarts.wsat.jtabridge.first;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import jakarta.ejb.EJBContext;
+import jakarta.ejb.Remote;
+import jakarta.ejb.Stateless;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.UserTransaction;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.jaxws.FirstServiceAT;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.SecondClient;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.jaxws.SecondServiceAT;
 
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 /**
  * @author paul.robinson@redhat.com, 2012-10-29
@@ -40,14 +46,18 @@ import javax.persistence.PersistenceContext;
 @Stateless
 @Remote(FirstServiceAT.class)
 @WebService(serviceName = "FirstServiceATService", portName = "FirstServiceAT", name = "FirstServiceAT", targetNamespace = "http://www.jboss.org/narayana/quickstarts/wsat/simple/first")
-@SOAPBinding(style = SOAPBinding.Style.RPC)
-@TransactionAttribute(TransactionAttributeType.MANDATORY) // default is REQUIRED
+//@SOAPBinding(style = SOAPBinding.Style.RPC)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY) // default is REQUIRED
+@TransactionAttribute(TransactionAttributeType.REQUIRED) // default is REQUIRED
 public class FirstServiceATImpl implements FirstServiceAT {
 
     private static final int ENTITY_ID = 1;
 
     @PersistenceContext
     protected EntityManager em;
+
+    @Resource
+    private EJBContext context;
 
     //Clien stub for the second WS, this will be invoked in a subordinate WS-AT transaction.
     private SecondServiceAT secondClient;
@@ -70,6 +80,23 @@ public class FirstServiceATImpl implements FirstServiceAT {
         System.out.println("[SERVICE_1] Calling incrementCounter on the WS secondClient stub. The registered interceptor will bridge rom JTA to WS-AT");
         getSecondClient().incrementCounter(num);
 
+    }
+
+    @WebMethod
+    public void incrementCounterAndRollBack(int num) {
+
+        System.out.println("[SERVICE_1] First service invoked to increment the counter by '" + num + "'");
+
+        System.out.println("[SERVICE_1] Using the JPA Entity Manager to update the counter within a JTA transaction");
+        FirstCounterEntity entityFirst = lookupCounterEntity();
+        entityFirst.incrementCounter(num);
+        em.merge(entityFirst);
+
+        System.out.println("[SERVICE_1] Calling incrementCounter on the WS secondClient stub. The registered interceptor will bridge rom JTA to WS-AT");
+        getSecondClient().incrementCounter(num);
+
+        System.out.println("[SERVICE_1] rolling back!");
+        context.setRollbackOnly();
     }
 
     @WebMethod
@@ -96,6 +123,11 @@ public class FirstServiceATImpl implements FirstServiceAT {
         em.merge(entityFirst);
 
         getSecondClient().resetCounter();
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        System.out.println("postConstruct called");
     }
 
     private FirstCounterEntity lookupCounterEntity() {
