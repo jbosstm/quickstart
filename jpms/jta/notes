@@ -1,0 +1,5 @@
+
+top level pom
+compiler source to 17 and must upgrade maven-compiler-plugin eg to 3.14.0 
+
+after change any module must run mvn clean install
