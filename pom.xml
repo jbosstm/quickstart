@@ -121,6 +121,7 @@
         <module>spring</module>
         <module>ArjunaCore</module>
         <module>ArjunaJTA</module>
+        <module>jpms</module>
         <module>atsintegration</module>
         <module>compensating-transactions</module>
         <module>rts</module>
