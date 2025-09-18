@@ -11,7 +11,7 @@
     <version>7.2.3.Final-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.jboss.narayana.quickstart.rts.jpms</groupId>
+  <groupId>org.jboss.narayana.quickstart.jpms</groupId>
   <artifactId>jpms-quickstarts</artifactId>
   <version>7.2.3.Final-SNAPSHOT</version>
   <name>JPMS Quickstarts</name>
