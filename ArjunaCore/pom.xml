@@ -5,7 +5,7 @@
   <parent>
     <artifactId>narayana-quickstarts-all</artifactId>
     <groupId>org.jboss.narayana.quickstart</groupId>
-    <version>7.3.0.Final</version>
+    <version>7.3.1.Final-SNAPSHOT</version>
   </parent>
   <groupId>org.jboss.narayana.quickstart.arjunacore</groupId>
   <artifactId>narayana-quickstarts-core</artifactId>
