@@ -1,8 +1,9 @@
 package org.jboss.narayana.quickstart.spring;
 
+import static org.junit.Assert.assertEquals;
+
 import org.jboss.narayana.quickstart.spring.config.DatabaseConfig;
 import org.jboss.narayana.quickstart.spring.config.DummyXAConfig;
-import org.jboss.narayana.quickstart.spring.config.TransactionConfig;
 import org.jboss.narayana.quickstart.spring.xa.DummyXAResource;
 import org.junit.After;
 import org.junit.Before;
@@ -13,14 +14,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import dev.snowdrop.boot.narayana.autoconfigure.NarayanaAutoConfiguration;
 import jakarta.annotation.Resource;
 import jakarta.transaction.TransactionManager;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class,
-        classes = {TransactionConfig.class, DatabaseConfig.class, DummyXAConfig.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { NarayanaAutoConfiguration.class,
+        DatabaseConfig.class, DummyXAConfig.class})
 public class TestJTA {
     @Resource
     private TransactionManager tm;
