@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.TransactionManager;
 import javax.transaction.xa.XAResource;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -64,11 +67,13 @@ public class QuickstartService {
      * @throws Exception
      */
     public void demonstrateRecovery() throws Exception {
-        List<Entry> entriesBefore = entriesService.getAll();
+        Iterable<Entry> entriesBefore = entriesService.getEntries();
         System.out.println("Entries at the start: " + entriesBefore);
         recoveryManagerService.addXAResourceRecovery(new DummyXAResourceRecovery());
-        waitForRecovery(entriesBefore);
-        System.out.println("Entries at the end: " + entriesService.getAll());
+        List<Entry> target = new ArrayList<>();
+        entriesBefore.forEach(target::add);
+        waitForRecovery(target);
+        System.out.println("Entries at the end: " + entriesService.getEntries());
     }
 
     /**
@@ -80,17 +85,17 @@ public class QuickstartService {
      * @throws Exception
      */
     private void executeDemonstration(String entry, TransactionTerminator terminator, XAResource xaResource) throws Exception {
-        System.out.println("Entries at the start: " + entriesService.getAll());
+        System.out.println("Entries at the start: " + entriesService.getEntries());
 
         transactionManager.begin();
         if (xaResource != null) {
             transactionManager.getTransaction().enlistResource(xaResource);
         }
-        entriesService.create(entry);
-        messagesService.send("Created entry '" + entry + "'");
+        entriesService.createEntry(entry);
+        messagesService.sendMessage("Created entry '" + entry + "'");
         terminator.terminate();
 
-        System.out.println("Entries at the end: " + entriesService.getAll());
+        System.out.println("Entries at the end: " + entriesService.getEntries());
     }
 
     /**
@@ -104,7 +109,7 @@ public class QuickstartService {
 
         for (int i = 0; i < 3 && !isComplete; i++) {
             sleep(5000);
-            isComplete = entriesBefore.size() < entriesService.getAll().size();
+            isComplete = entriesBefore.size() < ((Collection<?>) entriesService.getEntries()).size();
         }
 
         if (isComplete) {

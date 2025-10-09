@@ -2,11 +2,10 @@ package org.jboss.narayana.quickstart.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.jta.narayana.DbcpXADataSourceWrapper;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 
-import java.io.Closeable;
+import dev.snowdrop.boot.narayana.autoconfigure.NarayanaAutoConfiguration;
 
 /**
  * Main Spring Boot application class.
@@ -14,7 +13,7 @@ import java.io.Closeable;
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
 @SpringBootApplication
-@Import(DbcpXADataSourceWrapper.class)
+@Import(NarayanaAutoConfiguration.class)
 public class QuickstartApplication {
 
     public static final Object TO_WAIT = new Object();
@@ -26,7 +25,7 @@ public class QuickstartApplication {
             throw new IllegalArgumentException("Invalid arguments provided. See README.md for usage examples");
         }
 
-        ApplicationContext context = SpringApplication.run(QuickstartApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(QuickstartApplication.class, args);
         QuickstartService quickstartService = context.getBean(QuickstartService.class);
 
         switch (CompleteAction.valueOf(args[0].toUpperCase())) {
@@ -45,12 +44,18 @@ public class QuickstartApplication {
             case RECOVERY:
                 quickstartService.demonstrateRecovery();
         }
-
-        ((Closeable) context).close();
+        context.close();
     }
 
     public enum CompleteAction {
-        COMMIT, ROLLBACK, CRASH, RECOVERY
+
+        COMMIT("COMMIT"), ROLLBACK("ROLLBACK"), CRASH("CRASH"), RECOVERY("RECOVERY");
+
+        public final String label;
+
+        private CompleteAction(String label) {
+            this.label = label;
+        }
     }
 
 }
