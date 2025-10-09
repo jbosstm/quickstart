@@ -20,7 +20,7 @@
     <modules>
 <!--     JBTM-3747  Disable spring quickstarts-->
 <!--     jakarta TODO: wait narayana jta to be migrated -->
-<!--         <module>jta</module> -->
+	         <module>jta</module>
 <!--         <module>narayana-spring-boot</module> -->
 <!--         <module>stock-market-with-narayana-spring-boot</module> -->
 <!--         <module>camel-with-narayana-spring-boot</module> -->
