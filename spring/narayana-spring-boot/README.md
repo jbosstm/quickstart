@@ -25,17 +25,15 @@ Usage
 
 In your terminal navigate to the quickstart directory and execute one of the following scenarios:
 
-* Commit demonstration
+* Commit and rollback demonstration
 
-    mvn clean spring-boot:run -Drun.arguments="commit,Test Value"
+    mvn clean spring-boot:run -Dspring-boot.run.arguments="commit Test-Value"
     
-* Rollback demonstration
-
-    mvn clean spring-boot:run -Drun.arguments="rollback,Test Value" 
+    mvn clean spring-boot:run -Dspring-boot.run.arguments="rollback Test-Value" 
     
 * System crash and recovery demonstration
 
-    mvn clean spring-boot:run -Drun.arguments="crash,Test Value"
+    mvn clean spring-boot:run -Dspring-boot.run.arguments="crash Test-Value"
     
-    mvn spring-boot:run -Drun.arguments="recovery"
+    mvn spring-boot:run -Dspring-boot.run.arguments="recovery"
 

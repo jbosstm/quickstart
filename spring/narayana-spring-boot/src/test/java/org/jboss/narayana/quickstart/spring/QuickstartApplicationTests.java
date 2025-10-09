@@ -1,39 +1,56 @@
 package org.jboss.narayana.quickstart.spring;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.springframework.boot.test.rule.OutputCapture;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import dev.snowdrop.boot.narayana.autoconfigure.NarayanaAutoConfiguration;
+
 /**
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
+@ExtendWith(OutputCaptureExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = QuickstartApplication.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { NarayanaAutoConfiguration.class,
+        QuickstartService.class })
 public class QuickstartApplicationTests {
 
-    @Rule
-    public OutputCapture outputCapture = new OutputCapture();
+    @Autowired
+    QuickstartService quickstartService;
 
     @Test
-    public void testCommit() throws Exception {
-        QuickstartApplication.main(new String[] { "commit", "Test Value" });
-        String output = outputCapture.toString();
-        assertThat(output, containsString("Entries at the start: []"));
-        assertThat(output, containsString("Creating entry 'Test Value'"));
-        assertThat(output, containsString("Message received: Created entry 'Test Value'"));
-        assertThat(output, containsString("Entries at the end: [Entry{id=1, value='Test Value'}]"));
+    @Order(1)
+    public void testRollback(CapturedOutput output) throws Exception {
+        quickstartService.demonstrateRollback("Rollback Test");
+        String str = output.toString();
+        assertThat(str, containsString("Entries at the start: []"));
+        assertThat(str, containsString("Creating entry 'Rollback Test'"));
+        assertThat(str, not(containsString("Received message 'Created entry 'Rollback Test''")));
+        assertThat(str, containsString("Entries at the end: []"));
     }
 
     @Test
-    public void testRollback() throws Exception {
-        QuickstartApplication.main(new String[] { "rollback", "Test Value" });
-        String output = outputCapture.toString();
-        assertThat(output, containsString("Entries at the start: []"));
-        assertThat(output, containsString("Creating entry 'Test Value'"));
-        assertThat(output, not(containsString("Message received: Created entry 'Test Value'")));
-        assertThat(output, containsString("Entries at the end: []"));
+    @Order(2)
+    public void testCommit(CapturedOutput output) throws Exception {
+        quickstartService.demonstrateCommit("Commit Test");
+        String str = output.toString();
+        assertThat(str, containsString("Entries at the start: []"));
+        assertThat(str, containsString("Creating entry 'Commit Test'"));
+        assertThat(str, containsString("Received message 'Created entry 'Commit Test''"));
+        assertThat(str, containsString("Entries at the end: [Entry{id=2, value='Commit Test'}]"));
     }
 
 }

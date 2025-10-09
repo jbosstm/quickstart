@@ -1,10 +1,12 @@
 package org.jboss.narayana.quickstart.spring;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import java.util.List;
 
 /**
  * Service to store entries in the database.
@@ -12,24 +14,29 @@ import java.util.List;
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
 @Service
-@Transactional
 public class EntriesService {
 
+    private final Logger logger = LoggerFactory.getLogger(EntriesService.class);
     private final EntriesRepository entriesRepository;
 
-    @Autowired
     public EntriesService(EntriesRepository entriesRepository) {
         this.entriesRepository = entriesRepository;
     }
 
-    public Entry create(String value) {
-        System.out.println("Creating entry '" + value + "'");
-
-        return entriesRepository.save(new Entry(value));
+    @Transactional
+    public Entry createEntry(String value) {
+        this.logger.info("Creating entry '{}'", value);
+        return this.entriesRepository.save(new Entry(value));
     }
 
-    public List<Entry> getAll() {
-        return entriesRepository.findAll();
+    public List<Entry> getEntries() {
+        List<Entry> entries = this.entriesRepository.findAll();
+        this.logger.info("Returning entries '{}'", entries);
+        return entries;
+    }
+
+    public void clearEntries() {
+        this.entriesRepository.deleteAll();
     }
 
 }
