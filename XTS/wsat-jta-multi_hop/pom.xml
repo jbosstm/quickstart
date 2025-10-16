@@ -119,6 +119,11 @@
             <artifactId>jsr181-api</artifactId>
             <version>${version.javax.jw.jsr181}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>4.0.3</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>

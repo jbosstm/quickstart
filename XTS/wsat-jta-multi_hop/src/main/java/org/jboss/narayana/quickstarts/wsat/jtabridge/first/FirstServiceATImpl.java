@@ -20,25 +20,18 @@
  */
 package org.jboss.narayana.quickstarts.wsat.jtabridge.first;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
-import jakarta.ejb.EJBContext;
-import jakarta.ejb.Remote;
-import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionAttribute;
-import jakarta.ejb.TransactionAttributeType;
-import jakarta.transaction.NotSupportedException;
-import jakarta.transaction.SystemException;
-import jakarta.transaction.UserTransaction;
+
 import org.jboss.narayana.quickstarts.wsat.jtabridge.first.jaxws.FirstServiceAT;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.SecondClient;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.jaxws.SecondServiceAT;
 
-import jakarta.jws.WebMethod;
-import jakarta.jws.WebService;
-import jakarta.jws.soap.SOAPBinding;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.annotation.Resource;
+import javax.ejb.*;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 
 /**
  * @author paul.robinson@redhat.com, 2012-10-29
@@ -125,10 +118,6 @@ public class FirstServiceATImpl implements FirstServiceAT {
         getSecondClient().resetCounter();
     }
 
-    @PostConstruct
-    public void postConstruct() {
-        System.out.println("postConstruct called");
-    }
 
     private FirstCounterEntity lookupCounterEntity() {
         FirstCounterEntity entityFirst = em.find(FirstCounterEntity.class, ENTITY_ID);

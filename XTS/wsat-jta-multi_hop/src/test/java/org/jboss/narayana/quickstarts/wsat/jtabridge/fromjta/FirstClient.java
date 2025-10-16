@@ -29,7 +29,7 @@ import java.net.URL;
 public class FirstClient {
 
     public static FirstServiceAT newInstance() throws Exception {
-        URL wsdlLocation = new URL("http://localhost:8080/test/FirstServiceATService/FirstServiceAT?wsdl");
+        URL wsdlLocation = new URL("http://localhost:8080/bridge/FirstServiceATService/FirstServiceAT?wsdl");
         QName serviceName = new QName("http://www.jboss.org/narayana/quickstarts/wsat/simple/first", "FirstServiceATService");
         QName portName = new QName("http://www.jboss.org/narayana/quickstarts/wsat/simple/first", "FirstServiceAT");
 

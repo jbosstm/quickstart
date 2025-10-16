@@ -20,13 +20,13 @@
  */
 package org.jboss.narayana.quickstarts.wsat.jtabridge.second;
 
-import jakarta.jws.HandlerChain;
 import org.jboss.narayana.quickstarts.wsat.jtabridge.second.jaxws.SecondServiceAT;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
