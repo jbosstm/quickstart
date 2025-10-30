@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.wildfly.core</groupId>
             <artifactId>wildfly-logging</artifactId>
-            <version>${version.wildfly.logging}</version>
+            <version>${version.wildfly.core}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -95,7 +95,7 @@
         <dependency>
            <groupId>org.wildfly.core</groupId>
            <artifactId>wildfly-logging</artifactId>
-           <version>${version.wildfly.logging}</version>
+           <version>${version.wildfly.core}</version>
            <scope>provided</scope>
         </dependency>
         <!-- Arquillian allows you to test the example inside a container -->
