@@ -2,7 +2,7 @@
 
 echo "Running recovery quickstart"
 
-IF NOT %QUICKSTART_NARAYANA_VERSION%x == x SET NARAYANA_VERSION_PARAM="-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}"
+IF NOT %QUICKSTART_NARAYANA_VERSION%x == x SET NARAYANA_VERSION_PARAM="-Dversion.narayana=%QUICKSTART_NARAYANA_VERSION%"
 
 rem To run an example use the maven java exec pluging. For example to run the second recovery example
 rem (need to run with cmd /c as mvn exec:java does not fork the process and the failure ends the current bat process)

@@ -29,8 +29,8 @@ mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.recovery.Jm
 #fi
 mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.recovery.JmsRecovery -Dexec.args="-r" $NARAYANA_VERSION_PARAM
 if [ "$?" != "0" ]; then
-	exit -1
     echo "JMS example failed"
+	exit -1
 else
     echo "JMS example succeeded"
 fi

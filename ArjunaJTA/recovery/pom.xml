@@ -24,23 +24,21 @@
       <version>2.44.0</version>
     </dependency>
     <dependency>
+      <groupId>jakarta.jms</groupId>
+      <artifactId>jakarta.jms-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <scope>runtime</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId>
-      <version>5.0.0.Alpha2</version>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.jms</groupId>
-      <artifactId>jakarta.jms-api</artifactId>
+      <groupId>org.jboss.narayana.jta</groupId>
+      <artifactId>jta</artifactId>
     </dependency>
   </dependencies>
 

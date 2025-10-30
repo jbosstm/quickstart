@@ -13,9 +13,8 @@ public class RecoverySetup {
 
     public static void startRecovery() {
         BeanPopulator.getDefaultInstance(ObjectStoreEnvironmentBean.class).setObjectStoreDir(Util.recoveryStoreDir);
-        RecoveryManager.delayRecoveryManagerThread() ;
         BeanPopulator.getDefaultInstance(RecoveryEnvironmentBean.class).setRecoveryBackoffPeriod(1);
-        recoveryManager = RecoveryManager.manager();
+        recoveryManager = RecoveryManager.manager(RecoveryManager.DIRECT_MANAGEMENT);
     }
 
     public static void stopRecovery() {
