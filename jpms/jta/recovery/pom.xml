@@ -33,12 +33,10 @@
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>${version.jboss-logging}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging-processor</artifactId>
-            <version>${version.version.jboss-logging-processor}</version>
         </dependency>
     </dependencies>
     <build>

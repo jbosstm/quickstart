@@ -201,8 +201,7 @@
         <version.weld>5.0.1.Final</version.weld>
 
         <version.wildfly.plugin>4.0.0.Final</version.wildfly.plugin>
-        <version.wildfly.core>20.0.2.Final</version.wildfly.core>
-        <version.wildfly.logging>5.0.0.Final</version.wildfly.logging>
+        <version.wildfly.core>30.0.0.Final</version.wildfly.core>
         <version.sortpom>3.0.0</version.sortpom>
 
         <sortpom.skip>true</sortpom.skip>
