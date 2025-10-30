@@ -135,7 +135,7 @@
     </modules>
 
     <properties>
-        <artemis.version>2.4.0</artemis.version>
+        <artemis.version>2.43.0</artemis.version>
         <camel.version>2.25.4</camel.version>
         <ipv6.server.jvm.args>-Djboss.bind.address=[::1] -Djboss.bind.address.management=[::1] -Djboss.bind.address.unsecure=[::1] -Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</ipv6.server.jvm.args>
         <jvm.args.debug/>

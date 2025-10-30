@@ -106,23 +106,6 @@ public class JmsRecovery extends RecoverySetup {
     }
 
     public static void startRecovery() {
-        String resourceRecoveryClass = ActiveMQXAResourceRecovery.class.getName();
-        String inVMResourceRecoveryOpts = InVMConnectorFactory.class.getName();
-        String remoteResourceRecoveryOpts = NettyConnectorFactory.class.getName();
-
-        /*
-         * Tell JBossTS how to recover Hornetq resources. To do it via jbossts-properties.xml use
-         *  <entry key="JTAEnvironmentBean.xaResourceRecoveryClassNames">
-         */
-        List<String> recoveryClassNames = new ArrayList<String>();
-
-        if (inVM)
-            recoveryClassNames.add(resourceRecoveryClass + ";" + inVMResourceRecoveryOpts);
-        else
-            recoveryClassNames.add(resourceRecoveryClass + ";" + remoteResourceRecoveryOpts);
-
-        BeanPopulator.getDefaultInstance(JTAEnvironmentBean.class).setXaResourceRecoveryClassNames(recoveryClassNames);
-
         RecoverySetup.startRecovery();
     }
 
