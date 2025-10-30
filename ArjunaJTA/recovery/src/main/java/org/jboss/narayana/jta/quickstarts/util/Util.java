@@ -44,7 +44,7 @@ public class Util {
 
             for (File f : contents) {
                 if (f.isDirectory()) {
-                    count += countLogRecords(f, count);
+                    count += countLogRecords(f, 0);
                 } else {
                     count += 1;
                 }

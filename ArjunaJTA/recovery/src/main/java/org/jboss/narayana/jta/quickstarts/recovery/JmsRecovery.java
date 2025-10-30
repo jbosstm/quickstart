@@ -1,8 +1,5 @@
 package org.jboss.narayana.jta.quickstarts.recovery;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 
@@ -18,12 +15,11 @@ import org.apache.activemq.artemis.core.remoting.impl.netty.NettyConnectorFactor
 import org.apache.activemq.artemis.core.server.JournalType;
 import org.apache.activemq.artemis.core.server.embedded.EmbeddedActiveMQ;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
-import org.apache.activemq.artemis.service.extensions.xa.recovery.ActiveMQXAResourceRecovery;
 import org.jboss.narayana.jta.quickstarts.util.DummyXAResource;
 import org.jboss.narayana.jta.quickstarts.util.Util;
 
-import com.arjuna.ats.jta.common.JTAEnvironmentBean;
-import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
+import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
+import com.arjuna.ats.jta.recovery.XAResourceRecoveryHelper;
 
 import jakarta.jms.JMSException;
 import jakarta.jms.MessageConsumer;
@@ -54,7 +50,6 @@ public class JmsRecovery extends RecoverySetup {
                 if (args[0].equals("-f")) {
                     new JmsRecovery().testXAWithErrorPart1();
                 } else if (args[0].equals("-r")) {
-                    startRecovery();
                     new JmsRecovery().testXAWithErrorPart2();
                 } else {
                     printErrorMessage();
@@ -106,24 +101,22 @@ public class JmsRecovery extends RecoverySetup {
     }
 
     public static void startRecovery() {
-        String resourceRecoveryClass = ActiveMQXAResourceRecovery.class.getName();
-        String inVMResourceRecoveryOpts = InVMConnectorFactory.class.getName();
-        String remoteResourceRecoveryOpts = NettyConnectorFactory.class.getName();
-
-        /*
-         * Tell JBossTS how to recover Hornetq resources. To do it via jbossts-properties.xml use
-         *  <entry key="JTAEnvironmentBean.xaResourceRecoveryClassNames">
-         */
-        List<String> recoveryClassNames = new ArrayList<String>();
-
-        if (inVM)
-            recoveryClassNames.add(resourceRecoveryClass + ";" + inVMResourceRecoveryOpts);
-        else
-            recoveryClassNames.add(resourceRecoveryClass + ";" + remoteResourceRecoveryOpts);
-
-        BeanPopulator.getDefaultInstance(JTAEnvironmentBean.class).setXaResourceRecoveryClassNames(recoveryClassNames);
-
         RecoverySetup.startRecovery();
+
+        XARecoveryModule xaRecoveryModule = XARecoveryModule.getRegisteredXARecoveryModule();
+        xaRecoveryModule.addXAResourceRecoveryHelper(new XAResourceRecoveryHelper() {
+            @Override
+            public boolean initialise(String p) {
+                return true;
+            }
+
+            @Override
+            public XAResource[] getXAResources() throws Exception {
+                XAConnection xaConnection = xacf.createXAConnection();
+                XASession xaSession = xaConnection.createXASession();
+                return new XAResource[]{xaSession.getXAResource()};
+            }
+        });
     }
 
     private static void startActiveMQServer(String acceptorName, String connFacName) throws Exception {
@@ -152,7 +145,8 @@ public class JmsRecovery extends RecoverySetup {
     private static void initialiseActiveMQClient(String connFacName) {
         xacf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.XA_CF,
                 new TransportConfiguration(connFacName));
-        try (Session s = xacf.createConnection().createSession()) {
+        try (jakarta.jms.Connection conn = xacf.createConnection();
+             Session s = conn.createSession()) {
             queue = s.createQueue("TestQueue");
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,26 +175,23 @@ public class JmsRecovery extends RecoverySetup {
             tm.rollback();
     }
 
-    private void produceMessages(XAConnection connection, String... msgs) throws Exception {
-        // Create an XA session and a message producer
-        try(Session session = connection.createXASession();
-                MessageProducer producer = session.createProducer(queue);){
+    private void produceMessages(Session session, String... msgs) throws Exception {
+        try (MessageProducer producer = session.createProducer(queue)) {
             for (String msg : msgs)
                 producer.send(session.createTextMessage(msg));
         }
     }
 
     public void produceMessages(DummyXAResource.faultType fault, String... messages) throws Exception {
-        try(XAConnection connection = xacf.createXAConnection();) {
+        try (XAConnection connection = xacf.createXAConnection()) {
             connection.start();
 
-            // Begin some Transaction work
             XASession xaSession = connection.createXASession();
             XAResource xaRes = xaSession.getXAResource();
 
-            startJTATx(new DummyXAResource(fault), xaRes);
+            startJTATx(xaRes, new DummyXAResource(fault));
 
-            produceMessages(connection, messages);
+            produceMessages(xaSession, messages);
 
             endJTATx(true);
         }
@@ -231,11 +222,9 @@ public class JmsRecovery extends RecoverySetup {
 
             startJTATx(xaRes, new DummyXAResource(DummyXAResource.faultType.NONE));
 
-            // consume 2 messages withing a transaction
+            // consume messages within a transaction
             msgCnt = consumeMessages(xaConsumer, millis, cnt);
 
-            // roll back the transaction - since we consumed the messages inside a
-            // transaction they should still be available
             endJTATx(true);
         }
 
@@ -267,6 +256,7 @@ public class JmsRecovery extends RecoverySetup {
     }
 
     public void testXAWithErrorPart2() throws Exception {
+        runRecoveryScan();
         runRecoveryScan();
         int cnt = consumeMessages(2, 500);
         if (cnt != 2)
