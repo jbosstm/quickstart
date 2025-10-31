@@ -5,7 +5,7 @@
     <parent>
       <groupId>org.jboss.narayana.quickstart.jts</groupId>
       <artifactId>narayana-quickstarts-jts</artifactId>
-      <version>7.3.1.Final</version>
+      <version>7.3.2.Final-SNAPSHOT</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.jts</groupId>
     <artifactId>narayana-jts-quickstart-trailmap</artifactId>

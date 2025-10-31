@@ -8,12 +8,12 @@
   <parent>
     <artifactId>narayana-quickstarts-all</artifactId>
     <groupId>org.jboss.narayana.quickstart</groupId>
-    <version>7.3.1.Final</version>
+    <version>7.3.2.Final-SNAPSHOT</version>
   </parent>
 
   <groupId>org.jboss.narayana.quickstart.jpms</groupId>
   <artifactId>jpms-quickstarts</artifactId>
-  <version>7.3.1.Final</version>
+  <version>7.3.2.Final-SNAPSHOT</version>
   <name>JPMS Quickstarts</name>
   <description>Provides examples of modular applications</description>
   <packaging>pom</packaging>
