@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
         <artifactId>examples-lra-jwt-wildfly</artifactId>
-        <version>7.3.2.Final-SNAPSHOT</version>
+        <version>7.3.2.Final</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
     <artifactId>jwt-lra-coordinator</artifactId>
