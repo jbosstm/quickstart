@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>org.jboss.narayana.jta</groupId>
 			<artifactId>jta</artifactId>
-			<version>${project.version}</version>
+			<version>${version.org.jboss.narayana}</version>
 			<scope>provided</scope>
 		</dependency>
         <dependency>

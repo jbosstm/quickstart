@@ -55,12 +55,12 @@
 		<dependency>
 			<groupId>org.jboss.narayana.jta</groupId>
 			<artifactId>narayana-jta</artifactId>
-                        <version>${project.version}</version>
+                        <version>${version.org.jboss.narayana}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.narayana.stm</groupId>
 			<artifactId>stm</artifactId>
-                        <version>${project.version}</version>
+                        <version>${version.org.jboss.narayana}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.logging</groupId>

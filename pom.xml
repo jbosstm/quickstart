@@ -207,6 +207,7 @@
         <sortpom.skip>true</sortpom.skip>
         <checkstyle.skip>true</checkstyle.skip>
         <version.io.narayana.checkstyle-config>1.0.1.Final</version.io.narayana.checkstyle-config>
+        <version.org.jboss.narayana>${project.version}</version.org.jboss.narayana>
         <version.org.jboss.narayana.lra>1.0.2.Final</version.org.jboss.narayana.lra>
         <version.microprofile.lra>2.0.1</version.microprofile.lra>
     </properties>
@@ -216,14 +217,14 @@
             <dependency>
                 <groupId>org.jboss.narayana</groupId>
                 <artifactId>main-dependency-management</artifactId>
-                <version>${project.version}</version>
+                <version>${version.org.jboss.narayana}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.narayana</groupId>
                 <artifactId>test-dependency-management</artifactId>
-                <version>${project.version}</version>
+                <version>${version.org.jboss.narayana}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

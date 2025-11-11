@@ -14,13 +14,13 @@
     <dependency>
       <groupId>org.jboss.narayana.arjunacore</groupId>
       <artifactId>arjunacore</artifactId>
-      <version>${project.version}</version>
+      <version>${version.org.jboss.narayana}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.narayana.xts</groupId>
       <artifactId>jbossxts</artifactId>
-      <version>${project.version}</version>
+      <version>${version.org.jboss.narayana}</version>
       <classifier>api</classifier>
       <scope>provided</scope>
     </dependency>
