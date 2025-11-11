@@ -6,7 +6,7 @@
     <parent>
       <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
       <artifactId>lra-examples</artifactId>
-      <version>7.3.3.Final-SNAPSHOT</version>
+      <version>7.3.3.Final</version>
     </parent>
     <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
     <artifactId>examples-microprofile-lra-cdi-embedded</artifactId>
