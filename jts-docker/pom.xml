@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jts</groupId>
             <artifactId>narayana-jts-idlj</artifactId>
-            <version>${project.version}</version>
+            <version>${version.org.jboss.narayana}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

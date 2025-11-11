@@ -22,7 +22,7 @@
     <dependency>
       <groupId>org.jboss.narayana.xts</groupId>
       <artifactId>jbossxts</artifactId>
-      <version>${project.version}</version>
+      <version>${version.org.jboss.narayana}</version>
       <classifier>api</classifier>
       <scope>provided</scope>
       <exclusions>
@@ -35,7 +35,7 @@
     <dependency>
       <groupId>org.jboss.narayana.xts</groupId>
       <artifactId>jbossxts</artifactId>
-      <version>${project.version}</version>
+      <version>${version.org.jboss.narayana}</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -47,7 +47,7 @@
     <dependency>
       <groupId>org.jboss.narayana.jts</groupId>
       <artifactId>narayana-jts-idlj</artifactId>
-      <version>${project.version}</version>
+      <version>${version.org.jboss.narayana}</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -60,7 +60,7 @@
     <dependency>
       <groupId>org.jboss.narayana.compensations</groupId>
       <artifactId>compensations</artifactId>
-      <version>${project.version}</version>
+      <version>${version.org.jboss.narayana}</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>

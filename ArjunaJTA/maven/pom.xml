@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
             <artifactId>narayana-jta</artifactId>
-            <version>${project.version}</version>
+            <version>${version.org.jboss.narayana}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -104,7 +104,7 @@
                                   <executable>bash</executable>
                                   <commandlineArgs>${basedir}/run.sh</commandlineArgs>
                                   <environmentVariables>
-                                      <QUICKSTART_NARAYANA_VERSION>${project.version}</QUICKSTART_NARAYANA_VERSION>
+                                      <QUICKSTART_NARAYANA_VERSION>${version.org.jboss.narayana}</QUICKSTART_NARAYANA_VERSION>
                                   </environmentVariables>
                               </configuration>
                           </execution>
@@ -137,7 +137,7 @@
                                          <exec dir="${project.basedir}" executable="cmd" failonerror="true">
                                              <arg value="/c"/>
                                              <arg value="run.bat"/>
-                                             <env key="QUICKSTART_NARAYANA_VERSION" value="${project.version}" />
+                                             <env key="QUICKSTART_NARAYANA_VERSION" value="${version.org.jboss.narayana}" />
                                          </exec>
                                      </target>
                                  </configuration>
