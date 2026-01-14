@@ -1,5 +1,8 @@
 package org.jboss.narayana.quickstarts.mongodb.simple;
 
+import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.PortBinding;
+import com.github.dockerjava.api.model.Ports;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -46,7 +49,10 @@ public class BankingServiceTest {
     @ArquillianResource
     public URL baseURL;
 
-    private final static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
+    private final static MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"))
+        .withCreateContainerCmdModifier(cmd ->
+            cmd.withHostConfig(cmd.getHostConfig().withPortBindings(new PortBinding(Ports.Binding.bindPort(27017),new ExposedPort(27017))))
+        );
 
     private MongoClient mongo;
 
@@ -58,13 +64,25 @@ public class BankingServiceTest {
     public static WebArchive createTestArchive() {
 
         //Use 'Shrinkwrap Resolver' to include the mongodb java driver in the deployment
-        File lib = Maven.resolver().resolve("org.mongodb:mongo-java-driver:3.12.11").withoutTransitivity().asSingleFile();
+        File lib = Maven.resolver().loadPomFromFile("pom.xml").resolve("org.mongodb:mongo-java-driver").withoutTransitivity().asSingleFile();
+        File compensations = Maven.resolver().loadPomFromFile("pom.xml").resolve("org.jboss.narayana.compensations:compensations").withTransitivity().asSingleFile();
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackages(true, BankingService.class.getPackage().getName())
                 .addAsWebInfResource(new StringAsset("<beans bean-discovery-mode=\"all\"></beans>"), "beans.xml")
-                .addAsLibraries(lib);
-
+                .addAsLibraries(lib).addAsLibraries(compensations)
+                .addAsWebInfResource(
+                    new StringAsset(
+                        "<jboss-deployment-structure>\n" +
+                            "  <deployment>\n" +
+                            "    <dependencies>\n" +
+                            "      <module name=\"org.jboss.xts\" />\n" +
+                            "    </dependencies>\n" +
+                            "  </deployment>\n" +
+                            "</jboss-deployment-structure>"
+                    ),
+                    "jboss-deployment-structure.xml"
+        );
         return archive;
     }
 
@@ -81,7 +99,8 @@ public class BankingServiceTest {
 
         client = ClientBuilder.newClient();
 
-        mongo = new MongoClient("localhost", 27017);
+        int port = mongoDBContainer.getMappedPort(27017);
+        mongo = new MongoClient(mongoDBContainer.getHost(), mongoDBContainer.getMappedPort(27017));
         MongoDatabase database = mongo.getDatabase("test");
 
         database.getCollection("accounts").drop();
