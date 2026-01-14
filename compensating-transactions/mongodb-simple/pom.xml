@@ -14,7 +14,8 @@
   <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with MongoDB</description>
 
   <properties>
-    <version.mongodb>3.12.11</version.mongodb>
+    <version.mongodb.driver>3.12.11</version.mongodb.driver>
+    <version.mongodb.container>4.0.10</version.mongodb.container>
     <version.testcontainers>1.17.6</version.testcontainers>
   </properties>
 
@@ -124,7 +125,7 @@
     <dependency>
       <groupId>org.mongodb</groupId>
       <artifactId>mongo-java-driver</artifactId>
-      <version>${version.mongodb}</version>
+      <version>${version.mongodb.driver}</version>
     </dependency>
 
     <dependency>
@@ -224,6 +225,7 @@
                 <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                 <node.address>127.0.0.1</node.address>
                 <server.config>standalone-xts.xml</server.config>
+                <version.mongodb.container>${version.mongodb.container}</version.mongodb.container>
               </systemPropertyVariables>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
             </configuration>
@@ -258,6 +260,7 @@
                 <modular.jdk.args>${modular.jdk.args}</modular.jdk.args>
                 <node.address>[::1]</node.address>
                 <server.config>standalone-xts.xml</server.config>
+                <version.mongodb.container>${version.mongodb.container}</version.mongodb.container>
               </systemPropertyVariables>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
             </configuration>
