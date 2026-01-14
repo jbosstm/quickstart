@@ -1,25 +1,33 @@
-#!/bin/bash
+#!/bin/bash -e
+set +x
 
 function fatal {
-  comment_on_pull "Tests failed ($BUILD_URL): $1"
-  echo "$1"; exit 1
+  echo "$1"
+  exit 1
 }
 
-set -x
-[ $WORKSPACE ] || fatal "please set WORKSPACE to the quickstarts directory"
+function which_java {
+  type -p java 2>&1 > /dev/null
+  if [ $? = 0 ]; then
+    _java=java
+  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]]; then
+    _java="$JAVA_HOME/bin/java"
+  else
+    unset _java
+  fi
 
-function comment_on_pull
-{
-    if [ "$COMMENT_ON_PULL" = "" ]; then return; fi
+  if [[ "$_java" ]]; then
+    version=$("$_java" -version 2>&1 | grep -oP 'version "?(1\.)?\K\d+' || true)
+    echo $version
+  fi
+}
 
-    PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
-    if [ "$PULL_NUMBER" != "" ]
-    then
-        JSON="{ \"body\": \"$1\" }"
-        curl -d "$JSON" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$GIT_ACCOUNT/$GIT_REPO/issues/$PULL_NUMBER/comments
-    else
-        echo "Not a pull request, so not commenting"
-    fi
+function min_java {
+  MIN_JAVA=17
+  _jdk=`which_java`
+  if [ "$_jdk" -lt "$MIN_JAVA" ]; then
+    fatal "Narayana does not support JDKs less than $MIN_JAVA"
+  fi
 }
 
 # Expects one argument as an integer number and adjust it
@@ -36,9 +44,9 @@ function timeout_adjust {
 }
 
 function int_env {
+  min_java
+
   cd $WORKSPACE
-  export GIT_ACCOUNT=jbosstm
-  export GIT_REPO=quickstart
   export MFACTOR=${MFACTOR:-1}
   export -f timeout_adjust || echo "Function timeout_adjust won't be used in the subshells as it can't be exported"
   NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
@@ -46,52 +54,7 @@ function int_env {
   QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.3.4.Final-SNAPSHOT}
   REDUCE_SPACE=${REDUCE_SPACE:-0}
 
-  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.3.4.Final-SNAPSHOT" 
-
-  PULL_NUMBER=$(echo $GIT_BRANCH | awk -F 'pull' '{ print $2 }' | awk -F '/' '{ print $2 }')
-  if [ "$PULL_NUMBER" != "" ]
-  then
-    PULL_DESCRIPTION=$(curl -H "Authorization: token $GITHUB_TOKEN" -s https://api.github.com/repos/$GIT_ACCOUNT/$GIT_REPO/pulls/$PULL_NUMBER)
-    if [[ $PULL_DESCRIPTION =~ "\"state\": \"closed\"" ]]; then
-      echo "pull closed"
-      exit 0
-    fi
-  fi
-    _jdk=`which_java`
-    if [ "$_jdk" -lt 17 ]; then
-      fatal "Narayana does not support JDKs less than 17"
-    fi
-}
-function which_java {
-  type -p java 2>&1 > /dev/null
-  if [ $? = 0 ]; then
-    _java=java
-  elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]]; then
-    _java="$JAVA_HOME/bin/java"
-  else
-    unset _java
-  fi
-
-  if [[ "$_java" ]]; then
-    version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-
-    if [[ $version = 17* ]]; then
-      echo 17
-    elif [[ $version = 11* ]]; then
-      echo 11
-    fi
-  fi
-}
-function rebase_quickstart_repo {
-  cd $WORKSPACE
-  git remote add upstream https://github.com/jbosstm/quickstart.git
-  export BRANCHPOINT=main
-  git branch $BRANCHPOINT origin/$BRANCHPOINT
-  git pull --rebase --ff-only origin $BRANCHPOINT
-  if [ $? -ne 0 ]; then
-    comment_on_pull "Narayana rebase on $BRANCHPOINT failed. Please rebase it manually: $BUILD_URL"
-    exit -1
-  fi
+  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.3.4.Final-SNAPSHOT"
 }
 
 function build_narayana {
@@ -115,20 +78,15 @@ function build_narayana {
   fi
   
   if [ $? != 0 ]; then
-    comment_on_pull "Checkout failed: $BUILD_URL";
+    echo "Checkout failed: $BUILD_URL";
     exit -1
   fi
   cd narayana
   ./build.sh clean install -B -DskipTests -Pcommunity
 
   if [ $? != 0 ]; then
-    comment_on_pull "Narayana build failed: $BUILD_URL";
+    echo "Narayana build failed: $BUILD_URL";
     exit -1
-  fi
-  if [ $REDUCE_SPACE = 1 ]; then
-      echo "Deleting check out - assuming all artifacts are in the .m2"
-      cd ..
-      rm -rf narayana
   fi
 }
 
@@ -154,7 +112,7 @@ function build_narayana_lra {
   fi
 
   if [ $? != 0 ]; then
-    comment_on_pull "Checkout failed: $BUILD_URL";
+    echo "Checkout failed: $BUILD_URL";
     exit -1
   fi
   cd lra
@@ -163,13 +121,17 @@ function build_narayana_lra {
   cd ..
 
   if [ $? != 0 ]; then
-    comment_on_pull "Narayana LRA build failed: $BUILD_URL";
+    echo "Narayana LRA build failed: $BUILD_URL";
     exit -1
   fi
 }
 
 function download_and_update_as {
-  [ ! -z "${WILDFLY_RELEASE_VERSION}" ] || fatal "No WILDFLY_RELEASE_VERSION specified"
+  if [ -z "${WILDFLY_RELEASE_VERSION}" ]; then
+    WILDFLY_RELEASE_VERSION=$(curl -sL https://api.github.com/repos/wildfly/wildfly/releases/latest | jq -r ".tag_name")
+    [ $? -eq 0 ] ||fatal "No WILDFLY_RELEASE_VERSION specified"
+    echo "version=$WILDFLY_RELEASE_VERSION"
+  fi
   
   cd $WORKSPACE
   
@@ -219,16 +181,10 @@ function download_and_update_as {
   [ $? -eq 0 ] || fatal "Could not copy narayana-lra-${LRA_CURRENT_VERSION}.jar"
   cp ~/.m2/repository/org/jboss/narayana/lra/lra-proxy-api/${LRA_CURRENT_VERSION}/lra-proxy-api-${LRA_CURRENT_VERSION}.jar wildfly-${WILDFLY_RELEASE_VERSION}/modules/system/layers/base/org/jboss/narayana/lra/lra-participant/main/lra-proxy-api-*.jar
   [ $? -eq 0 ] || fatal "Could not copy lra-proxy-api-${LRA_CURRENT_VERSION}.jar"
-  
-  if [ $REDUCE_SPACE = 1 ]; then
-    echo "Deleting wildfly-${WILDFLY_RELEASE_VERSION}.zip to reduce disk usage"
-    rm wildfly-${WILDFLY_RELEASE_VERSION}.zip
-  fi  
-  
+
   export JBOSS_HOME=${WORKSPACE}/wildfly-${WILDFLY_RELEASE_VERSION}
   
   init_jboss_home
-
   cd $WORKSPACE
 }
 
@@ -248,30 +204,25 @@ function run_quickstarts {
   cd $WORKSPACE
   echo Running quickstarts
   ./build.sh -B clean install -fae -DskipX11Tests=true -Dversion.narayana=$QUICKSTART_NARAYANA_VERSION -Dversion.org.jboss.narayana.lra=$LRA_CURRENT_VERSION
-
-  if [ $? != 0 ]; then
-    comment_on_pull "Pull failed: $BUILD_URL";
-    exit -1
-  else
-    comment_on_pull "Pull passed: $BUILD_URL"
-  fi
 }
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE=$(cd "$SCRIPT_DIR/../.." && pwd)
+echo "WORKSPACE is set to: ${WORKSPACE}"
 
 int_env
 functionCalled=false
 if [ $# -eq 1 ]; then
-    if [ "$1" == "download_and_update_as" ]; then
-        download_and_update_as
-        functionCalled=true
-    fi
+  if [ "$1" == "download_and_update_as" ]; then
+    download_and_update_as
+    functionCalled=true
+  fi
 fi
 if [ $functionCalled = false ]; then
-    comment_on_pull "Started testing this pull request: $BUILD_URL"
-    rebase_quickstart_repo
-    build_narayana
-    build_narayana_lra
-    if [ -z "$JBOSS_HOME" ]; then
-      download_and_update_as "$@"
-    fi
-    run_quickstarts
+  build_narayana
+  build_narayana_lra
+  if [ -z "$JBOSS_HOME" ]; then
+    download_and_update_as "$@"
+  fi
+  run_quickstarts
 fi

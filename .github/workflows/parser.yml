@@ -1,0 +1,155 @@
+name: parser
+
+on:
+  pull_request:
+    types: [ opened, edited, synchronize, reopened ]
+  workflow_dispatch:
+    inputs:
+      pull_request_repo:
+        description: 'Repository to check out (optional)'
+        required: false
+        type: string
+      pull_request_ref:
+        description: 'Branch or commit to test (optional)'
+        required: false
+        type: string
+      jdk17:
+        description: 'JDK17'
+        required: true
+        type: boolean
+        default: false
+      jdk21:
+        description: 'JDK21'
+        required: true
+        type: boolean
+        default: false
+      jdk25:
+        description: 'JDK25'
+        required: true
+        type: boolean
+        default: true
+      WILDFLY_RELEASE_VERSION:
+        description: 'WILDFLY_RELEASE_VERSION: the version of WildFly to checkout.'
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      jdk_versions:
+        description: 'JDK versions'
+        required: true
+        type: string
+        default: '["25"]'
+      pull_request_repo:
+        description: 'Repository to check out (optional)'
+        required: false
+        type: string
+      pull_request_ref:
+        description: 'Branch or commit to test (optional)'
+        required: false
+        type: string
+      environment_variables:
+        description: 'The environment variables to use in quickstart.sh'
+        required: false
+        type: string
+        default: '{}'
+
+permissions:
+  actions: write
+  pull-requests: read
+  contents: read
+
+jobs:
+  parser:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    outputs:
+      jdk_versions: ${{ steps.parse.outputs.jdk_versions || steps.set-axes-inputs.outputs.jdk_versions || '["25"]' }}
+      environment_variables: ${{ steps.parse.outputs.environment_variables || steps.set-axes-inputs.outputs.environment_variables || '{}' }}
+      pr_number: ${{ steps.set-pr-data.outputs.pr_number }}
+      pr_ref: ${{ steps.set-pr-data.outputs.pr_ref }}
+      pr_repo: ${{ steps.set-pr-data.outputs.pr_repo }}
+
+    steps:
+      - name: Extract PR metadata
+        id: set-pr-data
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo 'pr_number=${{ github.event.pull_request.number }}' >> $GITHUB_OUTPUT
+          echo 'pr_ref=${{ github.event.pull_request.head.ref }}' >> $GITHUB_OUTPUT
+          echo 'pr_repo=${{ github.event.pull_request.head.repo.full_name }}' >> $GITHUB_OUTPUT
+
+      - name: Parse PR description
+        id: parse
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const prBody = pr.body || '';
+            
+            // Matches JDK17, JDK21, etc.
+            const jdkRegex = /\bJDK(17|21|25)\b/gi;
+            const matches = [...prBody.matchAll(jdkRegex)];
+            let jdk_versions = matches.map(m => parseInt(m[1], 10));
+            if (jdk_versions.length === 0) {
+              jdk_versions = [25];
+              core.info(`Using JDK25.`);
+            } else {
+              core.info(`JDKs detected in PR body: ${jdk_versions}`);
+            }
+            core.setOutput('jdk_versions', JSON.stringify(jdk_versions));
+            
+            const possibleEnvVars = [
+              'WILDFLY_RELEASE_VERSION'
+            ];
+            
+            const extractedEnvVars = {};
+            
+            for (const varName of possibleEnvVars) {
+              // Matches "VAR=value" stopping at the first whitespace
+              const regex = new RegExp(`\\b${varName}=([^\\s]+)`);
+              const match = prBody.match(regex);
+            
+              if (match) {
+                const value = match[1];
+                core.info(`Environment variables ${varName} detected: ${value}`);
+                extractedEnvVars[varName] = value;
+              }
+            }
+            
+            core.setOutput('environment_variables', JSON.stringify(extractedEnvVars));
+
+      - name: Set axes according to triggering event
+        id: set-axes-inputs
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/github-script@v8
+        with:
+          script: |
+            // Creates jdk_versions
+            const jdk_versions = [
+              ${{ inputs.jdk17 }} && '17',
+              ${{ inputs.jdk21 }} && '21',
+              ${{ inputs.jdk25 }} && '25'
+            ].filter(Boolean);
+
+            core.setOutput('jdk_versions', JSON.stringify(jdk_versions));
+            
+            const extractedEnvVars = Object.fromEntries([
+              ['WILDFLY_RELEASE_VERSION', '${{ inputs.WILDFLY_RELEASE_VERSION }}']
+            ].filter(entry => entry[1] !== ''));
+
+            core.info(`Custom Envs: ${JSON.stringify(extractedEnvVars)}`);
+            core.setOutput('environment_variables', JSON.stringify(extractedEnvVars));
+
+  main:
+    needs: parser
+    uses: ./.github/workflows/main.yml
+    strategy:
+      matrix:
+        jdk_version: ${{ fromJSON(needs.parser.outputs.jdk_versions) }}
+    with:
+      jdk_version: ${{ matrix.jdk_version }}
+      pull_request_ref: ${{ needs.parser.outputs.pr_ref }}
+      pull_request_repo: ${{ needs.parser.outputs.pr_repo }}
+      environment_variables: ${{ needs.parser.outputs.environment_variables }}
