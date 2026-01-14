@@ -1,0 +1,85 @@
+name: main
+
+on:
+  workflow_call:
+    inputs:
+      jdk_version:
+        description: 'JDK version'
+        required: true
+        type: string
+      pull_request_repo:
+        description: 'Repository to check out'
+        required: true
+        type: string
+        default: 'jbosstm/quickstart'
+      pull_request_ref:
+        description: 'Branch or commit to test'
+        required: true
+        type: string
+      environment_variables:
+        description: 'Environment variables'
+        required: false
+        type: string
+        default: '{}'
+
+# Only run the latest job
+concurrency:
+  group: 'main @ ${{ github.workflow }} @ ${{ github.head_ref || github.ref }} @ jdk${{ inputs.jdk_version }}'
+  cancel-in-progress: true
+
+jobs:
+  main-test:
+    name: Testing quickstart with JDK ${{ inputs.jdk_version }}
+    timeout-minutes: 120
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Load Dynamic Environment Variables
+        uses: actions/github-script@v7
+        if: ${{ inputs.environment_variables != '' && inputs.environment_variables != '{}' }}
+        env:
+          ENV_JSON: ${{ inputs.environment_variables }}
+        with:
+          script: |
+            const envs = JSON.parse(process.env.ENV_JSON);
+            for (const [key, value] of Object.entries(envs)) {
+              core.exportVariable(key, value);
+              core.info(`Set ${key}=${value}`);
+            }
+
+      - name: Log run context
+        run: |
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Repository: ${{ inputs.pull_request_repo || github.repository }}"
+          echo "Branch/Ref: ${{ inputs.pull_request_ref || github.ref }}"
+
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          repository: '${{ inputs.pull_request_repo || github.repository }}'
+          ref: ${{ inputs.pull_request_ref || github.ref }}
+
+      - name: Set up JDK ${{ inputs.jdk_version }}
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: ${{ inputs.jdk_version }}
+          cache: 'maven'
+
+      - name: Testing all quickstart
+        id: main
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          ./.github/scripts/quickstart.sh
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() && steps.main.conclusion == 'failure' || cancelled() && steps.main.conclusion == 'cancelled' }}
+        with:
+          retention-days: 30
+          name: main-logs-jdk${{ inputs.jdk_version }}
+          path: |
+            **/*.*log*
+            **/target/*surefire-reports*/**
+            **/target/*failsafe-reports*/**
+          if-no-files-found: warn
