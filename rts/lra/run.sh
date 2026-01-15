@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-
-if [[ ! -v WORKSPACE ]]; then
-    echo "Please set the WORKSPACE variable to the root folder of the quickstart"
-    exit -1
-fi
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE=$(cd "$SCRIPT_DIR/../.." && pwd)
+echo "WORKSPACE is set to: ${WORKSPACE}"
 
 if [ ! -f $WORKSPACE/rts/lra-examples/coordinator-quarkus/target/lra-coordinator-quarkus-runner.jar ]; then
     echo "Please build first the lra-coordinator-quarkus module which is needed for this demo"
