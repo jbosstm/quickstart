@@ -1,43 +1,23 @@
 #!/usr/bin/env bash
 
-
-if [[ ! -v WORKSPACE ]]; then
-    echo "Please set the WORKSPACE variable to the root folder of the quickstart"
-    exit -1
-fi
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE=$(cd "$SCRIPT_DIR/../.." && pwd)
+echo "WORKSPACE is set to: ${WORKSPACE}"
 
 if [ ! -f $WORKSPACE/rts/lra-examples/coordinator-quarkus/target/lra-coordinator-quarkus-runner.jar ]; then
     echo "Please build first the lra-coordinator-quarkus module which is needed for this demo"
     exit -1 
 fi
 
-function finish {
-    if ps -p $ID1 > /dev/null
-    then
-       kill -9 $ID1
-    fi
+function finish() {
+   for pid in "$ID1" "$ID2" "$ID3" "$ID4" "$ID5"; do
+       [[ -z "$pid" || ! "$pid" =~ ^[0-9]+$ ]] && continue
 
-    if ps -p $ID2 > /dev/null
-    then
-       kill -9 $ID2
-    fi
-
-    if ps -p $ID3 > /dev/null
-    then
-       kill -9 $ID3
-    fi
-
-    if ps -p $ID4 > /dev/null
-    then
-       kill -9 $ID4
-    fi
-
-    if ps -p $ID5 > /dev/null
-    then
-       kill -9 $ID5
-    fi
+       if kill -0 "$pid" 2>/dev/null; then
+           kill -9 "$pid" 2>/dev/null || true
+       fi
+   done
 }
-trap finish EXIT
 
 urlencode() {
     # urlencode <string>
@@ -132,3 +112,5 @@ if [ "$DEBUG" ]; then
   echo "Processes are still running ($ID1 $ID2 $ID3 $ID4 $ID5) press any key to end them"
   read
 fi
+
+finish
