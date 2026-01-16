@@ -208,7 +208,7 @@
         <checkstyle.skip>true</checkstyle.skip>
         <version.io.narayana.checkstyle-config>1.0.1.Final</version.io.narayana.checkstyle-config>
         <version.org.jboss.narayana>${project.version}</version.org.jboss.narayana>
-        <version.org.jboss.narayana.lra>1.0.2.Final</version.org.jboss.narayana.lra>
+        <version.org.jboss.narayana.lra>1.0.3.Final</version.org.jboss.narayana.lra>
         <version.microprofile.lra>2.0.1</version.microprofile.lra>
     </properties>
 
