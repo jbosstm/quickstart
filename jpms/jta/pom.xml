@@ -16,7 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.jta-modules.quickstart>${project.version}</version.jta-modules.quickstart>
-        <log4j.version>2.23.1</log4j.version>
+        <log4j.version>2.25.3</log4j.version>
         <!-- use compatible versions of jboss logging (3.6.0.Final https://issues.redhat.com/browse/JBLOGGING-184 -->
         <version.maven-jar-plugin>3.0.2</version.maven-jar-plugin>
         <version.maven-compiler-plugin>3.14.0</version.maven-compiler-plugin> <!-- 3.7.0 doesn't work with JPMS -->
