@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -14,8 +13,8 @@
   <description>JBoss Narayana Quickstarts: A simple example of using compensation-based transactions with MongoDB</description>
 
   <properties>
-    <version.mongodb.driver>3.12.11</version.mongodb.driver>
     <version.mongodb.container>4.0.10</version.mongodb.container>
+    <version.mongodb.driver>3.12.11</version.mongodb.driver>
     <version.testcontainers>1.17.6</version.testcontainers>
   </properties>
 
