@@ -57,7 +57,7 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.2.2.Final</version>
+                <version>5.1.5.Final</version>
             </plugin>
             <!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation 
 				processors -->
