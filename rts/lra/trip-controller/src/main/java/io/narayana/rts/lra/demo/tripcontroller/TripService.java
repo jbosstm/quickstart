@@ -36,7 +36,10 @@ public class TripService {
                 booking.getId(), booking.getName(), booking.getStatus());
 
         lraClient.closeLRA(new URI(booking.getId()));
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
         if (!TripCheck.validateBooking(booking, true, hotelTarget, flightTarget))
             throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
 
@@ -49,7 +52,10 @@ public class TripService {
                 booking.getId(), booking.getName(), booking.getStatus());
 
         lraClient.cancelLRA(new URI(booking.getId()));
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
         if (!TripCheck.validateBooking(booking, false, hotelTarget, flightTarget))
             throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
 
