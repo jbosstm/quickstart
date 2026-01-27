@@ -149,7 +149,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!--         quarkus -->
         <quarkus-plugin.version>3.17.5</quarkus-plugin.version>
-        <quarkus.platform.version>3.17.5</quarkus.platform.version>
+        <quarkus.platform.version>3.31.0</quarkus.platform.version>
 
         <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
         <spring.version>2.0.9.RELEASE</spring.version>
