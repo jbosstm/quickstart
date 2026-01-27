@@ -1,4 +1,4 @@
-package io.narayana.sra.demo.service;
+package io.narayana.sra.demo.booking;
 
 public class BookingException extends Exception {
     int reason;

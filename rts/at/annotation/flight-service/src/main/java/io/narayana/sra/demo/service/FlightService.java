@@ -1,5 +1,6 @@
 package io.narayana.sra.demo.service;
 
+import io.narayana.sra.demo.booking.BookingStore;
 import io.narayana.sra.demo.model.Booking;
 
 import jakarta.enterprise.context.ApplicationScoped;

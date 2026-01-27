@@ -1,8 +1,8 @@
 package io.narayana.sra.demo.api;
 
+import io.narayana.sra.demo.booking.BookingException;
 import io.narayana.sra.demo.constant.ServiceConstant;
 import io.narayana.sra.demo.model.Booking;
-import io.narayana.sra.demo.service.BookingException;
 import io.narayana.sra.demo.service.TripService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

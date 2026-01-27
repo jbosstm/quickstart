@@ -1,4 +1,4 @@
-package io.narayana.sra.demo.service;
+package io.narayana.sra.demo.booking;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
