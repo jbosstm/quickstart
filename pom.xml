@@ -164,7 +164,7 @@
         <version.creaper>2.0.2</version.creaper>
         <version.ear.plugin>2.10.1</version.ear.plugin>
         <version.exec-maven-plugin>1.4.0</version.exec-maven-plugin>
-        <version.glassfish.corba.omgapi>4.2.1</version.glassfish.corba.omgapi>
+        <version.glassfish.corba.omgapi>5.0.0</version.glassfish.corba.omgapi>
         <version.hibernate.validator>8.0.0.Final</version.hibernate.validator>
         <version.hibernate>5.6.11.Final</version.hibernate>
         <version.jackson>2.13.0</version.jackson>
