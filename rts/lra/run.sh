@@ -89,7 +89,7 @@ echo "Booking ID was: $BOOKINGID"
 ###### START not working
 #When a coordinator killed and then restarted everything should keep working as usual
 #instead when restarting the coordinator the final status of the nested LRAs is not correct
-kill -9 $ID1
+while kill -9 $ID1 2>/dev/null; do sleep 1; done
 java ${IP_OPTS} -Dquarkus.http.port=8080 $(getDebugArgs 8787) -jar $WORKSPACE/rts/lra-examples/coordinator-quarkus/target/lra-coordinator-quarkus-runner.jar &
 ID1=$!
 ########## END not working 
