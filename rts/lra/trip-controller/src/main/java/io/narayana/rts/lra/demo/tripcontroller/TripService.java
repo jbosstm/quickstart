@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,6 +30,9 @@ public class TripService {
     @Inject
     private NarayanaLRAClient lraClient;
 
+    @ConfigProperty(name = "lra.booking.sleep.timeout", defaultValue = "1000")
+    long sleepTimeout;
+
     private Map<String, Booking> bookings = new HashMap<>();
 
     public void confirmBooking(Booking booking, WebTarget hotelTarget, WebTarget flightTarget) throws URISyntaxException, IOException {
@@ -37,7 +41,7 @@ public class TripService {
 
         lraClient.closeLRA(new URI(booking.getId()));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(sleepTimeout);
         } catch (InterruptedException e) {
         }
         if (!TripCheck.validateBooking(booking, true, hotelTarget, flightTarget))
@@ -53,7 +57,7 @@ public class TripService {
 
         lraClient.cancelLRA(new URI(booking.getId()));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(sleepTimeout);
         } catch (InterruptedException e) {
         }
         if (!TripCheck.validateBooking(booking, false, hotelTarget, flightTarget))
