@@ -35,6 +35,11 @@ urlencode() {
     
     LC_COLLATE=$old_lc_collate
 }
+#use the safe sleep when using GH actions
+function safe_sleep() {
+	sleep "$1"  || ping -n "$1"  127.0.0.1 > nul || (for i in `seq 1 5000`; do echo >&5; done)
+	
+}
 
 set -e
 set -x
@@ -71,7 +76,7 @@ fi
 ((PORT++))
 
 echo "Waiting for all the servers to start"
-sleep `timeout_adjust 30 2>/dev/null || echo 30`
+safe_sleep `timeout_adjust 30 2>/dev/null || echo 30`
 
 MAVEN_OPTS=${IP_OPTS} mvn -f trip-client/pom.xml exec:java -Dexec.args="confirm"
 MAVEN_OPTS=${IP_OPTS} mvn -f trip-client/pom.xml exec:java -Dexec.args="cancel"
@@ -91,7 +96,7 @@ ID1=$!
 
 echo "Waiting for all coordinators to recover"
 
-sleep 40
+safe_sleep 40
 echo -e "\n\n\n"
 set +x
 

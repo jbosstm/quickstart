@@ -42,6 +42,11 @@ if [ -z "$IP_OPTS" ]; then
   CURL_IP_OPTS="-4"
 fi
 
+#use the safe sleep when using GH actions
+function safe_sleep() {
+	sleep "$1"  || ping -n "$1"  127.0.0.1 > nul || (for i in `seq 1 5000`; do echo >&5; done)
+	
+}
 function killpid {
   kill $2
   test $? || echo "===== could not kill $1"
@@ -56,12 +61,12 @@ function start_service {
     return 1
   fi
   service_pid=$!
-  sleep `timeout_adjust 10 2>/dev/null || echo 10`
+  safe_sleep `timeout_adjust 10 2>/dev/null || echo 10`
 }
 
 function test_service {
   curl ${CURL_IP_OPTS} -X PUT -I http://localhost:${service_port}/${svctype} || echo ===== failed
-  sleep `timeout_adjust 1 2>/dev/null || echo 1`
+  safe_sleep `timeout_adjust 1 2>/dev/null || echo 1`
   if [ "$(curl ${CURL_IP_OPTS} http://localhost:${service_port}/${svctype})" = "$1" ]; then
     return 0
   else
@@ -87,7 +92,7 @@ function start_and_test_service {
       res=0
     else
       echo "===== recovery failed ($svcstatus versus ${completions}) sleeping for 1 minute to allow debugging"
-      sleep 60
+      safe_sleep 60
       res=1
     fi
   else
@@ -101,7 +106,7 @@ function test_recovery {
   # now test recovery
   echo "===== CdiBasedResource halt the service on pid $service_pid"
   curl ${CURL_IP_OPTS} -X PUT -I "http://localhost:${service_port}/${svctype}?fault=halt${svctype}during"
-  sleep `timeout_adjust 1 2>/dev/null || echo 1`
+  safe_sleep `timeout_adjust 1 2>/dev/null || echo 1`
   # verify that the service is not running
   kill -0 $service_pid > /dev/null 2>&1
   if [ "$?" != 1 ]; then
@@ -112,7 +117,7 @@ function test_recovery {
   fi
 }
 
-echo "===== Running qickstart $qsname in directory $PWD"
+echo "===== Running quickstart $qsname in directory $PWD"
 
 if [[ "$last" = "participant" ]]; then
 #  start_coordinator
@@ -120,7 +125,7 @@ if [[ "$last" = "participant" ]]; then
   JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
   java ${JAVA_OPTS} ${IP_OPTS} -jar $PWD/../lra-coordinator/target/lra-coordinator-quarkus.jar &
   coord_pid=$!
-  sleep `timeout_adjust 10 2>/dev/null || echo 10`
+  safe_sleep `timeout_adjust 10 2>/dev/null || echo 10`
 elif [[ "$last" = "embedded" ]]; then
   service_port=${coord_port} # the coordinator is running in-VM with the service
 else
