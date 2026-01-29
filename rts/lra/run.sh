@@ -19,6 +19,8 @@ function finish() {
    done
 }
 
+trap finish EXIT
+
 urlencode() {
     # urlencode <string>
     old_lc_collate=$LC_COLLATE
@@ -112,5 +114,3 @@ if [ "$DEBUG" ]; then
   echo "Processes are still running ($ID1 $ID2 $ID3 $ID4 $ID5) press any key to end them"
   read
 fi
-
-finish
