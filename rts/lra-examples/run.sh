@@ -43,7 +43,7 @@ if [ -z "$IP_OPTS" ]; then
 fi
 
 function killpid {
-  kill $2
+  kill -9 $2
   test $? || echo "===== could not kill $1"
 }
 

@@ -50,6 +50,10 @@
       <artifactId>quarkus-smallrye-fault-tolerance</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.narayana.lra</groupId>
       <artifactId>lra-coordinator-jar</artifactId>
       <version>${version.org.jboss.narayana.lra}</version>
