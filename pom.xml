@@ -202,7 +202,7 @@
 
         <version.wildfly.plugin>5.1.5.Final</version.wildfly.plugin>
         <version.wildfly.core>31.0.1.Final</version.wildfly.core>
-        <version.sortpom>3.0.0</version.sortpom>
+        <version.sortpom>4.0.0</version.sortpom>
 
         <sortpom.skip>true</sortpom.skip>
         <checkstyle.skip>true</checkstyle.skip>
