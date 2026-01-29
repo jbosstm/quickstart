@@ -189,7 +189,7 @@
         <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>
 
         <version.org.springframework.boot>3.5.6</version.org.springframework.boot>
-        <version.org.springframwork>6.2.11</version.org.springframwork>
+        <version.org.springframwork>7.0.3</version.org.springframwork>
         <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
