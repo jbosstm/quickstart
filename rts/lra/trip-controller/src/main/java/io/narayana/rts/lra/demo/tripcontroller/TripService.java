@@ -40,11 +40,17 @@ public class TripService {
                 booking.getId(), booking.getName(), booking.getStatus());
 
         lraClient.closeLRA(new URI(booking.getId()));
-        try {
-            Thread.sleep(sleepTimeout);
-        } catch (InterruptedException e) {
+        //wait for all nested lra to move to the cancelled status
+        boolean statusIsValid = TripCheck.validateBooking(booking, true, hotelTarget, flightTarget);
+        for(int i = 0; i < 100 && !statusIsValid; i++) {
+            try {
+                Thread.sleep(sleepTimeout);
+            } catch (InterruptedException e) {
+            }
+            statusIsValid = TripCheck.validateBooking(booking, true, hotelTarget, flightTarget);
         }
-        if (!TripCheck.validateBooking(booking, true, hotelTarget, flightTarget))
+        // if the status is not yet valid throw the BookingException
+        if (!statusIsValid)
             throw new BookingException(INTERNAL_SERVER_ERROR.getStatusCode(), "LRA response data does not match booking data");
 
 //        mergeBookingResponse(booking, response);
