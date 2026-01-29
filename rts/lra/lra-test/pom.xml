@@ -38,6 +38,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
+                                    <executable>bash</executable>
                                     <executable>${basedir}/../run.sh</executable>
                                 </configuration>
                             </execution>
