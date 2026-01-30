@@ -15,7 +15,7 @@
   <properties>
     <version.mongodb.container>4.0.10</version.mongodb.container>
     <version.mongodb.driver>3.12.14</version.mongodb.driver>
-    <version.testcontainers>1.17.6</version.testcontainers>
+    <version.testcontainers>1.21.4</version.testcontainers>
   </properties>
 
   <dependencies>
