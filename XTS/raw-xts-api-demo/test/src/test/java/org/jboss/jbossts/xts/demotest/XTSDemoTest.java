@@ -2,7 +2,7 @@ package org.jboss.jbossts.xts.demotest;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.logging.Logger;
 import org.jboss.shrinkwrap.api.Archive;
@@ -11,6 +11,7 @@ import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
 import org.openqa.selenium.By;
@@ -26,7 +27,7 @@ import java.util.zip.ZipFile;
  *
  * @author istudens@redhat.com
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 public class XTSDemoTest {
     private static final Logger log = Logger.getLogger(XTSDemoTest.class);
     private static final int IMPLICIT_WAIT_S = 120;
