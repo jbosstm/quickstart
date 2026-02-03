@@ -179,7 +179,7 @@
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
         <version.org.jboss.logmanager-log4j-jboss-logmanager>1.0.1.Final</version.org.jboss.logmanager-log4j-jboss-logmanager>
         <version.org.jboss.shrinkwrap.descriptors>2.0.0-alpha-5</version.org.jboss.shrinkwrap.descriptors>
-        <version.org.jboss.shrinkwrap.resolver>3.1.4</version.org.jboss.shrinkwrap.resolver>
+        <version.org.jboss.shrinkwrap.resolver>3.3.4</version.org.jboss.shrinkwrap.resolver>
         <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
 
         <version.jakarta.persistence-api>3.1.0</version.jakarta.persistence-api>
