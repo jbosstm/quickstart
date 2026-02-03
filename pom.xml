@@ -169,7 +169,7 @@
         <version.hibernate>5.6.11.Final</version.hibernate>
         <version.jakarta.servlet.jstl>3.0.0</version.jakarta.servlet.jstl>
         <version.jakarta.validation>3.0.2</version.jakarta.validation>
-        <version.jupiter>5.9.1</version.jupiter>
+        <version.jupiter>6.0.2</version.jupiter>
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
         <version.nimbus.jose.jwt>10.7</version.nimbus.jose.jwt>
         <version.org.apache.logging.log4j>2.25.3</version.org.apache.logging.log4j>
