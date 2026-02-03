@@ -174,7 +174,7 @@
         <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
         <version.nimbus.jose.jwt>10.7</version.nimbus.jose.jwt>
         <version.org.apache.logging.log4j>2.25.3</version.org.apache.logging.log4j>
-        <version.org.jboss.arquillian>1.7.0.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian>1.10.0.Final</version.org.jboss.arquillian>
         <version.org.jboss.ironjacamar>3.0.9.Final</version.org.jboss.ironjacamar>
         <version.org.jboss.jboss-transaction-spi>8.0.0.Final</version.org.jboss.jboss-transaction-spi>
         <version.org.jboss.logmanager-jboss-logmanager>1.4.0.Final</version.org.jboss.logmanager-jboss-logmanager>
