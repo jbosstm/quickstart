@@ -89,11 +89,22 @@
         <!-- MP LRA CDI support relies on JAX-RS filters for
              starting LRAs and for enlisting resources in LRAs
         -->
+		<!-- We need to specify the proper version of lra dependencies otherwise quarkus-bom determines them-->
         <dependency>
             <groupId>org.jboss.narayana.lra</groupId>
             <artifactId>narayana-lra</artifactId>
             <version>${version.org.jboss.narayana.lra}</version>
         </dependency>
+	    <dependency>
+	        <groupId>org.jboss.narayana.lra</groupId>
+	        <artifactId>lra-client</artifactId>
+	        <version>${version.org.jboss.narayana.lra}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.jboss.narayana.lra</groupId>
+	        <artifactId>lra-proxy-api</artifactId>
+	        <version>${version.org.jboss.narayana.lra}</version>
+	    </dependency>
 
         <!-- MP LRA CDI support defines annotations for controlling the lifecycle
              of LRAs and for controlling participation in an LRA

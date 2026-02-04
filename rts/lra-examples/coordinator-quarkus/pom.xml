@@ -58,6 +58,11 @@
       <artifactId>lra-coordinator-jar</artifactId>
       <version>${version.org.jboss.narayana.lra}</version>
     </dependency>
+    <dependency>
+      <groupId>org.jboss.narayana.lra</groupId>
+      <artifactId>lra-client</artifactId>
+      <version>${version.org.jboss.narayana.lra}</version>
+    </dependency>
   </dependencies>
 
   <build>
