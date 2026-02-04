@@ -1,7 +1,7 @@
 package io.narayana.rts.lra.demo.tripcontroller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.narayana.lra.client.internal.NarayanaLRAClient;
+import io.narayana.lra.client.NarayanaLRAClient;
 import io.narayana.rts.lra.demo.model.Booking;
 
 import jakarta.ws.rs.client.WebTarget;
