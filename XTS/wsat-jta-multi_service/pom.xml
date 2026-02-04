@@ -240,7 +240,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.4.0</version>
             <configuration>
               <skip>${skip.resource.plugin}</skip>
             </configuration>
