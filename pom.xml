@@ -183,7 +183,7 @@
         <version.org.jboss.shrinkwrap.resolver>3.3.4</version.org.jboss.shrinkwrap.resolver>
         <version.org.jboss.shrinkwrap>1.0.1</version.org.jboss.shrinkwrap>
 
-        <version.jakarta.persistence-api>3.1.0</version.jakarta.persistence-api>
+        <version.jakarta.persistence-api>3.2.0</version.jakarta.persistence-api>
 
         <version.org.jboss.stdio>1.0.1.GA</version.org.jboss.stdio>
         <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>
