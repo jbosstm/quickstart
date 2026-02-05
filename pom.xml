@@ -157,7 +157,7 @@
         <!--         arquillian -->
         <version.arquillian.byteman>1.1.0</version.arquillian.byteman>
 
-        <version.clear.plugin>3.0.0</version.clear.plugin>
+        <version.clear.plugin>3.5.0</version.clear.plugin>
         <version.commons-dbcp2>2.13.0</version.commons-dbcp2>
         <version.commons-pool2>2.12.1</version.commons-pool2>
         <version.compiler.plugin>3.5.1</version.compiler.plugin>
