@@ -190,7 +190,7 @@
 
         <version.org.springframework.boot>4.0.2</version.org.springframework.boot>
         <version.org.springframwork>7.0.3</version.org.springframwork>
-        <version.plugin.maven.dependency>2.3</version.plugin.maven.dependency>
+        <version.plugin.maven.dependency>3.10.0</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
         <version.resteasy>6.2.2.Final</version.resteasy>
