@@ -165,8 +165,7 @@
         <version.ear.plugin>3.4.0</version.ear.plugin>
         <version.exec-maven-plugin>3.6.3</version.exec-maven-plugin>
         <version.glassfish.corba.omgapi>5.0.0</version.glassfish.corba.omgapi>
-        <version.hibernate.validator>8.0.0.Final</version.hibernate.validator>
-        <version.hibernate>5.6.15.Final</version.hibernate>
+        <version.hibernate>7.2.4.Final</version.hibernate>
         <version.jakarta.servlet.jstl>3.0.0</version.jakarta.servlet.jstl>
         <version.jakarta.validation>3.0.2</version.jakarta.validation>
 <!--        quickstarts using arquillian-junit5-container must use junit 5 still-->
@@ -199,7 +198,7 @@
         <!--         Using an older plugin version to have compatibility with older maven version -->
         <version.surefire.plugin>3.5.4</version.surefire.plugin>
         <version.war.plugin>3.5.1</version.war.plugin>
-        <version.weld>5.0.1.Final</version.weld>
+        <version.weld>6.0.4.Final</version.weld>
 
         <version.wildfly.plugin>5.1.5.Final</version.wildfly.plugin>
         <version.wildfly.core>31.0.1.Final</version.wildfly.core>
