@@ -116,8 +116,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core-jakarta</artifactId>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
             <version>${version.hibernate}</version>
         </dependency>
         <dependency>
@@ -130,14 +130,19 @@
             <artifactId>h2</artifactId>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
+	    <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter</artifactId>
+	        <scope>test</scope>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter-engine</artifactId>
+	        <scope>test</scope>
+	    </dependency>
         <dependency>
             <groupId>org.jboss.weld</groupId>
-            <artifactId>weld-junit4</artifactId>
+            <artifactId>weld-junit5</artifactId>
             <version>${version.weld-junit}</version>
         </dependency>
         <dependency>
@@ -157,7 +162,7 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.byteman</groupId>
-            <artifactId>byteman-bmunit</artifactId>
+            <artifactId>byteman-bmunit5</artifactId>
             <scope>test</scope>
         </dependency>
       </dependencies>

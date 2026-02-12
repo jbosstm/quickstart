@@ -1,30 +1,9 @@
 package org.jboss.narayana.quickstart.jta;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-import jakarta.transaction.TransactionManager;
 
-import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
-import com.arjuna.ats.arjuna.recovery.RecoveryManager;
-import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
-import org.h2.jdbcx.JdbcDataSource;
-import org.jboss.byteman.contrib.bmunit.BMRule;
-import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
-import org.jboss.weld.junit4.WeldInitiator;
-import org.jnp.server.NamingBeanImpl;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import com.arjuna.ats.jta.utils.JNDIManager;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -34,17 +13,34 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import org.h2.jdbcx.JdbcDataSource;
+import org.jboss.byteman.contrib.bmunit.BMRule;
+import org.jboss.byteman.contrib.bmunit.WithByteman;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
+import org.jnp.server.NamingBeanImpl;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.arjuna.ats.arjuna.common.recoveryPropertyManager;
+import com.arjuna.ats.arjuna.recovery.RecoveryManager;
+import com.arjuna.ats.internal.jta.recovery.arjunacore.XARecoveryModule;
+import com.arjuna.ats.jta.utils.JNDIManager;
+
+import jakarta.transaction.TransactionManager;
+
 /**
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
-@RunWith(BMUnitRunner.class)
+@WithByteman
 public class TestCase {
-
-    @Rule
-    public WeldInitiator weld = WeldInitiator.of(
-            QuickstartEntityRepository.class,
-            EntityManagerFactoryProducer.class,
-            EntityManagerProducer.class);
 
     /**
      * JNDI server.
@@ -52,16 +48,21 @@ public class TestCase {
     private static final NamingBeanImpl NAMING_BEAN = new NamingBeanImpl();
 
     /**
+     * Weld container.
+     */
+    private Weld weld;
+
+    /**
      * Transaction manager for transaction demarcation.
      */
-    private static TransactionManager transactionManager;
+    private TransactionManager transactionManager;
 
     /**
      * Repository to create test entities.
      */
-    private static QuickstartEntityRepository quickstartEntityRepository;
+    private QuickstartEntityRepository quickstartEntityRepository;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws Exception {
         NAMING_BEAN.start();
         JNDIManager.bindJTAImplementation();
@@ -75,24 +76,36 @@ public class TestCase {
                 .forEach(m -> ((XARecoveryModule) m).addXAResourceRecoveryHelper(new DummyXAResourceRecoveryHelper()));
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         // Stop JNDI server
         NAMING_BEAN.stop();
     }
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
+        weld = new Weld()
+            .disableDiscovery()
+            .addBeanClass(QuickstartEntityRepository.class)
+            .addBeanClass(EntityManagerFactoryProducer.class)
+            .addBeanClass(EntityManagerProducer.class);
+
+        WeldContainer weldContainer = weld.initialize();
+
         transactionManager = InitialContext.doLookup("java:/TransactionManager");
-        quickstartEntityRepository = weld.select(QuickstartEntityRepository.class).get();
+        quickstartEntityRepository = weldContainer.select(QuickstartEntityRepository.class).get();
         quickstartEntityRepository.clear();
     }
 
-    @After
+    @AfterEach
     public void after() {
         try {
             transactionManager.rollback();
         } catch (Throwable t) {
+        }
+
+        if (weld != null) {
+            weld.shutdown();
         }
     }
 
@@ -150,7 +163,7 @@ public class TestCase {
             transactionManager.commit();
             fail("QuickstartRuntimeException expected");
         } catch (Throwable t) {
-            assertTrue("Exception was: " + t.getClass() + ":" + t.getMessage(), t.getCause() instanceof QuickstartRuntimeException);
+            Assertions.assertTrue(t.getCause() instanceof QuickstartRuntimeException, "Exception was: " + t.getClass() + ":" + t.getMessage());
         }
 
         assertEntities();

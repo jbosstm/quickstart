@@ -1,29 +1,26 @@
 package org.jboss.narayana.quickstarts.compensationsApi.hotel;
 
-import com.arjuna.mw.wst11.UserBusinessActivity;
-import com.arjuna.mw.wst11.UserBusinessActivityFactory;
-import junit.framework.Assert;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.narayana.compensations.api.TransactionCompensatedException;
-import org.jboss.narayana.quickstarts.compensationsApi.taxi1.Taxi1ServiceImpl;
-import org.jboss.shrinkwrap.api.ArchivePaths;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import jakarta.inject.Inject;
-
 import java.io.File;
 import java.util.Date;
 
-@RunWith(Arquillian.class)
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.narayana.compensations.api.TransactionCompensatedException;
+import org.jboss.narayana.quickstarts.compensationsApi.taxi1.Taxi1ServiceImpl;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.arjuna.mw.wst11.UserBusinessActivity;
+import com.arjuna.mw.wst11.UserBusinessActivityFactory;
+
+import jakarta.inject.Inject;
+
+@ExtendWith(ArquillianExtension.class)
 public class HotelBookingTest {
 
     @Inject
@@ -52,7 +49,7 @@ public class HotelBookingTest {
         client.makeBooking("Paul", new Date(System.currentTimeMillis()), false);
 
         BookingStatus bookingStatus = client.getLastBookingStatus();
-        Assert.assertTrue("Expected booking to be confirmed, but it wasn't: " + bookingStatus, bookingStatus.equals(BookingStatus.CONFIRMED));
+        Assertions.assertTrue(bookingStatus.equals(BookingStatus.CONFIRMED), "Expected booking to be confirmed, but it wasn't: " + bookingStatus);
     }
 
     /**
@@ -66,19 +63,19 @@ public class HotelBookingTest {
 
         try {
             client.makeBooking("Paul", new Date(System.currentTimeMillis()), true);
-            Assert.fail("Should have thrown a TransactionCompensatedException");
+            Assertions.fail("Should have thrown a TransactionCompensatedException");
         } catch (TransactionCompensatedException e) {
             //expected
         }
 
-        Assert.assertTrue("Expected booking to be cancelled, but it wasn't", client.getLastBookingStatus().equals(BookingStatus.CANCELLED));
+        Assertions.assertTrue(client.getLastBookingStatus().equals(BookingStatus.CANCELLED), "Expected booking to be cancelled, but it wasn't");
 
     }
 
     /**
      * Utility method for cancelling a Business Activity if it is currently active.
      */
-    @After
+    @AfterEach
     public void cancelIfActive() {
 
         try {

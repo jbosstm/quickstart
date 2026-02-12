@@ -1,6 +1,21 @@
 package org.jboss.narayana.quickstarts.jta;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import javax.naming.Context;
+
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
+import org.jnp.server.NamingBeanImpl;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.arjuna.ats.jta.utils.JNDIManager;
+
 import jakarta.transaction.Status;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.Transaction;
@@ -8,19 +23,6 @@ import jakarta.transaction.TransactionManager;
 import jakarta.transaction.TransactionSynchronizationRegistry;
 import jakarta.transaction.TransactionalException;
 import jakarta.transaction.UserTransaction;
-
-import org.jboss.weld.environment.se.Weld;
-import org.jboss.weld.environment.se.WeldContainer;
-import org.jnp.server.NamingBeanImpl;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import com.arjuna.ats.jta.utils.JNDIManager;
 
 /**
  * <p>
@@ -55,7 +57,7 @@ public class JNDIBindingTestCase {
     private EventsCounter lifeCycleCounter;
 
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws Exception {
         System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
         System.setProperty(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
@@ -67,7 +69,7 @@ public class JNDIBindingTestCase {
         JNDIManager.bindJTAImplementation();
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         NAMING_BEAN.stop();
 
@@ -75,7 +77,7 @@ public class JNDIBindingTestCase {
         System.clearProperty(Context.URL_PKG_PREFIXES);
     }
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         // Initialize Weld container
         weld = new Weld();
@@ -91,7 +93,7 @@ public class JNDIBindingTestCase {
         transactionManager = weldContainer.select(TransactionManager.class).get();
     }
 
-    @After
+    @AfterEach
     public void after() throws SystemException {
         // cleaning the transaction state in case of an error
         if(transactionManager.getTransaction()!=null
@@ -108,57 +110,59 @@ public class JNDIBindingTestCase {
     @Test
     public void testRequiredTransactionWithExistingTransaction() throws Exception {
         transactionManager.begin();
-        Assert.assertTrue(requiredCounterManager.isTransactionAvailable());
+        Assertions.assertTrue(requiredCounterManager.isTransactionAvailable());
         transactionManager.rollback();
     }
 
     @Test
     public void testRequiredTransactionWithoutExistingTransaction() {
-        Assert.assertTrue(requiredCounterManager.isTransactionAvailable());
+        Assertions.assertTrue(requiredCounterManager.isTransactionAvailable());
 
-        Assert.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"));
-        Assert.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"));
     }
 
     @Test
     public void testMandatoryTransactionWithExistingTransaction() throws Exception {
         transactionManager.begin();
-        Assert.assertTrue(mandatoryCounterManager.isTransactionAvailable());
+        Assertions.assertTrue(mandatoryCounterManager.isTransactionAvailable());
         transactionManager.rollback();
     }
 
-    @Test(expected = TransactionalException.class)
+    @Test
     public void testMandatoryTransactionWithoutExistingTransaction() {
-        mandatoryCounterManager.isTransactionAvailable();
+    	assertThrows(TransactionalException.class, () -> {
+    		mandatoryCounterManager.isTransactionAvailable();
+    	});
     }
 
     @Test
     public void testTransactionScoped() throws Exception {
         transactionManager.begin();
-        Assert.assertEquals(0, requiredCounterManager.getCounter());
-        Assert.assertEquals(0, mandatoryCounterManager.getCounter());
+        Assertions.assertEquals(0, requiredCounterManager.getCounter());
+        Assertions.assertEquals(0, mandatoryCounterManager.getCounter());
         requiredCounterManager.incrementCounter();
-        Assert.assertEquals(1, requiredCounterManager.getCounter());
-        Assert.assertEquals(1, mandatoryCounterManager.getCounter());
+        Assertions.assertEquals(1, requiredCounterManager.getCounter());
+        Assertions.assertEquals(1, mandatoryCounterManager.getCounter());
 
-        Assert.assertTrue("Expected the @Initialized scope event to be thrown",
-                lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"),
+                "Expected the @Initialized scope event to be thrown");
 
         final Transaction suspendedTransaction = transactionManager.suspend();
 
         transactionManager.begin();
-        Assert.assertEquals(0, requiredCounterManager.getCounter());
-        Assert.assertEquals(0, mandatoryCounterManager.getCounter());
+        Assertions.assertEquals(0, requiredCounterManager.getCounter());
+        Assertions.assertEquals(0, mandatoryCounterManager.getCounter());
         mandatoryCounterManager.incrementCounter();
-        Assert.assertEquals(1, requiredCounterManager.getCounter());
-        Assert.assertEquals(1, mandatoryCounterManager.getCounter());
+        Assertions.assertEquals(1, requiredCounterManager.getCounter());
+        Assertions.assertEquals(1, mandatoryCounterManager.getCounter());
 
         transactionManager.rollback();
         transactionManager.resume(suspendedTransaction);
         transactionManager.rollback();
 
-        Assert.assertTrue("Expected the @Destroy scope event to be thrown",
-                lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"),
+                "Expected the @Destroy scope event to be thrown");
     }
 
 }
