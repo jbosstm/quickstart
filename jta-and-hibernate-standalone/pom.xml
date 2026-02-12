@@ -19,7 +19,7 @@
     <url>http://narayana.io</url>
 
     <properties>
-        <version.weld-junit>4.0.0.Final</version.weld-junit>
+        <version.weld-junit>5.0.3.Final</version.weld-junit>
     </properties>
 
     <repositories>
