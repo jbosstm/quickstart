@@ -1,19 +1,18 @@
 package org.jboss.narayana.quickstarts.jta;
 
-import jakarta.transaction.Status;
-import jakarta.transaction.SystemException;
-import jakarta.transaction.TransactionManager;
-import jakarta.transaction.TransactionalException;
-
 import org.jboss.narayana.quickstarts.jta.cdi.CDITransactionsProducers;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jboss.weld.transaction.spi.TransactionServices;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionalException;
 
 /**
  * <p>
@@ -39,7 +38,7 @@ public class CDIBindingTestCase {
     private Counter counter;
     private EventsCounter lifeCycleCounter;
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         // Initialize Weld container
         weld = new Weld()
@@ -57,7 +56,7 @@ public class CDIBindingTestCase {
         transactionManager = weldContainer.select(TransactionManager.class).get();
     }
 
-    @After
+    @AfterEach
     public void after() throws SystemException {
         // cleaning the transaction state in case of an error
         if(transactionManager.getTransaction() != null
@@ -75,26 +74,26 @@ public class CDIBindingTestCase {
     public void testTransactionScoped() throws Exception {
         transactionManager.begin();
         
-        Assert.assertTrue("Expected the @Initialized scope event to be thrown",
-                lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"),
+                "Expected the @Initialized scope event to be thrown");
 
-        Assert.assertEquals(0, counter.get());
+        Assertions.assertEquals(0, counter.get());
         requiredManager.incrementCounter();
-        Assert.assertEquals(1, counter.get());
+        Assertions.assertEquals(1, counter.get());
 
         transactionManager.rollback();
 
-        Assert.assertTrue("Expected the @Destroy scope event to be thrown",
-                lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"),
+                "Expected the @Destroy scope event to be thrown");
 
         // verification that TransactionSynchronizationRegistry was taken as the CDI bean from the producer
-        Assert.assertTrue("Expected TransactionSynchronizationRegistry was created by CDI producer",
-                lifeCycleCounter.containsEvent(CDITransactionsProducers.class.getSimpleName()));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent(CDITransactionsProducers.class.getSimpleName()),
+                "Expected TransactionSynchronizationRegistry was created by CDI producer");
 
         // verification that when TransactionServices are not implemented the observer does not count with 'during'
-        Assert.assertTrue("Expected the transactional observers are not working and the event is not deffered"
-                + " and received immediatelly when fired. The transaction was active at time the event was received.",
-                lifeCycleCounter.containsEvent(TransactionServices.class.getName()));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent(TransactionServices.class.getName()),
+                "Expected the transactional observers are not working and the event is not deffered"
+				        + " and received immediatelly when fired. The transaction was active at time the event was received.");
     }
 
 }

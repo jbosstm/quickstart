@@ -97,11 +97,13 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
+      <version>${version.jupiter5}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
+      <version>${version.jupiter5}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -122,12 +124,6 @@
       <groupId>org.jboss.arquillian.junit5</groupId>
       <artifactId>arquillian-junit5-core</artifactId>
       <version>${version.org.jboss.arquillian}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jboss.arquillian.protocol</groupId>
-      <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
       <scope>test</scope>
     </dependency>
 

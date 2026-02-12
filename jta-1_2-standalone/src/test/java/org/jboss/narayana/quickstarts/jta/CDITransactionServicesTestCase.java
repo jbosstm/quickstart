@@ -1,20 +1,19 @@
 package org.jboss.narayana.quickstarts.jta;
 
-import jakarta.transaction.Status;
-import jakarta.transaction.SystemException;
-import jakarta.transaction.TransactionManager;
-import jakarta.transaction.TransactionalException;
-
 import org.jboss.narayana.quickstarts.jta.cdi.CDITransactionServices;
 import org.jboss.narayana.quickstarts.jta.cdi.CDITransactionsProducers;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.jboss.weld.transaction.spi.TransactionServices;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import jakarta.transaction.Status;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionalException;
 
 /**
  * <p>
@@ -40,7 +39,7 @@ public class CDITransactionServicesTestCase {
     private Counter counter;
     private EventsCounter lifeCycleCounter;
 
-    @Before
+    @BeforeEach
     public void before() throws Exception {
         // Initialize Weld container
         weld = new Weld()
@@ -56,7 +55,7 @@ public class CDITransactionServicesTestCase {
         transactionManager = weldContainer.select(TransactionManager.class).get();
     }
 
-    @After
+    @AfterEach
     public void after() throws SystemException {
         // cleaning the transaction state in case of an error
         if(transactionManager.getTransaction() != null
@@ -74,21 +73,21 @@ public class CDITransactionServicesTestCase {
     public void testTransactionScoped() throws Exception {
         transactionManager.begin();
 
-        Assert.assertTrue("Expected the @Initialized scope event to be thrown",
-                lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Initialized"),
+                "Expected the @Initialized scope event to be thrown");
         
-        Assert.assertEquals(0, counter.get());
+        Assertions.assertEquals(0, counter.get());
         requiredManager.incrementCounter();
-        Assert.assertEquals(1, counter.get());
+        Assertions.assertEquals(1, counter.get());
 
         transactionManager.commit();
 
-        Assert.assertTrue("Expected the @Destroy scope event to be thrown",
-                lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"));
+        Assertions.assertTrue(lifeCycleCounter.containsEvent("RequiredCounterManager.*Destroyed"),
+                "Expected the @Destroy scope event to be thrown");
 
-        Assert.assertFalse("Expected the Transactional observer failed and event was not proccessed correctly "
-                + " as the Counter is in @Transactional scope.",
-                lifeCycleCounter.containsEvent(TransactionServices.class.getName()));
+        Assertions.assertFalse(lifeCycleCounter.containsEvent(TransactionServices.class.getName()),
+                "Expected the Transactional observer failed and event was not proccessed correctly "
+				        + " as the Counter is in @Transactional scope.");
     }
 
 }

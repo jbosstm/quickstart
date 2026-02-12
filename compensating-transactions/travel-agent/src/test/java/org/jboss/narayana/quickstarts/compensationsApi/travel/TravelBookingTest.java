@@ -1,30 +1,27 @@
 package org.jboss.narayana.quickstarts.compensationsApi.travel;
 
-import com.arjuna.mw.wst11.UserBusinessActivity;
-import com.arjuna.mw.wst11.UserBusinessActivityFactory;
-import junit.framework.Assert;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.narayana.quickstarts.compensationsApi.hotel.HotelServiceImpl;
-import org.jboss.narayana.quickstarts.compensationsApi.taxi1.Taxi1ServiceImpl;
-import org.jboss.narayana.quickstarts.compensationsApi.taxi2.Taxi2ServiceImpl;
-import org.jboss.shrinkwrap.api.ArchivePaths;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import jakarta.inject.Inject;
-
 import java.io.File;
 import java.util.Date;
 
-@RunWith(Arquillian.class)
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.narayana.quickstarts.compensationsApi.hotel.HotelServiceImpl;
+import org.jboss.narayana.quickstarts.compensationsApi.taxi1.Taxi1ServiceImpl;
+import org.jboss.narayana.quickstarts.compensationsApi.taxi2.Taxi2ServiceImpl;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.arjuna.mw.wst11.UserBusinessActivity;
+import com.arjuna.mw.wst11.UserBusinessActivityFactory;
+
+import jakarta.inject.Inject;
+
+@ExtendWith(ArquillianExtension.class)
 public class TravelBookingTest {
 
     @Inject
@@ -53,15 +50,15 @@ public class TravelBookingTest {
 
         TravelBookingResult travelBookingResult = client.makeBooking("Paul", new Date(System.currentTimeMillis()));
 
-        Assert.assertTrue(travelBookingResult.getHotelBookingId() != null);
-        Assert.assertTrue(travelBookingResult.getTaxi1BookingId() == null);
-        Assert.assertTrue(travelBookingResult.getTaxi2BookingId() != null);
+        Assertions.assertTrue(travelBookingResult.getHotelBookingId() != null);
+        Assertions.assertTrue(travelBookingResult.getTaxi1BookingId() == null);
+        Assertions.assertTrue(travelBookingResult.getTaxi2BookingId() != null);
     }
 
     /**
      * Utility method for cancelling a Business Activity if it is currently active.
      */
-    @After
+    @AfterEach
     public void cancelIfActive() {
 
         try {
