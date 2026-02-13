@@ -1,0 +1,66 @@
+# Automatically approve and merge Dependabot PRs for minor and patch updates
+name: Dependabot auto-merge
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    steps:
+      - name: Check if dependency should be excluded
+        id: check_exclusion
+        run: |
+          # List of dependencies to exclude from auto-merge
+          # Add package names as they appear in the dependency-name metadata
+          EXCLUDED_DEPS=(
+            # "org.example:example-artifact"
+            # "com.example:another-dependency"
+          )
+
+          DEPENDENCY_NAME="${{ github.event.pull_request.title }}"
+          echo "Checking dependency: $DEPENDENCY_NAME"
+
+          EXCLUDED=false
+          for dep in "${EXCLUDED_DEPS[@]}"; do
+            # Skip empty lines and comments
+            [[ -z "$dep" || "$dep" =~ ^#.*$ ]] && continue
+
+            if [[ "$DEPENDENCY_NAME" == *"$dep"* ]]; then
+              echo "Dependency '$dep' is excluded from auto-merge"
+              EXCLUDED=true
+              break
+            fi
+          done
+
+          echo "excluded=$EXCLUDED" >> $GITHUB_OUTPUT
+          echo "Excluded: $EXCLUDED"
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Approve Dependabot PR
+        if: steps.check_exclusion.outputs.excluded == 'false'
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        if: steps.check_exclusion.outputs.excluded == 'false' && (steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor')
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip auto-merge for excluded dependency
+        if: steps.check_exclusion.outputs.excluded == 'true'
+        run: |
+          echo "This dependency is excluded from auto-merge. Manual review required."
+          echo "PR will remain open for manual review and approval."
