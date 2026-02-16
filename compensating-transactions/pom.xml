@@ -20,7 +20,6 @@
 
   <properties>
     <sortpom.skip>false</sortpom.skip>
-    <version.junit-platform-launcher>1.14.2</version.junit-platform-launcher>
   </properties>
 
   <build>

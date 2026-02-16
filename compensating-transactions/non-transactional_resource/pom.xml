@@ -53,19 +53,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>${version.jupiter5}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${version.jupiter5}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-launcher</artifactId>
-      <version>${version.junit-platform-launcher}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
