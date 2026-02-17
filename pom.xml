@@ -170,7 +170,7 @@
         <version.jakarta.validation>3.0.2</version.jakarta.validation>
 <!--        quickstarts using arquillian-junit5-container must use junit 5 still-->
 		<version.jupiter5>5.14.2</version.jupiter5>
-        <version.jupiter>6.0.2</version.jupiter>
+        <version.jupiter>6.0.3</version.jupiter>
         <version.maven-compiler-plugin>3.15.0</version.maven-compiler-plugin>
         <version.nimbus.jose.jwt>10.7</version.nimbus.jose.jwt>
         <version.org.apache.logging.log4j>2.25.3</version.org.apache.logging.log4j>
