@@ -109,7 +109,6 @@
 		<dependency>
     		<groupId>org.slf4j</groupId>
     		<artifactId>slf4j-api</artifactId>
-    		<version>2.0.17</version>
     		<scope>compile</scope>
 		</dependency>
         <!-- JUnit test framework -->
