@@ -194,7 +194,7 @@
         <version.resteasy>6.2.2.Final</version.resteasy>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
         <!--         Using an older plugin version to have compatibility with older maven version -->
-        <version.surefire.plugin>3.5.4</version.surefire.plugin>
+        <version.surefire.plugin>3.5.5</version.surefire.plugin>
         <version.war.plugin>3.5.1</version.war.plugin>
         <version.weld>6.0.4.Final</version.weld>
 
