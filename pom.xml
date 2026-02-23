@@ -165,7 +165,7 @@
         <version.ear.plugin>3.4.0</version.ear.plugin>
         <version.exec-maven-plugin>3.6.3</version.exec-maven-plugin>
         <version.glassfish.corba.omgapi>5.0.0</version.glassfish.corba.omgapi>
-        <version.hibernate>7.2.4.Final</version.hibernate>
+        <version.hibernate>7.2.5.Final</version.hibernate>
         <version.jakarta.servlet.jstl>3.0.0</version.jakarta.servlet.jstl>
         <version.jakarta.validation>3.0.2</version.jakarta.validation>
         <version.jupiter>6.0.3</version.jupiter>
