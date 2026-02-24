@@ -1,5 +1,9 @@
 package org.jboss.jbossts.xts.demotest;
 
+import java.net.URL;
+import java.time.Duration;
+import java.util.zip.ZipFile;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit5.ArquillianExtension;
@@ -9,18 +13,11 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
-import java.util.concurrent.TimeUnit;
-
-import java.net.URL;
-import java.util.zip.ZipFile;
+import org.jboss.arquillian.drone.webdriver.htmlunit.DroneHtmlUnitDriver;
 
 /**
  * Basic tests for XTS demo application.
@@ -44,7 +41,7 @@ public class XTSDemoTest {
 
 
     @Drone
-    private HtmlUnitDriver driver;
+    private DroneHtmlUnitDriver driver;
 
     // Load context path to the test
     @ArquillianResource
@@ -85,7 +82,7 @@ public class XTSDemoTest {
         log.info("contextPath = " + contextPath);
         driver.get(contextPath + "/" + DEMO_APP_CONTEXT + "/");
 
-        driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_S, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(IMPLICIT_WAIT_S));
         driver.findElement(TX_TYPE_FIELD);
         log.info("driver.getTitle() = " + driver.getTitle());
 
@@ -101,11 +98,11 @@ public class XTSDemoTest {
 
         String resultTableTitle = driver.findElement(RESULT_TABLE_TITLE_XP).getText();
         log.info("resultTableTitle = " + resultTableTitle);
-        Assert.assertTrue("Page does not contain any results!", resultTableTitle.contains(RESULT_TITLE));
+        Assertions.assertTrue(resultTableTitle.contains(RESULT_TITLE), "Page does not contain any results!");
 
         String resultTableContent = driver.findElement(RESULT_TABLE_CONTENT_XP).getText();
         log.info("resultTableContent = " + resultTableContent);
-        Assert.assertTrue("Transaction failed with: " + resultTableContent, resultTableContent.contains(TRANSACTION_FINISHED));
+        Assertions.assertTrue(resultTableContent.contains(TRANSACTION_FINISHED), "Transaction failed with: " + resultTableContent);
     }
 
 }
