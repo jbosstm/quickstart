@@ -17,7 +17,7 @@
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <narayana.nodename.property>CoreEnvironmentBean.nodeIdentifier</narayana.nodename.property>
     <quarkus.http.port>8080</quarkus.http.port>
-    <surefire-plugin.version>3.5.4</surefire-plugin.version>
+    <surefire-plugin.version>3.5.5</surefire-plugin.version>
   </properties>
 
   <dependencyManagement>
