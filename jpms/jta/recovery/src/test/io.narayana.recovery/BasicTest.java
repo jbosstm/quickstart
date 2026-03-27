@@ -49,6 +49,7 @@ public class BasicTest {
         try {
             recovery.start();
             recovery.addHelper(helper);
+            recovery.scan();
             recovery.stop();
             assertTrue("XAResourceRecoveryHelper was not used", helperCalled.get());
         } catch (RecoveryException e) {
