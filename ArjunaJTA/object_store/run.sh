@@ -27,3 +27,13 @@ mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JDBCStoreEx
 if [ "$?" != "0" ]; then
 	exit -1
 fi
+
+mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanSlotStoreConfigExample $NARAYANA_VERSION_PARAM
+if [ "$?" != "0" ]; then
+	exit -1
+fi
+
+mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanSlotStoreExample $NARAYANA_VERSION_PARAM
+if [ "$?" != "0" ]; then
+	exit -1
+fi
