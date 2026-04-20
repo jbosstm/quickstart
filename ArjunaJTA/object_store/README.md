@@ -11,6 +11,11 @@ to cater for various application requirements.
 3. VolatileStoreExample shows how to use an unsafe (because it does not persist logs in the event of
    failures and therefore does not support recovery) in-memory log store implementation.
 4. JDBCStoreExample shows how to use a database for persisting transaction logs. This example uses [H2](https://www.h2database.com/).
+5. InfinispanSlotStore shows how to use the Infinispan backed slot store. Two examples are provided,
+   one showing how to configure the store programmatically and the other uses a jbossts properties file.
+
+> **Warning**
+> The InfinispanSlotStore store is an experimental feature. It is not recommended for production systems and may contain breaking changes in future releases. The ARJUNA012419 warning message is printed in the logs when the feature is used.
 
 ## Usage
 
@@ -25,6 +30,8 @@ mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.Vol
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.HornetqStoreExample
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.FileStoreExample
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JDBCStoreExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanStoreExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanStoreConfigExample
 ```
 
 The JDBCStore can be configured programmatically or via a properties file. To use the properties file pass the argument `-DUSE_JBOSSTS_PROPERTIES=true` on the command line.
@@ -32,6 +39,13 @@ The JDBCStore can be configured programmatically or via a properties file. To us
 ## Expected output
 
 When running examples one at a time look for the output
+
+```
+DummyXAResource commit() called
+DummyXAResource commit() called
+```
+
+which indicates that bother resources were asked to commit, followed by
 
 ```
 [INFO] BUILD SUCCESS

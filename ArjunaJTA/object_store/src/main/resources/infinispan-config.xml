@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinispan:config:16.0 http://www.infinispan.org/schemas/infinispan-config-16.0.xsd"
+        xmlns="urn:infinispan:config:16.0">
+
+    <jgroups>
+        <stack-file name="udp-stack" path="jgroups.xml" />
+    </jgroups>
+
+    <cache-container default-cache="sharedCache">
+        <transport stack="udp-stack" node-name="${nodeName}" />
+        <distributed-cache name="sharedCache">
+            <!-- file-based store to the cache that implicitly uses write-through mode -->
+            <persistence>
+                <file-store>
+                    <data path="infinispan-caches/data"/>
+                    <index path="infinispan-caches/index"/>
+                </file-store>
+            </persistence>
+        </distributed-cache>
+    </cache-container>
+</infinispan>
