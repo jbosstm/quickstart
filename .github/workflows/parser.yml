@@ -101,7 +101,12 @@ jobs:
             core.setOutput('jdk_versions', JSON.stringify(jdk_versions));
             
             const possibleEnvVars = [
-              'WILDFLY_RELEASE_VERSION'
+              'WILDFLY_RELEASE_VERSION',
+              'NARAYANA_REPO',
+              'NARAYANA_BRANCH',
+              'NY_BRANCH',
+              'LRA_REPO',
+              'LRA_BRANCH'
             ];
             
             const extractedEnvVars = {};
