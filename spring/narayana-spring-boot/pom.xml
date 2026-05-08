@@ -64,12 +64,12 @@
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>narayana-spring-boot-core</artifactId>
-            <version>4.0.0</version>
+            <version>${version.dev.snowdrop.narayana-spring-boot}</version>
         </dependency>
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>narayana-spring-boot-starter</artifactId>
-            <version>4.0.0</version>
+            <version>${version.dev.snowdrop.narayana-spring-boot}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -77,7 +77,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>artemis-jms-server</artifactId>
+            <artifactId>artemis-jakarta-server</artifactId>
             <version>2.43.0</version>
             <exclusions>
               <exclusion>

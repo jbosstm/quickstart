@@ -91,12 +91,12 @@
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>narayana-spring-boot-core</artifactId>
-            <version>4.0.0</version>
+            <version>${version.dev.snowdrop.narayana-spring-boot}</version>
         </dependency>
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>narayana-spring-boot-starter</artifactId>
-            <version>4.0.0</version>
+            <version>${version.dev.snowdrop.narayana-spring-boot}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

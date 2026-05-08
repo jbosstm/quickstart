@@ -2,7 +2,7 @@ package org.jboss.narayana.quickstart.spring;
 
 import org.apache.activemq.artemis.api.core.SimpleString;
 import org.apache.activemq.artemis.core.settings.impl.AddressSettings;
-import org.springframework.boot.autoconfigure.jms.artemis.ArtemisConfigurationCustomizer;
+import org.springframework.boot.artemis.autoconfigure.ArtemisConfigurationCustomizer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
