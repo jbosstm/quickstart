@@ -1,18 +1,19 @@
 package org.jboss.narayana.quickstart.spring;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Unit tests for the PortfolioController.
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class PortfolioControllerTests {
 
@@ -38,53 +39,60 @@ public class PortfolioControllerTests {
     @Autowired
     private PortfolioController portfolioController;
 
-    @Before
+    @BeforeEach
     public void before() {
         initUser();
         initShare();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testBuyWithNotExistingUser() {
-        portfolioController.buy(USERNAME + "_", SYMBOL, 1);
+        assertThrows(IllegalArgumentException.class, () ->
+                portfolioController.buy(USERNAME + "_", SYMBOL, 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testBuyNotExistingShare() {
-        portfolioController.buy(USERNAME, SYMBOL + "_", 1);
+        assertThrows(IllegalArgumentException.class, () ->
+                portfolioController.buy(USERNAME, SYMBOL + "_", 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testBuyOverBudget() {
-        portfolioController.buy(USERNAME, SYMBOL, AMOUNT);
+        assertThrows(IllegalArgumentException.class, () ->
+                portfolioController.buy(USERNAME, SYMBOL, AMOUNT));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testBuyOverAmount() {
-        portfolioController.buy(USERNAME, SYMBOL, AMOUNT + 1);
+        assertThrows(IllegalArgumentException.class, () ->
+                portfolioController.buy(USERNAME, SYMBOL, AMOUNT + 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSellWithNotExistingUser() {
-        portfolioController.sell(USERNAME + "_", SYMBOL, 1);
+        assertThrows(IllegalArgumentException.class, () ->
+                portfolioController.sell(USERNAME + "_", SYMBOL, 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSellNotExistingShare() {
-        portfolioController.sell(USERNAME, SYMBOL + "_", 1);
+        assertThrows(IllegalArgumentException.class, () ->
+                portfolioController.sell(USERNAME, SYMBOL + "_", 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSellOverAmount() {
-        portfolioController.sell(USERNAME, SYMBOL, 1);
+        assertThrows(IllegalArgumentException.class, () ->
+                portfolioController.sell(USERNAME, SYMBOL, 1));
     }
 
     @Test
     public void testBuyAndSell() {
         portfolioController.buy(USERNAME, SYMBOL, 1);
-        User user = userRepository.getOne(USERNAME);
+        User user = userRepository.findById(USERNAME).orElseThrow();
         assertEquals(BUDGET - PRICE, user.getBudget());
-        Share share = shareRepository.getOne(SYMBOL);
+        Share share = shareRepository.findById(SYMBOL).orElseThrow();
         assertEquals(AMOUNT - 1, share.getAmount());
         PortfolioEntry portfolioEntry = portfolioEntryRepository.findByUserAndShare(user, share);
         assertEquals(1, portfolioEntry.getAmount());

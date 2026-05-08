@@ -17,100 +17,142 @@
     <name>camel-with-narayana-spring-boot</name>
     <description>Demo project for Spring Boot</description>
 
+    <properties>
+        <modular.jdk.args>--add-opens=java.base/java.lang=ALL-UNNAMED</modular.jdk.args>
+        <camel.version>4.18.1</camel.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.org.springframework.boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.narayana.jta</groupId>
+                <artifactId>jdbc</artifactId>
+                <version>${version.org.jboss.narayana}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.narayana.jta</groupId>
+                <artifactId>jms</artifactId>
+                <version>${version.org.jboss.narayana}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.narayana.jta</groupId>
+                <artifactId>jta</artifactId>
+                <version>${version.org.jboss.narayana}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.narayana.jts</groupId>
+                <artifactId>narayana-jts-integration</artifactId>
+                <version>${version.org.jboss.narayana}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>${spring.version}</version>
+            <version>${version.org.springframework.boot}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-             <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-activemq</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring-boot-starter</artifactId>
-            <version>${camel.version}</version>
+            <version>${version.org.springframework.boot}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jta-narayana</artifactId>
-            <version>${spring.version}</version>
+            <version>${version.org.springframework.boot}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-artemis</artifactId>
-            <version>${spring.version}</version>
+            <version>${version.org.springframework.boot}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>artemis-jms-server</artifactId>
+            <artifactId>artemis-jakarta-server</artifactId>
             <version>2.43.0</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-jms</artifactId>
+            <groupId>dev.snowdrop</groupId>
+            <artifactId>narayana-spring-boot-core</artifactId>
+            <version>${version.dev.snowdrop.narayana-spring-boot}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.snowdrop</groupId>
+            <artifactId>narayana-spring-boot-starter</artifactId>
+            <version>${version.dev.snowdrop.narayana-spring-boot}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.camel</groupId>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-jms-starter</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-jpa-starter</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>${version.commons-dbcp2}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>${version.commons-pool2}</version>
-        </dependency>
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring.version}</version>
+            <version>${version.org.springframework.boot}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${version.jupiter}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${version.org.springframework.boot}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <skip>false</skip>
+                    <argLine>${modular.jdk.args}</argLine>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 </configuration>
             </plugin>
@@ -132,7 +174,7 @@
                     <plugin>
                         <artifactId>exec-maven-plugin</artifactId>
                         <groupId>org.codehaus.mojo</groupId>
-                        <version>3.1.0</version>
+                        <version>${version.exec-maven-plugin}</version>
                         <executions>
                             <execution>
                                 <id>Run tests</id>

@@ -1,10 +1,10 @@
-#/bin/bash
+#!/bin/bash
 MAX=10
 
 function check_application_alive() {
     for (( i = 0; i < $MAX ; i ++ ))
     do
-        STATUS=$(curl -s http://localhost:8080/health | grep UP)
+        STATUS=$(curl -s http://localhost:8080/actuator/health | grep UP)
         if [ ! -z "$STATUS" ]; then
             break;
         fi
@@ -41,7 +41,6 @@ if [ ! -z "$STATUS" ]; then
         echo "Done"
         curl -s http://localhost:8080/users
         echo "Application Shutdown"
-        curl -X POST -s http://localhost:8080/shutdown 1>/dev/null 2>&1
+        curl -X POST -s http://localhost:8080/actuator/shutdown 1>/dev/null 2>&1
     fi
 fi
-
