@@ -51,10 +51,10 @@ function int_env {
   export -f timeout_adjust || echo "Function timeout_adjust won't be used in the subshells as it can't be exported"
   NARAYANA_REPO=${NARAYANA_REPO:-jbosstm}
   NARAYANA_BRANCH="${NARAYANA_BRANCH:-main}"
-  QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-7.3.4.Final-SNAPSHOT}
+  QUICKSTART_NARAYANA_VERSION=${QUICKSTART_NARAYANA_VERSION:-$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout)}
   REDUCE_SPACE=${REDUCE_SPACE:-0}
+  NARAYANA_CURRENT_VERSION=${NARAYANA_CURRENT_VERSION:-$QUICKSTART_NARAYANA_VERSION}
 
-  [ $NARAYANA_CURRENT_VERSION ] || export NARAYANA_CURRENT_VERSION="7.3.4.Final-SNAPSHOT"
 }
 
 function build_narayana {
