@@ -19,9 +19,8 @@
   <dependencies>
     <!-- Embedded Artemis ActiveMQ -->
     <dependency>
-      <groupId>org.apache.activemq</groupId>
+      <groupId>org.apache.artemis</groupId>
       <artifactId>artemis-jakarta-server</artifactId>
-      <version>2.44.0</version>
     </dependency>
     <dependency>
       <groupId>jakarta.jms</groupId>
