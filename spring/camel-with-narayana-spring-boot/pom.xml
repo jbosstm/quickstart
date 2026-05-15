@@ -19,7 +19,7 @@
 
     <properties>
         <modular.jdk.args>--add-opens=java.base/java.lang=ALL-UNNAMED</modular.jdk.args>
-        <camel.version>4.18.1</camel.version>
+        <camel.version>4.20.0</camel.version>
     </properties>
 
     <dependencyManagement>
