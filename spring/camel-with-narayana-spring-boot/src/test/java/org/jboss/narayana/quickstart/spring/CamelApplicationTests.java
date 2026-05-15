@@ -14,23 +14,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 public class CamelApplicationTests {
-    @Autowired
-    private JmsTemplate jmsTemplate;
+	@Autowired
+	private JmsTemplate jmsTemplate;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Test
 	public void testCommit() throws Exception {
-        jmsTemplate.convertAndSend("foo", "test");
-        Thread.sleep(1 * 1000);
-        assertEquals(1, userRepository.count());
-    }
+		long initialCount = userRepository.count();
+		jmsTemplate.convertAndSend("foo", "test");
+		Thread.sleep(1 * 1000);
+		assertEquals(initialCount + 1, userRepository.count());
+	}
 
-    @Test
-    public void testRollback() throws Exception {
-        jmsTemplate.convertAndSend("foo", "bad");
-        Thread.sleep(1 * 1000);
-        assertEquals(0, userRepository.count());
-    }
+	@Test
+	public void testRollback() throws Exception {
+		long initialCount = userRepository.count();
+		jmsTemplate.convertAndSend("foo", "bad");
+		Thread.sleep(1 * 1000);
+		assertEquals(initialCount, userRepository.count());
+	}
 }
