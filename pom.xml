@@ -189,7 +189,7 @@
         <version.dev.snowdrop.narayana-spring-boot>4.0.0</version.dev.snowdrop.narayana-spring-boot>
         <version.org.springframework.boot>4.0.6</version.org.springframework.boot>
         <version.org.springframwork>7.0.7</version.org.springframwork>
-        <version.plugin.maven.dependency>3.10.0</version.plugin.maven.dependency>
+        <version.plugin.maven.dependency>3.11.0</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
         <version.resteasy>6.2.2.Final</version.resteasy>
