@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LRA AI Assistant</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #f4f4f4; display: flex; flex-direction: column; height: 100vh; }
+    header { background: #1a1a2e; color: #eee; padding: 14px 20px; font-size: 1.1rem; }
+    header span { color: #e94560; font-weight: bold; }
+    #chat { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .msg { max-width: 80%; padding: 10px 14px; border-radius: 12px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+    .user      { align-self: flex-end; background: #1a1a2e; color: #eee; border-bottom-right-radius: 2px; }
+    .assistant { align-self: flex-start; background: #fff; border: 1px solid #ddd; border-bottom-left-radius: 2px; }
+    .assistant.streaming::after { content: '▍'; animation: blink .7s step-end infinite; margin-left: 1px; }
+    .error     { align-self: flex-start; background: #ffe0e0; border: 1px solid #f88; color: #900; }
+    @keyframes blink { 50% { opacity: 0; } }
+    #form { display: flex; gap: 8px; padding: 12px 16px; background: #fff; border-top: 1px solid #ddd; }
+    #input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; resize: none; }
+    #send { padding: 10px 20px; background: #e94560; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+    #send:disabled { background: #aaa; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <header>LRA <span>AI</span> Assistant — Narayana LRA Coordinator Diagnostics</header>
+  <div id="chat">
+    <div class="msg assistant">Hello! I can help you diagnose and manage your Narayana LRA coordinator.
+
+Try asking:
+• "Show me all active LRAs"
+• "Are there any stuck or failed transactions?"
+• "Why is LRA &lt;paste-lra-id&gt; stuck?"
+• "Cancel LRA &lt;paste-lra-id&gt;"</div>
+  </div>
+  <div id="form">
+    <textarea id="input" rows="2" placeholder="Ask about your LRA coordinator state…"></textarea>
+    <button id="send">Send</button>
+  </div>
+  <script>
+    const chat  = document.getElementById('chat');
+    const input = document.getElementById('input');
+    const send  = document.getElementById('send');
+
+    function addMsg(text, cls) {
+      const el = document.createElement('div');
+      el.className = 'msg ' + cls;
+      el.textContent = text;
+      chat.appendChild(el);
+      chat.scrollTop = chat.scrollHeight;
+      return el;
+    }
+
+    async function submit() {
+      const msg = input.value.trim();
+      if (!msg) return;
+      input.value = '';
+      send.disabled = true;
+
+      addMsg(msg, 'user');
+      const reply = addMsg('', 'assistant streaming');
+
+      try {
+        const res = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: msg })
+        });
+
+        if (!res.ok) {
+          reply.textContent = 'Error ' + res.status + ': ' + await res.text();
+          reply.className = 'msg error';
+          return;
+        }
+
+        const reader  = res.body.getReader();
+        const decoder = new TextDecoder();
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          // Plain text/plain chunked stream — append raw bytes directly.
+          // No SSE parsing: SSE's data: framing strips spaces and loses newlines
+          // when the encoder splits multi-line tokens into multiple data: fields.
+          reply.textContent += decoder.decode(value, { stream: true });
+          chat.scrollTop = chat.scrollHeight;
+        }
+      } catch (e) {
+        reply.textContent = 'Network error: ' + e.message;
+        reply.className = 'msg error';
+      } finally {
+        reply.classList.remove('streaming'); // stop cursor blink
+        send.disabled = false;
+        input.focus();
+      }
+    }
+
+    send.addEventListener('click', submit);
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submit(); }
+    });
+  </script>
+</body>
+</html>
