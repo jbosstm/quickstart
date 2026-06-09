@@ -52,11 +52,12 @@ brew install ollama
 # Linux
 curl -fsSL https://ollama.com/install.sh | sh
 
+# Start the server (if not already running as a service)
+ollama serve &
+
 # Pull the configured model
 ollama pull llama3.1
 
-# Start the server (if not already running as a service)
-ollama serve
 ```
 
 > **Tool-calling requirement:** The LLM must support Ollama's tool-calling API.
