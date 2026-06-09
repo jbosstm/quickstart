@@ -30,8 +30,8 @@ mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.Vol
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.HornetqStoreExample
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.FileStoreExample
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JDBCStoreExample
-mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanStoreExample
-mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanStoreConfigExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanSlotStoreExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanSlotStoreConfigExample
 ```
 
 The JDBCStore can be configured programmatically or via a properties file. To use the properties file pass the argument `-DUSE_JBOSSTS_PROPERTIES=true` on the command line.
