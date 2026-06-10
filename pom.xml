@@ -187,7 +187,7 @@
         <version.org.jboss.threads>2.3.2.Final</version.org.jboss.threads>
 
         <version.dev.snowdrop.narayana-spring-boot>4.0.0</version.dev.snowdrop.narayana-spring-boot>
-        <version.org.springframework.boot>4.0.6</version.org.springframework.boot>
+        <version.org.springframework.boot>4.1.0</version.org.springframework.boot>
         <version.org.springframwork>7.0.8</version.org.springframwork>
         <version.plugin.maven.dependency>3.11.0</version.plugin.maven.dependency>
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
