@@ -42,6 +42,8 @@ mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGr
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreClusterExample  -Dexec.args="node2" -Djgroups.bind_port=7801
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreConfigExample
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreClusterExample  -Dexec.args="node1" -Djgroups.bind_port=7800
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreClusterExample  -Dexec.args="node2" -Djgroups.bind_port=7801
 ```
 
 The JDBCStore can be configured programmatically or via a properties file. To use the properties file pass the argument `-DUSE_JBOSSTS_PROPERTIES=true` on the command line.
