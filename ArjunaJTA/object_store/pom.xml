@@ -38,12 +38,20 @@
       <groupId>org.apache.artemis</groupId>
       <artifactId>artemis-journal</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.jgroups</groupId>
+      <artifactId>jgroups-raft</artifactId>
+    </dependency>
     <!-- JDBCStore dependency on h2 -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>compile</scope>
     </dependency>
+      <dependency>
+          <groupId>org.jboss.narayana.arjunacore</groupId>
+          <artifactId>arjuna</artifactId>
+      </dependency>
   </dependencies>
 
   <profiles>

@@ -1,0 +1,15 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
+    <entry key="ObjectStoreEnvironmentBean.objectStoreType">com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreAdaptor</entry>
+    <entry key="ObjectStoreEnvironmentBean.stateStore.objectStoreType">com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreAdaptor</entry>
+    <entry key="ObjectStoreEnvironmentBean.communicationStore.objectStoreType">com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreAdaptor</entry>
+
+    <entry key="SlotStoreEnvironmentBean.backingSlotsClassName">com.arjuna.ats.internal.arjuna.objectstore.slot.jgroups.JGroupsSlots</entry>
+
+    <entry key="JGroupsStoreEnvironmentBean.experimentalEnabled">true</entry>
+    <entry key="JGroupsStoreEnvironmentBean.nodeAddress">node1</entry>
+    <entry key="JGroupsStoreEnvironmentBean.cacheName">replCache</entry>
+    <!-- JGroups resolves config files as classpath resources without a leading slash -->
+    <entry key="JGroupsStoreEnvironmentBean.jGroupsConfigFileName">jgroups-config.xml</entry>
+</properties>
