@@ -37,3 +37,23 @@ mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanS
 if [ "$?" != "0" ]; then
 	exit -1
 fi
+
+mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreConfigExample $NARAYANA_VERSION_PARAM
+if [ "$?" != "0" ]; then
+	exit -1
+fi
+
+mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreExample $NARAYANA_VERSION_PARAM
+if [ "$?" != "0" ]; then
+	exit -1
+fi
+
+mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreConfigExample $NARAYANA_VERSION_PARAM
+if [ "$?" != "0" ]; then
+	exit -1
+fi
+
+mvn -e exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreExample $NARAYANA_VERSION_PARAM
+if [ "$?" != "0" ]; then
+	exit -1
+fi
