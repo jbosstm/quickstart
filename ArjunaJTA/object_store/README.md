@@ -13,9 +13,12 @@ to cater for various application requirements.
 4. JDBCStoreExample shows how to use a database for persisting transaction logs. This example uses [H2](https://www.h2database.com/).
 5. InfinispanSlotStore shows how to use the Infinispan backed slot store. Two examples are provided,
    one showing how to configure the store programmatically and the other uses a jbossts properties file.
+6. JGroupsSlotStore shows the JGroups backed store with and without write ahead logging
+7. JGroupsSlotStoreClusterExample shows how to run a two node cluster with record sharing
+8. JGroupsRaftSlotStore shows the JGroups+RAFT backed store
 
 > **Warning**
-> The InfinispanSlotStore store is an experimental feature. It is not recommended for production systems and may contain breaking changes in future releases. The ARJUNA012419 warning message is printed in the logs when the feature is used.
+> InfinispanSlotStore, JGroupsSlotStore and JGroupsRaftSlotStore are experimental features. They are not recommended for production systems and may contain breaking changes in future releases and the warning messages ARJUNA012419, ARJUNA012423 and ARJUNA012425, respectively, warning messages are printed in the logs if any of the features are used.
 
 ## Usage
 
@@ -33,6 +36,12 @@ mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JDB
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanSlotStoreExample
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.InfinispanSlotStoreConfigExample
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreConfigExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreWALRecoveryExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreClusterExample  -Dexec.args="node1" -Djgroups.bind_port=7800
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsSlotStoreClusterExample  -Dexec.args="node2" -Djgroups.bind_port=7801
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreConfigExample
+mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreExample
 ```
 
 The JDBCStore can be configured programmatically or via a properties file. To use the properties file pass the argument `-DUSE_JBOSSTS_PROPERTIES=true` on the command line.
@@ -46,7 +55,7 @@ DummyXAResource commit() called
 DummyXAResource commit() called
 ```
 
-which indicates that bother resources were asked to commit, followed by
+which indicates that both resources were asked to commit, followed by
 
 ```
 [INFO] BUILD SUCCESS
