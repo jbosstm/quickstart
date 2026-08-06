@@ -94,7 +94,7 @@ class ClusterExampleSupport {
                 } while (!uid.equals(Uid.nullUid()));
             }
         } catch (Exception e) {
-            log("Error scanning recovery store: %s", e.getMessage());
+            log("Error scanning recovery store: %s", e);
         }
 
         return uids;

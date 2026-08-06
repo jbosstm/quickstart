@@ -31,16 +31,15 @@ public class JGroupsRaftSlotStoreExample {
 
     public static void main(String[] args) throws Exception {
         setupStore();
+        try {
+            UserTransaction utx = com.arjuna.ats.jta.UserTransaction.userTransaction();
 
-        UserTransaction utx = com.arjuna.ats.jta.UserTransaction.userTransaction();
-
-        utx.begin();
-        Util.enlistResources();
-        utx.commit();
-
-        shutdownStore();
-
-        System.exit(0);
+            utx.begin();
+            Util.enlistResources();
+            utx.commit();
+        } finally {
+            shutdownStore();
+        }
     }
 
     public static void setupStore() {
