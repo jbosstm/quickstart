@@ -13,6 +13,9 @@ import com.arjuna.ats.internal.arjuna.objectstore.slot.jgroups.JGroupsStoreEnvir
 import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
 import org.jgroups.blocks.ReplCache;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Demonstrates a cluster of transaction managers sharing a JGroups
  * ReplCache-backed object store. When a node has in-doubt transactions,
@@ -75,19 +78,26 @@ public class JGroupsSlotStoreClusterExample {
         config.setReplicationCount((short) -1);
 
         if (!support.isNode1()) {
-            // ReplCache migrateData is asynchronous: replicated entries arrive
-            // after cache.start() returns. Pre-start the cache and poll until
-            // the entries are present, so JGroupsSlots.load() sees them.
+            // ReplCache data migration runs asynchronously after the view
+            // change (100ms timer in viewAccepted). Pre-start the cache so
+            // that migrated entries are present in the L2 cache before
+            // JGroupsSlots.init() reads keys — otherwise init() generates
+            // fresh keys that don't match the migrated data. Stop the cache
+            // after transfer so init()'s own start() connects cleanly
+            // without leaking a second JChannel (start is not idempotent).
             ReplCache<ByteArrayKey, byte[]> cache = config.getCache();
+            CountDownLatch dataArrived = new CountDownLatch(1);
+            ReplCache.ChangeListener listener = dataArrived::countDown;
+            cache.addChangeListener(listener);
             cache.start();
 
-            long deadline = System.currentTimeMillis() + 10_000;
-            while (cache.getL2Cache().getInternalMap().isEmpty()
-                    && System.currentTimeMillis() < deadline) {
-                Thread.sleep(200);
+            if (!dataArrived.await(10, TimeUnit.SECONDS)) {
+                support.log("Warning: timed out waiting for state transfer");
             }
-            support.log("State transfer complete: %d cache entries",
-                    cache.getL2Cache().getInternalMap().size());
+            int entryCount = cache.getL2Cache().getSize();
+            cache.removeChangeListener(listener);
+            cache.stop();
+            support.log("State transfer complete: %d cache entries", entryCount);
         }
 
         BeanPopulator.getDefaultInstance(ObjectStoreEnvironmentBean.class)
