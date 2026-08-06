@@ -91,13 +91,15 @@ public class JGroupsSlotStoreClusterExample {
             cache.addChangeListener(listener);
             cache.start();
 
-            if (!dataArrived.await(10, TimeUnit.SECONDS)) {
-                support.log("Warning: timed out waiting for state transfer");
-            }
+            boolean transferred = dataArrived.await(10, TimeUnit.SECONDS);
             int entryCount = cache.getL2Cache().getSize();
             cache.removeChangeListener(listener);
             cache.stop();
-            support.log("State transfer complete: %d cache entries", entryCount);
+            if (transferred) {
+                support.log("State transfer complete: %d cache entries", entryCount);
+            } else {
+                support.log("WARN: state transfer timed out after 10 s (%d cache entries)", entryCount);
+            }
         }
 
         BeanPopulator.getDefaultInstance(ObjectStoreEnvironmentBean.class)
