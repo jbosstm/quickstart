@@ -1,0 +1,14 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
+    <entry key="ObjectStoreEnvironmentBean.objectStoreType">com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreAdaptor</entry>
+    <entry key="ObjectStoreEnvironmentBean.stateStore.objectStoreType">com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreAdaptor</entry>
+    <entry key="ObjectStoreEnvironmentBean.communicationStore.objectStoreType">com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreAdaptor</entry>
+
+    <entry key="SlotStoreEnvironmentBean.backingSlotsClassName">com.arjuna.ats.internal.arjuna.objectstore.slot.jgroups.JGroupsRaftSlots</entry>
+
+    <entry key="JGroupsRaftStoreEnvironmentBean.nodeAddress">node1</entry>
+    <entry key="JGroupsRaftStoreEnvironmentBean.raftMembers">node1</entry>
+    <entry key="JGroupsRaftStoreEnvironmentBean.jGroupsRaftConfigFileName">jgroups-raft-config.xml</entry>
+    <entry key="JGroupsRaftStoreEnvironmentBean.storeDir">raft-log</entry>
+</properties>
