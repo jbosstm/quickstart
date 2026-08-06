@@ -9,8 +9,10 @@ set -m
 echo "JGroups Raft Cluster Object Store Quickstart"
 echo "============================================="
 
-[ "x$QUICKSTART_NARAYANA_VERSION" != 'x' ] &&\
-  NARAYANA_VERSION_PARAM="-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}"
+NARAYANA_VERSION_PARAM=()
+if [ -n "$QUICKSTART_NARAYANA_VERSION" ]; then
+  NARAYANA_VERSION_PARAM=("-Dversion.narayana=${QUICKSTART_NARAYANA_VERSION}")
+fi
 
 MAIN_CLASS=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreClusterExample
 
@@ -18,15 +20,14 @@ MAIN_CLASS=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreClusterExample
 rm -rf RaftStore-node1 RaftStore-node2 node1.ready node2.ready
 
 echo "Compiling..."
-mvn -q compile $NARAYANA_VERSION_PARAM
-if [ $? -ne 0 ]; then
+if ! mvn -q compile "${NARAYANA_VERSION_PARAM[@]}"; then
     echo "FAILED: compilation error"
     exit 1
 fi
 
 echo "Starting node1 on port 7800..."
 mvn -q exec:java -Dexec.mainClass=$MAIN_CLASS \
-    -Dexec.args="node1" -Djgroups.bind_port=7800 $NARAYANA_VERSION_PARAM &
+    -Dexec.args="node1" -Djgroups.bind_port=7800 "${NARAYANA_VERSION_PARAM[@]}" &
 PID1=$!
 
 echo "Waiting for node1 to create its in-doubt transaction..."
@@ -44,7 +45,7 @@ fi
 
 echo "Starting node2 on port 7801..."
 mvn -q exec:java -Dexec.mainClass=$MAIN_CLASS \
-    -Dexec.args="node2" -Djgroups.bind_port=7801 $NARAYANA_VERSION_PARAM
+    -Dexec.args="node2" -Djgroups.bind_port=7801 "${NARAYANA_VERSION_PARAM[@]}"
 RC=$?
 
 # Shut down node1

@@ -46,6 +46,8 @@ mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGr
 mvn -e compile exec:java -Dexec.mainClass=org.jboss.narayana.jta.quickstarts.JGroupsRaftSlotStoreClusterExample  -Dexec.args="node2" -Djgroups.bind_port=7801
 ```
 
+Note that the two cluster examples each have two commands for starting a 2-node cluster, refer to the javadoc for these classes for details. 
+
 The JDBCStore can be configured programmatically or via a properties file. To use the properties file pass the argument `-DUSE_JBOSSTS_PROPERTIES=true` on the command line.
 
 ## Expected output
