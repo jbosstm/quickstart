@@ -4,25 +4,12 @@
  */
 package org.jboss.narayana.jta.quickstarts;
 
-import com.arjuna.ats.arjuna.AtomicAction;
 import com.arjuna.ats.arjuna.common.ObjectStoreEnvironmentBean;
-import com.arjuna.ats.arjuna.common.Uid;
-import com.arjuna.ats.arjuna.common.arjPropertyManager;
-import com.arjuna.ats.arjuna.coordinator.TransactionReaper;
-import com.arjuna.ats.arjuna.objectstore.RecoveryStore;
-import com.arjuna.ats.arjuna.objectstore.StateStatus;
-import com.arjuna.ats.arjuna.objectstore.StoreManager;
-import com.arjuna.ats.arjuna.state.InputObjectState;
-import com.arjuna.ats.internal.arjuna.common.UidHelper;
 import com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreAdaptor;
 import com.arjuna.ats.internal.arjuna.objectstore.slot.SlotStoreEnvironmentBean;
 import com.arjuna.ats.internal.arjuna.objectstore.slot.jgroups.JGroupsRaftSlots;
 import com.arjuna.ats.internal.arjuna.objectstore.slot.jgroups.JGroupsRaftStoreEnvironmentBean;
 import com.arjuna.common.internal.util.propertyservice.BeanPopulator;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Demonstrates a cluster of transaction managers sharing a JGroups
@@ -55,7 +42,6 @@ import java.util.List;
 public class JGroupsRaftSlotStoreClusterExample {
 
     private static JGroupsRaftSlots backingSlots;
-    private static String nodeId;
 
     public static void main(String[] args) throws Exception {
         if (args.length < 1) {
@@ -64,64 +50,33 @@ public class JGroupsRaftSlotStoreClusterExample {
             System.exit(1);
         }
 
-        nodeId = args[0];
-        log("Starting Raft cluster node");
+        ClusterExampleSupport support = new ClusterExampleSupport(args[0]);
+        support.log("Starting Raft cluster node");
 
-        arjPropertyManager.getCoreEnvironmentBean().setNodeIdentifier(nodeId);
+        support.waitForNode1();
+        setupStore(support);
+        support.createInDoubtTransaction();
+        support.createMarkerFile();
 
-        if (!"node1".equals(nodeId)) {
-            log("Waiting for node1 to be ready...");
-            while (!new File("node1.ready").exists()) {
-                Thread.sleep(200);
-            }
-            Thread.sleep(1000);
-        }
-
-        setupStore();
-
-        log("Creating in-doubt transaction...");
-        Uid txnUid = createInDoubtTransaction();
-        log("In-doubt transaction created: %s", txnUid);
-
-        File marker = new File(nodeId + ".ready");
-        marker.createNewFile();
-        marker.deleteOnExit();
-
-        if ("node1".equals(nodeId)) {
-            log("Keeping Raft cluster alive for other nodes (Ctrl-C to stop)");
-            try {
-                Thread.sleep(Long.MAX_VALUE);
-            } catch (InterruptedException ignored) {
-            }
+        if (support.isNode1()) {
+            support.keepAlive();
         } else {
-            List<Uid> uids = scanRecoveryStore();
-            log("Found %d in-doubt transaction(s) via recovery store:", uids.size());
-            for (Uid uid : uids) {
-                log("  %s", uid);
-            }
-
-            boolean success = uids.size() >= 2;
-            log(success
-                    ? "SUCCESS: transactions from other nodes are visible for recovery"
-                    : "FAIL: expected to see transactions from other nodes (found %d)", uids.size());
-
-            shutdown();
-            System.exit(success ? 0 : 1);
+            support.verifyRecoveryAndExit(() -> { if (backingSlots != null) backingSlots.stop(); });
         }
     }
 
-    private static void setupStore() {
+    private static void setupStore(ClusterExampleSupport support) {
         JGroupsRaftStoreEnvironmentBean config = new JGroupsRaftStoreEnvironmentBean();
         backingSlots = new JGroupsRaftSlots();
 
         config.setJGroupsConfigFileName("jgroups-raft-tcp-config.xml");
-        config.setNodeAddress(nodeId);
+        config.setNodeAddress(support.nodeId());
         config.setCacheName("raftClusterTxStore");
         config.setClusterName("raftClusterTxStore");
-        config.setStoreDir("RaftStore-" + nodeId);
+        config.setStoreDir("RaftStore-" + support.nodeId());
         config.setBackingSlots(backingSlots);
 
-        if ("node1".equals(nodeId)) {
+        if (support.isNode1()) {
             // Node1 bootstraps a single-member cluster
             config.setRaftMembers("node1");
         }
@@ -131,51 +86,5 @@ public class JGroupsRaftSlotStoreClusterExample {
                 .setObjectStoreType(SlotStoreAdaptor.class.getName());
         BeanPopulator.setBeanInstanceIfAbsent(
                 SlotStoreEnvironmentBean.class.getName(), config);
-    }
-
-    private static Uid createInDoubtTransaction() throws Exception {
-        AtomicAction aa = new AtomicAction();
-        aa.begin();
-
-        aa.add(new JGroupsSlotStoreClusterExample.CrashInCommitRecord());
-        aa.add(new JGroupsSlotStoreClusterExample.CrashInCommitRecord());
-
-        aa.commit(true);
-
-        return aa.getSavingUid();
-    }
-
-    private static List<Uid> scanRecoveryStore() {
-        List<Uid> uids = new ArrayList<>();
-        RecoveryStore rs = StoreManager.getRecoveryStore();
-        AtomicAction probe = new AtomicAction();
-        InputObjectState ios = new InputObjectState();
-
-        try {
-            if (rs.allObjUids(probe.type(), ios, StateStatus.OS_UNKNOWN)) {
-                Uid uid;
-                do {
-                    uid = UidHelper.unpackFrom(ios);
-                    if (!uid.equals(Uid.nullUid())) {
-                        uids.add(uid);
-                    }
-                } while (!uid.equals(Uid.nullUid()));
-            }
-        } catch (Exception e) {
-            log("Error scanning recovery store: %s", e.getMessage());
-        }
-
-        return uids;
-    }
-
-    private static void shutdown() {
-        if (backingSlots != null) {
-            backingSlots.stop();
-        }
-        TransactionReaper.terminate(true);
-    }
-
-    private static void log(String fmt, Object... args) {
-        System.out.printf("[%s] %s%n", nodeId, String.format(fmt, args));
     }
 }

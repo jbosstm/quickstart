@@ -163,8 +163,8 @@ public class JGroupsSlotStoreWALRecoveryExample {
         AtomicAction aa = new AtomicAction();
         aa.begin();
 
-        aa.add(new JGroupsSlotStoreClusterExample.CrashInCommitRecord());
-        aa.add(new JGroupsSlotStoreClusterExample.CrashInCommitRecord());
+        aa.add(new ClusterExampleSupport.CrashInCommitRecord());
+        aa.add(new ClusterExampleSupport.CrashInCommitRecord());
 
         aa.commit(true);
 
