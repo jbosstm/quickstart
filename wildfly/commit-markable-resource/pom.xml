@@ -29,16 +29,34 @@
         <finalName>cmr-quickstart</finalName>
 
         <plugins>
+            <!-- Resolve the byteman jar path so it can be passed to -javaagent without hardcoding version/path -->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${version.plugin.maven.dependency}</version>
+                <executions>
+                    <execution>
+                        <id>byteman-jar-property</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.surefire.plugin}</version>
                 <configuration>
                     <skip>false</skip>
-                    <argLine>${surefire.argline}</argLine>
+                    <!-- Load byteman into the test (client) JVM at startup instead of a dynamic self-attach.
+                         This avoids the intermittent JDK libinstrument assertion failure during attach. -->
+                    <argLine>-javaagent:${org.jboss.byteman:byteman:jar}=listener:true,port:9092 ${surefire.argline}</argLine>
                     <systemPropertyVariables combine.children="append">
                         <server.jvm.args>${jvm.args} ${jvm.args.debug}</server.jvm.args>
                         <node.address>127.0.0.1</node.address>
                         <xboot.classpath>${xboot.classpath}</xboot.classpath>
+                        <!-- Exposed so arquillian.xml can add byteman as a -javaagent to the WildFly server JVM -->
+                        <byteman.jar>${org.jboss.byteman:byteman:jar}</byteman.jar>
                     </systemPropertyVariables>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                 </configuration>
