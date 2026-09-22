@@ -9,7 +9,7 @@
 
     <container qualifier="jbossas-managed" default="true">
         <configuration>
-            <property name="javaVmArguments">${server.jvm.args} -Djboss.modules.system.pkgs=com.sun.tools.attach,org.jboss.byteman ${xboot.classpath}</property>
+            <property name="javaVmArguments">${server.jvm.args} -Djboss.modules.system.pkgs=com.sun.tools.attach,org.jboss.byteman ${xboot.classpath} -javaagent:${byteman.jar}=listener:true,port:9091,prop:org.jboss.byteman.verbose=true</property>
             <property name="serverConfig">standalone-full.xml</property>
             <property name="managementAddress">${node.address}</property>
             <property name="allowConnectingToRunningServer">false</property>
@@ -17,8 +17,11 @@
     </container>
 
    	<extension qualifier="byteman">
-	    <property name="autoInstallAgent">true</property>
-	    <property name="agentProperties">org.jboss.byteman.verbose=true,prop:org.jboss.byteman.debug=true</property>
+	    <!-- Agents are pre-loaded via -javaagent (see pom.xml surefire argLine and the server javaVmArguments
+	         above), so no dynamic attach is performed. The RuleInstallers just submit rules to these ports. -->
+	    <property name="autoInstallAgent">false</property>
+	    <property name="clientAgentPort">9092</property>
+	    <property name="containerAgentPort">9091</property>
 	</extension>
 
 	<!--
