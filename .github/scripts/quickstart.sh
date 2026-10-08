@@ -82,7 +82,7 @@ function build_narayana {
     exit -1
   fi
   cd narayana
-  ./build.sh clean install -B -DskipTests -Pcommunity
+  ./build.sh clean install -B -DskipTests -Pcommunity,experimental
 
   if [ $? != 0 ]; then
     echo "Narayana build failed: $BUILD_URL";
