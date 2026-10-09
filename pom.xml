@@ -193,7 +193,7 @@
         <version.postgresql>9.1-901.jdbc4</version.postgresql>
         <version.resteasy.api>3.0.12.Final</version.resteasy.api>
         <version.resteasy>6.2.2.Final</version.resteasy>
-        <version.shrinkwrap>1.2.6</version.shrinkwrap>
+        <version.shrinkwrap>2.0.0.Final</version.shrinkwrap>
         <!--         Using an older plugin version to have compatibility with older maven version -->
         <version.surefire.plugin>3.6.0</version.surefire.plugin>
         <version.war.plugin>3.5.1</version.war.plugin>
