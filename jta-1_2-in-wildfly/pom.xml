@@ -74,6 +74,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-spi</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.wildfly.extras.creaper</groupId>
             <artifactId>creaper-core</artifactId>
             <version>${version.creaper}</version>
