@@ -61,6 +61,11 @@
       <version>${version.org.jboss.arquillian}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-spi</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <repositories>

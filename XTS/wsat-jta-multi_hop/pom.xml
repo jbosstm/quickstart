@@ -63,6 +63,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-spi</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
       <version>${version.jakarta.persistence-api}</version>
