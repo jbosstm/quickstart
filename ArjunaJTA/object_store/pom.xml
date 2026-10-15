@@ -44,6 +44,13 @@
       <artifactId>h2</artifactId>
       <scope>compile</scope>
     </dependency>
+<!--    experimental module-->
+    <dependency>
+      <groupId>org.jboss.narayana.experimental</groupId>
+      <artifactId>infinispan-store</artifactId>
+      <scope>compile</scope>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
   <profiles>
