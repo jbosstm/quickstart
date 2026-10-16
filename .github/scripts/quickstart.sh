@@ -128,7 +128,12 @@ function download_and_update_as {
   fi
   
   cd $WORKSPACE
-  
+
+  # When called directly (without build_narayana_lra), LRA_CURRENT_VERSION is not set.
+  # Fall back to the version declared in the quickstart pom.xml so that file-presence
+  # checks and cp commands below use a real version string instead of an empty one.
+  LRA_CURRENT_VERSION=${LRA_CURRENT_VERSION:-$(sed -n 's/.*<version\.org\.jboss\.narayana\.lra>\(.*\)<\/version\.org\.jboss\.narayana\.lra>.*/\1/p' pom.xml)}
+
   # Check if the needed files are available in the m2 cache
   filesToCheck=(~/.m2/repository/org/jboss/narayana/rts/restat-api/${NARAYANA_CURRENT_VERSION}/restat-api-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-bridge/${NARAYANA_CURRENT_VERSION}/restat-bridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-integration/${NARAYANA_CURRENT_VERSION}/restat-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/rts/restat-util/${NARAYANA_CURRENT_VERSION}/restat-util-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/xts/jbossxts/${NARAYANA_CURRENT_VERSION}/jbossxts-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jbosstxbridge/${NARAYANA_CURRENT_VERSION}/jbosstxbridge-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-integration/${NARAYANA_CURRENT_VERSION}/narayana-jts-integration-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/jts/narayana-jts-idlj/${NARAYANA_CURRENT_VERSION}/narayana-jts-idlj-${NARAYANA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-service-base/${LRA_CURRENT_VERSION}/lra-service-base-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-coordinator-jar/${LRA_CURRENT_VERSION}/lra-coordinator-jar-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-client/${LRA_CURRENT_VERSION}/lra-client-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/narayana-lra/${LRA_CURRENT_VERSION}/narayana-lra-${LRA_CURRENT_VERSION}.jar ~/.m2/repository/org/jboss/narayana/lra/lra-proxy-api/${LRA_CURRENT_VERSION}/lra-proxy-api-${LRA_CURRENT_VERSION}.jar)
   goOffline=false
