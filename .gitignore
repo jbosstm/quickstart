@@ -14,18 +14,22 @@ target/
 ObjectStore/
 PutObjectStoreDirHere/
 
+ArjunaJTA/object_store/HornetqJournalStore/
+ArjunaJTA/object_store/infinispan-caches/
 ArjunaJTS/interop/glassfish/tmp/
 
+**/dependency-reduced-pom.xml
+**/transaction-logs/
+
+lra/
+narayana/
 instantclient_11_2/
 jboss-as
 jbossesb-4.9.zip
 instantclient-basiclite-win32-11.2.0.1.0.zip
 instantclient-sdk-win32-11.2.0.1.0.zip
 *~
-wildfly-10.x.zip
-wildfly-10.*/
-wildfly-10.*.jar
-narayana-full-*-bin.zip
+wildfly-*
 jboss1/
 jboss2/
 bin/
