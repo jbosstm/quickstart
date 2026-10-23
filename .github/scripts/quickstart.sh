@@ -122,8 +122,16 @@ function build_narayana_lra {
 
 function download_and_update_as {
   if [ -z "${WILDFLY_RELEASE_VERSION}" ]; then
-    WILDFLY_RELEASE_VERSION=$(curl -sL https://api.github.com/repos/wildfly/wildfly/releases/latest | jq -r ".tag_name")
-    [ $? -eq 0 ] ||fatal "No WILDFLY_RELEASE_VERSION specified"
+    for attempt in $(seq 1 30); do
+      WILDFLY_RELEASE_VERSION=$(curl -sL --max-time 10 https://api.github.com/repos/wildfly/wildfly/releases/latest | jq -r ".tag_name")
+      if [ $? -eq 0 ] && [ -n "${WILDFLY_RELEASE_VERSION}" ] && [ "${WILDFLY_RELEASE_VERSION}" != "null" ]; then
+        break
+      fi
+      echo "Attempt ${attempt}/30: could not retrieve WILDFLY_RELEASE_VERSION, retrying in 1 second..."
+      WILDFLY_RELEASE_VERSION=""
+      sleep 1
+    done
+    [ -n "${WILDFLY_RELEASE_VERSION}" ] && [ "${WILDFLY_RELEASE_VERSION}" != "null" ] || fatal "No WILDFLY_RELEASE_VERSION specified"
     echo "version=$WILDFLY_RELEASE_VERSION"
   fi
   
