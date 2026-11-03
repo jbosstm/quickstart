@@ -14,5 +14,6 @@
 
     <modules>
         <module>wildfly</module>
+        <module>quarkus</module>
     </modules>
 </project>
