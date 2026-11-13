@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
+        <artifactId>examples-lra-jwt-quarkus</artifactId>
+        <version>7.3.5.Final-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <groupId>org.jboss.narayana.quickstart.rts.lra</groupId>
+    <artifactId>lra-jwt-token-propagation</artifactId>
+
+    <name>LRA JWT Examples: token propagation across participants (Quarkus)</name>
+    <description>Demonstrates propagating a JWT Bearer token across LRA participants and into
+        coordinator complete/compensate callbacks using the @PropagateToken annotation.</description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repo.eclipse.org-snapshots</id>
+            <name>Eclipse MicroProfile Repository - Snapshots</name>
+            <url>https://repo.eclipse.org/content/repositories/microprofile-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- MicroProfile LRA CDI/JAX-RS support. The versions of the Narayana LRA
+             artifacts are pinned so that the @PropagateToken-aware filters (added in
+             2.0.0.Final) are bundled, overriding whatever the quarkus-bom would select.
+             2.0.1.Final-SNAPSHOT is required because 2.0.0.Final's BearerTokenResolver
+             fails to fall back to the async-safe token property when the request scope is
+             inactive (async LRA start / recovery), throwing ContextNotActiveException. -->
+
+        <dependency>
+            <groupId>org.jboss.narayana.lra</groupId>
+            <artifactId>narayana-lra</artifactId>
+            <version>${version.org.jboss.narayana.lra}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.lra</groupId>
+            <artifactId>lra-client</artifactId>
+            <version>${version.org.jboss.narayana.lra}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.lra</groupId>
+            <artifactId>lra-proxy-api</artifactId>
+            <version>${version.org.jboss.narayana.lra}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.lra</groupId>
+            <artifactId>lra-service-base</artifactId>
+            <version>${version.org.jboss.narayana.lra}</version>
+        </dependency>
+
+        <!-- MicroProfile LRA API (@LRA, @Complete, @Compensate). Version is managed by
+             the quarkus-bom so it stays aligned with the bundled Narayana LRA runtime. -->
+        <dependency>
+            <groupId>org.eclipse.microprofile.lra</groupId>
+            <artifactId>microprofile-lra-api</artifactId>
+        </dependency>
+
+        <!-- JAX-RS (classic RESTEasy) server and client used by the LRA filters -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-client-jackson</artifactId>
+        </dependency>
+
+        <!-- MicroProfile JWT: makes JsonWebToken injectable with verified claims -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
+        </dependency>
+
+        <!-- Nimbus JOSE + JWT: used only to mint the demo tokens and expose the public
+             JWKS. In production an external identity provider issues the tokens. -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${version.nimbus.jose.jwt}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.stephenc.jcip</groupId>
+                    <artifactId>jcip-annotations</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+        </dependency>
+
+        <!-- Test: plain JUnit 5 unit tests for the JWT helpers (no running server needed) -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>lra-jwt-token-propagation</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.surefire.plugin}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
