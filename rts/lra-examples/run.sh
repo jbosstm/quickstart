@@ -31,7 +31,7 @@ arr=(${qsname//-/ })
 svctype=${arr[0]}
 last=${arr[${#arr[@]} - 1]}
 
-[[ "$svctype" =~ ^(cdi)$ ]] || usage "quickstart directory must start with {cdi}"
+[[ "$svctype" =~ ^(cdi|token)$ ]] || usage "quickstart directory must start with {cdi} or be the token-propagation example"
 
 [ "$svctype" = "mixed" ] && completions=2 || completions=1
 
@@ -45,6 +45,119 @@ fi
 function killpid {
   kill -9 $2
   test $? || echo "===== could not kill $1"
+}
+
+# Poll an HTTP endpoint until it answers (any HTTP status counts as "up"; we only
+# care that the port is accepting connections). $1=url $2=description $3=max attempts
+function wait_for_http {
+  local url="$1" desc="$2" max="${3:-30}" i=0
+  echo "===== waiting for ${desc} at ${url}"
+  until curl ${CURL_IP_OPTS} -s -o /dev/null "${url}"; do
+    i=$((i + 1))
+    if [ "$i" -ge "$max" ]; then
+      echo "===== ${desc} did not become ready after ${max} attempts"
+      return 1
+    fi
+    sleep `timeout_adjust 2 2>/dev/null || echo 2`
+  done
+  echo "===== ${desc} is ready"
+  return 0
+}
+
+# Drive the lra-jwt/quarkus/token-propagation quickstart's README workflow:
+# start an external coordinator (8080) and the participant (8081), then exercise the
+# happy path, a compensation and the authentication check. Sets the global $res.
+function run_token_propagation {
+  local participant_port=8081
+  local coordinator_port=${coord_port}
+  local coord_jar="$PWD/../../../lra-coordinator/target/lra-coordinator-quarkus.jar"
+  local part_jar="target/${quarkusjar}"
+  res=0
+
+  if [ ! -f "$coord_jar" ]; then
+    echo "===== cannot find coordinator jar: $coord_jar"
+    res=1
+    return 1
+  fi
+  if [ ! -f "$part_jar" ]; then
+    echo "===== cannot find participant jar: $part_jar"
+    res=1
+    return 1
+  fi
+
+  echo "===== starting external coordinator on port ${coordinator_port}"
+  java ${IP_OPTS} -jar "$coord_jar" &
+  coord_pid=$!
+
+  echo "===== starting participant on port ${participant_port}"
+  java ${IP_OPTS} -jar "$part_jar" &
+  service_pid=$!
+
+  if ! wait_for_http "http://localhost:${coordinator_port}/lra-coordinator" "LRA coordinator"; then
+    res=1
+    return 1
+  fi
+  if ! wait_for_http "http://localhost:${participant_port}/auth/jwks" "participant"; then
+    res=1
+    return 1
+  fi
+
+  # 3. obtain a token (the endpoint returns it already prefixed with "Bearer ")
+  echo "===== obtain a JWT via /auth/token"
+  local token
+  token=$(curl ${CURL_IP_OPTS} -s "http://localhost:${participant_port}/auth/token?subject=example-user")
+  if [ -z "$token" ]; then
+    echo "===== failed to obtain a token from /auth/token"
+    res=1
+    return 1
+  fi
+  echo "===== token: ${token}"
+
+  # 4. happy path: create an order, expecting a CONFIRMED response
+  echo "===== creating an order (happy path), expecting status CONFIRMED"
+  local happy
+  happy=$(curl ${CURL_IP_OPTS} -s -X POST "http://localhost:${participant_port}/orders/create" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: ${token}" \
+    -d '{"orderId":"ORDER-001","itemId":"ITEM-123","quantity":2,"amount":99.99}')
+  echo "===== happy path response: ${happy}"
+  if echo "$happy" | grep -q '"status":"CONFIRMED"'; then
+    echo "===== happy path OK"
+  else
+    echo "===== happy path FAILED: expected a CONFIRMED order"
+    res=1
+  fi
+
+  # 5. compensation: a negative amount makes payment decline, cancelling the LRA (HTTP 502)
+  echo "===== creating an order with a negative amount, expecting HTTP 502 (compensation)"
+  local comp_code
+  comp_code=$(curl ${CURL_IP_OPTS} -s -o /dev/null -w '%{http_code}' -X POST "http://localhost:${participant_port}/orders/create" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: ${token}" \
+    -d '{"orderId":"ORDER-002","itemId":"ITEM-123","quantity":1,"amount":-5.00}')
+  echo "===== compensation response code: ${comp_code}"
+  if [ "$comp_code" = "502" ]; then
+    echo "===== compensation OK"
+  else
+    echo "===== compensation FAILED: expected 502, got ${comp_code}"
+    res=1
+  fi
+
+  # 6. authentication: a request without a token must be rejected (HTTP 401)
+  echo "===== creating an order without a token, expecting HTTP 401"
+  local auth_code
+  auth_code=$(curl ${CURL_IP_OPTS} -s -o /dev/null -w '%{http_code}' -X POST "http://localhost:${participant_port}/orders/create" \
+    -H "Content-Type: application/json" \
+    -d '{"orderId":"ORDER-003","itemId":"ITEM-123","quantity":1,"amount":10.0}')
+  echo "===== no-token response code: ${auth_code}"
+  if [ "$auth_code" = "401" ]; then
+    echo "===== authentication check OK"
+  else
+    echo "===== authentication check FAILED: expected 401, got ${auth_code}"
+    res=1
+  fi
+
+  return $res
 }
 
 function start_service {
@@ -112,7 +225,18 @@ function test_recovery {
   fi
 }
 
-echo "===== Running qickstart $qsname in directory $PWD"
+echo "===== Running quickstart $qsname in directory $PWD"
+
+if [[ "$svctype" = "token" ]]; then
+  run_token_propagation
+  res=$?
+
+  [[ -z ${service_pid+x} ]] || killpid "participant" $service_pid
+  [[ -z ${coord_pid+x} ]] || killpid "coordinator" $coord_pid
+
+  echo "===== test $qsname completed with status $res"
+  exit $res
+fi
 
 if [[ "$last" = "participant" ]]; then
 #  start_coordinator
